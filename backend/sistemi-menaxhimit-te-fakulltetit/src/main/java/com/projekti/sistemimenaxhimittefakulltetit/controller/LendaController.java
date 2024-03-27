@@ -17,7 +17,7 @@ public class LendaController {
     private LendaService lendaService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Lenda> findLendaById(@RequestParam Long id) throws Exception {
+    public ResponseEntity<Lenda> findLendaById(@PathVariable Long id) throws Exception {
         Lenda lenda = lendaService.findLendaById(id);
         return new ResponseEntity<>(lenda, HttpStatus.FOUND);
     }
@@ -28,8 +28,8 @@ public class LendaController {
         return new ResponseEntity<>(lendet, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteLendaById(@RequestParam Long id){
+    @DeleteMapping("/{id}")
+    public void deleteLendaById(@PathVariable Long id){
         lendaService.deleteLenda(id);
     }
 }
