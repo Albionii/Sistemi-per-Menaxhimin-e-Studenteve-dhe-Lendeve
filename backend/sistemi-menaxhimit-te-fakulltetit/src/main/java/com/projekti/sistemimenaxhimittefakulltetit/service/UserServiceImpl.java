@@ -1,5 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
+import com.projekti.sistemimenaxhimittefakulltetit.config.JwtProvider;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.AddressRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.NrTelefonitRepository;
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService{
     private final AddressRepository addressRepository;
 
     @Autowired
+    private final JwtProvider jwtProvider;
+
+    @Autowired
     private final NrTelefonitRepository nrTelefonitRepository;
 
     @Override
@@ -36,5 +40,21 @@ public class UserServiceImpl implements UserService{
 
     public List<User> findAll(){
         return userRepository.findAll();
+    }
+
+    @Override
+    public User findUserByJwtToken(String jwt) throws Exception {
+        String email = jwtProvider.getEmailFromJwtToken(jwt);
+        User user = findUserByEmail(email);
+        return user;
+    }
+
+    public User findUserByEmail(String email) throws Exception{
+        User user = userRepository.findUserByEmail(email);
+        if(user == null){
+            throw new Exception("User not found with email: "+email);
+        }
+
+        return user;
     }
 }
