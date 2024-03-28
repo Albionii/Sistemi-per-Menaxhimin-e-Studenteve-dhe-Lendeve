@@ -19,7 +19,9 @@ public class StudentLigjerataController {
     private final UserService userService;
 
     @GetMapping("{id}")
-    public List<StudentLigjerata> findLendetByStudentId(@PathVariable Long id){
+    public List<StudentLigjerata> findLendetByStudentId(
+            @RequestHeader("Authorization") String jwt,
+            @PathVariable Long id){
         return studentLigjerataService.findLendetByStudentId(id);
     }
 
