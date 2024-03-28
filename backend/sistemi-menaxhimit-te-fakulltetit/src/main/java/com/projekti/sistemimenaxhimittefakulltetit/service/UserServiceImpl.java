@@ -27,8 +27,6 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private final NrTelefonitRepository nrTelefonitRepository;
 
-    @Autowired
-    private JwtProvider jwtProvider;
 
     @Override
     public User findUserById(Long id) throws Exception {
@@ -42,16 +40,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findUserByJwtToken(String token) throws Exception {
-        String email = jwtProvider.getEmailFromJwtToken(token);
-        User user = findUserByEmail(email);
-
-        return user;
-    }
-
-    @Override
     public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findUserByEmail(email);
     }
 
     public List<User> findAll(){
@@ -65,12 +55,4 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
-    public User findUserByEmail(String email) throws Exception{
-        User user = userRepository.findUserByEmail(email);
-        if(user == null){
-            throw new Exception("User not found with email: "+email);
-        }
-
-        return user;
-    }
 }
