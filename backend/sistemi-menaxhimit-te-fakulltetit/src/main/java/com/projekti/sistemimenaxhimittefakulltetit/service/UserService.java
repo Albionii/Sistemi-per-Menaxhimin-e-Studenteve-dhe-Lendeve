@@ -10,6 +10,11 @@ public interface UserService {
 
     List<User> findAll();
 
+    User findUserByJwtToken(String token) throws Exception;
+
+    User findUserByEmail(String email);
+
+
     User findUserByJwtToken(String jwt) throws Exception;
 
     User findUserByEmail(String email) throws Exception;

@@ -1,7 +1,9 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.LendaRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.request.CreateLendaReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,14 @@ public class LendaServiceImpl implements LendaService{
     @Override
     public Lenda findLendaByProfessorId(Long id) {
         return null;
+    }
+
+    @Override
+    public Lenda createLenda(CreateLendaReq request) {
+        Lenda lenda = new Lenda();
+        lenda.setEmri(request.getEmri());
+        lenda.setEcts(request.getEcts());
+        lenda.setObligative(request.isObligative());
+        return lendaRepository.save(lenda);
     }
 }
