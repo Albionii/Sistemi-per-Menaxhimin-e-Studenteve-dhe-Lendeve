@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "users")
 public class User {
     @Id
@@ -41,4 +41,7 @@ public class User {
 
     private USER_ROLE role = USER_ROLE.ROLE_STUDENT;
 
+
 }
+
+
