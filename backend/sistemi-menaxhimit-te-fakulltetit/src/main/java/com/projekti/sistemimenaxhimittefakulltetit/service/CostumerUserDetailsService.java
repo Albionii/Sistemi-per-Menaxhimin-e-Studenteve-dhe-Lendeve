@@ -20,7 +20,7 @@ public class CostumerUserDetailsService {
     private UserRepository userRepository;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        User user = userRepository.findByEmail(username);
+        User user = userRepository.findUserByEmail(username);
         if(user == null){
             throw new UsernameNotFoundException("User not found with email: "+username);
         }

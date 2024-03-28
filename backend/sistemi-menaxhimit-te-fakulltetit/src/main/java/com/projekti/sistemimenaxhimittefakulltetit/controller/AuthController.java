@@ -42,7 +42,7 @@ public class AuthController {
 
     @PostMapping("signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception{
-        User emailExists = userRepository.findByEmail(user.getEmail());
+        User emailExists = userRepository.findUserByEmail(user.getEmail());
         if(emailExists != null){
             throw new Exception("Email already exists");
         }
