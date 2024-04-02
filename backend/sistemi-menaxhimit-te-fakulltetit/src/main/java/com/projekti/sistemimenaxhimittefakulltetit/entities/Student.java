@@ -3,16 +3,14 @@ package com.projekti.sistemimenaxhimittefakulltetit.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
 @Entity
-@Table
-public class ProfesoriLenda {
+@Data
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String vitiAkademik;
 
-    @ManyToOne
-    private Professor professor;
-    @ManyToOne
-    private Lenda lenda;
+    @OneToOne
+    private User user;
 }

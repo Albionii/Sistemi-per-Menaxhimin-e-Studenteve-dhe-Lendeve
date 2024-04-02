@@ -1,6 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentLigjerata;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
@@ -35,7 +36,7 @@ public class StudentLigjerataService {
 
 
     //enroll in a Ligjerate
-    public StudentLigjerata enroll (Long id, User student) throws Exception{
+    public StudentLigjerata enroll (Long id, Student student) throws Exception{
         ProfesoriLenda profesoriLenda = findProfesoriLendaById(id);
         if(profesoriLenda == null){
             throw new Exception("Ligjerata me id: "+id+" nuk ekziston");

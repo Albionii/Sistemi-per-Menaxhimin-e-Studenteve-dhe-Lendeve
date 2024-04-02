@@ -2,7 +2,9 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div className='text-red-500 font-bold'>Home</div>
+    <>
+    <p className="text-center text-green-500 font-bold">Hi</p>
+    </>
   )
 }
 
