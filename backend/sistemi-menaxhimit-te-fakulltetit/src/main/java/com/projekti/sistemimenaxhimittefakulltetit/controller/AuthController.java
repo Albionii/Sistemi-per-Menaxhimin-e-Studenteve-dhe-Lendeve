@@ -49,6 +49,8 @@ public class AuthController {
 
         User createdUser = new User();
         createdUser.setEmail(user.getEmail());
+        createdUser.setGjinia(user.getGjinia());
+        createdUser.setDatelindja(user.getDatelindja());
         createdUser.setFirstName(user.getFirstName());
         createdUser.setLastName(user.getLastName());
         createdUser.setRole(user.getRole());

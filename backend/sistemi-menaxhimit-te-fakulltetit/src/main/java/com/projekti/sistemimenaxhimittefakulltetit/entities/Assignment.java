@@ -35,13 +35,19 @@ public class Assignment {
     @Column(length = 500)
     private List<String> fileNames;
 
-    private Long lenda;
+    @ManyToOne
+    @JoinColumn(name = "lenda_id")
+    private Lenda lenda;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by")
     @CreatedBy
-    private Long createdBy;
+    private User createdBy;
 
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
     @LastModifiedBy
-    private Long updatedBy;
+    private User updatedBy;
 
     @LastModifiedDate
     private LocalDateTime updatedAt = null;

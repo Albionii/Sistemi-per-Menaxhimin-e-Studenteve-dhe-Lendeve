@@ -44,12 +44,12 @@ public class AssignmentServiceImpl implements AssignmentService{
                 .orElseThrow(() -> new RuntimeException("Lenda not found with id: " + req.getLendaId()));
 
         created.setTitulli(req.getTitulli());
-        created.setCreatedBy(user.getId());
+        created.setCreatedBy(user);
         created.setMesazhi(req.getMesazhi());
         created.setCreatedAt(LocalDateTime.now());
         created.setExpireAt(req.getExpireAt());
         created.setFileNames(req.getFileNames());
-        created.setLenda(lenda.getId()); // Set the Lenda
+        created.setLenda(lenda); // Set the Lenda
         return assignmentRepository.save(created);
     }
 
@@ -74,7 +74,7 @@ public class AssignmentServiceImpl implements AssignmentService{
             updatedAssignment.setMesazhi(update.getMesazhi());
             updatedAssignment.setExpireAt(update.getExpireAt());
             updatedAssignment.setFileNames(update.getFileNames());
-            updatedAssignment.setUpdatedBy(user.getId());
+            updatedAssignment.setUpdatedBy(user);
             updatedAssignment.setUpdatedAt(LocalDateTime.now());
 
             return assignmentRepository.save(updatedAssignment);
