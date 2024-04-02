@@ -11,7 +11,7 @@ public class StudentLigjerata {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private User student;
+    private Student student;
     @ManyToOne
     private ProfesoriLenda ligjerata;
 }
