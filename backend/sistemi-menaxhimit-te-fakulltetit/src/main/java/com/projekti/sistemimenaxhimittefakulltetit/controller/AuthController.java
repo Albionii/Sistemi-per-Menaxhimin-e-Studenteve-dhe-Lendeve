@@ -4,7 +4,6 @@ import com.projekti.sistemimenaxhimittefakulltetit.config.JwtProvider;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.USER_ROLE;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.UserProf;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.UserRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.LoginRequest;
 import com.projekti.sistemimenaxhimittefakulltetit.response.AuthResponse;
@@ -42,8 +41,6 @@ public class AuthController {
     @Autowired
     private CostumerUserDetailsService costumerUserDetailsService;
 
-    @Autowired
-    private UserProf userProf;
 
     @PostMapping("signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception{
@@ -63,12 +60,6 @@ public class AuthController {
 
         User savedUser = userRepository.save(createdUser);
 
-        if (createdUser.getRole() == USER_ROLE.ROLE_PROFESSOR) {
-
-            Professor prof = new Professor(createdUser);
-
-            userProf.save(prof);
-        }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
