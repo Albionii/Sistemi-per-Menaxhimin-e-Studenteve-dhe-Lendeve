@@ -36,16 +36,14 @@ public class AdminController {
     }
 
     @PostMapping("/add-lenda")
-    public ResponseEntity<Lenda> createLenda(@RequestBody CreateLendaReq lenda,
-                                             @RequestHeader("Authorization") String jwt) throws Exception{
+    public ResponseEntity<Lenda> createLenda(@RequestBody CreateLendaReq lenda) throws Exception{
         Lenda savedLenda = lendaService.createLenda(lenda);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedLenda);
     }
 
     @PostMapping("add-ligjerata")
-    public ResponseEntity<ProfesoriLenda> createLenda(@RequestBody ProfesoriLenda ligjerata,
-                                                      @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<ProfesoriLenda> createLenda(@RequestBody ProfesoriLenda ligjerata) throws Exception {
         ProfesoriLenda savedLigjerata = profesoriLendaService.createLigjerata(ligjerata);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedLigjerata);

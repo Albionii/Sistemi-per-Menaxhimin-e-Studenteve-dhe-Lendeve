@@ -43,11 +43,7 @@ public class UserServiceImpl implements UserService{
     public User findUserById(Long id) throws Exception {
         Optional<User> opt = userRepository.findById(id);
 
-        if(opt.isEmpty()){
-            throw new Exception("User not found with id: "+id);
-        }
-
-        return opt.get();
+        return opt.orElseThrow(() -> new Exception("User not found with id: "+id));
     }
 
     @Override
@@ -83,6 +79,8 @@ public class UserServiceImpl implements UserService{
         }
 
         updateUser.setRole(userDetails.getRole());
+
+        //TODO (d.sylaj): remove the previous role
 
         if(updateUser.getRole() == USER_ROLE.ROLE_STUDENT){
             Student student = new Student();

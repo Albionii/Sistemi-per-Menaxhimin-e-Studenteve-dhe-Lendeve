@@ -53,7 +53,7 @@ public class LendaServiceImpl implements LendaService{
     public Lenda createLenda(CreateLendaReq request) throws Exception{
         Lenda lenda = new Lenda();
 
-        if(lenda.getEmri() == null || lenda.getEcts() == null){
+        if(request.getEmri() == null || request.getEcts() == null){
             throw new Exception("All the fields are mandatory");
         }
         lenda.setEmri(request.getEmri());
