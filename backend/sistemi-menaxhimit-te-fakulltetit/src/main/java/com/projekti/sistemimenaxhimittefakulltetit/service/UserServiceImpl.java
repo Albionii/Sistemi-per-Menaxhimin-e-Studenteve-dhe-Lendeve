@@ -41,13 +41,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findUserById(Long id) throws Exception {
-        Optional<User> opti = userRepository.findById(id);
+        Optional<User> opt = userRepository.findById(id);
 
-        if(opti.isEmpty()){
+        if(opt.isEmpty()){
             throw new Exception("User not found with id: "+id);
         }
 
-        return opti.get();
+        return opt.get();
     }
 
     @Override
