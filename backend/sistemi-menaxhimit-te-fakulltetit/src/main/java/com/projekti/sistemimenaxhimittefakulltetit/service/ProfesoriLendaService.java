@@ -21,4 +21,17 @@ public class ProfesoriLendaService {
     public List<ProfesoriLenda> findLendaByProfesoriIdaaaaaaaa(Long id){
         return profesoriLendaRepository.findAllByProfessorId(id);
     }
+
+    public ProfesoriLenda createLigjerata(ProfesoriLenda ligjerata) throws Exception{
+        ProfesoriLenda ligjerata1 = new ProfesoriLenda();
+
+        if(ligjerata == null){
+            throw new Exception("Ligjerata can't be null");
+        }
+
+        ligjerata1.setLenda(ligjerata.getLenda());
+        ligjerata1.setProfessor(ligjerata.getProfessor());
+
+        return profesoriLendaRepository.save(ligjerata1);
+    }
 }

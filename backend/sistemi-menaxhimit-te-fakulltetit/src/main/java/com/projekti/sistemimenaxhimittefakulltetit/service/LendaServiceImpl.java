@@ -6,8 +6,12 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.LendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.CreateLendaReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,11 +50,16 @@ public class LendaServiceImpl implements LendaService{
     }
 
     @Override
-    public Lenda createLenda(CreateLendaReq request) {
+    public Lenda createLenda(CreateLendaReq request) throws Exception{
         Lenda lenda = new Lenda();
+
+        if(lenda.getEmri() == null || lenda.getEcts() == null){
+            throw new Exception("All the fields are mandatory");
+        }
         lenda.setEmri(request.getEmri());
         lenda.setEcts(request.getEcts());
         lenda.setObligative(request.isObligative());
+
         return lendaRepository.save(lenda);
     }
 }

@@ -14,4 +14,8 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
+    void deleteUserById(Long id);
+
+    User updateRole(Long id, User user) throws Exception;
+
 }

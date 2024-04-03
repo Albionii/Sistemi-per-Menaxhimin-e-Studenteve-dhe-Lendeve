@@ -14,6 +14,6 @@
         void deleteLenda(Long id);
         Lenda findLendaByProfessorId(Long id);
 
-        Lenda createLenda(CreateLendaReq lenda);
+        Lenda createLenda(CreateLendaReq lenda) throws Exception;
 
     }

@@ -31,7 +31,7 @@ public class LendaController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createLenda(@RequestBody CreateLendaReq request) {
+    public ResponseEntity<?> createLenda(@RequestBody CreateLendaReq request) throws Exception {
         Lenda createdLenda = lendaService.createLenda(request);
         return ResponseEntity.ok(createdLenda);
     }

@@ -2,8 +2,10 @@ package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
 import com.projekti.sistemimenaxhimittefakulltetit.config.JwtProvider;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.USER_ROLE;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.UserRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.LoginRequest;
 import com.projekti.sistemimenaxhimittefakulltetit.response.AuthResponse;
@@ -33,6 +35,9 @@ public class AuthController {
     private UserRepository userRepository;
 
     @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -58,7 +63,12 @@ public class AuthController {
         createdUser.setRole(user.getRole());
         createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
+
+        Student createdStudent = new Student();
+
         User savedUser = userRepository.save(createdUser);
+        createdStudent.setUser(createdUser);
+        studentRepository.save(createdStudent);
 
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
