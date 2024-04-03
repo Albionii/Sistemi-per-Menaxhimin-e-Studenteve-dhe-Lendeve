@@ -80,8 +80,6 @@ public class UserServiceImpl implements UserService{
 
         updateUser.setRole(userDetails.getRole());
 
-        //TODO (d.sylaj): remove the previous role
-
         if(updateUser.getRole() == USER_ROLE.ROLE_STUDENT){
             Student student = new Student();
             student.setUser(updateUser);
