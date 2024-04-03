@@ -23,14 +23,14 @@ public class ProfesoriLendaService {
     }
 
     public ProfesoriLenda createLigjerata(ProfesoriLenda ligjerata) throws Exception{
-        ProfesoriLenda ligjerata1 = new ProfesoriLenda();
 
         if(ligjerata == null){
             throw new Exception("Ligjerata can't be null");
         }
+        ProfesoriLenda ligjerata1 = new ProfesoriLenda(ligjerata.getProfessor(), ligjerata.getLenda());
 
-        ligjerata1.setLenda(ligjerata.getLenda());
-        ligjerata1.setProfessor(ligjerata.getProfessor());
+//        ligjerata1.setLenda(ligjerata.getLenda());
+//        ligjerata1.setProfessor(ligjerata.getProfessor());
 
         return profesoriLendaRepository.save(ligjerata1);
     }

@@ -1,5 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.cglib.core.Local;
@@ -24,7 +25,7 @@ public class Assignment {
     @Column(nullable = false)
     private String titulli;
 
-    private String mesazhi = null;
+    private String mesazhi;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -37,7 +38,8 @@ public class Assignment {
 
     @ManyToOne
     @JoinColumn(name = "lenda_id")
-    private Lenda lenda;
+    ProfesoriLenda profesoriLenda;
+
 
     @ManyToOne
     @JoinColumn(name = "created_by")
@@ -51,5 +53,9 @@ public class Assignment {
 
     @LastModifiedDate
     private LocalDateTime updatedAt = null;
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<AssignmentSubmission> submissions;
 
 }

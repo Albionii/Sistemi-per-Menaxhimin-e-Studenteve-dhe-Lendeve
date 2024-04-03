@@ -10,11 +10,10 @@ import java.util.List;
 public class AssignmentResponse {
 
     private String titulli;
-    private String mesazhi = null;
+    private String mesazhi;
     private LocalDateTime createdAt;
     private LocalDateTime expireAt;
     private List<String> fileNames;
-    private Long lendaId;
-    private Long createdBy;
+    private Long ligjerata;
 
 }

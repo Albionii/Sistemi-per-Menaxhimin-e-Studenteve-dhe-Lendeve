@@ -1,6 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Assignment;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.AssignmentSubmission;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.request.AssignmentResponse;
 
@@ -12,4 +13,6 @@ public interface AssignmentService {
     public Assignment getAssignmentById(Long id) throws Exception;
     public Assignment updateAssignment(AssignmentResponse update, String token, Long id) throws Exception;
     public void deleteAssignment(Long id);
+
+    public List<AssignmentSubmission> submit(Long assignment_id,AssignmentSubmission submission, String token) throws Exception;
 }

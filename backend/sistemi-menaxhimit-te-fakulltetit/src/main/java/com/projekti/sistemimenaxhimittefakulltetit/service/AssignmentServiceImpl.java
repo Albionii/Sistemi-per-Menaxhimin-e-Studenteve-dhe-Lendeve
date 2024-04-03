@@ -1,18 +1,20 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Assignment;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentSubmissionRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.LendaRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.AssignmentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +25,18 @@ public class AssignmentServiceImpl implements AssignmentService{
     private AssignmentRepository assignmentRepository;
 
     @Autowired
+    private AssignmentSubmissionRepository assignmentSubmissionRepository;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
     private LendaRepository lendaRepository;
+
+    @Autowired
+    private ProfesoriLendaRepository profesoriLendaRepository;
+
+
 
     @Override
     public List<Assignment> getAllAssignments() {
@@ -40,17 +50,25 @@ public class AssignmentServiceImpl implements AssignmentService{
 
         User user = userService.findUserByJwtToken(token);
 
-        Lenda lenda = lendaRepository.findById(req.getLendaId())
-                .orElseThrow(() -> new RuntimeException("Lenda not found with id: " + req.getLendaId()));
+        System.out.println(req.getLigjerata());
 
-        created.setTitulli(req.getTitulli());
-        created.setCreatedBy(user);
-        created.setMesazhi(req.getMesazhi());
-        created.setCreatedAt(LocalDateTime.now());
-        created.setExpireAt(req.getExpireAt());
-        created.setFileNames(req.getFileNames());
-        created.setLenda(lenda); // Set the Lenda
-        return assignmentRepository.save(created);
+        ProfesoriLenda ligjerata = profesoriLendaRepository.findById(req.getLigjerata())
+                .orElseThrow(() -> new RuntimeException("ligjerata not found with id: " + req.getLigjerata()));
+
+//        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaRepository.findById(req.getLendaId());
+
+        if (user != null && ligjerata != null) {
+            created.setTitulli(req.getTitulli());
+            created.setCreatedBy(user);
+            created.setMesazhi(req.getMesazhi());
+            created.setCreatedAt(LocalDateTime.now());
+            created.setExpireAt(req.getExpireAt());
+            created.setFileNames(req.getFileNames());
+            created.setProfesoriLenda(ligjerata); // Set the Lenda
+
+            return assignmentRepository.save(created);
+        }
+        return null;
     }
 
     @Override
@@ -82,6 +100,37 @@ public class AssignmentServiceImpl implements AssignmentService{
             throw new Exception("Assignment Not found");
 
     }
+
+    public List<AssignmentSubmission> submit(Long assignmentId, AssignmentSubmission submittedAssignment, String token) throws Exception {
+        Assignment assignment = getAssignmentById(assignmentId);
+        User user = userService.findUserByJwtToken(token);
+
+        // Ensure the assignment is loaded from the database
+        if (assignment == null) {
+            throw new Exception("Assignment not found with id: " + assignmentId);
+        }
+
+        // Set the association between assignment and submission
+        submittedAssignment.setAssignment(assignment);
+        submittedAssignment.setSubmiter(user);
+        submittedAssignment.setSubmitedAt(LocalDateTime.now());
+
+        assignmentSubmissionRepository.save(submittedAssignment);
+
+        // Add the submission to the list of submissions
+        List<AssignmentSubmission> submissions = new ArrayList<>();
+
+        submissions.add(submittedAssignment);
+
+        // Update the assignment with the modified list of submissions
+        assignment.setSubmissions(submissions);
+
+        // Save the assignment to persist the changes
+        assignmentRepository.save(assignment);
+        return assignment.getSubmissions();
+    }
+
+
 
     @Override
     public void deleteAssignment(Long id) {
