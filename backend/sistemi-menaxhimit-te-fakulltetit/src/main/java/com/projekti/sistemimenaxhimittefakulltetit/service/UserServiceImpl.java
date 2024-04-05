@@ -1,10 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.config.JwtProvider;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.USER_ROLE;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +35,14 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private final ProfessorRepository professorRepository;
+
+    @Autowired
+    private final AssignmentService assignmentService;
+    @Autowired
+    private final AssignmentRepository assignmentRepository;
+
+    @Autowired
+    private final AssignmentSubmissionRepository assignmentSubmissionRepository;
 
 
     @Override
@@ -97,5 +103,28 @@ public class UserServiceImpl implements UserService{
 
         return userRepository.save(updateUser);
     }
+
+    @Override
+    public Assignment deleteAssignmentSubmission(Long id, String token) throws Exception {
+        Assignment assignment = assignmentService.getAssignmentById(id);
+        User user = findUserByJwtToken(token);
+
+        List<AssignmentSubmission> submissions = assignment.getSubmissions();
+
+        Iterator<AssignmentSubmission> iterator = submissions.iterator();
+        while (iterator.hasNext()) {
+            AssignmentSubmission sub = iterator.next();
+            if(sub.getSubmiter().equals(user)) {
+                iterator.remove();
+                assignmentSubmissionRepository.deleteById(sub.getId());
+                System.out.println("I have Deleted It Master!....");
+            }
+        }
+
+        assignment.setSubmissions(submissions);
+
+        return assignmentRepository.save(assignment);
+    }
+
 
 }
