@@ -12,7 +12,7 @@ public interface AssignmentService {
     public Assignment createAssignment(AssignmentResponse assignment, String token) throws Exception;
     public Assignment getAssignmentById(Long id) throws Exception;
     public Assignment updateAssignment(AssignmentResponse update, String token, Long id) throws Exception;
-    public void deleteAssignment(Long id);
+    public void deleteAssignment(Long id) throws Exception;
 
     public List<AssignmentSubmission> submit(Long assignment_id,AssignmentSubmission submission, String token) throws Exception;
 }

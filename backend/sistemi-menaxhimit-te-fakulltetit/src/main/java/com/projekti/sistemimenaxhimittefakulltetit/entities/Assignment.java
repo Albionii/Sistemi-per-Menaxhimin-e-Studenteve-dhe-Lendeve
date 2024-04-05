@@ -36,10 +36,6 @@ public class Assignment {
     @Column(length = 500)
     private List<String> fileNames;
 
-    @ManyToOne
-    @JoinColumn(name = "lenda_id")
-    ProfesoriLenda profesoriLenda;
-
 
     @ManyToOne
     @JoinColumn(name = "created_by")

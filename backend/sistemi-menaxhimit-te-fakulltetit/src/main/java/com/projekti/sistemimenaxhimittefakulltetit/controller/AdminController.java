@@ -35,14 +35,6 @@ public class AdminController {
 
         User updateUser = userService.updateRole(id, userDetails);
 
-        User user = userService.findUserById(userDetails.getId());
-
-        if(user.getRole() == USER_ROLE.ROLE_PROFESSOR) {
-            Professor professor = new Professor();
-
-            professor.setUser(user);
-        }
-
         return ResponseEntity.ok(updateUser);
     }
 

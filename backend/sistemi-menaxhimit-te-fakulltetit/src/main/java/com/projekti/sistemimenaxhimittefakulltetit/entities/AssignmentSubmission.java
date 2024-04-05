@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,12 +22,9 @@ public class AssignmentSubmission {
     private Long id;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User submiter;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Assignment assignment;
 
     private String mesazhi;
 

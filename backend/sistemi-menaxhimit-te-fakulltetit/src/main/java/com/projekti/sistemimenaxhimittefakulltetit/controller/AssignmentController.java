@@ -43,8 +43,9 @@ public class AssignmentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Assignment> createAssignment(@RequestParam(name="id")Long id,@RequestBody AssignmentResponse assignment,
-                                           @RequestHeader("Authorization") String token ) throws Exception {
+    public ResponseEntity<Assignment> createAssignment(@RequestParam(name="id")Long id,
+                                                       @RequestBody AssignmentResponse assignment,
+                                                    @RequestHeader("Authorization") String token ) throws Exception {
 
         Optional<ProfesoriLenda> profesoriLenda = profesoriLendaRepository.findById(id);
 
@@ -56,8 +57,6 @@ public class AssignmentController {
         Assignment created = assignmentService.createAssignment(assignment, token);
 
         assignments.add(created);
-
-
 
         profesoriLenda.ifPresent(opti -> {
             System.out.println("Before update: " + opti.getAssignments());
@@ -74,14 +73,13 @@ public class AssignmentController {
     public ResponseEntity<Assignment> updateAssignment(@RequestBody AssignmentResponse assignment,
                                                         @RequestHeader("Authorization") String token,
                                                         @PathVariable Long id) throws Exception {
-        User user = userService.findUserByJwtToken(token);
         Assignment updated = assignmentService.updateAssignment(assignment, token, id);
 
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteAssignment(@PathVariable Long id) {
+    public ResponseEntity<String> deleteAssignment(@PathVariable Long id) throws Exception {
         assignmentService.deleteAssignment(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Assignment Removed!");

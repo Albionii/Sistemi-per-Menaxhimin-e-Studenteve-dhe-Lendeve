@@ -9,12 +9,14 @@ import com.projekti.sistemimenaxhimittefakulltetit.request.AssignmentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.expression.spel.ast.Assign;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +66,6 @@ public class AssignmentServiceImpl implements AssignmentService{
             created.setCreatedAt(LocalDateTime.now());
             created.setExpireAt(req.getExpireAt());
             created.setFileNames(req.getFileNames());
-            created.setProfesoriLenda(ligjerata); // Set the Lenda
 
             return assignmentRepository.save(created);
         }
@@ -105,27 +106,21 @@ public class AssignmentServiceImpl implements AssignmentService{
         Assignment assignment = getAssignmentById(assignmentId);
         User user = userService.findUserByJwtToken(token);
 
-        // Ensure the assignment is loaded from the database
         if (assignment == null) {
             throw new Exception("Assignment not found with id: " + assignmentId);
         }
 
-        // Set the association between assignment and submission
-        submittedAssignment.setAssignment(assignment);
         submittedAssignment.setSubmiter(user);
         submittedAssignment.setSubmitedAt(LocalDateTime.now());
 
         assignmentSubmissionRepository.save(submittedAssignment);
 
-        // Add the submission to the list of submissions
         List<AssignmentSubmission> submissions = new ArrayList<>();
 
         submissions.add(submittedAssignment);
 
-        // Update the assignment with the modified list of submissions
         assignment.setSubmissions(submissions);
 
-        // Save the assignment to persist the changes
         assignmentRepository.save(assignment);
         return assignment.getSubmissions();
     }
@@ -133,7 +128,7 @@ public class AssignmentServiceImpl implements AssignmentService{
 
 
     @Override
-    public void deleteAssignment(Long id) {
+    public void deleteAssignment(Long id) throws Exception {
         assignmentRepository.deleteById(id);
     }
 }
