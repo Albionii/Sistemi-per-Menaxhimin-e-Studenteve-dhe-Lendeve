@@ -47,10 +47,8 @@ public class AssignmentServiceImpl implements AssignmentService{
 
 
     @Override
-    public Assignment createAssignment(AssignmentResponse req, @RequestHeader String token) throws Exception {
+    public Assignment createAssignment(AssignmentResponse req, User user) throws Exception {
         Assignment created = new Assignment();
-
-        User user = userService.findUserByJwtToken(token);
 
         System.out.println(req.getLigjerata());
 
@@ -82,9 +80,7 @@ public class AssignmentServiceImpl implements AssignmentService{
     }
 
     @Override
-    public Assignment updateAssignment(AssignmentResponse update,String token, Long id) throws Exception {
-
-        User user = userService.findUserByJwtToken(token);
+    public Assignment updateAssignment(AssignmentResponse update,User user, Long id) throws Exception {
 
         Optional<Assignment> old = assignmentRepository.findById(id);
         if(old.isPresent()) {
@@ -102,10 +98,9 @@ public class AssignmentServiceImpl implements AssignmentService{
 
     }
 
-    public List<AssignmentSubmission> submit(Long assignmentId, AssignmentSubmission submittedAssignment, String token) throws Exception {
-        Assignment assignment = getAssignmentById(assignmentId);
-        User user = userService.findUserByJwtToken(token);
+    public List<AssignmentSubmission> submit(Long assignmentId, AssignmentSubmission submittedAssignment, User user) throws Exception {
 
+        Assignment assignment = getAssignmentById(assignmentId);
         if (assignment == null) {
             throw new Exception("Assignment not found with id: " + assignmentId);
         }
@@ -124,6 +119,29 @@ public class AssignmentServiceImpl implements AssignmentService{
         assignmentRepository.save(assignment);
         return assignment.getSubmissions();
     }
+
+    @Override
+    public Assignment deleteAssignmentSubmission(Long id, User user) throws Exception {
+        Assignment assignment = getAssignmentById(id);
+
+        List<AssignmentSubmission> submissions = assignment.getSubmissions();
+
+        Iterator<AssignmentSubmission> iterator = submissions.iterator();
+        while (iterator.hasNext()) {
+            AssignmentSubmission sub = iterator.next();
+            if(sub.getSubmiter().equals(user)) {
+                iterator.remove();
+                assignmentSubmissionRepository.deleteById(sub.getId());
+                System.out.println("I have Deleted It Master!....");
+            }
+        }
+
+        assignment.setSubmissions(submissions);
+
+        return assignmentRepository.save(assignment);
+    }
+
+
 
 
 
