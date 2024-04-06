@@ -54,7 +54,7 @@ public class AssignmentController {
         List<Assignment> assignments = new ArrayList<>();
 
 
-        Assignment created = assignmentService.createAssignment(assignment, token);
+        Assignment created = assignmentService.createAssignment(assignment, user);
 
         assignments.add(created);
 
@@ -73,7 +73,9 @@ public class AssignmentController {
     public ResponseEntity<Assignment> updateAssignment(@RequestBody AssignmentResponse assignment,
                                                         @RequestHeader("Authorization") String token,
                                                         @PathVariable Long id) throws Exception {
-        Assignment updated = assignmentService.updateAssignment(assignment, token, id);
+
+        User user = userService.findUserByJwtToken(token);
+        Assignment updated = assignmentService.updateAssignment(assignment, user, id);
 
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }

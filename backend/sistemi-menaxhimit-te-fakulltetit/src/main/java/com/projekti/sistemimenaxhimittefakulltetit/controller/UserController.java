@@ -58,7 +58,9 @@ public class UserController {
                                                        @RequestBody AssignmentSubmission submitedAssignment,
                                                        @RequestHeader("Authorization") String token) throws Exception {
 
-        List<AssignmentSubmission> list = assignmentService.submit(id, submitedAssignment, token);
+        User user = userService.findUserByJwtToken(token);
+
+        List<AssignmentSubmission> list = assignmentService.submit(id, submitedAssignment, user);
 
         return list;
 
@@ -68,24 +70,9 @@ public class UserController {
     public Assignment deleteSubmission(@PathVariable Long id,
                                     @RequestHeader("Authorization") String token) throws Exception {
 
-        Assignment assignment = assignmentService.getAssignmentById(id);
         User user = userService.findUserByJwtToken(token);
 
-        List<AssignmentSubmission> submissions = assignment.getSubmissions();
-
-        Iterator<AssignmentSubmission> iterator = submissions.iterator();
-        while (iterator.hasNext()) {
-            AssignmentSubmission sub = iterator.next();
-            if(sub.getSubmiter().equals(user)) {
-                iterator.remove();
-                assignmentSubmissionRepository.deleteById(sub.getId());
-                System.out.println("I have Deleted It Master!....");
-            }
-        }
-
-        assignment.setSubmissions(submissions);
-
-        return assignmentRepository.save(assignment);
+        return assignmentService.deleteAssignmentSubmission(id, user);
     }
 
 }

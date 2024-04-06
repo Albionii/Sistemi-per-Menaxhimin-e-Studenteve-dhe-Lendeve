@@ -36,14 +36,6 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private final ProfessorRepository professorRepository;
 
-    @Autowired
-    private final AssignmentService assignmentService;
-    @Autowired
-    private final AssignmentRepository assignmentRepository;
-
-    @Autowired
-    private final AssignmentSubmissionRepository assignmentSubmissionRepository;
-
 
     @Override
     public User findUserById(Long id) throws Exception {
@@ -102,28 +94,6 @@ public class UserServiceImpl implements UserService{
         }
 
         return userRepository.save(updateUser);
-    }
-
-    @Override
-    public Assignment deleteAssignmentSubmission(Long id, String token) throws Exception {
-        Assignment assignment = assignmentService.getAssignmentById(id);
-        User user = findUserByJwtToken(token);
-
-        List<AssignmentSubmission> submissions = assignment.getSubmissions();
-
-        Iterator<AssignmentSubmission> iterator = submissions.iterator();
-        while (iterator.hasNext()) {
-            AssignmentSubmission sub = iterator.next();
-            if(sub.getSubmiter().equals(user)) {
-                iterator.remove();
-                assignmentSubmissionRepository.deleteById(sub.getId());
-                System.out.println("I have Deleted It Master!....");
-            }
-        }
-
-        assignment.setSubmissions(submissions);
-
-        return assignmentRepository.save(assignment);
     }
 
 
