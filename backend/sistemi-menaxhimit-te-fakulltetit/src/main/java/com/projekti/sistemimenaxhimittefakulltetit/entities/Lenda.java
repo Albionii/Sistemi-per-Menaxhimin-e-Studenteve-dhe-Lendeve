@@ -24,6 +24,8 @@ public class Lenda {
 //    @OneToMany(mappedBy = "lenda")
 //    private List<ProfesoriLenda> profesoriLendaList = new ArrayList<>();
 
-
+    @ManyToOne
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
 
 }

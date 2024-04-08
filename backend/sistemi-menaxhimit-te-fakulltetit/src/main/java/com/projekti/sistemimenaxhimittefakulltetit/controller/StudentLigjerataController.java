@@ -1,17 +1,15 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentLigjerata;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
-import com.projekti.sistemimenaxhimittefakulltetit.service.StudentLigjerataService;
-import com.projekti.sistemimenaxhimittefakulltetit.service.StudentService;
-import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentSemesterRegistrationRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/student")
@@ -20,6 +18,8 @@ public class StudentLigjerataController {
     private final StudentLigjerataService studentLigjerataService;
     private final UserService userService;
     private final StudentService studentService;
+    private final LendaService lendaService;
+    private final StudentSemesterRegistrationService studentSemesterRegistrationService;
 
     @GetMapping("{id}")
     public List<StudentLigjerata> findLendetByStudentId(
@@ -41,4 +41,23 @@ public class StudentLigjerataController {
         return new ResponseEntity<>(sl, HttpStatus.OK);
     }
 
+    @PostMapping("course/enroll/{id}")
+    public ResponseEntity<StudentSemesterRegistration> registerStudentForCourse(@PathVariable Long id,
+                                                      @RequestHeader("Authorization")String token) throws Exception {
+
+        User user = userService.findUserByJwtToken(token);
+        System.out.println(user == null);
+
+        Student student = studentService.findStudentByUserId(user.getId());
+        System.out.println(student == null);
+
+        Lenda lenda = lendaService.findLendaById(id);
+        System.out.println(lenda == null);
+
+
+        StudentSemesterRegistration enrollments = studentSemesterRegistrationService.EnrollStudent(lenda, student.getId());
+
+
+        return new ResponseEntity<>(enrollments, HttpStatus.CREATED);
+    }
 }
