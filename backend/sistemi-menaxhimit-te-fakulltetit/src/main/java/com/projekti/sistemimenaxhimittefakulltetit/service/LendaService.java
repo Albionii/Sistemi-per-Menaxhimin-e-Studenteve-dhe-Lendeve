@@ -16,4 +16,7 @@
 
         Lenda createLenda(CreateLendaReq lenda) throws Exception;
 
+        Lenda updateLenda(Long id, CreateLendaReq lenda) throws Exception;
+
+        void setSemesterNull(Long id) throws Exception;
     }

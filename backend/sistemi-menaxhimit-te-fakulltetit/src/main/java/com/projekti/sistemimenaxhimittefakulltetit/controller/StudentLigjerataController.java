@@ -1,5 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
-
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentSemesterRegistrationRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentLigjerata;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/student")
@@ -23,7 +26,10 @@ public class StudentLigjerataController {
     private final StudentLigjerataService studentLigjerataService;
     private final UserService userService;
     private final StudentService studentService;
+    private final LendaService lendaService;
+    private final StudentSemesterRegistrationService studentSemesterRegistrationService;
     private final VleresimiService vleresimiService;
+
 
     @GetMapping("{id}")
     public List<StudentLigjerata> findLendetByStudentId(
@@ -60,10 +66,29 @@ public class StudentLigjerataController {
         return new ResponseEntity<>(sl, HttpStatus.OK);
     }
 
+
+    //alternativ(Mos e shlyni)
+    @PostMapping("course/enroll/{id}")
+    public ResponseEntity<StudentSemesterRegistration> registerStudentForCourse(@PathVariable Long id,
+                                                      @RequestHeader("Authorization")String token) throws Exception {
+
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+        Lenda lenda = lendaService.findLendaById(id);
+
+
+
+        StudentSemesterRegistration enrollments = studentSemesterRegistrationService.EnrollStudent(lenda, student.getId());
+
+
+        return new ResponseEntity<>(enrollments, HttpStatus.CREATED);
+    }
+
     @GetMapping("mesataret/{id}")
     public List<Double[]> mesataretPerNote(@PathVariable Long id){
         return Collections.singletonList(vleresimiService.mesateretPerNote(id));
     }
+
 
 
 }
