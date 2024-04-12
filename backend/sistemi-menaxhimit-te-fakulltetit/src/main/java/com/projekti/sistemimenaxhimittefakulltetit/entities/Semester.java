@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -22,8 +23,22 @@ public class Semester {
 
     private LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "semester")
+    @OneToMany
     private Set<Lenda> lendet = new HashSet<>();
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, startDate, endDate);
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if (!(obj instanceof Semester)) return false;
+        Semester other = (Semester) obj;
+        return Objects.equals(id, other.id) &&
+                Objects.equals(name, other.name) &&
+                Objects.equals(startDate, other.startDate) &&
+                Objects.equals(endDate, other.endDate);
+    }
 }

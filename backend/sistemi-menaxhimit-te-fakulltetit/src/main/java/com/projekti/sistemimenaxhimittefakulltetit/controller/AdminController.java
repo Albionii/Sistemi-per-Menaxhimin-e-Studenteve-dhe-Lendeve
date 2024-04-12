@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ public class AdminController {
     private final ProfessorService professorService;
     private final LendaService lendaService;
     private final ProfesoriLendaService profesoriLendaService;
+    private final SemesterService semesterService;
 
     @DeleteMapping("/{id}")
     public void deleteUserById(
@@ -67,4 +70,41 @@ public class AdminController {
                             @RequestHeader("Authorization") String jwt){
         lendaService.deleteLenda(id);
     }
+
+
+    @PostMapping("/semester/create")
+    public ResponseEntity<Semester> createSemester(@RequestBody Semester req,
+                               @RequestHeader("Authorization")String jwt) {
+
+        Semester created = semesterService.createSemester(req);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @DeleteMapping("/semester/delete/{id}")
+    public void deleteSemester(@PathVariable Long id) {
+        semesterService.deleteSemester(id);
+    }
+    @DeleteMapping("/semester/delete/Lenda/{id}/{lendaId}")
+    public void deleteLendaSemester(@PathVariable Long id,
+                                    @PathVariable Long lendaId) throws Exception {
+        Lenda lenda = lendaService.findLendaById(lendaId);
+        Semester semester = semesterService.getSemester(id);
+
+        lenda.setSemester(null);
+
+        semesterService.deleteLendaSemester(semester, lenda);
+        lendaService.setSemesterNull(lendaId);
+
+    }
+
+
+    @GetMapping("/semester/get/{id}")
+    public ResponseEntity<Semester> getSemester(@PathVariable Long id) {
+        Semester semester = semesterService.getSemester(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(semester);
+    }
+
+
+
 }

@@ -1,9 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Semester;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentSemesterRegistration;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentSemesterRegistrationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +16,19 @@ import java.util.Set;
 public class StudentSemesterRegistrationService {
 
     private final StudentSemesterRegistrationRepository registrationRepository;
+    private final StudentLigjerataService studentLigjerataService;
+    private final ProfesoriLendaRepository profesoriLendaRepository;
 
 
-    public StudentSemesterRegistration registerStudentForSemester(Student student, Semester semester) {
+    public StudentSemesterRegistration registerStudentForSemester(Student student, Semester semester) throws Exception {
         StudentSemesterRegistration registration = new StudentSemesterRegistration();
+        if (registrationRepository.existsByStudentAndSemester(student, semester)) {
+            throw new Exception("Student is already registered for this semester");
+        }
         registration.setStudent(student);
         registration.setSemester(semester);
         registration.setRegistrationDate(LocalDateTime.now());
+
 
         return registrationRepository.save(registration);
     }
@@ -33,15 +37,9 @@ public class StudentSemesterRegistrationService {
 
         StudentSemesterRegistration sem = registrationRepository.findByStudentId(id);
 
-        System.out.println(sem == null);
-
         Set<Lenda> lendet = sem.getLendet();
-        System.out.println("Para: " + lendet);
         lendet.add(lenda);
-
         sem.setLendet(lendet);
-
-        System.out.println("Pas: " + lendet);
 
         registrationRepository.save(sem);
 

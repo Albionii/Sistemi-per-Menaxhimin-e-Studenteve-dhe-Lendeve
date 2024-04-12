@@ -1,14 +1,11 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Assignment;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.AssignmentSubmission;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 
 import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentSubmissionRepository;
-import com.projekti.sistemimenaxhimittefakulltetit.service.AssignmentService;
+import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 
-import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,17 +23,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-
     @Autowired
     private AssignmentService assignmentService;
-
     @Autowired
     private AssignmentSubmissionRepository assignmentSubmissionRepository;
-
     @Autowired
     private AssignmentRepository assignmentRepository;
-
+    private StudentService studentService;
+    private ProvimiService provimiService;
+    private ProfesoriProvimiService profesoriProvimiService;
 
 
     @GetMapping("/{id}")
@@ -74,5 +69,19 @@ public class UserController {
 
         return assignmentService.deleteAssignmentSubmission(id, user);
     }
+
+//    @PostMapping("/paraqit/provimin/{id}/{profId}")
+//    public ResponseEntity<ProfesoriProvimi> paraqitProvimin(@PathVariable Long id,
+//                                   @PathVariable Long profId,
+//                                   @RequestHeader("Authentication") String jwt) throws Exception {
+//
+//        User user = userService.findUserByJwtToken(jwt);
+//        Student student = studentService.findStudentByUserId(user.getId());
+//
+//        Provimi provimi = provimiService.findProvimiById(id);
+//
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body();
+//    }
 
 }

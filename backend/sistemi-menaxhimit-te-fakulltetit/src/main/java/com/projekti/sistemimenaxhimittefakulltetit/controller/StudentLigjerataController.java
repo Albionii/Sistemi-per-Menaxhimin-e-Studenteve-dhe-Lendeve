@@ -41,18 +41,15 @@ public class StudentLigjerataController {
         return new ResponseEntity<>(sl, HttpStatus.OK);
     }
 
+    //alternativ(Mos e shlyni)
     @PostMapping("course/enroll/{id}")
     public ResponseEntity<StudentSemesterRegistration> registerStudentForCourse(@PathVariable Long id,
                                                       @RequestHeader("Authorization")String token) throws Exception {
 
         User user = userService.findUserByJwtToken(token);
-        System.out.println(user == null);
-
         Student student = studentService.findStudentByUserId(user.getId());
-        System.out.println(student == null);
-
         Lenda lenda = lendaService.findLendaById(id);
-        System.out.println(lenda == null);
+
 
 
         StudentSemesterRegistration enrollments = studentSemesterRegistrationService.EnrollStudent(lenda, student.getId());

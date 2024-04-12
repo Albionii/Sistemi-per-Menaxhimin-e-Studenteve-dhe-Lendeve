@@ -1,34 +1,31 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
-import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import jakarta.persistence.*;
-import jdk.jfr.MemoryAddress;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
-public class ProfesoriLenda {
+@Data
+@Table(name="professor_provimi")
+public class ProfesoriProvimi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "professor_id")
     private Professor professor;
+
     @ManyToOne
-    private Lenda lenda;
+    @JoinColumn(name = "provimi_id")
+    private Provimi provimi;
 
-    @OneToMany
-    private List<Assignment> assignments;
-
-    public ProfesoriLenda(Professor professor, Lenda lenda) {
+    public ProfesoriProvimi(Professor professor, Provimi provimi) {
         this.professor = professor;
-        this.lenda = lenda;
+        this.provimi = provimi;
     }
+
 }

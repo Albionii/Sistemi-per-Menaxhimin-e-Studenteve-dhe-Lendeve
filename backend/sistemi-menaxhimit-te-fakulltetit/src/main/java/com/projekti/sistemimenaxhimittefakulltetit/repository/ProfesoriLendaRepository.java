@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProfesoriLendaRepository extends JpaRepository<ProfesoriLenda, Long> {
 
     List<ProfesoriLenda> findAllByProfessorId(Long professorId);
+    ProfesoriLenda findByLendaId(Long id);
 }
