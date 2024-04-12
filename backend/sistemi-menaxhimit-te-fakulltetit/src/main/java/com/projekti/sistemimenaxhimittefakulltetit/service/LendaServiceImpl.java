@@ -60,7 +60,13 @@ public class LendaServiceImpl implements LendaService{
     public Lenda createLenda(CreateLendaReq request) throws Exception{
         Lenda lenda = new Lenda();
 
+
         Optional<Semester> semester = semesterRepository.findById(request.getSemester_id());
+
+        if(request.getEmri() == null || request.getEcts() == null){
+            throw new Exception("All the fields are mandatory");
+        }
+
 
         System.out.println(semester.get() == null);
         lenda.setEmri(request.getEmri());
@@ -68,6 +74,16 @@ public class LendaServiceImpl implements LendaService{
         lenda.setObligative(request.isObligative());
         lenda.setSemester(semester.get());
 
+
+
+        if(lenda.getEmri() == null || lenda.getEcts() == null
+                || lenda.getSemester() == null){
+
+        if(request.getEmri() == null || request.getEcts() == null){
+
+            throw new Exception("All the fields are mandatory");
+        }
+          
         lendaRepository.save(lenda);
 
         semester.ifPresent(s -> {
@@ -77,11 +93,7 @@ public class LendaServiceImpl implements LendaService{
 
             s.setLendet(lendet);
         });
-
-        if(lenda.getEmri() == null || lenda.getEcts() == null
-                || lenda.getSemester() == null){
-            throw new Exception("All the fields are mandatory");
-        }
+          
 
         semesterRepository.save(semester.get());
 

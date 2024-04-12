@@ -1,5 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ public class StudentLigjerata {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JsonIgnore
     private Student student;
     @ManyToOne
     private ProfesoriLenda ligjerata;
