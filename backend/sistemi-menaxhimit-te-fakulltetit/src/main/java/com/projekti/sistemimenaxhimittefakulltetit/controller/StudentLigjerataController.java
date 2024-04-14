@@ -1,6 +1,5 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentSemesterRegistrationRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentLigjerata;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/student")

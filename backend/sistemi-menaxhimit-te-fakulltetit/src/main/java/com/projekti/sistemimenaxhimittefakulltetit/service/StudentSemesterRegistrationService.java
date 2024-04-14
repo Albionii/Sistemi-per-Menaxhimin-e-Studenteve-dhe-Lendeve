@@ -2,20 +2,18 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentSemesterRegistrationRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentSemesterRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class StudentSemesterRegistrationService {
 
-    private final StudentSemesterRegistrationRepository registrationRepository;
+    private final StudentSemesterRepository registrationRepository;
     private final StudentLigjerataService studentLigjerataService;
     private final ProfesoriLendaRepository profesoriLendaRepository;
 
