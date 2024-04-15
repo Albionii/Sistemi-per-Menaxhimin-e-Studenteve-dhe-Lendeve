@@ -1,22 +1,25 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Data
-public class Student {
+public class Provimi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String vitiAkademik;
+    private Long p_ID;
+    private LocalDate data_paraqitjes;
+    private LocalDate data_e_vendosjes;
+    private int nota;
 
     @OneToOne
-    private User user;
+    private ProfesoriLenda profesoriLenda;
+
+
 
 }

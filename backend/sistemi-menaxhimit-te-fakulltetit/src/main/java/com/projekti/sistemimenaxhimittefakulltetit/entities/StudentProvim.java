@@ -1,22 +1,20 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
-public class Student {
+public class StudentProvim {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String vitiAkademik;
 
-    @OneToOne
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "s_id")
+    private Student student;
 
+    @ManyToOne
+    @JoinColumn(name = "p_id")
+    private Provimi provim;
 }
