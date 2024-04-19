@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/admin/")
 @AllArgsConstructor
@@ -21,28 +23,28 @@ public class ProvimiController {
     private final ProfessorService professorService;
     private final ProfesoriProvimiService profesoriProvimiService;
 
-    @PostMapping("provimi/create")
-    public ResponseEntity<Provimi> createProvimi(@RequestBody ProvimiReq request) throws Exception {
-
-
-        Lenda lenda = lendaService.findLendaById(request.getLenda_Id());
-
-
-        Provimi provimi = provimiService.createProvimi(lenda, request);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(provimi);
-    }
-
-    @PostMapping("provimi/profesori/{prov}/{prof}")
-    public ResponseEntity<ProfesoriProvimi> provimiProfesori(@PathVariable Long prov,
-                                 @PathVariable Long prof) throws Exception {
-        Provimi provimi = provimiService.findProvimiById(prov);
-        Professor professor = professorService.findProfessorById(prof);
-
-        ProfesoriProvimi profesoriProvimi = profesoriProvimiService.add(professor, provimi);
-
-        return ResponseEntity.status(HttpStatus.OK).body(profesoriProvimi);
-    }
+//    @PostMapping("provimi/create")
+//    public ResponseEntity<Provimi> createProvimi(@RequestBody ProvimiReq request) throws Exception {
+//
+//
+//        Lenda lenda = lendaService.findLendaById(request.getLenda_Id());
+//
+//
+//        Provimi provimi = provimiService.createProvimi(lenda, request);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(provimi);
+//    }
+//
+//    @PostMapping("provimi/profesori/{prov}/{prof}")
+//    public ResponseEntity<ProfesoriProvimi> provimiProfesori(@PathVariable Long prov,
+//                                 @PathVariable Long prof) throws Exception {
+//        Optional<Provimi> provimi = provimiService.findProvimiById(prov);
+//        Professor professor = professorService.findProfessorById(prof);
+//
+//        ProfesoriProvimi profesoriProvimi = profesoriProvimiService.add(professor, provimi);
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(profesoriProvimi);
+//    }
 
     @DeleteMapping("provimi/delete/{id}")
     public void deleteProvimi(@PathVariable Long id) {

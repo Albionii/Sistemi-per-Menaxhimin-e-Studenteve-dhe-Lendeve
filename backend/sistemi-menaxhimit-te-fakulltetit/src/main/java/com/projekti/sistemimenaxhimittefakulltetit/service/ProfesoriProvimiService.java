@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ProfesoriProvimiService {
     private ProfesoriProvimiRepository profesoriProvimiRepository;
-
-    public ProfesoriProvimi add(Professor professor, Provimi provimi) throws Exception {
-
-        if (profesoriProvimiRepository.existsByProfessorAndProvimi(professor, provimi)) {
-            throw new Exception("Lidhja e profesorit me provimin, ekziston!");
-        }
-
-        ProfesoriProvimi profesoriProvimi = new ProfesoriProvimi(professor, provimi);
-
-        return profesoriProvimiRepository.save(profesoriProvimi);
-    }
+//
+//    public ProfesoriProvimi add(Professor professor, Provimi provimi) throws Exception {
+//
+//        if (profesoriProvimiRepository.existsByProfessorAndProvimi(professor, provimi)) {
+//            throw new Exception("Lidhja e profesorit me provimin, ekziston!");
+//        }
+//
+//        ProfesoriProvimi profesoriProvimi = new ProfesoriProvimi(professor, provimi);
+//
+//        return profesoriProvimiRepository.save(profesoriProvimi);
+//    }
 }
