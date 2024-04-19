@@ -27,10 +27,7 @@ public class FakultetiService {
         fakultetiRepository.save(f);
     }
 
-    public void updateDrejtori(User drejtori,Long fakultetiId){
-        Optional<Fakulteti> f = fakultetiRepository.findById(fakultetiId);
-        f.get().setUser(drejtori);
-        Fakulteti fSave = f.get();
-        fakultetiRepository.save(fSave);
+    public void updateDrejtori(Fakulteti f){
+        fakultetiRepository.save(f);
     }
 }
