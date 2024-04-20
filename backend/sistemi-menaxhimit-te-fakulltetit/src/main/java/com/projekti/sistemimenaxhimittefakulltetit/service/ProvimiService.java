@@ -1,7 +1,9 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Provimi;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProvimiRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.request.ProvimiReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +36,9 @@ public class ProvimiService {
         return  provimi;
     }
 
-    public Provimi createProvimi(Lenda lenda,ProvimiReq request) throws Exception {
+    public Provimi createProvimi(Lenda lenda, ProvimiReq request) throws Exception {
 
-        if(lenda != null) {
+        if (lenda != null) {
             Provimi provimi = new Provimi();
 
             provimi.setLenda(lenda);
@@ -50,6 +52,7 @@ public class ProvimiService {
         } else {
             throw new Exception("Something went wrong while creating Provimi");
         }
+    }
 
 
     public void deleteProvimi(Long id) {
