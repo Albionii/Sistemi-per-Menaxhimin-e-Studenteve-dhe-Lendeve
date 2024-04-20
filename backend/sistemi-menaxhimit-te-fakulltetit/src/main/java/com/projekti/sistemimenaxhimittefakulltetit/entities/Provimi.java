@@ -1,35 +1,25 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
-import com.projekti.sistemimenaxhimittefakulltetit.service.ProvimiService;
-import com.projekti.sistemimenaxhimittefakulltetit.service.StudentSemesterRegistrationService;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-@Table(name="Provimet")
 public class Provimi {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long p_ID;
+    private LocalDate data_paraqitjes;
+    private LocalDate data_e_vendosjes;
+    private int nota;
 
     @OneToOne
-    @JoinColumn(name = "lenda_id", unique = true)
-    private Lenda lenda;
+    private ProfesoriLenda profesoriLenda;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
 
-    private String location;
 
 }

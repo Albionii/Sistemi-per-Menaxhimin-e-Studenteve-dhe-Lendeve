@@ -1,33 +1,29 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Provimi;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProvimiRepository;
-import com.projekti.sistemimenaxhimittefakulltetit.request.ProvimiReq;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProvimiService {
+
+    @Autowired
     private final ProvimiRepository provimiRepository;
-    private final ProfesoriProvimiService profesoriProvimiService;
 
+    public List<Provimi> findAllProvimet(){
+        return provimiRepository.findAll();
+    };
 
-    public Provimi findProvimiById(Long id) throws Exception {
-        Optional<Provimi> provimi = provimiRepository.findById(id);
-
-        if(provimi.isPresent()) {
-            return provimi.get();
-        }else {
-            throw new Exception("Provimi with that id, does not exist!");
-        }
-
+    public Optional<Provimi> findProvimiById(Long id){
+        return provimiRepository.findById(id);
     }
+
 
     public Provimi findProvimiByLendaId(Long id)throws Exception {
         Provimi provimi = provimiRepository.findProvimiByLendaId(id);
@@ -48,22 +44,19 @@ public class ProvimiService {
             provimi.setLocation(request.getLocation());
 
             provimiRepository.save(provimi);
-//
-//            profesoriProvimiService.add(professor, provimi);
+
 
             return provimi;
         } else {
             throw new Exception("Something went wrong while creating Provimi");
         }
-    }
-
-
 
 
     public void deleteProvimi(Long id) {
-        Optional<Provimi> provimi = provimiRepository.findById(id);
-        provimi.ifPresent(p -> {
-            provimiRepository.delete(provimi.get());
-        });
+        provimiRepository.deleteById(id);
+    }
+
+    public void removeNota(Long id){
+        provimiRepository.deleteById(id);
     }
 }

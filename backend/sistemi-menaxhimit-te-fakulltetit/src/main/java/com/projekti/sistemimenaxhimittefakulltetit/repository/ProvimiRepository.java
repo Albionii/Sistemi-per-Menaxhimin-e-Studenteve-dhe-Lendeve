@@ -7,4 +7,5 @@ public interface ProvimiRepository extends JpaRepository<Provimi, Long> {
 
     Provimi findProvimiByLendaId(Long Id);
 
+
 }

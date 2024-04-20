@@ -16,6 +16,7 @@ import java.util.Optional;
 public class ProfesoriProvimiService {
     private ProfesoriProvimiRepository profesoriProvimiRepository;
 
+
     public ProfesoriProvimi add(Professor professor, Provimi provimi) throws Exception {
 
         if (profesoriProvimiRepository.existsByProfessorAndProvimi(professor, provimi)) {
@@ -37,4 +38,16 @@ public class ProfesoriProvimiService {
         return profesoriProvimiRepository.findAllByProfessorId(id);
     }
 
+
+//
+//    public ProfesoriProvimi add(Professor professor, Provimi provimi) throws Exception {
+//
+//        if (profesoriProvimiRepository.existsByProfessorAndProvimi(professor, provimi)) {
+//            throw new Exception("Lidhja e profesorit me provimin, ekziston!");
+//        }
+//
+//        ProfesoriProvimi profesoriProvimi = new ProfesoriProvimi(professor, provimi);
+//
+//        return profesoriProvimiRepository.save(profesoriProvimi);
+//    }
 }
