@@ -29,6 +29,15 @@ public class ProvimiService {
 
     }
 
+    public Provimi findProvimiByLendaId(Long id)throws Exception {
+        Provimi provimi = provimiRepository.findProvimiByLendaId(id);
+
+        if(provimi == null)
+            throw new Exception("Provimi per nuk u gjet!" );
+
+        return  provimi;
+    }
+
     public Provimi createProvimi(Lenda lenda,ProvimiReq request) throws Exception {
 
         if(lenda != null) {

@@ -1,10 +1,10 @@
 spring:
   datasource:
-#    url: jdbc:mysql://localhost:3306/UMS
-    url: jdbc:mysql://localhost:3306/backendjavaspring
+    url: jdbc:mysql://localhost:3306/UMS
+#    url: jdbc:mysql://localhost:3306/backendjavaspring
     username: root
-    password:
-#    password: root
+#    password:
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -12,6 +12,13 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            scripts:
+              create-target: "classpath:create-db.sql"
 
   application:
     name: SistemiMenaxhimitTeFakulltetit

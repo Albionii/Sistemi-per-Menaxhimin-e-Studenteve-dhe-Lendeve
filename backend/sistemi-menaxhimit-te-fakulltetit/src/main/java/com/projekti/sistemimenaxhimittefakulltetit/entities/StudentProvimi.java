@@ -5,20 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Vleresimi {
+@Data
+public class StudentProvimi {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int nota;
-    private Date dataVendosjes;
+
+    @ManyToOne
+    @JoinColumn(name = "provimi_id")
+    private ProfesoriProvimi provimi;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     @OneToOne
-    private StudentLigjerata studentLigjerata;
+    private Vleresimi vleresimi;
 
 }

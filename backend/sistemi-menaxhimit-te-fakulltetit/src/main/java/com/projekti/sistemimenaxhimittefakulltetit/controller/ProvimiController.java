@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/admin/")
 @AllArgsConstructor
@@ -42,6 +44,14 @@ public class ProvimiController {
         ProfesoriProvimi profesoriProvimi = profesoriProvimiService.add(professor, provimi);
 
         return ResponseEntity.status(HttpStatus.OK).body(profesoriProvimi);
+    }
+
+    @GetMapping("/{profId}")
+    public ResponseEntity<List<ProfesoriProvimi>> getProvimet(@PathVariable Long profId) {
+        Professor professor = professorService.findProfessorById(profId);
+        List<ProfesoriProvimi> provimet = profesoriProvimiService.getProvimet(professor.getId());
+
+        return ResponseEntity.status(HttpStatus.OK).body(provimet);
     }
 
     @DeleteMapping("provimi/delete/{id}")

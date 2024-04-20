@@ -1,11 +1,15 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
+import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriProvimi;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Provimi;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriProvimiRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,4 +26,15 @@ public class ProfesoriProvimiService {
 
         return profesoriProvimiRepository.save(profesoriProvimi);
     }
+
+    public ProfesoriProvimi findProvimiById(Long id) {
+        Optional<ProfesoriProvimi> provimi = profesoriProvimiRepository.findById(id);
+        return provimi.orElse(null);
+
+    }
+
+    public List<ProfesoriProvimi> getProvimet(Long id) {
+        return profesoriProvimiRepository.findAllByProfessorId(id);
+    }
+
 }
