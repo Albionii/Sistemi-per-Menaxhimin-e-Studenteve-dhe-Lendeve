@@ -24,9 +24,33 @@ public class ProvimiService {
         return provimiRepository.findById(id);
     }
 
-    public void saveProvimi(Provimi p){
-        provimiRepository.save(p);
+
+    public Provimi findProvimiByLendaId(Long id)throws Exception {
+        Provimi provimi = provimiRepository.findProvimiByLendaId(id);
+
+        if(provimi == null)
+            throw new Exception("Provimi per nuk u gjet!" );
+
+        return  provimi;
     }
+
+    public Provimi createProvimi(Lenda lenda,ProvimiReq request) throws Exception {
+
+        if(lenda != null) {
+            Provimi provimi = new Provimi();
+
+            provimi.setLenda(lenda);
+            provimi.setData(request.getData());
+            provimi.setLocation(request.getLocation());
+
+            provimiRepository.save(provimi);
+
+
+            return provimi;
+        } else {
+            throw new Exception("Something went wrong while creating Provimi");
+        }
+
 
     public void deleteProvimi(Long id) {
         provimiRepository.deleteById(id);
