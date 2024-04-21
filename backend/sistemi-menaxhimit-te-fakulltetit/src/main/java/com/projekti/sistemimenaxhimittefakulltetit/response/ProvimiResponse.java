@@ -1,10 +1,12 @@
 package com.projekti.sistemimenaxhimittefakulltetit.response;
 
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Provimi;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ProvimiResponse {
-    private String Lenda;
-    private String profesori;
-    private String semestri;
+    private String emriLendes;
+    private List<Provimi> provimet;
 }

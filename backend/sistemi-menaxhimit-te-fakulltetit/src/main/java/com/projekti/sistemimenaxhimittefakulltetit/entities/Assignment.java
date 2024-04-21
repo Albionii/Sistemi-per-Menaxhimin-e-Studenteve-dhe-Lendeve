@@ -50,7 +50,6 @@ public class Assignment {
     @LastModifiedDate
     private LocalDateTime updatedAt = null;
 
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<AssignmentSubmission> submissions;
 

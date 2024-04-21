@@ -21,10 +21,8 @@ public class AssignmentSubmission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @ManyToOne
     private User submiter;
-
 
     private String mesazhi;
 

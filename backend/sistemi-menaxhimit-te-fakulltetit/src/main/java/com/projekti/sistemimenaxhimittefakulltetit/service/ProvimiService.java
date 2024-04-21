@@ -1,6 +1,8 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Provimi;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProvimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.ProvimiReq;
@@ -18,6 +20,8 @@ public class ProvimiService {
     @Autowired
     private final ProvimiRepository provimiRepository;
 
+    private final ProfesoriLendaService profesoriLendaService;
+
     public List<Provimi> findAllProvimet(){
         return provimiRepository.findAll();
     };
@@ -27,21 +31,16 @@ public class ProvimiService {
     }
 
 
-    public Provimi findProvimiByLendaId(Long id)throws Exception {
-        Provimi provimi = provimiRepository.findProvimiByLendaId(id);
 
-        if(provimi == null)
-            throw new Exception("Provimi per nuk u gjet!" );
-
-        return  provimi;
-    }
-
-    public Provimi createProvimi(Lenda lenda, ProvimiReq request) throws Exception {
+    public Provimi createProvimi(ProfesoriLenda lenda, ProvimiReq request) throws Exception {
 
         if (lenda != null) {
             Provimi provimi = new Provimi();
 
-            provimi.setLenda(lenda);
+            Optional<ProfesoriLenda> ligjerata = profesoriLendaService.findById(lenda.getId());
+
+
+            provimi.setLigjerata(ligjerata.get());
             provimi.setData(request.getData());
             provimi.setLocation(request.getLocation());
 
@@ -57,6 +56,14 @@ public class ProvimiService {
 
     public void deleteProvimi(Long id) {
         provimiRepository.deleteById(id);
+    }
+
+    public Provimi findProvimiByLigjerataId(Long id) {
+        return provimiRepository.findProvimiByLigjerataId(id);
+    }
+
+    public List<Provimi> findProvimetByLigjerataId(ProfesoriLenda profesoriLenda) {
+        return provimiRepository.findAllByLigjerataId(profesoriLenda.getId());
     }
 
     public void removeNota(Long id){

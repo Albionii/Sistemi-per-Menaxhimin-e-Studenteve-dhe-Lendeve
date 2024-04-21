@@ -2,6 +2,8 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriProvimi;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,13 @@ public class ProfesoriLendaService {
         return profesoriLendaRepository.findAllByProfessorId(id);
     }
 
+    public Optional<ProfesoriLenda> findById(Long id) {
+        return profesoriLendaRepository.findById(id);
+    }
+    public List<ProfesoriLenda> findAllByLendaId(Long id) {
+        return profesoriLendaRepository.findAllByLendaId(id);
+    }
+
     public ProfesoriLenda createLigjerata(ProfesoriLenda ligjerata) throws Exception{
 
         if(ligjerata == null){
@@ -33,5 +42,9 @@ public class ProfesoriLendaService {
 //        ligjerata1.setProfessor(ligjerata.getProfessor());
 
         return profesoriLendaRepository.save(ligjerata1);
+    }
+
+    public ProfesoriLenda findByProfessorAndLenda(Professor professor, Lenda lenda) {
+        return profesoriLendaRepository.findByProfessorAndLenda(professor, lenda);
     }
 }

@@ -3,17 +3,17 @@ package com.projekti.sistemimenaxhimittefakulltetit.controller;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProvimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.response.ProvimiResponse;
+import com.projekti.sistemimenaxhimittefakulltetit.response.TranskriptaResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +23,8 @@ public class StudentController {
     private final StudentPrvService studentPrvService;
     private final StudentService studentService;
     private final UserService userService;
-    private final ProfesoriProvimiService profesoriProvimiService;
+    private final LendaService lendaService;
+    private final ProfesoriLendaService profesoriLendaService;
     private final StudentSemesterRegistrationService studentSemesterRegistrationService;
     private final ProvimiService provimiService;
 
@@ -32,9 +33,9 @@ public class StudentController {
                                                           @RequestHeader("Authorization") String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
         Student student = studentService.findStudentByUserId(user.getId());
-        ProfesoriProvimi provimi = profesoriProvimiService.findProvimiById(id);
+        Optional<Provimi> provimi = provimiService.findProvimiById(id);
 
-        StudentProvimi prv =  studentPrvService.paraqitProvimin(student, provimi);
+        StudentProvimi prv =  studentPrvService.paraqitProvimin(student, provimi.get());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(prv);
     }
@@ -43,13 +44,22 @@ public class StudentController {
                               @RequestHeader("Authorization") String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
         Student student = studentService.findStudentByUserId(user.getId());
-        ProfesoriProvimi provimi = profesoriProvimiService.findProvimiById(id);
 
-        studentPrvService.anulo(student, provimi);
+        studentPrvService.anulo(id);
     }
 
+    @DeleteMapping("/refuzo/{id}")
+    public void refuzo(@PathVariable Long id,
+                              @RequestHeader("Authorization") String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        studentPrvService.anulo(id);
+    }
+
+
     @GetMapping
-    public ResponseEntity<List<StudentProvimi>> getProvimet(@RequestHeader("Authorization")String token) throws Exception {
+    public ResponseEntity<List<StudentProvimi>> getProvimetParaqitura(@RequestHeader("Authorization")String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
         Student student = studentService.findStudentByUserId(user.getId());
 
@@ -58,14 +68,46 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body(provimet);
     }
 
-    @GetMapping("/provimet/semester")
+    @GetMapping("/provimet/{lendaId}")
+    public ResponseEntity<List<Provimi>> getProvimetLenda(@PathVariable Long lendaId,
+            @RequestHeader("Authorization")String token)throws Exception {
+
+        Lenda lenda = lendaService.findLendaById(lendaId);
+        List<ProfesoriLenda> ligjeratat = profesoriLendaService.findAllByLendaId(lenda.getId());
+        List<Provimi> provimet = new ArrayList<>();
+
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<StudentProvimi> paraqitura = studentPrvService.getProvimet(student.getId());
+
+        for (ProfesoriLenda ligjerat : ligjeratat) {
+            Provimi provimi = provimiService.findProvimiByLigjerataId(ligjerat.getId());
+            lenda = ligjerat.getLenda();
+            if (provimi != null) {
+                if (!studentPrvService.existsByProvimiAndStudent(provimi, student) &&
+                    !studentPrvService.existsByEmriLendes(lenda.getEmri())) {
+                    provimet.add(provimi);
+                }
+            }
+
+
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(provimet);
+    }
+
+
+
+    @GetMapping("/provimet/")
     public ResponseEntity<List<ProvimiResponse>> getSemesterProvimet(@RequestHeader("Authorization")String token)
                                                                         throws Exception{
         User user = userService.findUserByJwtToken(token);
         Student student = studentService.findStudentByUserId(user.getId());
 
+        List<StudentProvimi> paraqitura = studentPrvService.getProvimet(student.getId());
+
         List<StudentSemesterRegistration> semesterRegistrations = studentSemesterRegistrationService.getSemesters(student.getId());
-        List<ProfesoriProvimi> provimet = new ArrayList<>();
         List<ProvimiResponse> responses = new ArrayList<>();
 
 
@@ -74,25 +116,46 @@ public class StudentController {
 
             Set<Lenda> lendet = semester.getLendet();
 
-            for (Lenda lenda : lendet ){
-                Provimi provimi = provimiService.findProvimiByLendaId(lenda.getId());
-                ProfesoriProvimi profesoriProvimi = profesoriProvimiService.findProvimiById(provimi.getId());
-                if (profesoriProvimi != null) {
-                    Lenda l = provimi.getLenda();
-                    Professor p = profesoriProvimi.getProfessor();
-                    User prof = p.getUser();
+            for(Lenda lenda : lendet) {
+                List<Provimi> prov = getProvimetLenda(lenda.getId(), token).getBody();
 
+                if (!prov.isEmpty()) {
                     ProvimiResponse response = new ProvimiResponse();
-                    response.setLenda(lenda.getEmri());
-                    response.setProfesori(prof.getFirstName() + " " + prof.getLastName());
-                    response.setSemestri(semester.getName());
+
+                    response.setEmriLendes(lenda.getEmri());
+                    response.setProvimet(prov);
                     responses.add(response);
                 }
+
             }
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
+
+    @GetMapping("/transkripta")
+    public ResponseEntity<TranskriptaResponse> generateTranskripta(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<StudentProvimi> transkripta = studentPrvService.gjeneroTranskripten(student.getId());
+        List<Double> notat = new ArrayList<>();
+
+        for (StudentProvimi provimi : transkripta) {
+            notat.add((double)provimi.getNota());
+        }
+
+
+        Double mesatarja = studentPrvService.getMesatarja(notat);
+
+
+        TranskriptaResponse response = new TranskriptaResponse();
+        response.setTranskripta(transkripta);
+        response.setMesatarja(mesatarja);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 
 
 }

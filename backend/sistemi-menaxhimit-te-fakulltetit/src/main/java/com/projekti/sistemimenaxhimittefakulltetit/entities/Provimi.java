@@ -18,7 +18,7 @@ public class Provimi {
 
     @OneToOne
     @JoinColumn(name = "lenda_id", unique = true)
-    private Lenda lenda;
+    private ProfesoriLenda ligjerata;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date data;
