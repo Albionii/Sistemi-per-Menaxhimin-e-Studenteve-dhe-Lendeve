@@ -14,6 +14,7 @@ import Home from './pages/home.jsx';
 import Services from './pages/services.jsx';
 import LogIn from './pages/login.jsx';
 import Signup from './pages/signup.jsx';
+import Nav from './components/Nav';
 
 function App() {
 
@@ -22,7 +23,8 @@ function App() {
     <>
 
       <Router>
-      <NavBar></NavBar>
+      {/* <NavBar/> */}
+      <Nav></Nav>
 
         <Routes>
           <Route exact path='/' 
