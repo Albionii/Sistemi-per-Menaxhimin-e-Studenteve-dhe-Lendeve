@@ -15,7 +15,8 @@ import Services from './pages/services.jsx';
 import LogIn from './pages/login.jsx';
 import Signup from './pages/signup.jsx';
 import Nav from './components/Nav';
-import Provimet from './components/Provimet.jsx';
+import Provimet from './components/Provimi/Provimet.jsx';
+import Paraqitura from './components/Provimi/Paraqitura.jsx';
 
 function App() {
 
@@ -46,6 +47,8 @@ function App() {
 
           <Route path="/provimet"
             element={<Provimet />} />
+          <Route path="/provimet/paraqitura"
+            element={<Paraqitura />} />
         
         </Routes>
         

@@ -9,7 +9,7 @@ import { BiSolidFilePlus } from "react-icons/bi";
 import { HiMiniBookOpen } from "react-icons/hi2";
 import { ImFolderOpen } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
-import Provimet from "./Provimet";
+import Provimet from "./Provimi/Provimet";
 
 
 
@@ -38,7 +38,7 @@ export default function Nav() {
 
           <Sidebar.Collapse icon={FaFile} label="Provimet">
             <Sidebar.Item onClick={() => navigate('/provimet')} href="" icon={BiSolidFilePlus}>Paraqit Provimet</Sidebar.Item>
-            <Sidebar.Item  href="#" icon={ImFolderOpen}>Provimet e Paraqitura</Sidebar.Item>
+            <Sidebar.Item onClick={() => navigate("/provimet/paraqitura")} href="" icon={ImFolderOpen}>Provimet e Paraqitura</Sidebar.Item>
           </Sidebar.Collapse>
 
           <Sidebar.Item href="#" icon={HiViewBoards}>
