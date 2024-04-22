@@ -47,6 +47,7 @@ function App() {
 
           <Route path="/provimet"
             element={<Provimet />} />
+            
           <Route path="/provimet/paraqitura"
             element={<Paraqitura />} />
         
