@@ -15,6 +15,7 @@ import java.util.Optional;
 public class StudentPrvService {
 
     private final StudentPrvRepository studentPrvRepository;
+    private final VleresimiService vleresimiService;
     public StudentProvimi paraqitProvimin(Student student, Provimi prv) throws Exception {
 
         if (student == null)
@@ -44,6 +45,7 @@ public class StudentPrvService {
     public StudentProvimi noto(StudentProvimi paraqitja, int nota) {
         paraqitja.setNota(nota);
         paraqitja.setDataVendosjes(LocalDateTime.now());
+
         return studentPrvRepository.save(paraqitja);
     }
 

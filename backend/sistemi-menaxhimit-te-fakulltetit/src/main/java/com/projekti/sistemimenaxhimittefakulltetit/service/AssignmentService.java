@@ -15,4 +15,7 @@ public interface AssignmentService {
     public void deleteAssignment(Long id) throws Exception;
     public Assignment deleteAssignmentSubmission(Long id, User user) throws Exception;
     public List<AssignmentSubmission> submit(Long assignment_id,AssignmentSubmission submission, User user) throws Exception;
+    public List<Assignment> getAssignmentsOfPostimi(Long id);
+    public AssignmentSubmission updateAssignmentSubmission(Long id, AssignmentSubmission update);
+
 }

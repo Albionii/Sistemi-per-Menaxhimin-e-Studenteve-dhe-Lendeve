@@ -1,8 +1,10 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Assignment;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Postimi;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.PostimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.AssignmentResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.AssignmentService;
@@ -27,7 +29,7 @@ public class AssignmentController {
     @Autowired
     private UserService userService;
     @Autowired
-    private ProfesoriLendaRepository profesoriLendaRepository;
+    private PostimiRepository postimiRepository;
 
 
     @GetMapping
@@ -47,7 +49,7 @@ public class AssignmentController {
                                                        @RequestBody AssignmentResponse assignment,
                                                     @RequestHeader("Authorization") String token ) throws Exception {
 
-        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaRepository.findById(id);
+        Postimi postimi = postimiRepository.findPostimiById(id);
 
         User user = userService.findUserByJwtToken(token);
 
@@ -58,13 +60,11 @@ public class AssignmentController {
 
         assignments.add(created);
 
-        profesoriLenda.ifPresent(opti -> {
-            System.out.println("Before update: " + opti.getAssignments());
-            opti.setAssignments(assignments);
-            System.out.println("After update: " + opti.getAssignments());
-            profesoriLendaRepository.save(opti);
 
-        });
+        if (postimi != null) {
+            postimi.setAssignments(assignments);
+            postimiRepository.save(postimi);
+        }
 
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
@@ -85,6 +85,13 @@ public class AssignmentController {
         assignmentService.deleteAssignment(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Assignment Removed!");
+    }
+
+
+
+    @GetMapping("/get/postimi/{id}")
+    public ResponseEntity<List<Assignment>> getAssignmentsOfPostimi(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfPostimi(id));
     }
 
 

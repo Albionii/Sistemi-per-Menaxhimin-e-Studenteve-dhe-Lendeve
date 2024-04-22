@@ -1,11 +1,9 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentRepository;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentSubmissionRepository;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.LendaRepository;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.*;
 import com.projekti.sistemimenaxhimittefakulltetit.request.AssignmentResponse;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -38,6 +36,9 @@ public class AssignmentServiceImpl implements AssignmentService{
     @Autowired
     private ProfesoriLendaRepository profesoriLendaRepository;
 
+    @Autowired
+    private PostimiRepository postimiRepository;
+
 
 
     @Override
@@ -50,22 +51,24 @@ public class AssignmentServiceImpl implements AssignmentService{
     public Assignment createAssignment(AssignmentResponse req, User user) throws Exception {
         Assignment created = new Assignment();
 
-        System.out.println(req.getLigjerata());
-
-        ProfesoriLenda ligjerata = profesoriLendaRepository.findById(req.getLigjerata())
-                .orElseThrow(() -> new RuntimeException("ligjerata not found with id: " + req.getLigjerata()));
+        Postimi postimi = postimiRepository.findById(req.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Postimi nuk u gjet!"));
 
 //        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaRepository.findById(req.getLendaId());
 
-        if (user != null && ligjerata != null) {
+        if (user != null && postimi != null) {
             created.setTitulli(req.getTitulli());
             created.setCreatedBy(user);
             created.setMesazhi(req.getMesazhi());
             created.setCreatedAt(LocalDateTime.now());
             created.setExpireAt(req.getExpireAt());
             created.setFileNames(req.getFileNames());
+            assignmentRepository.save(created);
 
-            return assignmentRepository.save(created);
+            postimi.getAssignments().add(created);
+            postimiRepository.save(postimi);
+
+            return created;
         }
         return null;
     }
@@ -82,9 +85,13 @@ public class AssignmentServiceImpl implements AssignmentService{
     @Override
     public Assignment updateAssignment(AssignmentResponse update,User user, Long id) throws Exception {
 
-        Optional<Assignment> old = assignmentRepository.findById(id);
-        if(old.isPresent()) {
-            Assignment updatedAssignment = old.get();
+        Assignment old = assignmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Assignment me Id {" + id + "} nuk u gjet!"));
+
+        Postimi postimi = postimiRepository.findByAssignmentsContaining(old);
+
+        if(postimi != null) {
+            Assignment updatedAssignment = old;
             updatedAssignment.setTitulli(update.getTitulli());
             updatedAssignment.setMesazhi(update.getMesazhi());
             updatedAssignment.setExpireAt(update.getExpireAt());
@@ -92,7 +99,12 @@ public class AssignmentServiceImpl implements AssignmentService{
             updatedAssignment.setUpdatedBy(user);
             updatedAssignment.setUpdatedAt(LocalDateTime.now());
 
-            return assignmentRepository.save(updatedAssignment);
+            assignmentRepository.save(updatedAssignment);
+
+            postimi.getAssignments().add(updatedAssignment);
+            postimiRepository.save(postimi);
+
+            return updatedAssignment;
         } else
             throw new Exception("Assignment Not found");
 
@@ -122,31 +134,53 @@ public class AssignmentServiceImpl implements AssignmentService{
 
     @Override
     public Assignment deleteAssignmentSubmission(Long id, User user) throws Exception {
-        Assignment assignment = getAssignmentById(id);
+        AssignmentSubmission submission = assignmentSubmissionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Submission with id {" + id +"} was not found!"));
 
-        List<AssignmentSubmission> submissions = assignment.getSubmissions();
+        Assignment assignment = assignmentRepository.findBySubmissionsContains(submission);
 
-        Iterator<AssignmentSubmission> iterator = submissions.iterator();
-        while (iterator.hasNext()) {
-            AssignmentSubmission sub = iterator.next();
-            if(sub.getSubmiter().equals(user)) {
-                iterator.remove();
-                assignmentSubmissionRepository.deleteById(sub.getId());
-                System.out.println("I have Deleted It Master!....");
-            }
+        if (assignment != null) {
+            assignment.getSubmissions().remove(submission);
+            assignmentRepository.save(assignment);
         }
+        assignmentSubmissionRepository.delete(submission);
 
-        assignment.setSubmissions(submissions);
-
-        return assignmentRepository.save(assignment);
+        return assignment;
     }
 
+    @Override
+    public AssignmentSubmission updateAssignmentSubmission(Long id, AssignmentSubmission update) {
+        AssignmentSubmission old = assignmentSubmissionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Submission with id {" + id +"} was not found!"));
 
+        old.setMesazhi(update.getMesazhi());
+        old.setFileNames(update.getFileNames());
+        old.setSubmitedAt(LocalDateTime.now());
+
+        return assignmentSubmissionRepository.save(old);
+    }
 
 
 
     @Override
     public void deleteAssignment(Long id) throws Exception {
-        assignmentRepository.deleteById(id);
+        Assignment assignment = assignmentRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("Assignment me id {" + id + "} nuk u gjend!"));
+
+        Postimi postimi = postimiRepository.findByAssignmentsContaining(assignment);
+
+        if (postimi != null) {
+            postimi.getAssignments().remove(assignment);
+            postimiRepository.save(postimi);
+        }
+
+        assignmentRepository.delete(assignment);
+    }
+
+    public List<Assignment> getAssignmentsOfPostimi(Long id) {
+        Postimi postimi = postimiRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Postimi me id {"+  id +"} nuk u gjet!"));
+
+        return postimi.getAssignments();
     }
 }

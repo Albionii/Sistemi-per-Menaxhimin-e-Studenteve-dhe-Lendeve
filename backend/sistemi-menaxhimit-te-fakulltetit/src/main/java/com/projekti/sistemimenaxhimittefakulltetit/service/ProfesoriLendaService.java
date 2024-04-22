@@ -44,6 +44,8 @@ public class ProfesoriLendaService {
         return profesoriLendaRepository.save(ligjerata1);
     }
 
+
+
     public ProfesoriLenda findByProfessorAndLenda(Professor professor, Lenda lenda) {
         return profesoriLendaRepository.findByProfessorAndLenda(professor, lenda);
     }

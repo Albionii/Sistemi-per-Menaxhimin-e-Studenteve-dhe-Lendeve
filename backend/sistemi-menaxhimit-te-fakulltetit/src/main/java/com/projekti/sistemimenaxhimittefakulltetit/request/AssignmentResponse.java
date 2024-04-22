@@ -14,6 +14,5 @@ public class AssignmentResponse {
     private LocalDateTime createdAt;
     private LocalDateTime expireAt;
     private List<String> fileNames;
-    private Long ligjerata;
-
+    private Long id;
 }
