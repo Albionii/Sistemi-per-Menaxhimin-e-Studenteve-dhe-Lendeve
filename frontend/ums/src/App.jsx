@@ -15,6 +15,7 @@ import Services from './pages/services.jsx';
 import LogIn from './pages/login.jsx';
 import Signup from './pages/signup.jsx';
 import Nav from './components/Nav';
+import Provimet from './components/Provimet.jsx';
 
 function App() {
 
@@ -42,6 +43,9 @@ function App() {
           <Route path="/signup"
             element={<Signup />}>
           </Route>
+
+          <Route path="/provimet"
+            element={<Provimet />} />
         
         </Routes>
         

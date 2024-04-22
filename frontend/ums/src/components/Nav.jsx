@@ -3,10 +3,18 @@
 
 import { Sidebar } from "flowbite-react";
 import { Avat } from "./Avatar";
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from "react-icons/hi";
+import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards} from "react-icons/hi";
+import { FaFile } from "react-icons/fa";
+import { BiSolidFilePlus } from "react-icons/bi";
 import { HiMiniBookOpen } from "react-icons/hi2";
+import { ImFolderOpen } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
+import Provimet from "./Provimet";
+
+
 
 export default function Nav() {
+  const navigate = useNavigate();
   return (
     <Sidebar aria-label="Sidebar with logo branding example" className="h-screen">
       <Sidebar.Logo href="#" img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgQA7rSroxsdTTefwdaVB0lK7HFszwnQAeAvlX1SNdGw&s" imgAlt="Flowbite logo">
@@ -27,6 +35,12 @@ export default function Nav() {
             <Sidebar.Item href="#">Semestri 3</Sidebar.Item>
             <Sidebar.Item href="#">Semestri 4</Sidebar.Item>
           </Sidebar.Collapse>
+
+          <Sidebar.Collapse icon={FaFile} label="Provimet">
+            <Sidebar.Item onClick={() => navigate('/provimet')} href="" icon={BiSolidFilePlus}>Paraqit Provimet</Sidebar.Item>
+            <Sidebar.Item  href="#" icon={ImFolderOpen}>Provimet e Paraqitura</Sidebar.Item>
+          </Sidebar.Collapse>
+
           <Sidebar.Item href="#" icon={HiViewBoards}>
             Isa + Hasha = Esat Pasha
           </Sidebar.Item>

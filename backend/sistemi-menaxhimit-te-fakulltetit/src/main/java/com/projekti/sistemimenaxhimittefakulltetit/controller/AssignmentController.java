@@ -86,13 +86,8 @@ public class AssignmentController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Assignment Removed!");
     }
-
-
-
     @GetMapping("/get/postimi/{id}")
     public ResponseEntity<List<Assignment>> getAssignmentsOfPostimi(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfPostimi(id));
     }
-
-
 }
