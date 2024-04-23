@@ -27,7 +27,9 @@ public class FakultetiController {
 
     @DeleteMapping("/{id}")
     public void deleteFakulteti(@PathVariable Long id){
-        fakultetiService.deleteFakultetiById(id);
+        Optional<Fakulteti> f = fakultetiService.findFakultetiById(id);
+        f.get().setUser(null);
+        fakultetiService.deleteFakultetiById(f.get().getId());
     }
 
     @PostMapping("/{id}")

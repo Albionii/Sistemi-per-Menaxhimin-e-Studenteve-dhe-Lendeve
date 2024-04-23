@@ -29,7 +29,9 @@ public class DepartamentiController {
     }
     @DeleteMapping("/{id}")
     public void deleteDepartamenti(@PathVariable Long id){
-        departamentiService.deleteDepartamentiById(id);
+        Optional<Departamenti> d = departamentiService.findByDepartamentiId(id);
+        d.get().setUser(null);
+        departamentiService.deleteDepartamentiById(d.get().getId());
     }
 
 
