@@ -7,6 +7,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentSubmissi
 import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.Assign;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,18 +71,16 @@ public class UserController {
         return assignmentService.deleteAssignmentSubmission(id, user);
     }
 
-//    @PostMapping("/paraqit/provimin/{id}/{profId}")
-//    public ResponseEntity<ProfesoriProvimi> paraqitProvimin(@PathVariable Long id,
-//                                   @PathVariable Long profId,
-//                                   @RequestHeader("Authentication") String jwt) throws Exception {
-//
-//        User user = userService.findUserByJwtToken(jwt);
-//        Student student = studentService.findStudentByUserId(user.getId());
-//
-//        Provimi provimi = provimiService.findProvimiById(id);
-//
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body();
-//    }
+    @PutMapping("/submit/update/{id}")
+    public AssignmentSubmission updateSubmission(@PathVariable Long id,
+                                                 @RequestBody AssignmentSubmission submission) {
+        return assignmentService.updateAssignmentSubmission(id, submission);
+    }
+
+
+    @GetMapping("/get/postimi/{id}")
+    public ResponseEntity<List<Assignment>> getAssignmentsOfPostimi(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfPostimi(id));
+    }
 
 }

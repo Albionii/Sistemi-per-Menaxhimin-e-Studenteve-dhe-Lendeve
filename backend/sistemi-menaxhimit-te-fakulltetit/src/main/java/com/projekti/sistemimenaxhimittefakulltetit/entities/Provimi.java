@@ -5,21 +5,24 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Data
 public class Provimi {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long p_ID;
-    private LocalDate data_paraqitjes;
-    private LocalDate data_e_vendosjes;
-    private int nota;
+    private Long id;
 
     @OneToOne
-    private ProfesoriLenda profesoriLenda;
+    @JoinColumn(name = "lenda_id", unique = true)
+    private ProfesoriLenda ligjerata;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date data;
 
+    private String location;
 
 }

@@ -1,10 +1,12 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Vleresimi;
-import com.projekti.sistemimenaxhimittefakulltetit.service.VleresimiService;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
+import com.projekti.sistemimenaxhimittefakulltetit.request.CreateStudentProvimRequest;
+import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -13,6 +15,13 @@ import java.util.Optional;
 public class ProfessorController {
 
     private final VleresimiService vleresimiService;
+    private final ProvimiService provimiService;
+    private final StudentService studentService;
+    private final UserService userService;
+    private final LendaService lendaService;
+    private final ProfessorService professorService;
+    private final StudentPrvService studentPrvService;
+    private final ProfesoriLendaService profesoriLendaService;
 
     @PutMapping("/{id}")
     public Optional<Vleresimi> updateNota(@RequestBody Vleresimi updatedVleresimi,
@@ -20,8 +29,33 @@ public class ProfessorController {
         return vleresimiService.updateNota(updatedVleresimi, oldVleresimiId);
     }
 
-    @PostMapping
-    public Vleresimi addNota(@RequestBody Vleresimi vleresimi){
-        return vleresimiService.addNota(vleresimi);
+    @PostMapping("/provimi/")
+    public StudentProvimi addNota(@RequestBody CreateStudentProvimRequest request){
+
+        StudentProvimi paraqitja = studentPrvService.findById(request.getId());
+
+        return studentPrvService.noto(paraqitja, request.getNota());
+    }
+
+    @GetMapping("/paraqitjet/{lendaId}")
+    public List<StudentProvimi> getParaqitjet(@PathVariable Long lendaId,
+                                        @RequestHeader("Authorization") String token) throws Exception {
+        Lenda lenda = lendaService.findLendaById(lendaId);
+        User user = userService.findUserByJwtToken(token);
+        Professor professor = professorService.findProfessorByUserId(user.getId());
+
+        ProfesoriLenda profesoriLenda = profesoriLendaService.findByProfessorAndLenda(professor, lenda);
+
+        System.out.println(profesoriLenda.getId());
+
+        Provimi provimi = provimiService.findProvimiByLigjerataId(profesoriLenda.getId());
+
+        System.out.println(provimi.getId());
+
+        return studentPrvService.findAllStudentProvimiByProvimiId(provimi.getId());
+    }
+    @GetMapping("/get/provimi/{id}")
+    public StudentProvimi getProvimi(@PathVariable Long id) {
+        return studentPrvService.findById(id);
     }
 }

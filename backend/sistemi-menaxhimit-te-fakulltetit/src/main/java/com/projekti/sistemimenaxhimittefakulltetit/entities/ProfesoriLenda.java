@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,8 +28,12 @@ public class ProfesoriLenda {
     @OneToMany
     private List<Assignment> assignments;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Postimi> postimet = new ArrayList<>();
+
     public ProfesoriLenda(Professor professor, Lenda lenda) {
         this.professor = professor;
         this.lenda = lenda;
     }
 }
+

@@ -16,9 +16,9 @@ function home() {
   return (
     <>
     <div>
-       {students.map(student => (
+       {/* {students.map(student => (
         <Student key={student.id} student={student}/>
-       ))}
+       ))} */}
     </div>
     </>
   )

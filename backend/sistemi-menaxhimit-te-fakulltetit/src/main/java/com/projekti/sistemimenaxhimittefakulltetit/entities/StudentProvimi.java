@@ -5,23 +5,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Vleresimi {
+@Data
+public class StudentProvimi {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int nota;
-    private Date dataVendosjes;
 
-    @OneToOne
-    private StudentLigjerata studentLigjerata;
+    private int nota;
+    private LocalDateTime dataVendosjes;
+
+    private String emriLendes;
+
+    @ManyToOne
+    @JoinColumn(name = "provimi_id")
+    private Provimi provimi;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+
 
 }
