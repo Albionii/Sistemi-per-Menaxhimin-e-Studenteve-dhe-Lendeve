@@ -3,7 +3,7 @@ import Student from '../components/Student';
 
 
 
-function home() {
+function  home() {
   const [students, setStudent] = useState([]);
 
   useEffect(() => {
