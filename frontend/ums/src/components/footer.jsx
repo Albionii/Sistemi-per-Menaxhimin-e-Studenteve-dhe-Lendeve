@@ -6,15 +6,15 @@ import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-
 
 function footer() {
   return (
-    <Footer container>
-      <div className="w-full">
+    <Footer container className='rounded-none'>
+      <div className="w-full ">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>
             <Footer.Brand
               href="https://flowbite.com"
               src="https://flowbite.com/docs/images/logo.svg"
               alt="Flowbite Logo"
-              name="Flowbite"
+              name="SMES"
             />
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">

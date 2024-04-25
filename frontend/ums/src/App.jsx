@@ -1,7 +1,8 @@
 import './output.css'
 
 // import About from './pages/about.jsx';
-import Signup from './pages/signup.jsx';
+// import Signup from './pages/signup.jsx';
+import Authentication from './pages/authentication.jsx';
 import LoggedIn from './components/loggedIn.jsx';
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
   if (isLoggedIn) {
     return <LoggedIn />
   } else {
-    return <Signup />
+    return <Authentication />
   }
 }
 

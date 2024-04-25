@@ -4,6 +4,8 @@ import { Button, Card, Label, TextInput, Radio, Alert, Datepicker } from "flowbi
 import { HiInformationCircle } from "react-icons/hi";
 import Swal from 'sweetalert2'
 import FooterSmes from '../components/footer.jsx';
+import { Link } from "react-router-dom";
+
 
 
 const About = () => {
@@ -106,9 +108,9 @@ const About = () => {
           <span className="font-bold">Gabim!</span> {parameterError} I pa pranuar.
         </Alert>
       </div>
-      <div className='h-auto'>
-        <div className=' flex items-center justify-evenly  flex-col-reverse lg:flex-row h-4/5'>
-          <Card className="max-w-sm">
+      <div className='h-auto lg:h-screen  overflow-scroll flex flex-col justify-end items-center'>
+        <div className='w-full flex items-center justify-evenly h-full  flex-col-reverse lg:flex-row '>
+          <Card className="max-w-sm mb-5 lg:mb-0">
             <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Mire se vini ne SEMS</h5>
             <p className="mb-5 text-base text-gray-500 dark:text-gray-400 sm:text-lg">
               Mirë se vini në platformën tonë për shkëmbimin e notave dhe komunikimin efikas midis studentëve dhe profesorëve. Monitoroni përparimin, merrni feedback dhe menaxhoni notat në një mjedis të përshtatur për nevojat tuaja akademike. Bashkohuni me ne për një eksperiencë të përmirësuar të arsimit!
@@ -164,7 +166,7 @@ const About = () => {
               </a>
             </div>
           </Card>
-          <Card className='mb-4 lg:mb-0'>
+          <Card className='mb-4 lg:mb-0 mt-5 lg:mt-0 '>
             <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white text-center">Krijo nje account!</h5>
 
             <form onSubmit={handleSubmit}>
@@ -262,11 +264,11 @@ const About = () => {
 
             </form>
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-              Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+              Already have an account? <Link to="/login"> <a className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a></Link>
             </p>
           </Card>
         </div>
-        <div className='h-1/5'>
+        <div className='w-full'>
            <FooterSmes/>
         </div>
       </div>

@@ -5,13 +5,7 @@ import LogIn from '../pages/login.jsx';
 import Nav from '../components/Nav';
 import Provimet from '../components/Provimi/Provimet.jsx';
 import Paraqitura from '../components/Provimi/Paraqitura.jsx';
-import Dashboard from '../pages/dashboard.jsx';3
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-  } from "react-router-dom";
-
+import Dashboard from '../pages/dashboard.jsx';
 
 
 function loggedIn() {
