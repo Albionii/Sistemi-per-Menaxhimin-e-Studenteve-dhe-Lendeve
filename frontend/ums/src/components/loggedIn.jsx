@@ -5,18 +5,22 @@ import LogIn from '../pages/login.jsx';
 import Nav from '../components/Nav';
 import Provimet from '../components/Provimi/Provimet.jsx';
 import Paraqitura from '../components/Provimi/Paraqitura.jsx';
+import Dashboard from '../pages/dashboard.jsx';3
 import {
     BrowserRouter as Router,
     Routes,
     Route,
   } from "react-router-dom";
 
+
+
 function loggedIn() {
   return (
+    <>
     <Router>
-      {/* <NavBar/> */}
-      <Nav></Nav>
+    <Nav></Nav>
 
+      <div className='sendLeft'>
       <Routes>
         <Route exact path='/'
           element={<Home />}>
@@ -34,6 +38,12 @@ function loggedIn() {
           element={<Signup />}>
         </Route> */}
 
+        <Route path='/dashboard'
+        element={<Dashboard/>}>
+        </Route>
+
+        
+
         <Route path="/provimet"
           element={<Provimet />} />
 
@@ -41,8 +51,11 @@ function loggedIn() {
           element={<Paraqitura />} />
 
       </Routes>
+      </div>
+
 
     </Router>
+    </>
   )
 }
 

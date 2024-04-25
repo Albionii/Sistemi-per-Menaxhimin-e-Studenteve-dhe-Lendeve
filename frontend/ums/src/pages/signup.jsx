@@ -106,7 +106,7 @@ const About = () => {
           <span className="font-bold">Gabim!</span> {parameterError} I pa pranuar.
         </Alert>
       </div>
-      <div className='h-screen'>
+      <div className='h-auto'>
         <div className=' flex items-center justify-evenly  flex-col-reverse lg:flex-row h-4/5'>
           <Card className="max-w-sm">
             <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Mire se vini ne SEMS</h5>

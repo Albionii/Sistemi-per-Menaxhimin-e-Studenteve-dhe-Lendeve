@@ -7,3 +7,7 @@ body{
     padding: 0;
     background-color: #c8daf0;
 }
+
+.sendLeft{
+    margin-left: 15rem;
+}

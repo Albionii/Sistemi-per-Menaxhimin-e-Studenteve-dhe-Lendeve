@@ -17,16 +17,18 @@ import { Link } from "react-router-dom";
 export default function Nav() {
   const navigate = useNavigate();
   return (
-    <Sidebar aria-label="Sidebar with logo branding example" className="h-screen fixed">
+    <Sidebar aria-label="Sidebar with logo branding example" className="w-60 h-screen fixed ">
       <Sidebar.Logo href="#" img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgQA7rSroxsdTTefwdaVB0lK7HFszwnQAeAvlX1SNdGw&s" imgAlt="Flowbite logo">
         UBT
       </Sidebar.Logo>
       <Avat />
       <Sidebar.Items className="mt-3">
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={HiChartPie}>
+          <Link to="Dashboard">
+          <Sidebar.Item icon={HiChartPie}>
             Dashboard
           </Sidebar.Item>
+          </Link>
           <Sidebar.Item href="#" icon={HiUser}>
             Profile
           </Sidebar.Item>
