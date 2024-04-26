@@ -7,7 +7,7 @@ import LoggedIn from './components/loggedIn.jsx';
 
 function App() {
   //ktu bahet verifikimi prej backend qe a osht logged in a jo
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   //ktu bahet renderimi nqoftse osht logged in at her e qon te home page nese jo te SignUp 
   if (isLoggedIn) {

@@ -16,13 +16,16 @@ const About = () => {
   currentDate.setDate(1);
 
   const [formData, setFormData] = useState({
-    adresa: '',
-    birthday: currentDate,
-    city: '',
+    rruga: '',
+    dateLindja: currentDate,
+    qyteti: '',
+    zipcode: '',
+    shteti: '',
+    nrTelefonit: '',
     email: '',
-    name: '',
-    surname: '',
-    gender: 'male',
+    firstName: '',
+    lastName: '',
+    gjinia: 'male',
     password: ''
   });
 
@@ -213,21 +216,17 @@ const About = () => {
                   <Datepicker utcOffset={1} onSelectedDateChanged={(e) => { formData.birthday = (new Date(e.setTime(e.getTime() + 8640000))) }} maxDate={currentDate} required>
 
                   </Datepicker>
-                  {/* <TextInput
-            type="text"
-            name="birthday"
-            value={formData.birthday}
-            onChange={handleChange}
-          /> */}
+
 
                 </label>
                 <label>
-                  <Label htmlFor='email1' value='City'></Label>
+                  <Label htmlFor='email1' value='Nr Tel.'></Label>
 
                   <TextInput
                     type="text"
-                    name="city"
-                    value={formData.city}
+                    name="nrTelefonit"
+                    placeholder='04xxxxxxx'
+                    value={formData.nrTelefonit}
                     onChange={handleChange}
                     required
                   />
@@ -261,6 +260,57 @@ const About = () => {
               <div className='flex justify-center items-center w-full'>
                 <Button className="mt-3 items-center w-full" type="submit">Register new account</Button>
               </div>
+              <div className="formDiv flex max-w-md flex-col gap-4 grid grid-cols-2">
+                <label>
+                  <Label value='Shteti'></Label>
+                  <TextInput
+                    type="text"
+                    name="name"
+                    autoComplete='off'
+                    placeholder="Kosova"
+                    value={formData.shteti}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  <Label value='Qyteti'></Label>
+                  <TextInput
+                    type="text"
+                    name="name"
+                    autoComplete='off'
+                    placeholder="Ferizaj"
+                    value={formData.qyteti}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  <Label value='Adresa'></Label>
+                  <TextInput
+                    type="text"
+                    name="name"
+                    autoComplete='off'
+                    placeholder="Filan Fisteku, 4"
+                    value={formData.rruga}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  <Label value='Zipcode'></Label>
+                  <TextInput
+                    type="text"
+                    name="name"
+                    autoComplete='off'
+                    placeholder="70000"
+                    value={formData.zipcode}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+              </div>
 
             </form>
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -269,7 +319,7 @@ const About = () => {
           </Card>
         </div>
         <div className='w-full'>
-           <FooterSmes/>
+          <FooterSmes />
         </div>
       </div>
 
