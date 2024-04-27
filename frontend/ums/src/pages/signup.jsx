@@ -5,10 +5,15 @@ import { HiInformationCircle } from "react-icons/hi";
 import Swal from 'sweetalert2'
 import FooterSmes from '../components/footer.jsx';
 import { Link } from "react-router-dom";
+import { tokens } from '../theme.js';
+import { useTheme } from '@mui/material';
 
 
 
 const About = () => {
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const currentDate = new Date();
   currentDate.setFullYear(currentDate.getFullYear() - 17);

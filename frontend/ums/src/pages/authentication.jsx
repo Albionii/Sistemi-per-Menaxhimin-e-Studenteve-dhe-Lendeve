@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-    BrowserRouter as Router,
     Routes,
     Route,
 } from "react-router-dom";
@@ -11,7 +10,6 @@ import Login from './login.jsx';
 
 function authentication() {
     return (
-        <Router>
             <Routes>
                 <Route exact path='/'
                     element={<Signup />}>
@@ -20,7 +18,6 @@ function authentication() {
                     element={<Login />}>
                 </Route>
             </Routes>
-        </Router>
     )
 }
 
