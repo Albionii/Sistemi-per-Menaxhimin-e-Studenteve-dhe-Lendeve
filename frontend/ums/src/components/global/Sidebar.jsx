@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -60,6 +60,24 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
+  useEffect(() => {
+    const handleResize = () => {
+      const sidebarWidth = document.getElementById("sidebar").offsetWidth;
+      const screenWidth = window.innerWidth;
+      if (sidebarWidth >= screenWidth / 6) {
+        setIsCollapsed(true);
+      } 
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Box
       sx={{
@@ -80,8 +98,8 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+      <ProSidebar id="sidebar" collapsed={isCollapsed}>
+        <Menu>
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -156,12 +174,12 @@ const Sidebar = () => {
                 color: colors.gray[100],
               }}
               iconShape="square"
-              icon={<PeopleOutlinedIcon />}
+              icon={<SchoolOutlinedIcon />}
               title={"ManageTeam"}
             >
               <SubItem
                 title="Menaxho Profesoret"
-                to="/team"
+                to="/profesoret"
                 selected={selected}
                 setSelected={setSelected}
               />

@@ -4,7 +4,7 @@ import "./output.css";
 // import Signup from './pages/signup.jsx';
 import { ColorModeContext, useMode } from "./theme.js";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import Authentication from "./pages/authentication.jsx";
+import Authentication from "./pages/Authentication.jsx";
 import LoggedIn from "./components/loggedIn.jsx";
 
 function App() {

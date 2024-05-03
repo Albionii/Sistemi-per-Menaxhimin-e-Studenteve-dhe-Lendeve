@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "../pages/home.jsx";
+import Home from "../pages/Home.jsx"
 import Services from "../pages/services.jsx";
 import LogIn from "../pages/login.jsx";
 import Topbar from "./global/Topbar.jsx"
@@ -10,6 +10,7 @@ import Dashboard from "../pages/dashboard.jsx";
 import Profili from "../pages/Profili.jsx";
 
 import { Routes, Route } from "react-router-dom";
+import Profesori from "../pages/Profesori.jsx";
 
 function loggedIn() {
   return (
@@ -18,9 +19,10 @@ function loggedIn() {
       <main className="content">
         <Topbar />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-
+        <Route path="/" element={<Home />}/>
+          <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/provimet" element={<Provimet />} />
+          <Route path="/profesoret" element={<Profesori />} />
 
           <Route path="/provimet/paraqitura" element={<Paraqitura />} />
 
