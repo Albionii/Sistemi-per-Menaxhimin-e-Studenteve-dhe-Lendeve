@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "../pages/Home.jsx"
+import Home from "../pages/home.jsx"
 import Services from "../pages/services.jsx";
 import LogIn from "../pages/login.jsx";
 import Topbar from "./global/Topbar.jsx"

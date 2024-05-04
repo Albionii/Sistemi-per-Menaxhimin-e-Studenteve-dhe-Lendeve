@@ -36,7 +36,7 @@ const About = () => {
     password: ''
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +45,6 @@ const About = () => {
         ...formData,
         nrTelefonit: [{ numri: e.target.value }]
       });
-
     }
     else {
       setFormData({
@@ -90,14 +89,18 @@ const About = () => {
 
   const postData = async (data) => {
     try {
+      let resp;
       const response = await fetch('http://localhost:8080/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      });
-      console.log(JSON.stringify(response));
+      })
+      const movies = await response.json();
+      console.log(movies);
+      // console.log(resp);
+      // console.log(response);
       if (response.status > 600) {
         changeDisplayType();
       }

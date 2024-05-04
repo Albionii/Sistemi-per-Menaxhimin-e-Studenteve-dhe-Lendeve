@@ -1,15 +1,13 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
 import com.projekti.sistemimenaxhimittefakulltetit.config.JwtProvider;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.USER_ROLE;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.UserRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.LoginRequest;
 import com.projekti.sistemimenaxhimittefakulltetit.response.AuthResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.CostumerUserDetailsService;
+import com.projekti.sistemimenaxhimittefakulltetit.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
@@ -47,12 +46,15 @@ public class AuthController {
     private CostumerUserDetailsService costumerUserDetailsService;
 
 
+
     @PostMapping("signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception{
         User emailExists = userRepository.findUserByEmail(user.getEmail());
         if(emailExists != null){
             throw new Exception("Email already exists");
         }
+
+
 
         User createdUser = new User();
         createdUser.setEmail(user.getEmail());
@@ -78,6 +80,7 @@ public class AuthController {
 
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(jwt);
+        authResponse.setMessage(jwt);
         authResponse.setMessage("Register success");
         authResponse.setRole(savedUser.getRole());
 

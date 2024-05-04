@@ -4,13 +4,13 @@ import "./output.css";
 // import Signup from './pages/signup.jsx';
 import { ColorModeContext, useMode } from "./theme.js";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import Authentication from "./pages/Authentication.jsx";
+import Authentication from "./pages/authentication.jsx";
 import LoggedIn from "./components/loggedIn.jsx";
 
 function App() {
   const [theme, colorMode] = useMode();
 
-  const loggedIn = true;
+  const loggedIn = false;
 
   return (
     <ColorModeContext.Provider value={colorMode}>
