@@ -33,11 +33,22 @@ public class User {
     private Date dateLindja;
     private String gjinia;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Address> addresses = new ArrayList<>();
+//
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<NrTelefonit> nrTelefonit = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NrTelefonit> nrTelefonit = new ArrayList<>();
+    private String nrTelefonit;
+
+    private String qyteti;
+
+    private String zipcode;
+
+    private String shteti;
+
+    private String rruga;
+
 
     private USER_ROLE role = USER_ROLE.ROLE_STUDENT;
 

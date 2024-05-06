@@ -26,9 +26,7 @@ const About = () => {
     qyteti: '',
     zipcode: '',
     shteti: '',
-    nrTelefonit: [{
-      numri: ''
-    }],
+    nrTelefonit: '',
     email: '',
     firstName: '',
     lastName: '',
@@ -40,18 +38,14 @@ const About = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "nrTelefonit") {
-      setFormData({
-        ...formData,
-        nrTelefonit: [{ numri: e.target.value }]
-      });
+    if(name === "shteti"){
+      mbushQytetet();
     }
-    else {
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-    }
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+    console.log(formData);
   };
 
   const handleSubmit = (e) => {
@@ -89,47 +83,116 @@ const About = () => {
 
   const postData = async (data) => {
     try {
-      let resp;
-      const response = await fetch('http://localhost:8080/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      const movies = await response.json();
-      console.log(movies);
-      // console.log(resp);
-      // console.log(response);
-      if (response.status > 600) {
-        changeDisplayType();
-      }
-      if (response.status == 601) {
-        changeParameterError("Emri");
-      }
-      if (response.status == 602) {
-        changeParameterError("Mbiemri");
-      }
-      if (response.status == 603) {
-        changeParameterError("Data ");
-      }
-      if (response.status == 604) {
-        changeParameterError("Email ");
-      }
-      if (response.status === 201) {
+      //Pjesa e Validimit
+      const passwordOrig = document.getElementById("password1").value;
+      const passwordComp = document.getElementById("password2").value;
+      const email = document.getElementById("email1").value;
+
+      let isValid = true;
+
+      if (passwordComp !== passwordOrig) {
+        isValid = false;
         Swal.fire({
-          icon: "success",
-          title: "U regjistrua!",
-          showConfirmButton: false,
-          timer: 3000
-        }).then(() => {
-          // window.location.href = "/Services";
+          icon: "error",
+          title: "Konfirmo Passwordin!",
+          timer: 1000
         })
+      }
+      if (!email.endsWith("@gmail.com")) {
+        isValid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Konfirmo Email!",
+          timer: 1000
+        })
+      }
+
+      if (isValid) {
+        const response = await fetch('http://localhost:8080/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        const movies = await response.json();
+        console.log(movies);
+
+        // console.log(resp);
+        // console.log(response);
+        if (response.status > 600) {
+          changeDisplayType();
+        }
+        if (response.status == 601) {
+          changeParameterError("Emri");
+        }
+        if (response.status == 602) {
+          changeParameterError("Mbiemri");
+        }
+        if (response.status == 603) {
+          changeParameterError("Data ");
+        }
+        if (response.status == 604) {
+          changeParameterError("Email ");
+        }
+        if (response.status === 201) {
+          Swal.fire({
+            icon: "success",
+            title: "U regjistrua!",
+            showConfirmButton: false,
+            timer: 3000
+          }).then(() => {
+            // window.location.href = "/Services";
+          })
+        }
       }
     } catch (error) {
       console.error('Error:', error);
     }
+
   };
+
+  function mbushQytetet() {
+    const shteti = document.getElementById("ShtetiDropdown").value;
+    const qyteti = document.getElementById("QytetiDropdown");
+
+    qyteti.innerHTML = "";
+
+    if (shteti === "Kosova") {
+      const qytetet = ["-","Ferizaj", "Prishtina", "Gjakova"];
+      qytetet.forEach(function(city){
+        var option = document.createElement("option");
+        option.text = city;
+        option.value = city;
+        qyteti.add(option);
+      })
+    }
+    if (shteti === "Maqedoni") {
+      const qytetet = ["-","Tetova", "Gostivari", "Shkupi"];
+      qytetet.forEach(function(city){
+        var option = document.createElement("option");
+        option.text = city;
+        option.value = city;
+
+        qyteti.add(option);
+      })
+    }
+
+    if (shteti === "Shqiperi") {
+      const qytetet = ["-","Durres", "Shkup", "Tiran"];
+      qytetet.forEach(function(city){
+        var option = document.createElement("option");
+        option.text = city;
+        option.value = city;
+        qyteti.add(option);
+      })
+    }
+      setFormData({
+        ...formData,
+        qyteti: qyteti.value,
+      })
+
+  }
 
   return (
     <>
@@ -287,7 +350,7 @@ const About = () => {
                 </label>
                 <label>
                   <div>
-                    <Label htmlFor="password1" value="Your password" />
+                    <Label htmlFor="password1" value="Confirm Password" />
                     <TextInput id="password2" type="password" name='password2' required />
                   </div>
                 </label>
@@ -343,6 +406,20 @@ const About = () => {
                     onChange={handleChange}
                     required
                   />
+                </label>
+                <label >
+                  <select style={{color: 'black'}} id="ShtetiDropdown" name="shteti" value={formData.shteti} onChange={handleChange}>
+                    <option value="">Zgjidhe Shtetin</option>
+                    <option value="Kosova">Kosova</option>
+                    <option value="Shqiperi">Sqhiperi</option>
+                    <option value="Maqedoni">Maqedoni</option>
+                  </select>
+                </label>
+                <label>
+                  <select style={{color: 'black'}} id="QytetiDropdown" name="qyteti" value={formData.qyteti} onChange={handleChange}>
+                    <option value="">Zgjidhe Qytetin</option>
+                  </select>
+
                 </label>
 
               </div>

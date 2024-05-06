@@ -64,6 +64,11 @@ public class AuthController {
         createdUser.setLastName(user.getLastName());
         createdUser.setRole(user.getRole());
         createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        createdUser.setQyteti(user.getQyteti());
+        createdUser.setRruga(user.getRruga());
+        createdUser.setShteti(user.getShteti());
+        createdUser.setZipcode(user.getZipcode());
+        createdUser.setNrTelefonit(user.getNrTelefonit());
 
 
         Student createdStudent = new Student();
