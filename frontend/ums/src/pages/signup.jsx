@@ -35,17 +35,28 @@ const About = () => {
   });
 
   // console.log(formData);
-
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    if(name === "shteti"){
+    if (e.target.name === "shteti") {
       mbushQytetet();
     }
+    console.log(e.target);
+    // console.log(e.target.name);
+    const { name, value } = e.target;
+
     setFormData({
       ...formData,
       [name]: value
     });
     console.log(formData);
+  };
+
+  const handleDateChange = (e) => {
+    // console.log(e);
+    const date = new Date(e);
+    setFormData({
+      ...formData,
+      'dateLindja': date
+    });
   };
 
   const handleSubmit = (e) => {
@@ -79,7 +90,7 @@ const About = () => {
     }, 4000);
 
   };
-
+  // mbushQytetet();
 
   const postData = async (data) => {
     try {
@@ -87,6 +98,9 @@ const About = () => {
       const passwordOrig = document.getElementById("password1").value;
       const passwordComp = document.getElementById("password2").value;
       const email = document.getElementById("email1").value;
+      const shteti = document.getElementById("ShtetiDropdown").value;
+      const qyteti = document.getElementById("QytetiDropdown").value;
+
 
       let isValid = true;
 
@@ -106,6 +120,15 @@ const About = () => {
           timer: 1000
         })
       }
+      if(qyteti === "" || shteti === ""){
+        isValid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Konfirmo Shtetin ose qytetin",
+          timer: 1000
+        })
+      }
+
 
       if (isValid) {
         const response = await fetch('http://localhost:8080/auth/signup', {
@@ -152,15 +175,17 @@ const About = () => {
 
   };
 
+
   function mbushQytetet() {
     const shteti = document.getElementById("ShtetiDropdown").value;
+
     const qyteti = document.getElementById("QytetiDropdown");
 
     qyteti.innerHTML = "";
 
     if (shteti === "Kosova") {
-      const qytetet = ["-","Ferizaj", "Prishtina", "Gjakova"];
-      qytetet.forEach(function(city){
+      const qytetet = ["Ferizaj", "Prishtina", "Gjakova"];
+      qytetet.forEach(function (city) {
         var option = document.createElement("option");
         option.text = city;
         option.value = city;
@@ -168,8 +193,8 @@ const About = () => {
       })
     }
     if (shteti === "Maqedoni") {
-      const qytetet = ["-","Tetova", "Gostivari", "Shkupi"];
-      qytetet.forEach(function(city){
+      const qytetet = ["Tetova", "Gostivari", "Shkupi"];
+      qytetet.forEach(function (city) {
         var option = document.createElement("option");
         option.text = city;
         option.value = city;
@@ -179,18 +204,18 @@ const About = () => {
     }
 
     if (shteti === "Shqiperi") {
-      const qytetet = ["-","Durres", "Shkup", "Tiran"];
-      qytetet.forEach(function(city){
+      const qytetet = ["Durres", "Shkup", "Tiran"];
+      qytetet.forEach(function (city) {
         var option = document.createElement("option");
         option.text = city;
         option.value = city;
         qyteti.add(option);
       })
     }
-      setFormData({
-        ...formData,
-        qyteti: qyteti.value,
-      })
+    setFormData({
+      ...formData,
+      qyteti: qyteti.value,
+    })
 
   }
 
@@ -316,7 +341,7 @@ const About = () => {
 
                 <label>
                   < Label value='Birthday'></Label>
-                  <Datepicker onSelectedDateChanged={(e) => { formData.birthday = (new Date(e.setTime(e.getTime() + 8640000))) }} maxDate={currentDate} required>
+                  <Datepicker name='dateLindja' id="date" onSelectedDateChanged={(e) => { handleDateChange(e.setTime(e.getTime() + 8640000)) }} maxDate={currentDate} required>
 
                   </Datepicker>
 
@@ -356,33 +381,24 @@ const About = () => {
                 </label>
               </div>
               <div className="formDiv flex max-w-md flex-col gap-4 grid grid-cols-2" style={{ display: isAdress ? 'none' : '' }}>
-                <label>
+
+                <label className='mb-3'>
                   <Label value='Shteti'></Label>
-                  <TextInput
-                    type="text"
-                    name="shteti"
-                    id='shtetiInput'
-                    autoComplete='off'
-                    placeholder="Kosova"
-                    value={formData.shteti}
-                    onChange={handleChange}
-                    required
-                  />
+                  <select style={{ color: 'white', background: '#374151', outline: 'solid', outlineWidth: '1px', outlineColor: '#4b5563' }} id="ShtetiDropdown" name="shteti" className='w-full h-full rounded px-2.5 ' value={formData.shteti} onChange={handleChange}>
+                    <option value="">Zgjidhe Shtetin</option>
+                    <option value="Kosova">Kosova</option>
+                    <option value="Shqiperi">Shqiperi</option>
+                    <option value="Maqedoni">Maqedoni</option>
+                  </select>
                 </label>
-                <label>
+                <label className='mb-3'>
                   <Label value='Qyteti'></Label>
-                  <TextInput
-                    type="text"
-                    name="qyteti"
-                    id='qytetiInput'
-                    autoComplete='off'
-                    placeholder="Kosova"
-                    value={formData.qyteti}
-                    onChange={handleChange}
-                    required
-                  />
+                  <select style={{ color: 'white', background: '#374151', outline: 'solid', outlineWidth: '1px', outlineColor: '#4b5563' }} id="QytetiDropdown" name="qyteti" className='w-full h-full rounded px-2.5' value={formData.qyteti} onChange={handleChange}>
+                    <option value="">Zgjidhe Qytetin</option>
+                  </select>
+
                 </label>
-                <label>
+                <label >
                   <Label value='Adresa'></Label>
                   <TextInput
                     type="text"
@@ -406,20 +422,6 @@ const About = () => {
                     onChange={handleChange}
                     required
                   />
-                </label>
-                <label >
-                  <select style={{color: 'black'}} id="ShtetiDropdown" name="shteti" value={formData.shteti} onChange={handleChange}>
-                    <option value="">Zgjidhe Shtetin</option>
-                    <option value="Kosova">Kosova</option>
-                    <option value="Shqiperi">Sqhiperi</option>
-                    <option value="Maqedoni">Maqedoni</option>
-                  </select>
-                </label>
-                <label>
-                  <select style={{color: 'black'}} id="QytetiDropdown" name="qyteti" value={formData.qyteti} onChange={handleChange}>
-                    <option value="">Zgjidhe Qytetin</option>
-                  </select>
-
                 </label>
 
               </div>
