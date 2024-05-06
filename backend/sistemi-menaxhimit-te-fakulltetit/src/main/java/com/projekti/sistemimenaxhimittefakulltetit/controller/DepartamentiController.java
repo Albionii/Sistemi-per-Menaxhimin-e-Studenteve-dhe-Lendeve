@@ -37,7 +37,7 @@ public class DepartamentiController {
 
     @PostMapping("/{fakultetiId}/{dekaniId}")
     public void createDepartamenti(@RequestBody Departamenti d,@PathVariable("fakultetiId") Long fkId,@PathVariable("dekaniId") Long dekId) throws Exception {
-        d.setFakulteti(fakultetiService.findFakultetiById(fkId).get());
+//        d.setFakulteti(fakultetiService.findFakultetiById(fkId).get());
         d.setUser(userService.findUserById(dekId));
         departamentiService.createDepartamenti(d);
     }

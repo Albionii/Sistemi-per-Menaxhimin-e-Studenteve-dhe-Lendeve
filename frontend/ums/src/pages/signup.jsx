@@ -26,7 +26,9 @@ const About = () => {
     qyteti: '',
     zipcode: '',
     shteti: '',
-    nrTelefonit: '',
+    nrTelefonit: [{
+      numri: ''
+    }],
     email: '',
     firstName: '',
     lastName: '',
@@ -34,17 +36,28 @@ const About = () => {
     password: ''
   });
 
+  // console.log(formData);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    if (name === "nrTelefonit") {
+      setFormData({
+        ...formData,
+        nrTelefonit: [{ numri: e.target.value }]
+      });
+    }
+    else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData.birthday.getFullYear);
+    console.log(JSON.stringify(formData));
+    // formData.nrTelefonit.push(formData.nrTelefonit);
     // formData.birthday;
     postData(formData);
   };
@@ -52,6 +65,11 @@ const About = () => {
   const [nameColor, setNameColor] = useState(undefined);
   const changeColorName = () => {
     setNameColor("failure");
+  };
+
+  const [isAdress, setIsAdress] = useState(true);
+  const changeIsAdress = () => {
+    setIsAdress(!isAdress);
   };
 
   const [parameterError, setParameterError] = useState("");
@@ -71,14 +89,18 @@ const About = () => {
 
   const postData = async (data) => {
     try {
-      const response = await fetch('http://localhost:8080/api/students', {
+      let resp;
+      const response = await fetch('http://localhost:8080/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      });
-      console.log(response);
+      })
+      const movies = await response.json();
+      console.log(movies);
+      // console.log(resp);
+      // console.log(response);
       if (response.status > 600) {
         changeDisplayType();
       }
@@ -178,16 +200,16 @@ const About = () => {
             <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white text-center">Krijo nje account!</h5>
 
             <form onSubmit={handleSubmit}>
-              <div className="formDiv flex max-w-md flex-col gap-4 grid grid-cols-2">
+              <div className="formDiv flex max-w-md flex-col gap-4 grid grid-cols-2" style={{ display: isAdress ? '' : 'none' }}>
                 <label>
                   <Label htmlFor='email1' value='name' color={nameColor}></Label>
                   <TextInput
                     type="text"
-                    name="name"
+                    name="firstName"
                     autoComplete='off'
                     color={nameColor}
                     placeholder="Filan"
-                    value={formData.name}
+                    value={formData.firstName}
                     onChange={handleChange}
                     required
                   />
@@ -197,15 +219,15 @@ const About = () => {
 
                   <TextInput
                     type="text"
-                    name="surname"
+                    name="lastName"
                     autoComplete='off'
                     placeholder='Fisteku'
-                    value={formData.surname}
+                    value={formData.lastName}
                     onChange={handleChange}
                     required
                   />
                 </label>
-                <label>
+                {/* <label>
                   <Label htmlFor='email1' value='Address'></Label>
 
                   <TextInput
@@ -215,15 +237,7 @@ const About = () => {
                     onChange={handleChange}
                     required
                   />
-                </label>
-                <label>
-                  < Label value='Birthday'></Label>
-                  <Datepicker utcOffset={1} onSelectedDateChanged={(e) => { formData.birthday = (new Date(e.setTime(e.getTime() + 8640000))) }} maxDate={currentDate} required>
-
-                  </Datepicker>
-
-
-                </label>
+                </label> */}
                 <label>
                   <Label htmlFor='email1' value='Nr Tel.'></Label>
 
@@ -231,29 +245,39 @@ const About = () => {
                     type="text"
                     name="nrTelefonit"
                     placeholder='04xxxxxxx'
-                    value={formData.nrTelefonit}
+                    value={formData.nrTelefonit.numri}
                     onChange={handleChange}
                     required
                   />
+                </label>
+
+                <label>
+                  < Label value='Birthday'></Label>
+                  <Datepicker onSelectedDateChanged={(e) => { formData.birthday = (new Date(e.setTime(e.getTime() + 8640000))) }} maxDate={currentDate} required>
+
+                  </Datepicker>
+
+
+                </label>
+
+                <label>
+                  <Label htmlFor='email1' value='Email'></Label>
+                  <TextInput id='email1' type='email' name='email' value={formData.email} onChange={handleChange} placeholder="name@flowbite.com" required shadow />
                 </label>
                 <label>
                   <Label htmlFor='male'> Chose your gender
                     <div className='flex gap-2 '>
                       <br />
                       <div className="flex items-center gap-2">
-                        <Radio id="male" name="gender" value="male" checked={formData.gender === 'male'} onChange={handleChange} defaultChecked={true} />
+                        <Radio id="male" name="gjinia" value="male" checked={formData.gjinia === 'male'} onChange={handleChange} />
                         <Label htmlFor="male">Male</Label>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Radio id="female" name="gender" value="female" checked={formData.gender === 'female'} onChange={handleChange} />
+                        <Radio id="female" name="gjinia" value="female" checked={formData.gjinia === 'female'} onChange={handleChange} />
                         <Label htmlFor="female">Female</Label>
                       </div>
                     </div>
                   </Label>
-                </label>
-                <label>
-                  <Label htmlFor='email1' value='Email'></Label>
-                  <TextInput id='email1' type='email' name='email' value={formData.email} onChange={handleChange} placeholder="name@flowbite.com" required shadow />
                 </label>
                 <label>
                   <div>
@@ -261,16 +285,20 @@ const About = () => {
                     <TextInput id="password1" type="password" name='password' value={formData.password} onChange={handleChange} required />
                   </div>
                 </label>
+                <label>
+                  <div>
+                    <Label htmlFor="password1" value="Your password" />
+                    <TextInput id="password2" type="password" name='password2' required />
+                  </div>
+                </label>
               </div>
-              <div className='flex justify-center items-center w-full'>
-                <Button className="mt-3 items-center w-full" type="submit">Register new account</Button>
-              </div>
-              <div className="formDiv flex max-w-md flex-col gap-4 grid grid-cols-2">
+              <div className="formDiv flex max-w-md flex-col gap-4 grid grid-cols-2" style={{ display: isAdress ? 'none' : '' }}>
                 <label>
                   <Label value='Shteti'></Label>
                   <TextInput
                     type="text"
-                    name="name"
+                    name="shteti"
+                    id='shtetiInput'
                     autoComplete='off'
                     placeholder="Kosova"
                     value={formData.shteti}
@@ -282,9 +310,10 @@ const About = () => {
                   <Label value='Qyteti'></Label>
                   <TextInput
                     type="text"
-                    name="name"
+                    name="qyteti"
+                    id='qytetiInput'
                     autoComplete='off'
-                    placeholder="Ferizaj"
+                    placeholder="Kosova"
                     value={formData.qyteti}
                     onChange={handleChange}
                     required
@@ -294,9 +323,10 @@ const About = () => {
                   <Label value='Adresa'></Label>
                   <TextInput
                     type="text"
-                    name="name"
+                    name="rruga"
+                    id='Inputrruga'
                     autoComplete='off'
-                    placeholder="Filan Fisteku, 4"
+                    placeholder="Kosova"
                     value={formData.rruga}
                     onChange={handleChange}
                     required
@@ -306,7 +336,7 @@ const About = () => {
                   <Label value='Zipcode'></Label>
                   <TextInput
                     type="text"
-                    name="name"
+                    name="zipcode"
                     autoComplete='off'
                     placeholder="70000"
                     value={formData.zipcode}
@@ -316,6 +346,12 @@ const About = () => {
                 </label>
 
               </div>
+              <div className='flex justify-center items-center w-full gap-4'>
+                <Button outline gradientDuoTone="cyanToBlue" as='div' style={{ cursor: 'pointer' }} className="mt-3 items-center w-full" onClick={changeIsAdress}>{isAdress ? 'Next' : 'Previous'}</Button>
+
+                <Button className="mt-3 items-center w-full" type="submit" style={{ display: isAdress ? 'none' : '' }}>Register new account</Button>
+              </div>
+
 
             </form>
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">

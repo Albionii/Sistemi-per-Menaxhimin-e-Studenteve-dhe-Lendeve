@@ -10,7 +10,7 @@ import LoggedIn from "./components/loggedIn.jsx";
 function App() {
   const [theme, colorMode] = useMode();
 
-  const loggedIn = true;
+  const loggedIn = false;
 
   return (
     <ColorModeContext.Provider value={colorMode}>

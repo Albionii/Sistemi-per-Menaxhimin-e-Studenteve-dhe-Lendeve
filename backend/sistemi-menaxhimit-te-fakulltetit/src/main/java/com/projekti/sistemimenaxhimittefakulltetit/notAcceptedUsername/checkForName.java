@@ -1,4 +1,4 @@
-package com.connectToDatabase.ConnectToDatabase.notAcceptedUsername;
+package com.projekti.sistemimenaxhimittefakulltetit.notAcceptedUsername;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -27,6 +27,11 @@ public class checkForName {
             }
             return false;
     }
+
+    //IDE PER MAVON ME IMPLEMENTU
+    //Fjalet tek array fjalet mu kan te sortume
+    //tani fjala qe vjen input nbaz te inputit e ban search si ne Algo qe e kem msu Implement mavon e ban
+
 
     //merr fjalet prej bufferit nje nga nje dhe i ruan ne ArrayList
     public void saveToArray() throws IOException{
