@@ -2,7 +2,6 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriProvimi;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,17 +35,34 @@ public class ProfesoriLendaService {
         if(ligjerata == null){
             throw new Exception("Ligjerata can't be null");
         }
-        ProfesoriLenda ligjerata1 = new ProfesoriLenda(ligjerata.getProfessor(), ligjerata.getLenda());
-
-//        ligjerata1.setLenda(ligjerata.getLenda());
-//        ligjerata1.setProfessor(ligjerata.getProfessor());
-
-        return profesoriLendaRepository.save(ligjerata1);
+        return profesoriLendaRepository.save(ligjerata);
     }
 
 
 
     public ProfesoriLenda findByProfessorAndLenda(Professor professor, Lenda lenda) {
         return profesoriLendaRepository.findByProfessorAndLenda(professor, lenda);
+    }
+
+    public List<ProfesoriLenda> getAllProfessorLenda(){
+        return profesoriLendaRepository.findAll();
+    }
+
+    public void deleteProfessorLendaByID(Long id){
+        profesoriLendaRepository.deleteById(id);
+    }
+
+    public ProfesoriLenda updateProfessorLenda(Long id, ProfesoriLenda newProfessorLenda){
+        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaRepository.findById(id);
+        if (profesoriLenda.isPresent()) {
+            ProfesoriLenda p = profesoriLenda.get();
+            p.setId(newProfessorLenda.getId());
+            p.setProfessor(newProfessorLenda.getProfessor());
+            p.setLenda(newProfessorLenda.getLenda());
+            return profesoriLendaRepository.save(p);
+        } else {
+            return null; // Or handle the case where the product with the given id is not found
+        }
+
     }
 }

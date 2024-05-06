@@ -4,13 +4,15 @@ import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.request.CreateStudentProvimRequest;
 import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/professor")
+@RequestMapping("/professor")
 @RequiredArgsConstructor
 public class ProfessorController {
 
@@ -58,4 +60,19 @@ public class ProfessorController {
     public StudentProvimi getProvimi(@PathVariable Long id) {
         return studentPrvService.findById(id);
     }
+
+    @GetMapping("/getProfessors")
+    public ResponseEntity<List<Professor>> getProfessors(){
+        List<Professor> professors = professorService.getProfessors();
+        return new ResponseEntity<>(professors, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/getProfessor/{id}")
+    public Optional<Professor> getProfessor(@PathVariable Long id){
+        return professorService.findProfById(id);
+    }
+
+
+
 }

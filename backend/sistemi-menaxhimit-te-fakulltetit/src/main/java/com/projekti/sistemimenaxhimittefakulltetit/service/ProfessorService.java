@@ -5,6 +5,9 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfessorRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProfessorService {
@@ -17,5 +20,13 @@ public class ProfessorService {
 
     public Professor findProfessorById(Long id) {
         return professorRepository.findProfessorById(id);
+    }
+
+    public Optional<Professor> findProfById(Long id) {
+        return professorRepository.findById(id);
+    }
+
+    public List<Professor> getProfessors(){
+        return professorRepository.findAll();
     }
 }
