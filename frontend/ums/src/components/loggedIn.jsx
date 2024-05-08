@@ -8,9 +8,11 @@ import Provimet from "../components/Provimi/Provimet.jsx";
 import Paraqitura from "../components/Provimi/Paraqitura.jsx";
 import Dashboard from "../pages/dashboard.jsx";
 import Profili from "../pages/Profili.jsx";
+import CRUD from "../CRUD-Template/Crud.jsx";
 
 import { Routes, Route } from "react-router-dom";
 import Profesori from "../pages/Profesori.jsx";
+import SampleCrud from "../SampleCrud.jsx";
 
 function loggedIn() {
   return (
@@ -23,6 +25,7 @@ function loggedIn() {
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/provimet" element={<Provimet />} />
           <Route path="/profesoret" element={<Profesori />} />
+          <Route path="/Ligjeratat" element={<SampleCrud />} />
 
           <Route path="/provimet/paraqitura" element={<Paraqitura />} />
 

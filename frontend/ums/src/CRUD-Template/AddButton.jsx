@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
-export default function AddButton ({setConfirmExit, renderBot}) {
+export default function AddButton ({setConfirmExit, renderBot, addButtonJson, formDataJson}) {
   const handleClick = () => {
     setConfirmExit();
   }
@@ -16,30 +16,7 @@ export default function AddButton ({setConfirmExit, renderBot}) {
     getId(e.target.value);
   }
 
-  const [formData, setFormData] = useState({
-    professor: {
-      id: '',
-      user: {
-        id: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        dateLindja: null,
-        gjinia: '',
-        addresses: [],
-        nrTelefonit: [],
-        role: null
-      }
-    },
-    lenda: {
-      id: '',
-      emri: '',
-      ects: '',
-      obligative: false
-    },
-    assignments: [],
-    postimet: []
-  });
+  const [formData, setFormData] = useState(formDataJson);
   
   useEffect(() => {
     getLendet();
@@ -47,10 +24,12 @@ export default function AddButton ({setConfirmExit, renderBot}) {
 
   const getLendet = async () => {
     try {
-      const fetchLendet = await axios.get('http://localhost:8080/lenda');
+      const [url, message] = addButtonJson.inputat.I2.getAPI()
+      console.log("url : " + url)
+      const fetchLendet = await axios.get(url);
       setLendet(fetchLendet.data);
     } catch (error) {
-      console.log("Could not get Lendet");
+      console.log("Could not get Lendet"+error);
     }
   };
 
@@ -106,16 +85,12 @@ export default function AddButton ({setConfirmExit, renderBot}) {
         }
       });
       
-      setFormData({
-        ...formData,
-      });
-      
-      renderBot();
-      setConfirmExit();
       console.log('ProfesoriLenda created:', response.data);
     } catch (error) {
       console.error('Error creating ProfesoriLenda:', error);
     }
+    renderBot();
+    setConfirmExit();
   };
   
 

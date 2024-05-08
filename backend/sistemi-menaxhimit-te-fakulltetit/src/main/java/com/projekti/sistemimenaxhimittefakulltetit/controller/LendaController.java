@@ -59,7 +59,7 @@ public class LendaController {
         return ResponseEntity.status(HttpStatus.OK).body(lenda);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteLendaById(@PathVariable Long id){
         lendaService.deleteLenda(id);
     }

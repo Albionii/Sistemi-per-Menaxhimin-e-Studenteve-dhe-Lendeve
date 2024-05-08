@@ -173,7 +173,7 @@ const Sidebar = () => {
               style={{
                 color: colors.gray[100],
               }}
-              iconShape="square"
+              // iconShape="square"
               icon={<SchoolOutlinedIcon />}
               title={"ManageTeam"}
             >
@@ -200,11 +200,22 @@ const Sidebar = () => {
             />
             <Item
               title="Lectures"
-              to="/ligjeratat"
+              to="/lectures"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+            <SubMenu
+              title="CRUD's"
+              icon={<ReceiptOutlinedIcon />}
+            >
+               <SubItem
+                title="Ligjeratat"
+                to="/Ligjeratat"
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </SubMenu>
 
             <Typography
               variant="h6"

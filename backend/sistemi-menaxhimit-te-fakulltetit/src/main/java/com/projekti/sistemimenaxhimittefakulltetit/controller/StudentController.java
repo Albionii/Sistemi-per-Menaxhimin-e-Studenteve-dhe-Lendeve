@@ -156,6 +156,25 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void deleteStudentByID(@PathVariable Long id) {
+        studentService.deleteByID(id);
+    }
+
+    @GetMapping("/getAllStudents")
+    public ResponseEntity<List<Student>> getAllStudents(){
+        List<Student> students = studentService.getAllStudents();
+        return ResponseEntity.ok().body(students);
+    }
+
+    @GetMapping("/getStudent/{id}")
+    public ResponseEntity<Student> getStudentByID(@PathVariable Long id){
+        Student student = studentService.getStudentByID(id).get();
+        return ResponseEntity.ok().body(student);
+    }
+
+
+
 
 
 }
