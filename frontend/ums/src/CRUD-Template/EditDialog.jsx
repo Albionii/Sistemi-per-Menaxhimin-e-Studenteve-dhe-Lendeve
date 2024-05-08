@@ -62,7 +62,6 @@ export default function EditDialog({setConfirmExit, ligjerataID, onLigjerataEdit
     e.preventDefault();
     try {
       await axios.put(`http://localhost:8080/professorLenda/update/${ligjerataID}`, newFormLigjerata);
-      console.log("it is working!!!" + newFormLigjerata.professor.id);
       setConfirmExit();
       onLigjerataEdit();
       
