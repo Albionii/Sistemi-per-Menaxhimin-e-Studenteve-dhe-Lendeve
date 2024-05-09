@@ -215,6 +215,12 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
+              <SubItem
+                title="Menaxho Users"
+                to="/MenaxhoUsers"
+                selected={selected}
+                setSelected={setSelected}
+              />
             </SubMenu>
 
             <Typography

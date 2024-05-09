@@ -9,7 +9,7 @@ import Paraqitura from "../components/Provimi/Paraqitura.jsx";
 import Dashboard from "../pages/dashboard.jsx";
 import Profili from "../pages/Profili.jsx";
 import CRUD from "../CRUD-Template/Crud.jsx";
-
+import MenaxhoUsers from '../usersCrud.jsx';
 import { Routes, Route } from "react-router-dom";
 import Profesori from "../pages/Profesori.jsx";
 import SampleCrud from "../SampleCrud.jsx";
@@ -30,6 +30,9 @@ function loggedIn() {
           <Route path="/provimet/paraqitura" element={<Paraqitura />} />
 
           <Route path="/Profili" element={<Profili />} />
+
+          <Route path="/MenaxhoUsers" element={<MenaxhoUsers />} />
+
 
         </Routes>
       </main>

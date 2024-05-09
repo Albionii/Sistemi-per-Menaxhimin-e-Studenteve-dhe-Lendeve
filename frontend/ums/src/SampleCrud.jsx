@@ -17,7 +17,8 @@ function SampleCrud() {
     "Gjinia",
     "Lenda",
     "ECTS",
-    "Statusi"
+    "email",
+    "buttons"
   ]
 
   const isPreviewAvailable = false;
@@ -89,6 +90,7 @@ function SampleCrud() {
       obligative: false
     }
   }
+  const jsonNames = ["professor.id","professor.user.firstName","professor.user.lastName","professor.user.gjinia","lenda.emri","lenda.ects","professor.user.email"];
 
   return (
     <>
@@ -103,6 +105,7 @@ function SampleCrud() {
         addButtonJson = {addButtonJson}
         editButtonJson = {editButtonJson}
         formDataJson = {formDataJson}
+        jsonName={jsonNames}
          />
     </>
   )
