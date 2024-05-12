@@ -2,6 +2,7 @@ package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
 import com.projekti.sistemimenaxhimittefakulltetit.config.JwtProvider;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfessorRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.UserRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.LoginRequest;
@@ -37,6 +38,9 @@ public class AuthController {
     private StudentRepository studentRepository;
 
     @Autowired
+    private ProfessorRepository professorRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -70,13 +74,19 @@ public class AuthController {
         createdUser.setZipcode(user.getZipcode());
         createdUser.setNrTelefonit(user.getNrTelefonit());
 
-
-        Student createdStudent = new Student();
-
         User savedUser = userRepository.save(createdUser);
-        createdStudent.setUser(createdUser);
-        studentRepository.save(createdStudent);
 
+
+        if(createdUser.getRole() == USER_ROLE.ROLE_STUDENT){
+            Student createdStudent = new Student();
+            createdStudent.setUser(createdUser);
+            studentRepository.save(createdStudent);
+        }
+        else if(createdUser.getRole() == USER_ROLE.ROLE_PROFESSOR){
+            Professor createdProfessor = new Professor();
+            createdProfessor.setUser(createdUser);
+            professorRepository.save(createdProfessor);
+        }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);

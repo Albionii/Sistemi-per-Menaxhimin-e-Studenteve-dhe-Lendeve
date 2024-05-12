@@ -4,7 +4,8 @@ import { tokens } from "../theme";
 import Table from "../components/Table";
 import PieChart from "../components/charts/Piechart";
 import Calendar from "../components/Calendar";
-import DeleteIcon from "@mui/icons-material/Delete";
+import SimpleSlider from "../components/Carousel"
+import ResponsiveButtons from "../components/Buttons"
 
 const Home = () => {
   const theme = useTheme();
@@ -14,35 +15,29 @@ const Home = () => {
     <Box m="20px">
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="153px"
+        gridTemplateColumns={{xs:'1fr', sm:"repeat(12, 1fr)"}}
+        gridAutoRows="156px"
         gap="20px"
       >
         {/* ROW 1*/}
         <Box
           gridColumn="span 12"
           backgroundColor={colors.blueAccent[400]}
+          gridRow={{xs: 'span 2', md: 'span 1', sm:'span 2'}}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
           borderRadius={"7px"}
           textAlign={"center"}
-          padding={"0 175px 0 175px"}
+          padding={{xs:'25px', sm:"45px"}}
         >
-          <h1>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollet anim id est laborum."
-          </h1>
+
+          <SimpleSlider/>
         </Box>
         {/* ROW 2 */}
         <Box
           onClick
-          gridColumn={"span 5"}
+          gridColumn={{xs: 'span 12', md:'span 5',sm:"span 12"}}
           gridRow={"span 2"}
           backgroundColor={colors.primary[400]}
           borderRadius={"7px"}
@@ -50,7 +45,7 @@ const Home = () => {
           <Table />
         </Box>
         <Box
-          gridColumn={"span 3"}
+          gridColumn={{xs: 'span 12', md:'span 3',sm:"span 12"}}
           gridRow={"span 2"}
           backgroundColor={colors.primary[400]}
           borderRadius={"7px"}
@@ -77,7 +72,7 @@ const Home = () => {
           </Box>
         </Box>
         <Box
-          gridColumn={"span 4"}
+          gridColumn={{xs:'span 12', md:'span 4',sm:"span 12"}}
           gridRow={"span 2"}
           backgroundColor={colors.primary[400]}
           borderRadius={"7px"}
@@ -97,80 +92,21 @@ const Home = () => {
 
         {/* ROW 3 */}
         <Box
-          gridColumn={"span 5"}
-          gridRow={"span 2"}
+          gridColumn={{xs: 'span 12', md:'span 5', sm:"span 12"}}
+          gridRow={{xs: 'span 4', md: 'span 2', sm: 'span 2'}}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
           borderRadius={"7px"}
           backgroundColor={colors.primary[400]}
         >
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            flexWrap="wrap"
-            width={"90%"}
-          >
-            <Button
-              startIcon={<DeleteIcon />}
-              variant="contained"
-              color="success"
-              style={{
-                padding: "50px",
-                margin: "15px",
-                color: "white",
-                background: "#D40E14",
-              }}
-            >
-              Gjenero Transkripten
-            </Button>
-            <Button
-              startIcon={<DeleteIcon />}
-              variant="contained"
-              color="error"
-              style={{
-                padding: "50px",
-                margin: "15px",
-                color: "white",
-                background: "#EC6601",
-              }}
-            >
-              Gjenero Transkripten
-            </Button>
-            <Button
-              startIcon={<DeleteIcon />}
-              variant="contained"
-              color="primary"
-              style={{
-                padding: "50px",
-                margin: "15px",
-                color: "white",
-                background: "#004F95",
-              }}
-            >
-              Gjenero Transkripten
-            </Button>
-            <Button
-              startIcon={<DeleteIcon />}
-              variant="contained"
-              color="secondary"
-              style={{
-                padding: "50px",
-                margin: "15px",
-                color: "white",
-                background: "#B70E77",
-              }}
-            >
-              Gjenero Transkripten
-            </Button>
-          </Box>
+          <ResponsiveButtons/>
         </Box>
         <Box
-          gridColumn={"span 7"}
+          gridColumn={{xs:'span 12', md:'span 7', sm:"span 12"}}
           gridRow={"span 2"}
           borderRadius={"7px"}
-          padding={"15px 40px 15px 40px"}
+          padding={{xs: '15px 40px', sm:"15px 40px 15px 40px"}}
           backgroundColor={colors.primary[400]}
         >
           <Calendar/>

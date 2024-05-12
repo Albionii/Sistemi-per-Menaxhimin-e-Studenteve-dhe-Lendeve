@@ -80,6 +80,7 @@ const Sidebar = () => {
 
   return (
     <Box
+      width={isCollapsed ? "80px" : "320px"}
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
@@ -98,7 +99,13 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar id="sidebar" collapsed={isCollapsed}>
+      {/* <Box width={isCollapsed ? "80px" : "270px"}> */}
+      <ProSidebar id="sidebar" collapsed={isCollapsed} style={{position: "fixed"}} rootStyles={{
+        position: "sticky",
+        top: 0,
+        height: "100vh",
+      }}>
+        
         <Menu>
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -291,6 +298,7 @@ const Sidebar = () => {
         </Menu>
       </ProSidebar>
     </Box>
+    // </Box>
   );
 };
 

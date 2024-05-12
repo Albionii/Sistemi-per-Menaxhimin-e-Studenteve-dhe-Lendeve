@@ -13,6 +13,7 @@ import MenaxhoUsers from '../usersCrud.jsx';
 import { Routes, Route } from "react-router-dom";
 import Profesori from "../pages/Profesori.jsx";
 import SampleCrud from "../SampleCrud.jsx";
+import CrudCategories from "../pages/CrudCategories.jsx";
 
 function loggedIn() {
   return (
@@ -25,7 +26,9 @@ function loggedIn() {
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/provimet" element={<Provimet />} />
           <Route path="/profesoret" element={<Profesori />} />
-          <Route path="/Ligjeratat" element={<SampleCrud />} />
+          <Route path="/ligjeratat" element={<SampleCrud />} />
+          <Route path="/cruds" element={<CrudCategories />} />
+
 
           <Route path="/provimet/paraqitura" element={<Paraqitura />} />
 
