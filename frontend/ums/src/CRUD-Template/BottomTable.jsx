@@ -88,7 +88,6 @@ export default function BottomTable({ theKey, rows, API, addButtonJson, editButt
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       <div className="flex items-center">
                         {accessJsonNames(p, jsonNames)}
-                        {console.log(p)}
                       </div>
                     </td>
                   ))

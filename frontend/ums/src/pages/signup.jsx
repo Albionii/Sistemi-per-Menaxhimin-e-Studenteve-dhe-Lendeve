@@ -39,7 +39,7 @@ const About = () => {
     if (e.target.name === "shteti") {
       mbushQytetet();
     }
-    console.log(e.target);
+    // console.log(e.target);
     // console.log(e.target.name);
     const { name, value } = e.target;
 
@@ -47,7 +47,7 @@ const About = () => {
       ...formData,
       [name]: value
     });
-    console.log(formData);
+    // console.log(formData);
   };
 
   const handleDateChange = (e) => {
@@ -61,7 +61,7 @@ const About = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(formData));
+    // console.log(JSON.stringify(formData));
     // formData.nrTelefonit.push(formData.nrTelefonit);
     // formData.birthday;
     postData(formData);
@@ -138,8 +138,8 @@ const About = () => {
           },
           body: JSON.stringify(data)
         })
-        const movies = await response.json();
-        console.log(movies);
+        const jwt = await response.json();
+        // console.log(jwt);
 
         // console.log(resp);
         // console.log(response);
