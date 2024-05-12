@@ -49,6 +49,12 @@ public class UserController {
     }
 
 
+    @PostMapping()
+    public User findUserByJWT(@RequestHeader("Authorization") String token) throws Exception {
+        return userService.findUserByJwtToken(token);
+    }
+
+
     @PostMapping("/submit/{id}")
     public List<AssignmentSubmission> submitAssignment(@PathVariable Long id,
                                                        @RequestBody AssignmentSubmission submitedAssignment,
