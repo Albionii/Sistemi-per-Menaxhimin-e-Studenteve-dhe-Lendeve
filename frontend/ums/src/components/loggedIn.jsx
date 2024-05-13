@@ -16,6 +16,10 @@ import SampleCrud from "../SampleCrud.jsx";
 import CrudCategories from "../pages/CrudCategories.jsx";
 import Transkripta from "../pages/Transkripta.jsx";
 
+import Ligjerata from "../pages/ligjerata.jsx";
+import Ligjeratat from "../pages/ligjeratat.jsx";
+
+
 function loggedIn() {
 // const [sideBarInfo, setSideBarInfo] = useState(null);
 
@@ -43,7 +47,9 @@ function loggedIn() {
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/provimet" element={<Provimet />} />
           <Route path="/profesoret" element={<Profesori />} />
-          <Route path="/ligjeratat" element={<SampleCrud />} />
+
+          <Route path="/ligjeratat" element={<Ligjeratat />} />
+          <Route path="/ligjeratat/:name//*" element={<Ligjerata />} />
           <Route path="/cruds" element={<CrudCategories />} />
           <Route path="/transkripta" element={<Transkripta />} />
 
