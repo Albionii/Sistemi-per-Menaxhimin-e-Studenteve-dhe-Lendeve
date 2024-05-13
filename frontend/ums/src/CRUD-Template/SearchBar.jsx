@@ -1,7 +1,11 @@
 import axios from "axios"
+import { useTheme } from "@mui/material";
+import { tokens } from "../theme";
 
 export default function SearchBar(){
 
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const search = async (category) => {
     try {
       const fetchCategory = await axios.get(``); 
@@ -34,7 +38,8 @@ export default function SearchBar(){
         <input
           type="text"
           id="simple-search"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          className="text-sm rounded-lg block w-full pl-10 p-2"
+          style={{background: colors.primary[400]}}
           placeholder="Search"
           required=""
         />

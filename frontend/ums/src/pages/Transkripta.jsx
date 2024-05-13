@@ -8,6 +8,7 @@ import Table from '../components/Table';
 import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import FunctionsOutlinedIcon from '@mui/icons-material/FunctionsOutlined';
+import Profesori from './Profesori';
 
 
 
@@ -86,7 +87,7 @@ const Transkripta = () => {
             gridRow={'span 4'}
             borderRadius={'7px'}
             backgroundColor={colors.blueAccent[400]}>
-                <TableTranskripta/>
+                <Profesori/>
             </Box>
             <Box
             gridColumn={{md:'span 4', sm:'span 12', xs:'span 12'}}

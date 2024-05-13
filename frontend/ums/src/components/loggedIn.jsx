@@ -16,26 +16,26 @@ import SampleCrud from "../SampleCrud.jsx";
 import CrudCategories from "../pages/CrudCategories.jsx";
 import Transkripta from "../pages/Transkripta.jsx";
 
-function loggedIn({changeLoggedInState}) {
+function loggedIn() {
 // const [sideBarInfo, setSideBarInfo] = useState(null);
 
 
-const [user,setUser] = useState({
-  firstName: "Loading",
-  lastName: "Loading"
-});
+// const [user,setUser] = useState({
+//   firstName: "Loading",
+//   lastName: "Loading"
+// });
 
-const setUserData = (data) =>{
-  setUser(data);
-}
+// const setUserData = (data) =>{
+//   setUser(data);
+// }
 
-getFromCookies({setUserData});
+// getFromCookies({setUserData});
 
 
 
   return (
     <>
-      <Sidebar user={user}/>
+      <Sidebar user={'Albin Kurti'}/>
       <main className="content">
         <Topbar />
         <Routes>
@@ -49,7 +49,7 @@ getFromCookies({setUserData});
 
           <Route path="/provimet/paraqitura" element={<Paraqitura />} />
 
-          <Route path="/Profili" element={<Profili  changeLoggedInState={changeLoggedInState} user={user} />} />
+          <Route path="/Profili" element={<Profili />} />
 
           <Route path="/MenaxhoUsers" element={<MenaxhoUsers />} />
 

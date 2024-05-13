@@ -35,7 +35,6 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-
 const SubItem = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -55,7 +54,7 @@ const SubItem = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = ({user}) => {
+const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -81,6 +80,7 @@ const Sidebar = ({user}) => {
 
   return (
     <Box
+      width={isCollapsed ? "80px" : "320px"}
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
@@ -99,7 +99,13 @@ const Sidebar = ({user}) => {
         },
       }}
     >
-      <ProSidebar id="sidebar" collapsed={isCollapsed}>
+      {/* <Box width={isCollapsed ? "80px" : "270px"}> */}
+      <ProSidebar id="sidebar" collapsed={isCollapsed} style={{position: "fixed"}} rootStyles={{
+        position: "sticky",
+        top: 0,
+        height: "100vh",
+      }}>
+        
         <Menu>
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -145,7 +151,7 @@ const Sidebar = ({user}) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {user.firstName + " " + user.lastName}
+                  Albin Kurti
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Prime Minister
@@ -292,6 +298,7 @@ const Sidebar = ({user}) => {
         </Menu>
       </ProSidebar>
     </Box>
+    // </Box>
   );
 };
 

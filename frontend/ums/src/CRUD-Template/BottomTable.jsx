@@ -1,15 +1,28 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState } from "react";
+import { useEffect } from "react";
 import EditButton from "./EditButton";
-import axios from 'axios';
-import DeleteButton from './DeleteButton';
-import PreviewButton from './PreviewButton';
+import axios from "axios";
+import DeleteButton from "./DeleteButton";
+import PreviewButton from "./PreviewButton";
+import { useTheme } from "@mui/material";
+import { tokens } from "../theme";
 
-export default function BottomTable({ theKey, rows, API, addButtonJson, editButtonJson, isPreviewAvailable, formDataJson, jsonName }) {
+export default function BottomTable({
+  theKey,
+  rows,
+  API,
+  addButtonJson,
+  editButtonJson,
+  isPreviewAvailable,
+  formDataJson,
+  jsonName
+}) {
   const [formData, setFormData] = useState([]);
   const [urlGetAll, messageGetAll] = API.getAll();
   const [urlDelete, messageDelete] = API.delete();
   const errorAlert = (message) => API.errorAlert(message);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   useEffect(() => {
     getAllRows();
@@ -17,8 +30,7 @@ export default function BottomTable({ theKey, rows, API, addButtonJson, editButt
 
   const onLigjerataEdit = () => {
     getAllRows();
-  }
-
+  };
 
   const getAllRows = async () => {
     try {
@@ -28,33 +40,27 @@ export default function BottomTable({ theKey, rows, API, addButtonJson, editButt
       errorAlert(messageGetAll);
       console.log(error);
     }
-
-  }
-
+  };
 
   const deleteRow = async (id) => {
     try {
       await axios.delete(urlDelete + `${id}`);
       getAllRows();
-
     } catch (error) {
-      errorAlert(messageDelete)
+      errorAlert(messageDelete);
       console.log(error);
     }
-  }
+  };
 
   function accessJsonNames(obj, jsonNames) {
-
-
     //i merr emrat qe jan dergu ne parameter
-    const properties = jsonNames.split('.');
+    const properties = jsonNames.split(".");
 
     //komplet objektin e run ne variablen result
     let result = obj;
 
     //for loop qe i merr krejt stringjet e parametrit qe jan ba split
     for (const prop of properties) {
-
       //vlera e re e objektit osht vlera e parametrit jsonName
       result = result[prop];
       if (result === undefined) {
@@ -64,43 +70,45 @@ export default function BottomTable({ theKey, rows, API, addButtonJson, editButt
     return result;
   }
 
-
   return (
     <>
       <div className="overflow-x-autowid">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="w-full text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full" style={{ background: colors.primary[600] }}>
+          <thead className="text-xs uppercase">
             <tr>
-              {
-                rows.map((row, index) => (
-                  <th key={index} scope="col" className="p-4">
-                    {row}
-                  </th>
-                ))
-              }
+              {rows.map((row, index) => (
+                <th key={index} scope="col" className="p-4">
+                  {row}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {formData.map(p => (
-              <tr key={p.id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                {
-                  jsonName.map(jsonNames => (
-                    <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      <div className="flex items-center">
-                        {accessJsonNames(p, jsonNames)}
-                      </div>
-                    </td>
-                  ))
-                }
-                
-                <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  <div className="flex items-center space-x-4">
-                    
+            {formData.map((p) => (
+              <tr
+                key={p.id}
+                className="border-b"
+                style={{
+                  background: colors.primary[400],
+                  borderBottomColor: colors.primary[500],
+                }}
+              >
+                {jsonName.map(jsonNames => (
+                  <td className="px-4 py-3 font-medium whitespace-nowrap">
+                    <div className="flex items-center">
+                      {accessJsonNames(p, jsonNames)}
+                      {console.log(p)}
+                    </div>
+                  </td>
+                ))}
 
-                    <EditButton ligjerataID={p.id} onLigjerataEdit={onLigjerataEdit} />
-                    {
-                      isPreviewAvailable ? <PreviewButton /> : ""
-                    }
+                <td className="px-4 py-3 font-medium whitespace-nowrap">
+                  <div className="flex items-center space-x-4">
+                    <EditButton
+                      ligjerataID={p.id}
+                      onLigjerataEdit={onLigjerataEdit}
+                    />
+                    {isPreviewAvailable ? <PreviewButton /> : ""}
                     <DeleteButton id={p.id} onDelete={deleteRow} />
                   </div>
                 </td>
@@ -110,5 +118,5 @@ export default function BottomTable({ theKey, rows, API, addButtonJson, editButt
         </table>
       </div>
     </>
-  )
+  );
 }

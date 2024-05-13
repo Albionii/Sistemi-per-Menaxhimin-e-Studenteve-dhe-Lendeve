@@ -6,7 +6,7 @@ const TableRow = ({ subject, lecturer, time, room, colors, hasBorder }) => (
     style={{
       background: colors.primary[400],
       borderBottomColor: colors.primary[600],
-      borderBottom: hasBorder ? "1px solid" : "none",
+      borderBottom: hasBorder ?  colors.primary[600]+" 1px solid" : "none",
     }}
   >
     <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">

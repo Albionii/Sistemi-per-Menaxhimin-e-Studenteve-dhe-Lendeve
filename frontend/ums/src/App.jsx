@@ -1,5 +1,7 @@
 import "./output.css";
 import { useState } from 'react';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // import About from './pages/about.jsx';
 // import Signup from './pages/signup.jsx';
@@ -11,31 +13,32 @@ import LoggedIn from "./components/loggedIn.jsx";
 function App() {
   const [theme, colorMode] = useMode();
 
+  let loggedIn = true;
 
-  let isLoggedIn = document.cookie ? true : false;
+  // let isLoggedIn = document.cookie ? true : false;
   // console.log(document.cookie);
 
-  if (isLoggedIn) {
-    const documentSplited = document.cookie.split('=');
-    let hasToken = false;
-    for (let i = 0; i < documentSplited.length; i++) {
-      try{
-        if((documentSplited[i].startsWith("Token") && documentSplited[i++].length === 0)){
-          isLoggedIn = false;
-          hasToken = true;
-        }
-      }
-      catch(error){
-        console.log("Cookie Error" + error);
-      }
+  // if (isLoggedIn) {
+  //   const documentSplited = document.cookie.split('=');
+  //   let hasToken = false;
+  //   for (let i = 0; i < documentSplited.length; i++) {
+  //     try{
+  //       if((documentSplited[i].startsWith("Token") && documentSplited[i++].length === 0)){
+  //         isLoggedIn = false;
+  //         hasToken = true;
+  //       }
+  //     }
+  //     catch(error){
+  //       console.log("Cookie Error" + error);
+  //     }
 
-      if(!hasToken){
-        isLoggedIn = false;
-      }
-    }
-  }
+  //     if(!hasToken){
+  //       isLoggedIn = false;
+  //     }
+  //   }
+  // }
 
-  const [loggedIn, setLoggedIn] = useState(isLoggedIn);
+  // const [loggedIn, setLoggedIn] = useState(isLoggedIn);
 
   // const [loggedIn, setLoggedIn] = useState(document.cookie.split('=')[1].length !== 0);
 
@@ -43,9 +46,9 @@ function App() {
 
 
   // const loggedIn = ;
-  const changeLoggedInState = () => {
-    setLoggedIn(!loggedIn);
-  }
+  // const changeLoggedInState = () => {
+  //   setLoggedIn(!loggedIn);
+  // }
   // console.log(document.cookie);
 
   return (
@@ -55,10 +58,10 @@ function App() {
 
         {loggedIn ? (
           <div className="app">
-            <LoggedIn changeLoggedInState={changeLoggedInState} />
+            <LoggedIn/>
           </div>
         ) : (
-          <Authentication changeLoggedInState={changeLoggedInState} />
+          <Authentication />
         )}
       </ThemeProvider>
     </ColorModeContext.Provider>

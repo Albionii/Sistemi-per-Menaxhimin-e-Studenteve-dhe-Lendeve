@@ -8,7 +8,7 @@ import Signup from './signup.jsx';
 import Login from './login.jsx';
 
 
-function authentication({ changeLoggedInState }) {
+function authentication() {
     return (
         <Routes>
             <Route exact path='/'

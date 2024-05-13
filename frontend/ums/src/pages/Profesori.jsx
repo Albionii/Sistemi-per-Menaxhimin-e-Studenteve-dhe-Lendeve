@@ -177,14 +177,8 @@ const Profesori = () => {
   ];
 
   return (
-    <Box m="20px">
-      <Header
-        title="PROFESORET"
-        subtitle="List of Contacts for Future Reference"
-      />
       <Box
-        m="40px 0 0 0"
-        height="75vh"
+        height="100%"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -196,7 +190,7 @@ const Profesori = () => {
             color: colors.greenAccent[300],
           },
           "& .MuiDataGrid-columnHeader": {
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.primary[600],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -204,7 +198,7 @@ const Profesori = () => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.primary[600],
           },
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
@@ -220,7 +214,6 @@ const Profesori = () => {
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
-    </Box>
   );
 };
 
