@@ -40,7 +40,7 @@ const ligjerata = () => {
           flexDirection: "column",
           alignItems: "center",
           gap: "15px",
-          margin: "20px",
+          margin: "20px"
         }}
       >
         <Box
@@ -53,7 +53,6 @@ const ligjerata = () => {
             display: "flex",
             alignItems: "flex-end",
             overflow: "hidden",
-          
           }}
         >
           <Box

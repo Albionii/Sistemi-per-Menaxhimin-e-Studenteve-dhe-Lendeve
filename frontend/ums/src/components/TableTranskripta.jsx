@@ -1,160 +1,190 @@
-import { useTheme } from "@mui/material";
+import { Box } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../theme";
+import { useTheme } from "@mui/material";
 
-const TableRow = ({ id, lenda, ects, nota, notaShkronje, colors, statusi, hasBorder }) => (
-  <tr
-    style={{
-      background: colors.primary[400],
-      borderBottomColor: colors.primary[600],
-      borderBottom: hasBorder ?  colors.primary[600]+" 1px solid" : "none",
-    }}
-  >
-    <td className="px-6 py-4">{id}</td>
-    <td className="px-6 py-4">{lenda}</td>
-    <td className="px-6 py-4">{ects}</td>
-    <td className="px-6 py-4">{nota}</td>
-    <td className="px-6 py-4">{notaShkronje}</td>
-    <td className="px-6 py-4">{statusi}</td>
-  </tr>
-);
+const mockData = [
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+  {
+    id: 1,
+    lenda: "Shkenca Kompjuterike 1",
+    ECTS: "5.00",
+    nota: '9',
+    kategoria: 'Obligative',
+    notaShkronje: "B",
+    statusi: "I rregullte",
+  },
+];
 
-const Table = () => {
+
+const Profesori = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const columns = [
+    { field: "id", headerName: "ID", flex: 0.5 },
+    {
+      field: "lenda",
+      headerName: "Lenda",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "ECTS",
+      headerName: "ECTS",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "nota",
+      headerName: "Nota",
+      flex: 1,
+    },
+    {
+      field: "kategoria",
+      headerName: "Kategoria",
+      flex: 1,
+    },
+    {
+      field: "notaShkronje",
+      headerName: "NotaShkronje",
+      flex: 1,
+    },
+    {
+      field: "statusi",
+      headerName: "Statusi",
+      flex: 1,
+    },
+  ];
+
   return (
-    <div className="relative overflow-x-auto h-full w-full rounded">
-      <table className="w-full text-sm text-left rtl:text-right h-full">
-        <thead
-          className="text-xs uppercase"
-          style={{ background: colors.primary[600] }}
-        >
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              ID
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Lenda
-            </th>
-            <th scope="col" className="px-6 py-3">
-              ECTS
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Nota
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Nota Shkronje 
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Statusi 
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <TableRow
-            id="1"
-            lenda="Bazat e Inxhinieries Elektrike"
-            ects="5.00"
-            nota="9"
-            notaShkronje='B'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            id="2"
-            lenda="Hyrje ne Shkenca Kompjuterike"
-            ects="5.00"
-            nota="9"
-            notaShkronje='B'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            id="3"
-            lenda="Shkenca Kompjuterike 1"
-            ects="5.00"
-            nota="10"
-            notaShkronje='A'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            id="4"
-            lenda="Bazat e Inxhinieries Elektrike"
-            ects="5.00"
-            nota="9"
-            notaShkronje='B'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            id="5"
-            lenda="Bazat e Inxhinieries Elektrike"
-            ects="6.00"
-            nota="9"
-            notaShkronje='B'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            id="6"
-            lenda="Bazat e Inxhinieries Elektrike"
-            ects="6.00"
-            nota="9"
-            notaShkronje='B'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-            <TableRow
-            id="7"
-            lenda="Shkenca Kompjuterike 1"
-            ects="5.00"
-            nota="10"
-            notaShkronje='A'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            id="8"
-            lenda="Bazat e Inxhinieries Elektrike"
-            ects="5.00"
-            nota="9"
-            notaShkronje='B'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            id="9"
-            lenda="Bazat e Inxhinieries Elektrike"
-            ects="6.00"
-            nota="9"
-            notaShkronje='B'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            id="10"
-            lenda="Bazat e Inxhinieries Elektrike"
-            ects="6.00"
-            nota="9"
-            notaShkronje='B'
-            statusi={'I rregullte'}
-            colors={colors}
-            hasBorder
-          />
-        </tbody>
-      </table>
-    </div>
+      <Box
+        height="100%"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+          },
+          "& .name-column--cell": {
+            color: colors.greenAccent[300],
+          },
+          "& .MuiDataGrid-columnHeader": {
+            backgroundColor: colors.primary[600],
+            borderBottom: "none",
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: colors.primary[400],
+          },
+          "& .MuiDataGrid-footerContainer": {
+            borderTop: "none",
+            backgroundColor: colors.primary[600],
+          },
+          "& .MuiCheckbox-root": {
+            color: `${colors.greenAccent[200]} !important`,
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.gray[100]} !important`,
+          },
+        }}
+      >
+        <DataGrid
+          rows={mockData}
+          columns={columns}
+          components={{ Toolbar: GridToolbar }}
+        />
+      </Box>
   );
 };
 
-export default Table;
+export default Profesori;

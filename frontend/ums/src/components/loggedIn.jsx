@@ -11,7 +11,7 @@ import Profili from "../pages/Profili.jsx";
 import CRUD from "../CRUD-Template/Crud.jsx";
 import MenaxhoUsers from '../usersCrud.jsx';
 import { Routes, Route } from "react-router-dom";
-import Profesori from "../pages/Profesori.jsx";
+import Profesori from "./TableTranskripta.jsx";
 import SampleCrud from "../SampleCrud.jsx";
 import CrudCategories from "../pages/CrudCategories.jsx";
 import Transkripta from "../pages/Transkripta.jsx";
@@ -46,7 +46,6 @@ function loggedIn() {
         <Route path="/" element={<Home />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/provimet" element={<Provimet />} />
-          <Route path="/profesoret" element={<Profesori />} />
 
           <Route path="/ligjeratat" element={<Ligjeratat />} />
           <Route path="/ligjeratat/:name//*" element={<Ligjerata />} />
