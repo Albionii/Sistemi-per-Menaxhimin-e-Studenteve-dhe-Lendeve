@@ -1,5 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import jakarta.persistence.*;
 import jdk.jfr.MemoryAddress;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ProfesoriLenda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +29,9 @@ public class ProfesoriLenda {
 
     @OneToMany
     private List<Assignment> assignments;
+
+//    @OneToMany(mappedBy = "ligjerata", cascade = CascadeType.ALL)
+//    private List<Provimi> provimet;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Postimi> postimet = new ArrayList<>();

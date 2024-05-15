@@ -61,7 +61,7 @@ public class ProfessorController {
         return studentPrvService.findById(id);
     }
 
-    @GetMapping("/getProfessors")
+    @GetMapping("")
     public ResponseEntity<List<Professor>> getProfessors(){
         List<Professor> professors = professorService.getProfessors();
         return new ResponseEntity<>(professors, HttpStatus.OK);
@@ -71,6 +71,27 @@ public class ProfessorController {
     @GetMapping("/getProfessor/{id}")
     public Optional<Professor> getProfessor(@PathVariable Long id){
         return professorService.findProfById(id);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Professor> createProfessor(@RequestBody Professor p) throws Exception {
+        Professor professor = professorService.createProfessor(p);
+        return ResponseEntity.ok().body(professor);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteProfessorByID(@PathVariable Long id){
+        professorService.deleteProfessorByID(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Professor> updateProfessor(@PathVariable Long id, @RequestBody Professor p) {
+        Professor professor = professorService.updateProfessor(id, p);
+        if (professor != null) {
+            return new ResponseEntity<>(professor, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 

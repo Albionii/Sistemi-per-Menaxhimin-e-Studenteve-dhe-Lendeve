@@ -31,27 +31,55 @@ public class ProvimiService {
     }
 
 
+    public Provimi createProvimi(Provimi provimi) throws Exception{
 
-    public Provimi createProvimi(ProfesoriLenda lenda, ProvimiReq request) throws Exception {
-
-        if (lenda != null) {
-            Provimi provimi = new Provimi();
-
-            Optional<ProfesoriLenda> ligjerata = profesoriLendaService.findById(lenda.getId());
-
-
-            provimi.setLigjerata(ligjerata.get());
-            provimi.setData(request.getData());
-            provimi.setLocation(request.getLocation());
-
-            provimiRepository.save(provimi);
-
-
-            return provimi;
-        } else {
-            throw new Exception("Something went wrong while creating Provimi");
+        if(provimi == null){
+            throw new Exception("Provimi can't be null");
         }
+        return provimiRepository.save(provimi);
     }
+
+    public List<Provimi> getAllProvimet(){
+        return provimiRepository.findAll();
+    }
+
+    public Provimi updateProvimiByID(Long id, Provimi newProvimi){
+        Optional<Provimi> provimi = provimiRepository.findById(id);
+        if (provimi.isPresent()) {
+            Provimi p = provimi.get();
+            p.setId(newProvimi.getId());
+            p.setLigjerata(newProvimi.getLigjerata());
+            p.setData(newProvimi.getData());
+            p.setLocation(newProvimi.getLocation());
+//            p.setStudentProvimet(newProvimi.getStudentProvimet());
+            return provimiRepository.save(p);
+        } else {
+            return null; // Or handle the case where the product with the given id is not found
+        }
+
+    }
+
+
+//    public Provimi createProvimi(ProfesoriLenda lenda, ProvimiReq request) throws Exception {
+//
+//        if (lenda != null) {
+//            Provimi provimi = new Provimi();
+//
+//            Optional<ProfesoriLenda> ligjerata = profesoriLendaService.findById(lenda.getId());
+//
+//
+//            provimi.setLigjerata(ligjerata.get());
+//            provimi.setData(request.getData());
+//            provimi.setLocation(request.getLocation());
+//
+//            provimiRepository.save(provimi);
+//
+//
+//            return provimi;
+//        } else {
+//            throw new Exception("Something went wrong while creating Provimi");
+//        }
+//    }
 
 
     public void deleteProvimi(Long id) {

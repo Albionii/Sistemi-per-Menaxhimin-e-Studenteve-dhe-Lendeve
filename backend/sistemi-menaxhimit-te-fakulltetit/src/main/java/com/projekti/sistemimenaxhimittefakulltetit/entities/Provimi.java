@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,13 +17,14 @@ public class Provimi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "lenda_id", unique = true)
+    @ManyToOne
+//    @JoinColumn(name = "lenda_id")
     private ProfesoriLenda ligjerata;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
+    private String data;
 
     private String location;
 
+//    @OneToMany(mappedBy = "provimi", cascade = CascadeType.ALL)
+//    private List<StudentProvimi> studentProvimet;
 }

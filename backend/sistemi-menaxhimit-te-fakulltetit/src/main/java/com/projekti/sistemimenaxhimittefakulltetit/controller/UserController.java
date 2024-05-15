@@ -65,7 +65,6 @@ public class UserController {
         List<AssignmentSubmission> list = assignmentService.submit(id, submitedAssignment, user);
 
         return list;
-
     }
 
     @DeleteMapping("/submit/delete/{id}")

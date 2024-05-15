@@ -42,7 +42,7 @@ public class AdminController {
     }
 
     @PostMapping("/add-lenda")
-    public ResponseEntity<Lenda> createLenda(@RequestBody CreateLendaReq lenda,
+    public ResponseEntity<Lenda> createLenda(@RequestBody Lenda lenda,
                                              @RequestHeader("Authorization") String jwt) throws Exception{
         Lenda savedLenda = lendaService.createLenda(lenda);
 

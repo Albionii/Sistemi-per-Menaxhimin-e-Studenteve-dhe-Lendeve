@@ -2,108 +2,91 @@ import React from 'react'
 import Crud from './CRUD-Template/Crud'
 
 import {
+  createProvimi,
+  getAllProvimet,
+  getProvimiByID,
+  updateProvimiByID,
+  deleteProvimiByID,
   createLigjerata,
-  getAllLigjeratat, 
-  getLigjerataByID, 
-  updateLigjerataByID, 
+  getAllLigjeratat,
+  getLigjerataByID,
+  updateLigjerataByID,
   deleteLigjerataByID,
-  getAllLendet
+  createLenda,
+  getAllLendet,
+  getLendaByID,
+  updateLendaByID,
+  deleteLendaByID
 } from './APIRequests'
 function SampleCrud() {
   const rowsNames = [
-    "Profesori ID",
-    "Emri",
-    "Mbiemri",
-    "Gjinia",
     "Lenda",
-    "ECTS",
-    "email",
-    "buttons"
+    "EMri",
+    "Data",
+    "Lokacioni",
+    "Butoni"
   ]
-
+  // const rowsNames = [
+  //   "Profesori ID",
+  //   "Emri",
+  //   "Mbiemri",
+  //   "Lenda",
+  //   "Kredite",
+  //   "Obligative",
+  //   "Butoni"
+  // ]
+  
+  const jsonNames = ["ligjerata.lenda.emri", "ligjerata.professor.user.firstName","data","location"];
+  // const jsonNames = ["professor.id","professor.user.firstName","professor.user.lastName", "lenda.emri", "lenda.ects", "lenda.obligative"];
   const isPreviewAvailable = false;
 
-  const addButtonJson = {
-    titulli : "Krijo Ligjeraten",
-    inputat : {
-      I1 : {
-        emri : "ID",
-        getAPI : ""
-      },
-      I2 : {
-        emri : "Lenda",
-        getAPI : getAllLendet
-      },
-      I3 : {
-        emri : "Emri",
-        getAPI : ""
-      },
-      I4 : {
-        emri : "Mbiemri",
-        getAPI : ""
-      }
-    },
-    button : {
-      emri : "Add Ligjerata"
-    }
-  }
-
-  const editButtonJson = {
-    titulli : "",
-    inputat : {
-      1 : {
-        emri : "",
-        getAPI : ""
-      },
-      2 : {
-        emri : "",
-        getAPI : ""
-      },
-      3 : {
-        emri : "",
-        getAPI : ""
-      }
-    },
-    button : {
-      emri : ""
-    }
-  }
-
   const formDataJson = {
-    // Ketu eshte json per api qe ki me dergu ne backend (si ne Postman)
-    professor: {
-      id: '',
-      user: {
-        id: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        dateLindja: null,
-        gjinia: '',
-        role: null
+    ligjerata : {
+      professor : {
+        id : '',
+        user : {
+          id : "",
+          firstName : "",
+          lastName : ""
+        }
+      },
+      lenda : {
+        emri : "",
+        ects : "",
+        obligative : ""
       }
     },
-    lenda: {
-      id: '',
-      emri: '',
-      ects: '',
-      obligative: false
-    }
+    data : '',
+    location : ''
   }
-  const jsonNames = ["professor.id","professor.user.firstName","professor.user.lastName","professor.user.gjinia","lenda.emri","lenda.ects","professor.user.email"];
+
+
+  // const formDataJson = {
+  //  professor : {
+  //   id : '',
+  //   user : {
+  //     id : "",
+  //     firstName : "",
+  //     lastName : ""
+  //   },
+  //   lenda : {
+  //     emri : "",
+  //     ects : "",
+  //     obligative : ""
+  //   }
+  //  }
+  // }
 
   return (
     <>
       <Crud 
         rows={rowsNames}  
-        createAPI = {createLigjerata} 
-        getAllAPI = {getAllLigjeratat} 
-        getByIDAPI = {getLigjerataByID}
-        updateAPI = {updateLigjerataByID}
-        deleteAPI = {deleteLigjerataByID}
+        createAPI = {createProvimi} 
+        getAllAPI = {getAllProvimet} 
+        getByIDAPI = {getProvimiByID}
+        updateAPI = {updateProvimiByID}
+        deleteAPI = {deleteProvimiByID}
         isPreviewAvailable = {isPreviewAvailable}
-        addButtonJson = {addButtonJson}
-        editButtonJson = {editButtonJson}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
          />
