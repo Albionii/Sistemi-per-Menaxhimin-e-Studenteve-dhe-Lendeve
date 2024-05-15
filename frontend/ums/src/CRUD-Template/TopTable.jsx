@@ -5,9 +5,8 @@ import DialogContent from '@mui/material/DialogContent';
 import AddButton from './AddButton';
 import SearchBar from './SearchBar';
 
-export default function TopTable({renderBot, addButton, formDataJson}){
+export default function TopTable({renderBot, formDataJson, API}){
   const [open, setOpen] = useState(false);
-  // const [confirmExit, setConfirmExit] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -25,20 +24,6 @@ export default function TopTable({renderBot, addButton, formDataJson}){
         <div className="w-full md:w-2/3">
           <form className="flex items-center md:w-2/3">
             <SearchBar/>
-          {/* <select
-                id="lenda"
-                className="md:w-1/3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                // value=""
-                // onChange=""
-              >
-                <option>Selekto Kategorinë</option>
-                <option>Profesori ID</option>
-                <option>Emri</option>
-                <option>Mbiemri</option>
-                <option>Gjinia</option>
-                <option>Lenda</option>
-                <option>ECTS</option>
-          </select> */}
           </form>
         </div>
         <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
@@ -60,14 +45,15 @@ export default function TopTable({renderBot, addButton, formDataJson}){
                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
               />
             </svg>
-            {addButton.button.emri}
+            {/* {addButton.button.emri} */}
+            Add Ligjerata
           </button>
           </div>
       </div>
       <Fragment>
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
           <DialogContent sx={{ padding: '0px' }}>
-            <AddButton setConfirmExit = {handleClose} renderBot={renderBot} addButtonJson={addButton} formDataJson={formDataJson}/>
+            <AddButton setConfirmExit = {handleClose} renderBot={renderBot} formDataJson={formDataJson} API={API}/>
           </DialogContent>
         </Dialog>
       </Fragment>

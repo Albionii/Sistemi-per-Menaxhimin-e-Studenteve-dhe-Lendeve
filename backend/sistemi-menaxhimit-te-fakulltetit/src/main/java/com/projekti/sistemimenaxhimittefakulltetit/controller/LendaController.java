@@ -1,6 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Semester;
 import com.projekti.sistemimenaxhimittefakulltetit.request.CreateLendaReq;
 import com.projekti.sistemimenaxhimittefakulltetit.service.LendaService;
@@ -26,41 +27,44 @@ public class LendaController {
     @GetMapping("/{id}")
     public ResponseEntity<Lenda> findLendaById(@PathVariable Long id) throws Exception {
         Lenda lenda = lendaService.findLendaById(id);
-        return new ResponseEntity<>(lenda, HttpStatus.FOUND);
+        return ResponseEntity.ok().body(lenda);
     }
 
     @GetMapping
     public ResponseEntity<List<Lenda>> getLendet(){
         List<Lenda> lendet = lendaService.getLendet();
-        return new ResponseEntity<>(lendet, HttpStatus.OK);
+        return ResponseEntity.ok().body(lendet);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createLenda(@RequestBody CreateLendaReq request) throws Exception {
-        Lenda createdLenda = lendaService.createLenda(request);
-        return ResponseEntity.ok(createdLenda);
+    public ResponseEntity<Lenda> createLenda(@RequestBody Lenda lenda) throws Exception {
+        Lenda createdLenda = lendaService.createLenda(lenda);
+        return ResponseEntity.ok().body(createdLenda);
     }
+
+
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Lenda> updatelenda(@PathVariable Long id,
-                                            @RequestBody CreateLendaReq request) throws Exception {
-
-        Lenda lenda = lendaService.updateLenda(id, request);
-        return ResponseEntity.status(HttpStatus.OK).body(lenda);
+    public ResponseEntity<Lenda> updateLenda(@PathVariable Long id, @RequestBody Lenda l) {
+        Lenda lenda = lendaService.updateLenda(id, l);
+        if (lenda != null) {
+            return new ResponseEntity<>(lenda, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-
-    @PutMapping("/semester/{lendaId}")
-    public ResponseEntity<Lenda> setSemester(@PathVariable Long lendaId,
-                                             @RequestBody CreateLendaReq req) throws Exception {
-
-        Lenda lenda = lendaService.updateLenda(lendaId, req);
-
-
-        return ResponseEntity.status(HttpStatus.OK).body(lenda);
-    }
-
     @DeleteMapping("/delete/{id}")
     public void deleteLendaById(@PathVariable Long id){
         lendaService.deleteLenda(id);
     }
+
+//    @PutMapping("/semester/{lendaId}")
+//    public ResponseEntity<Lenda> setSemester(@PathVariable Long lendaId,
+//                                             @RequestBody CreateLendaReq req) throws Exception {
+//
+//        Lenda lenda = lendaService.updateLenda(lendaId, req);
+//
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(lenda);
+//    }
 }

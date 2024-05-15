@@ -1,6 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,10 +17,13 @@ import java.util.Objects;
 @Table(name = "lendet")
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Lenda {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    private String kodi;
     @NotNull
     private String emri;
     @NotNull
@@ -28,27 +31,13 @@ public class Lenda {
     @NotNull
     private boolean isObligative;
 
-//    @OneToMany(mappedBy = "lenda")
-//    private List<ProfesoriLenda> profesoriLendaList = new ArrayList<>();
+
+
+//    @OneToMany(mappedBy = "lenda", cascade = CascadeType.ALL)
+//    private List<ProfesoriLenda> profesoriLenda;
 
     @ManyToOne
     @JsonIgnore
     private Semester semester;
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, emri, ects, isObligative);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Lenda)) return false;
-        Lenda other = (Lenda) obj;
-        return Objects.equals(id, other.id) &&
-                Objects.equals(emri, other.emri) &&
-                Objects.equals(ects, other.ects) &&
-                isObligative == other.isObligative;
-    }
 
 }

@@ -63,6 +63,5 @@ public class ProfesoriLendaService {
         } else {
             return null; // Or handle the case where the product with the given id is not found
         }
-
     }
 }

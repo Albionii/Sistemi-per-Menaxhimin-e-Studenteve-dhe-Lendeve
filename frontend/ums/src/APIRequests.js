@@ -40,6 +40,30 @@
 
   //Profesori
   
+  export const deleteProfessorByID = () => {
+    const url = BASE_URL + `/professor/delete/`;
+    return [url, "Studenti nuk është fshirë!"];
+  }
+  
+  export const createProfessor = () => {
+    const url = BASE_URL + `/professor/create`;
+    return [url, "Studenti nuk është shtuar!"];
+  }
+
+  export const getAllProfessors = () => {
+    const url = BASE_URL + `/professor`;
+    return [url, "Gabim në marrjen e studentëve!"];
+  }
+
+  export const getProfessorByID = () => {
+    const url = BASE_URL + `/professor/getProfessor/`;
+    return [url, "Gabim në marrjen e studentit!"];
+  }
+
+  export const updateProfessorByID = () => {
+    const url = BASE_URL + `/professor/update/`;
+    return [url, "Gabim në përditësimin e studentit!"];
+  }
 
 
   //Ligjeratat
@@ -65,14 +89,14 @@
   }
 
   export const updateLigjerataByID = () => {
-    const url = BASE_URL + `/professorLenda/updateprofessorLenda/`;
+    const url = BASE_URL + `/professorLenda/update/`;
     return [url, "Gabim në përditësimin e ligjeratës!"];
   }
 
   // Lenda
 
   export const deleteLendaByID = () => {
-    const url = BASE_URL + `/lenda/delete`;
+    const url = BASE_URL + `/lenda/delete/`;
     return [url, "Gabim në fshirjen e lëndës!"];
   }
 
@@ -87,16 +111,69 @@
   }
   
   export const getLendaByID = () => {
-    const url = BASE_URL + `/lenda`;
+    const url = BASE_URL + `/lenda/`;
     return [url, "Gabim në marrjen e lëndës!"];
   }
 
   export const updateLendaByID = () => {
-    const url = BASE_URL + `/lenda/update`;
+    const url = BASE_URL + `/lenda/update/`;
     return [url, "Gabim në përditësimin e lëndës!"];
   }
 
-  //
+  // Provimi
+
+  export const deleteProvimiByID = () => {
+    const url = BASE_URL + `/api/admin/provimi/delete/`;
+    return [url, "Gabim në fshirjen e provimit!"];
+  }
+
+  export const createProvimi = () => {
+    const url = BASE_URL + `/api/admin/provimi/create`;
+    return [url, "Gabim në krijimin e provimit!"];
+  }
+
+  export const getAllProvimet = () => {
+    const url = BASE_URL + `/api/admin/provimi`;
+    return [url, "Gabim në marrjen e provimeve!"];
+  }
+  
+  export const getProvimiByID = () => {
+    const url = BASE_URL + `/api/admin/provimi/`;
+    return [url, "Gabim në marrjen e provimit!"];
+  }
+
+  export const updateProvimiByID = () => {
+    const url = BASE_URL + `/api/admin/provimi/update/`;
+    return [url, "Gabim në përditësimin e provimit!"];
+  }
+
+  //Users
+
+  
+  // export const deleteLigjerataByID = () => {
+  //   const url = BASE_URL + `/professorLenda/delete/`;
+  //   return [url, "Gabim në fshirjen e ligjeratës!"];
+  // }
+
+  // export const createLigjerata = () => {
+  //   const url = BASE_URL + `/professorLenda/createLigjerata`;
+  //   return [url, "Gabim në krijimin e ligjeratës!"];
+  // }
+
+  // export const getAllLigjeratat = () => {
+  //   const url = BASE_URL + `/professorLenda`;
+  //   return [url,"Gabim në marrjen e ligjeratave!"];
+  // }
+  
+  // export const getLigjerataByID = () => {
+  //   const url = BASE_URL + `/professorLenda/`;
+  //   return [url, "Gabim në marrjen e ligjeratës!"];
+  // }
+
+  // export const updateLigjerataByID = () => {
+  //   const url = BASE_URL + `/professorLenda/update/`;
+  //   return [url, "Gabim në përditësimin e ligjeratës!"];
+  // }
 
   
 
