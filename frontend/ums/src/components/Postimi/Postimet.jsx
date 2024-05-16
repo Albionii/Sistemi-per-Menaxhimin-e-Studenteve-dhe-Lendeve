@@ -139,3 +139,4 @@ const Postimet = ({ post }) => {
 };
 
 export default Postimet;
+

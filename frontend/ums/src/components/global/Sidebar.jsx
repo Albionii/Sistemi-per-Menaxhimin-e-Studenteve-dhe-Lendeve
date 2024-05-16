@@ -66,7 +66,7 @@ const Sidebar = () => {
       const screenWidth = window.innerWidth;
       if (sidebarWidth >= screenWidth / 6) {
         setIsCollapsed(true);
-      } 
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -100,12 +100,16 @@ const Sidebar = () => {
       }}
     >
       {/* <Box width={isCollapsed ? "80px" : "270px"}> */}
-      <ProSidebar id="sidebar" collapsed={isCollapsed} style={{position: "fixed"}} rootStyles={{
-        position: "sticky",
-        top: 0,
-        height: "100vh",
-      }}>
-        
+      <ProSidebar
+        id="sidebar"
+        collapsed={isCollapsed}
+        style={{ position: "fixed" }}
+        rootStyles={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+        }}
+      >
         <Menu>
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -212,11 +216,25 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <SubMenu
-              title="CRUD's"
-              icon={<ReceiptOutlinedIcon />}
-            >
-               <SubItem
+
+
+
+            <SubMenu title="Provimi" icon={<ReceiptOutlinedIcon />}>
+              <SubItem
+                title="Paraqit"
+                to="/provimet"
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <SubItem
+                title="Paraqitura"
+                to="/paraqitura"
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </SubMenu>
+            <SubMenu title="CRUD's" icon={<ReceiptOutlinedIcon />}>
+              <SubItem
                 title="Ligjeratat"
                 to="/Ligjeratat"
                 selected={selected}

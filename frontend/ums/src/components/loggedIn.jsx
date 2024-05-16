@@ -18,6 +18,7 @@ import Transkripta from "../pages/Transkripta.jsx";
 
 import Ligjerata from "../pages/ligjerata.jsx";
 import Ligjeratat from "../pages/ligjeratat.jsx";
+import Provimi from "./Provimi/Provimi.jsx";
 
 
 function loggedIn() {
@@ -52,7 +53,7 @@ function loggedIn() {
           <Route path="/cruds" element={<CrudCategories />} />
           <Route path="/transkripta" element={<Transkripta />} />
 
-          <Route path="/provimet/paraqitura" element={<Paraqitura />} />
+          <Route path="/paraqitura" element={<Paraqitura />} />
 
           <Route path="/Profili" element={<Profili />} />
 

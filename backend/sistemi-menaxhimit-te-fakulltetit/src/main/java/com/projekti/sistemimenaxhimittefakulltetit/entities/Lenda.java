@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity
@@ -33,11 +34,15 @@ public class Lenda {
 
 
 
-//    @OneToMany(mappedBy = "lenda", cascade = CascadeType.ALL)
-//    private List<ProfesoriLenda> profesoriLenda;
-
-    @ManyToOne
-    @JsonIgnore
-    private Semester semester;
+    @Override
+    public String toString() {
+        return "Lenda{" +
+                "id=" + id +
+                ", kodi='" + kodi + '\'' +
+                ", emri='" + emri + '\'' +
+                ", ects='" + ects + '\'' +
+                ", isObligative=" + isObligative +
+                '}';
+    }
 
 }

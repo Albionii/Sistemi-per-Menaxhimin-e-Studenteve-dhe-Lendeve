@@ -84,8 +84,8 @@ public class UserController {
 
 
     @GetMapping("/get/postimi/{id}")
-    public ResponseEntity<List<Assignment>> getAssignmentsOfPostimi(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfPostimi(id));
+    public ResponseEntity<List<Assignment>> getAssignmentsOfLigjerata(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfLigjerata(id));
     }
 
 }

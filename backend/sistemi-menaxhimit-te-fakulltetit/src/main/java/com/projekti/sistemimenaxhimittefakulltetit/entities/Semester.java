@@ -1,5 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,8 +25,7 @@ public class Semester {
 
     private LocalDateTime endDate;
 
-    @OneToMany
-    private Set<Lenda> lendet = new HashSet<>();
+
 
     @Override
     public int hashCode() {

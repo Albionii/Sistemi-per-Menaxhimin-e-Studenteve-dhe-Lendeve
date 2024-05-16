@@ -26,15 +26,6 @@ public class SemesterService {
         semesterRepository.delete(semester);
     }
 
-    public void deleteLendaSemester(Semester semester, Lenda lenda) {
-
-        Set<Lenda> lendet = semester.getLendet();
-        lendet.remove(lenda);
-
-        semester.setLendet(lendet);
-
-        semesterRepository.save(semester);
-    }
 
 
     public Semester getSemester(Long id) {

@@ -23,6 +23,7 @@ public class AdminController {
     private final LendaService lendaService;
     private final ProfesoriLendaService profesoriLendaService;
     private final SemesterService semesterService;
+    private final LendaSemesterService lendaSemesterService;
 
     @DeleteMapping("/{id}")
     public void deleteUserById(
@@ -50,10 +51,9 @@ public class AdminController {
     }
 
     @PostMapping("add-ligjerata")
-    public ResponseEntity<ProfesoriLenda> createLenda(@RequestBody LigjerataReq ligjerataReq,// Json merr => { "profesor":"id", "lenda":"id"}
+    public ResponseEntity<ProfesoriLenda> createLenda(@RequestBody LigjerataReq ligjerataReq,
                                                       @RequestHeader("Authorization") String jwt) throws Exception {
 
-        // Identik dren veq tash i merr Id-te si json, jo me shkru komplet aty gjeth at sen.
         Professor professor = professorService.findProfessorById(ligjerataReq.getProfessor());
 
         Lenda created_lenda = lendaService.findLendaById(ligjerataReq.getLenda());
@@ -81,21 +81,26 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
+    @PostMapping("/semester/shtoLenda")
+    public ResponseEntity<LendaSemester> shtoLendaSemester(@RequestBody LendaSemester lendaSemester) {
+
+        LendaSemester  created = lendaSemesterService.shto(lendaSemester);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
     @DeleteMapping("/semester/delete/{id}")
     public void deleteSemester(@PathVariable Long id) {
         semesterService.deleteSemester(id);
     }
-    @DeleteMapping("/semester/delete/Lenda/{id}/{lendaId}")
-    public void deleteLendaSemester(@PathVariable Long id,
-                                    @PathVariable Long lendaId) throws Exception {
-        Lenda lenda = lendaService.findLendaById(lendaId);
-        Semester semester = semesterService.getSemester(id);
+    @DeleteMapping("/semester/delete/Lenda/{id}")
+    public void deleteLendaSemester(@PathVariable Long id) throws Exception {
+        lendaSemesterService.delete(id);
+    }
 
-        lenda.setSemester(null);
-
-        semesterService.deleteLendaSemester(semester, lenda);
-        lendaService.setSemesterNull(lendaId);
-
+    @GetMapping("/lendaSemester/{id}")
+    public LendaSemester getLendaSemester(@PathVariable Long id) {
+        return lendaSemesterService.getLendaSemesterById(id);
     }
 
 

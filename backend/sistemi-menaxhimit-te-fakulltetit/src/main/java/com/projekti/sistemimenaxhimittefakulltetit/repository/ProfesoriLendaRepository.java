@@ -1,9 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.repository;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Postimi;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import org.hibernate.dialect.PostgreSQLInetJdbcType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +14,7 @@ public interface ProfesoriLendaRepository extends JpaRepository<ProfesoriLenda, 
 
     ProfesoriLenda findByProfessorAndLenda(Professor professor, Lenda lenda);
 
+    ProfesoriLenda findByAssignmentsContaining(Assignment assignment);
     ProfesoriLenda findByPostimetContaining(Postimi postimi);
     ProfesoriLenda findByLendaId(Long id);
 }

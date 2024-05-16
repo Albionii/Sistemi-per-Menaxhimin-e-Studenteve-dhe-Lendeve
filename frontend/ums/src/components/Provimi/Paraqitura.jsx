@@ -7,48 +7,50 @@ const Paraqitura = () => {
     const [provimet, setProvimet] = useState([]);
     const [selectedProvimiId, setSelectedProvimiId] = useState(null);
 
-    // const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTM4MTY1NDQsImV4cCI6MTcxMzgyNTE4NCwiZW1haWwiOiJzdHVkZW50MUBleGFtcGxlLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.Sg5SGFoNXzFBJnRwg8RWe41TBIZgd9bSnEhcW3R4tvE';
+    const token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTU4ODEzMTcsImV4cCI6MTcxNTg4OTk1NywiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.atscXOQTqNJBRjBG-sLWrdp5BLuiKYGG7Hui_FyHMhA";
 
-    // const config = {
-    //     headers: {
-    //       'Authorization': `Bearer ${token}`
-    //     }
-    //   };
 
-    // useEffect(() => {
-    //     fetchProvimet();
-    // }, []);
+    const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
 
-    // const handleSelectedChange = (parqaitjaId) => {
-    //     setSelectedProvimiId(parqaitjaId);
-    // }
+    useEffect(() => {
+        fetchProvimet();
+    }, []);
 
-    // const fetchProvimet = () => {
+    const handleSelectedChange = (parqaitjaId) => {
+        setSelectedProvimiId(parqaitjaId);
+    }
 
-    //     axios.get('http://localhost:8080/student', {
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`
-    //         }
-    //       })
-    //       .then(response => {
+    const fetchProvimet = () => {
+
+        axios.get('http://localhost:8080/student', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+          })
+          .then(response => {
     
-    //         setProvimet(response.data); 
-    //       })
-    //       .catch(error => {
-    //         console.error('Error:', error);
-    //       });
+            setProvimet(response.data); 
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
     
-    // }
+    }
 
-    // const anuloParaqitjen = (id) => {
-    //     axios.delete(`http://localhost:8080/student/anulo/${id}`, config)
-    //         .then(response => {
-    //             window.location.reload();
-    //         })
-    //         .catch(error => {
-    //             console.log("Error: ", error);
-    //         })
-    // }
+    const anuloParaqitjen = (id) => {
+        axios.delete(`http://localhost:8080/student/anulo/${id}`, config)
+            .then(response => {
+               fetchProvimet();
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            })
+    }
 
   return (
     <div className="overflow-x-auto">

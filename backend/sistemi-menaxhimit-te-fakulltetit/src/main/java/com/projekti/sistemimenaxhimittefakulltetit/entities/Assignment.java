@@ -30,7 +30,7 @@ public class Assignment {
     @CreatedDate
     private LocalDateTime createdAt;
     @Column(nullable = false)
-    private LocalDateTime expireAt;
+    private  LocalDateTime expireAt;
 
     @ElementCollection
     @Column(length = 500)

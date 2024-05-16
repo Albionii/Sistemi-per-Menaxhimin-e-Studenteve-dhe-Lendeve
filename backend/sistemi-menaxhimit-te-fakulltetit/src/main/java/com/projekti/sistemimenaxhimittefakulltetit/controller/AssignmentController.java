@@ -8,7 +8,9 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.PostimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.AssignmentResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.AssignmentService;
+import com.projekti.sistemimenaxhimittefakulltetit.service.ProfesoriLendaService;
 import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.ast.Assign;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,11 @@ public class AssignmentController {
     @Autowired
     private PostimiRepository postimiRepository;
 
+    @Autowired
+    private ProfesoriLendaService profesoriLendaService;
+    @Autowired
+    private ProfesoriLendaRepository profesoriLendaRepository;
+
 
     @GetMapping
     public List<Assignment> getAllAssignments() {
@@ -49,7 +56,7 @@ public class AssignmentController {
                                                        @RequestBody AssignmentResponse assignment,
                                                     @RequestHeader("Authorization") String token ) throws Exception {
 
-        Postimi postimi = postimiRepository.findPostimiById(id);
+        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaService.findById(id);
 
         User user = userService.findUserByJwtToken(token);
 
@@ -61,10 +68,12 @@ public class AssignmentController {
         assignments.add(created);
 
 
-        if (postimi != null) {
-            postimi.setAssignments(assignments);
-            postimiRepository.save(postimi);
+        if (profesoriLenda.isEmpty()) {
+            throw new EntityNotFoundException("Ligjerata nuk ekziston!");
         }
+
+        profesoriLenda.get().setAssignments(assignments);
+        profesoriLendaRepository.save(profesoriLenda.get());
 
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
@@ -86,8 +95,8 @@ public class AssignmentController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Assignment Removed!");
     }
-    @GetMapping("/get/postimi/{id}")
-    public ResponseEntity<List<Assignment>> getAssignmentsOfPostimi(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfPostimi(id));
+    @GetMapping("/get/ligjerata/{id}")
+    public ResponseEntity<List<Assignment>> getAssignmentsOfLigjerata(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfLigjerata(id));
     }
 }

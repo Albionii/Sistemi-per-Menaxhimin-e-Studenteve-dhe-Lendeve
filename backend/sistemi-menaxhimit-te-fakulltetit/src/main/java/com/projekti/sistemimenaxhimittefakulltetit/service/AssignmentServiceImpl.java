@@ -51,12 +51,12 @@ public class AssignmentServiceImpl implements AssignmentService{
     public Assignment createAssignment(AssignmentResponse req, User user) throws Exception {
         Assignment created = new Assignment();
 
-        Postimi postimi = postimiRepository.findById(req.getId())
+        ProfesoriLenda ligjerata = profesoriLendaRepository.findById(req.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Postimi nuk u gjet!"));
 
 //        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaRepository.findById(req.getLendaId());
 
-        if (user != null && postimi != null) {
+        if (user != null && ligjerata != null) {
             created.setTitulli(req.getTitulli());
             created.setCreatedBy(user);
             created.setMesazhi(req.getMesazhi());
@@ -65,8 +65,8 @@ public class AssignmentServiceImpl implements AssignmentService{
             created.setFileNames(req.getFileNames());
             assignmentRepository.save(created);
 
-            postimi.getAssignments().add(created);
-            postimiRepository.save(postimi);
+            ligjerata.getAssignments().add(created);
+            profesoriLendaRepository.save(ligjerata);
 
             return created;
         }
@@ -88,9 +88,9 @@ public class AssignmentServiceImpl implements AssignmentService{
         Assignment old = assignmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Assignment me Id {" + id + "} nuk u gjet!"));
 
-        Postimi postimi = postimiRepository.findByAssignmentsContaining(old);
+        ProfesoriLenda ligjerata = profesoriLendaRepository.findByAssignmentsContaining(old);
 
-        if(postimi != null) {
+        if(ligjerata != null) {
             Assignment updatedAssignment = old;
             updatedAssignment.setTitulli(update.getTitulli());
             updatedAssignment.setMesazhi(update.getMesazhi());
@@ -101,8 +101,8 @@ public class AssignmentServiceImpl implements AssignmentService{
 
             assignmentRepository.save(updatedAssignment);
 
-            postimi.getAssignments().add(updatedAssignment);
-            postimiRepository.save(postimi);
+            ligjerata.getAssignments().add(updatedAssignment);
+            profesoriLendaRepository.save(ligjerata);
 
             return updatedAssignment;
         } else
@@ -167,20 +167,20 @@ public class AssignmentServiceImpl implements AssignmentService{
         Assignment assignment = assignmentRepository.findById(id)
                         .orElseThrow(() -> new EntityNotFoundException("Assignment me id {" + id + "} nuk u gjend!"));
 
-        Postimi postimi = postimiRepository.findByAssignmentsContaining(assignment);
+        ProfesoriLenda ligjerata = profesoriLendaRepository.findByAssignmentsContaining(assignment);
 
-        if (postimi != null) {
-            postimi.getAssignments().remove(assignment);
-            postimiRepository.save(postimi);
+        if (ligjerata != null) {
+            ligjerata.getAssignments().remove(assignment);
+            profesoriLendaRepository.save(ligjerata);
         }
 
         assignmentRepository.delete(assignment);
     }
 
-    public List<Assignment> getAssignmentsOfPostimi(Long id) {
-        Postimi postimi = postimiRepository.findById(id)
+    public List<Assignment> getAssignmentsOfLigjerata(Long id) {
+        ProfesoriLenda ligjerata = profesoriLendaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Postimi me id {"+  id +"} nuk u gjet!"));
 
-        return postimi.getAssignments();
+        return ligjerata.getAssignments();
     }
 }

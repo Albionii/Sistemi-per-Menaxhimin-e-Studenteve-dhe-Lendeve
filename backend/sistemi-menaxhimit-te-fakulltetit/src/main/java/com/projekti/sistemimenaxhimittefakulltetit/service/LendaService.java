@@ -1,6 +1,7 @@
     package com.projekti.sistemimenaxhimittefakulltetit.service;
 
     import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
+    import com.projekti.sistemimenaxhimittefakulltetit.entities.Semester;
     import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
     import com.projekti.sistemimenaxhimittefakulltetit.repository.LendaRepository;
     import com.projekti.sistemimenaxhimittefakulltetit.repository.SemesterRepository;
@@ -10,8 +11,10 @@
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
 
+    import java.util.ArrayList;
     import java.util.List;
     import java.util.Optional;
+    import java.util.Set;
 
     @Service
     @RequiredArgsConstructor
@@ -21,6 +24,8 @@
         private final LendaRepository lendaRepository;
 
         private final SemesterRepository semesterRepository;
+
+        private final SemesterService semesterService;
 
         public Lenda findLendaById(Long id) throws Exception {
             Optional<Lenda> opt = lendaRepository.findById(id);
@@ -60,22 +65,13 @@
             return null;
         }
 
-        public Lenda createLenda(Lenda l) throws Exception{
+        public Lenda createLenda(Lenda l) throws Exception {
             if (l == null) {
-                throw new Exception("Lenda eshte null");
+                throw new IllegalArgumentException("Lenda object is null");
             }
+
             return lendaRepository.save(l);
-
         }
 
-
-
-        public void setSemesterNull(Long id) throws Exception {
-            Lenda lenda = findLendaById(id);
-
-            lenda.setSemester(null);
-
-            lendaRepository.save(lenda);
-        }
 
     }
