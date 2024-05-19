@@ -28,7 +28,7 @@ const CourseCard = ({ name, professor, imageUrl }) => {
         background: colors.primary[600],
       }}
     >
-      <CardActionArea component={Link} to={name}>
+      <CardActionArea component={Link} to={'/postimi'}>
         <CardMedia
           component="div"
           sx={{
@@ -50,7 +50,7 @@ const CourseCard = ({ name, professor, imageUrl }) => {
               sx={{
                 fontSize: { xs: "h4.fontSize", md: "h3.fontSize" },
                 fontWeight: "bold",
-                marginBottom: "0.5rem", // gutterBottom equivalent
+                marginBottom: "0.5rem", 
               }}
             >
               {name}

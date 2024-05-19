@@ -80,24 +80,14 @@ const ligjerata = () => {
                   gap: "10px",
                 }}
               >
-                <Avatar
-                  sx={{
-                    bgcolor: colors.redAccent[400],
-                    width: { xs: 50, sm: 80, sl: 100 },
-                    height: { xs: 50, sm: 80, sl: 100 },
-                  }}
-                  src="foto.jpg"
-                />
                 <Box>
                   <Typography
                     variant="h2"
-                    sx={{ fontSize: { xs: 18, sm: 30 } }}
                   >
                     Matematik
                   </Typography>
                   <Typography
-                    variant="h6"
-                    sx={{ fontSize: { xs: 12, sm: 14 } }}
+                    variant="h5"
                     color="text.secondary"
                   >
                     Ragip Profesori
@@ -165,7 +155,6 @@ const ligjerata = () => {
                 display: "flex",
                 flexDirection: { xs: "row", sm: "column" },
                 width: "30%",
-                height: "100%",
                 gap: "30px",
               }}
             >
