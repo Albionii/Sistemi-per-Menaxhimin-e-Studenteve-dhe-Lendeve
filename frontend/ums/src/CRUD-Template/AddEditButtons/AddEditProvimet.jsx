@@ -225,7 +225,7 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
 export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLigjerataEdit, API}) => {
   const [urlUpdate, errorUpdate] = API.update();
   const [urlProvimi, errorProvimi] = getProvimiByID();
-  const [urlLigjerata, errorLigjerata] = getLigjerataByID();
+  // const [urlLigjerata, errorLigjerata] = getLigjerataByID();
   const [urlLigjeratat, errorLigjeratat] = getAllLigjeratat();
   const [urlLendet, errorLendet] = getAllLendet();
 

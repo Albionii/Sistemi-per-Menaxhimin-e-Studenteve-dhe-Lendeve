@@ -67,6 +67,9 @@ export default function BottomTable({ theKey, rows, API, isPreviewAvailable, for
                   {row}
                 </th>
               ))}
+              <th>
+                Butonat
+              </th>
             </tr>
           </thead>
           <tbody>
