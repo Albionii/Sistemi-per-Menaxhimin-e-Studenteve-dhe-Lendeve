@@ -19,6 +19,27 @@ function SampleCrud() {
   const jsonNames = ["ligjerata.lenda.emri", "ligjerata.professor.user.firstName","data","location"];
   const isPreviewAvailable = false;
 
+  const formDataJson = {
+    ligjerata : {
+      professor : {
+        id : '',
+        user : {
+          id : "",
+          firstName : "",
+          lastName : ""
+        }
+      },
+      lenda : {
+        emri : "",
+        ects : "",
+        obligative : ""
+      }
+    },
+    data : '',
+    location : ''
+  }
+
+
 
   return (
     <>
@@ -29,6 +50,7 @@ function SampleCrud() {
         getByIDAPI = {getProvimiByID}
         updateAPI = {updateProvimiByID}
         deleteAPI = {deleteProvimiByID}
+        formDataJson={formDataJson}
         isPreviewAvailable = {isPreviewAvailable}
         jsonName={jsonNames}
          />
