@@ -25,8 +25,6 @@ public class Semester {
 
     private LocalDateTime endDate;
 
-
-
     @Override
     public int hashCode() {
         return Objects.hash(id, name, startDate, endDate);

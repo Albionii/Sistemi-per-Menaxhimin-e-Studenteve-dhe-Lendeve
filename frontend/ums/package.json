@@ -23,6 +23,7 @@
     "@nivo/pie": "^0.85.1",
     "apexcharts": "^3.49.0",
     "axios": "^1.6.8",
+    "critters": "^0.0.22",
     "flowbite-react": "^0.7.3",
     "formik": "^2.4.6",
     "next": "^14.1.3",

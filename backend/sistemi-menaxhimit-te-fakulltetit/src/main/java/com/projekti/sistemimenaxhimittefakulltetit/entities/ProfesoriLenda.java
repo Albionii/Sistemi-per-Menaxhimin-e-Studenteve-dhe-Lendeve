@@ -24,14 +24,18 @@ public class ProfesoriLenda {
 
     @ManyToOne
     private Professor professor;
+
     @ManyToOne
-    private Lenda lenda;
+    private Lenda  lenda;
 
     @OneToMany
     private List<Assignment> assignments;
 
 //    @OneToMany(mappedBy = "ligjerata", cascade = CascadeType.ALL)
 //    private List<Provimi> provimet;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Materiali> materiali = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Postimi> postimet = new ArrayList<>();

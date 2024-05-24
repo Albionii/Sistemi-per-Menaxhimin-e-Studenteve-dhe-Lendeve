@@ -15,6 +15,8 @@ public interface ProfesoriLendaRepository extends JpaRepository<ProfesoriLenda, 
     ProfesoriLenda findByProfessorAndLenda(Professor professor, Lenda lenda);
 
     ProfesoriLenda findByAssignmentsContaining(Assignment assignment);
+
+    ProfesoriLenda findByMaterialiContaining(Materiali materiali);
     ProfesoriLenda findByPostimetContaining(Postimi postimi);
     ProfesoriLenda findByLendaId(Long id);
 }

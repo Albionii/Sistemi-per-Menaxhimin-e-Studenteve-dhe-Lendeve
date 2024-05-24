@@ -78,8 +78,17 @@ public class UserController {
 
     @PutMapping("/submit/update/{id}")
     public AssignmentSubmission updateSubmission(@PathVariable Long id,
-                                                 @RequestBody AssignmentSubmission submission) {
-        return assignmentService.updateAssignmentSubmission(id, submission);
+                                                 @RequestBody AssignmentSubmission submission,
+                                                 @RequestHeader("Authorization") String token) throws Exception {
+
+        User user = userService.findUserByJwtToken(token);
+
+        return assignmentService.updateAssignmentSubmission(id, submission, user);
+    }
+
+    @GetMapping("/get/user/info")
+    public User getUserInfo(@RequestHeader("Authorization")String token) throws Exception {
+        return userService.findUserByJwtToken(token);
     }
 
 
@@ -87,5 +96,14 @@ public class UserController {
     public ResponseEntity<List<Assignment>> getAssignmentsOfLigjerata(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfLigjerata(id));
     }
+
+    @GetMapping("/get/submission/{assignmentID}")
+    public ResponseEntity<AssignmentSubmission> getSubmissionByUser(@PathVariable Long assignmentID,
+                                                                    @RequestHeader("Authorization") String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.findSubmissionByUser(user, assignmentID));
+    }
+
+
 
 }

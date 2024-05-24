@@ -2,6 +2,7 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Postimi;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.PostimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.PostimiReq;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,20 +25,21 @@ public class PostimiService {
         return postimiRepository.findPostimiById(id);
     }
 
-    public Postimi createPostimi(PostimiReq postimiReq) {
+    public Postimi createPostimi(PostimiReq postimiReq, User user) {
         Postimi postimi = new Postimi();
+        postimi.setUser(user);
         postimi.setTitulli(postimiReq.getTitulli());
-        postimi.setData_Postimit(postimiReq.getData_Postimit());
+        postimi.setMesazhi(postimiReq.getMesazhi());
+        postimi.setData_Postimit(LocalDateTime.now());
 
         return postimiRepository.save(postimi);
     }
 
     public Postimi updatePostimi(Postimi newPostimi, Long id) {
         Postimi postimi = findPostimiById(id);
-
         postimi.setTitulli(newPostimi.getTitulli());
-        postimi.setData_Postimit(newPostimi.getData_Postimit());
-        postimi.setAssignments(newPostimi.getAssignments());
+        postimi.setMesazhi(newPostimi.getMesazhi());
+        postimi.setData_Postimit(LocalDateTime.now());
 
         return postimiRepository.save(postimi);
     }
@@ -59,5 +63,19 @@ public class PostimiService {
                 .orElseThrow(() -> new EntityNotFoundException("Ligjerata nuk u gjet!!!!"));
 
         return profesoriLenda.getPostimet();
+    }
+
+    public List<Postimi> getPostimetOfUser(User user, ProfesoriLenda profesoriLenda) {
+
+        List<Postimi> postimetLigjerata = getPostimetOfLigjerata(profesoriLenda.getId());
+        List<Postimi> postimetUser = new ArrayList<>();
+
+        for (Postimi postimi : postimetLigjerata) {
+            if (postimi.getUser() == user) {
+                postimetUser.add(postimi);
+            }
+        }
+
+        return postimetUser;
     }
 }
