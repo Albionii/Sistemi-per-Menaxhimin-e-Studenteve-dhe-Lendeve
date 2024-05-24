@@ -146,8 +146,7 @@ const ligjerata = () => {
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
               justifyContent: "space-around ",
-              gap: "30px",
-              height: "60vh",
+              gap: "30px"
             }}
           >
             <Box

@@ -11,12 +11,13 @@ import {
 function SampleCrud() {
   const rowsNames = [
     "Lenda",
-    "EMri",
+    "Emri",
+    "Mbiemri",
     "Data",
     "Lokacioni"
   ]
   
-  const jsonNames = ["ligjerata.lenda.emri", "ligjerata.professor.user.firstName","data","location"];
+  const jsonNames = ["ligjerata.lenda.emri", "ligjerata.professor.user.firstName", "ligjerata.professor.user.lastName", "data","location"];
   const isPreviewAvailable = false;
 
   const formDataJson = {

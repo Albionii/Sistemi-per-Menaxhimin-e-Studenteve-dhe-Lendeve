@@ -20,6 +20,9 @@ import Ligjerata from "../pages/ligjerata.jsx";
 import Ligjeratat from "../pages/ligjeratat.jsx";
 import Provimi from "./Provimi/Provimi.jsx";
 import Postimi from "../pages/Postimi.jsx";
+import SemestriCrud from "../CRUD-Template/SemesterCrud.jsx";
+import Semestrat from "../pages/Semestrat.jsx";
+import Departmentat from "../pages/Departmentat.jsx";
 
 
 function loggedIn() {
@@ -60,6 +63,12 @@ function loggedIn() {
           <Route path="/postimi" element={<Postimi />} />
 
           <Route path="/MenaxhoUsers" element={<MenaxhoUsers />} />
+          <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
+          <Route path="/semestrat" element={<Semestrat />} />
+          <Route path="/department" element={<Departmentat />} />
+          
+
+
 
           <Route path="*" element={<Home />} /> 
 

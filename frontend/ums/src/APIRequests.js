@@ -147,6 +147,26 @@
     return [url, "Gabim në përditësimin e provimit!"];
   }
 
+  //Semestri
+
+  export const createSemestri = () => {
+    const url = BASE_URL + `/api/admin/semester/create`;
+    return [url, "Gabim ne shtimin e semestrit!"];
+  }
+
+  export const deleteSemestriById = () => {
+    const url = BASE_URL + `/api/admin/semester/delete/`;
+    return [url, "Gabim ne fshirjen e semestrit!"];
+  }
+
+  export const getAllSemesters = () => {
+    const url = BASE_URL + `/api/admin/semesters`;
+    return [url, "Gabim ne marrjen e semestrave!"];
+  }
+
+
+  
+
   //Users
 
   

@@ -64,6 +64,12 @@ public class ProvimiController {
         }
     }
 
+    @GetMapping("/mockForm")
+    public ResponseEntity<Provimi> getProvimet(){
+        Provimi p = new Provimi();
+        return ResponseEntity.ok().body(p);
+    }
+
 
 
 
