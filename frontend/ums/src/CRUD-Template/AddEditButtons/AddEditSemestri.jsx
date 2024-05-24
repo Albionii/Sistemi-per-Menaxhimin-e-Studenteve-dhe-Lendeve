@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { getAllLendet, getAllProfessors } from '../../APIRequests';
-import { useTheme } from '@mui/material';
-import { tokens } from '../../theme';
-export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const SemestriAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [urlCreate, errorCreate] = API.create();
@@ -15,7 +13,7 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
     setConfirmExit();
   }
 
-  const [lendet, setLendet] = useState([]);
+  const [semestri, ] = useState([]);
   const [selectedLenda, setSelectedLenda] = useState('');
 
   const [profesoret, setProfesoret] = useState([]);
@@ -81,14 +79,14 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
 
   return (
     <>
-      <div className="relative w-full rounded-lg shadow" style={{background: colors.primary[400]}}>
-        <div className="flex items-center justify-between md:p-5 border-b rounded-t border-gray-600">
+      <div className="relative w-full rounded-lg shadow" style={{background: colors.primary[500]}}>
+        <div className="flex items-center justify-between md:p-5 border-b rounded-t">
           <h3 className="text-lg font-semibold">
             Krijo Ligjeraten
           </h3>
           <button
             type="button"
-            className="bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-toggle="crud-modal"
             onClick={handleClick}
           >
@@ -115,13 +113,13 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
             <div className="col-span-1 sm:col-span-1">
               <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium"
+                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Emri dhe Mbiemri i Profesorit
                 </label>
                 <select
                   // id="pr"
-                  className="border border-gray-400  text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   value={selectedProfesori}
                   onChange={handleChangedProfesoret}
                 >
@@ -134,13 +132,13 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
             <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium "
+                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Lënda
               </label>
               <select
                 id="lenda"
-                className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 value={selectedLenda}
                 onChange={handleChangedLendet}
               >
@@ -174,33 +172,41 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
     </>
   )
 }
-export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
+export const ligjerataEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLigjerataEdit, API}) => {
+  const [urlLigjerata, errorLigjerata] = API.getByID();
   const [urlUpdate, errorUpdate] = API.update();
   const [urlLendet, messageLendet] = getAllLendet();
   const [urlProfessor, messageProfessor] = getAllProfessors();
 
   //Per inputat select lendet
   const [lendet, setLendet] = useState([]);
-  const [selectedLenda, setSelectedLenda] = useState(item.lenda.emri);
+  const [selectedLenda, setSelectedLenda] = useState('');
 
   //Per inputat select profesoret
   const [profesoret, setProfesoret] = useState([]);
-  const [selectedProfesori, setSelectedProfesori] = useState(item.professor.user.firstName + item.professor.user.lastName);
+  const [selectedProfesori, setSelectedProfesori] = useState('');
 
-  const [formData, setFormData] = useState(item);
+  const [formData, setFormData] = useState(formDataJson);
 
   const handleClick = () => {
     setConfirmExit();
   }
 
   useEffect(() => {
+    getLigjerata();
     getLendet();
     getProfesoret();
   }, []);
 
+
+  const getLigjerata = async () => {
+    try{
+      const fetchLigjerata = await axios.get(urlLigjerata + `${ligjerataID}`);
+      setFormData(fetchLigjerata.data)
+    }catch(error) {
+      console.log(error)
+    }
+  }
   
   const getLendet = async () => {
     try {
@@ -243,7 +249,7 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + `${ligjerataID}`, formData);
       setConfirmExit();
       onLigjerataEdit();
       
@@ -256,9 +262,9 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
 
   return (
     <>
-      <div className="relative w-full rounded-lg shadow" style={{background: colors.primary[500]}}>
-        <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-500">
-          <h3 className="text-lg font-semibold">
+      <div className="relative bg-white w-full rounded-lg shadow dark:bg-gray-700">
+        <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             Edito Ligjeraten
           </h3>
           <button
@@ -290,13 +296,13 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
             <div className="col-span-1 sm:col-span-1">
               <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium"
+                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Emri dhe Mbiemri i Profesorit
                 </label>
                 <select
                   // id="pr"
-                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   value={selectedProfesori}
                   onChange={handleChangedProfesoret}
                 >
@@ -309,13 +315,13 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
             <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium"
+                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Lënda
               </label>
               <select
                 id="lenda"
-                className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 value={selectedLenda}
                 onChange={handleChangedLendet}
               >

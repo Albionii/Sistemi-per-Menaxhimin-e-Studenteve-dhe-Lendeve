@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -88,6 +89,12 @@ public class AdminController {
         LendaSemester  created = lendaSemesterService.shto(lendaSemester);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @GetMapping("/semesters")
+    public ResponseEntity<List<Semester>> semesters() {
+        List<Semester> sm = semesterService.getSemesters();
+        return ResponseEntity.status(HttpStatus.OK).body(sm);
     }
 
     @DeleteMapping("/semester/delete/{id}")

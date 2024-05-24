@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ProfesoriLenda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +27,19 @@ public class ProfesoriLenda {
     @ManyToOne
     private Lenda  lenda;
 
+
     @OneToMany
     private List<Assignment> assignments;
-
-//    @OneToMany(mappedBy = "ligjerata", cascade = CascadeType.ALL)
-//    private List<Provimi> provimet;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Materiali> materiali = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Postimi> postimet = new ArrayList<>();
+
+    @OneToMany(mappedBy = "ligjerata", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Provimi> provimet;
 
     public ProfesoriLenda(Professor professor, Lenda lenda) {
         this.professor = professor;

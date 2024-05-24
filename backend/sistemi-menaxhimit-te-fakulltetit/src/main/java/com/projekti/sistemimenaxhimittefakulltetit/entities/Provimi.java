@@ -1,6 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,7 +19,6 @@ public class Provimi {
     private Long id;
 
     @ManyToOne
-//    @JoinColumn(name = "lenda_id")
     private ProfesoriLenda ligjerata;
 
     private String data;

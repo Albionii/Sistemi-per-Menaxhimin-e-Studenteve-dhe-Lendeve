@@ -1,12 +1,12 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Semester;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
+
 
 @Service
 public class SemesterService {
@@ -24,6 +24,10 @@ public class SemesterService {
         Semester semester = semesterRepository.findSemesterById(id);
 
         semesterRepository.delete(semester);
+    }
+
+    public List<Semester> getSemesters(){
+        return semesterRepository.findAll();
     }
 
 

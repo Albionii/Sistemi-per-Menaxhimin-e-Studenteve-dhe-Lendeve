@@ -67,7 +67,6 @@ public class ProfessorController {
         return new ResponseEntity<>(professors, HttpStatus.OK);
     }
 
-
     @GetMapping("/getProfessor/{id}")
     public Optional<Professor> getProfessor(@PathVariable Long id){
         return professorService.findProfById(id);

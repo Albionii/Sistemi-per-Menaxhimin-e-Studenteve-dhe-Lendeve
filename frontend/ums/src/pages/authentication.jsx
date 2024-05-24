@@ -12,10 +12,12 @@ function authentication() {
     return (
         <Routes>
             <Route exact path='/'
-                element={<Signup changeLoggedInState={changeLoggedInState} />}>
+                // element={<Signup changeLoggedInState={changeLoggedInState} />}>
+                element={<Signup />}>
             </Route>
             <Route exact path='/login'
-                element={<Login changeLoggedInState={changeLoggedInState} />}>
+                // element={<Login changeLoggedInState={changeLoggedInState} />}>
+                element={<Login />}>
             </Route>
             <Route path="*" element={<Signup />} />
 

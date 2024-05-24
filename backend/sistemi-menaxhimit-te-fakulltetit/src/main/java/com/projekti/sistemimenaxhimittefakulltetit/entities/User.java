@@ -23,10 +23,9 @@ public class User {
     private String firstName;
     private String lastName;
 
-    @Column(nullable = false)
+
     private String email;
 
-    @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

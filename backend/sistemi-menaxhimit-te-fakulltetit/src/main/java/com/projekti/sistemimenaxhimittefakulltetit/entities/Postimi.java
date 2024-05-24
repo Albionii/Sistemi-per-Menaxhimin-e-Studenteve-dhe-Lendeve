@@ -30,4 +30,10 @@ public class Postimi {
     @NotNull
     private LocalDateTime data_Postimit;
 
+    @OneToMany
+    private List<Assignment> assignments;
+
+    @OneToMany
+    private List<Komenti> komentet;
+
 }

@@ -132,41 +132,30 @@ export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API
     </>
   )
 }
-export const ligjerataEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLigjerataEdit, API}) => {
-  const [urlLigjerata, errorLigjerata] = API.getByID();
+export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
   const [urlUpdate, errorUpdate] = API.update();
   const [urlLendet, messageLendet] = getAllLendet();
   const [urlProfessor, messageProfessor] = getAllProfessors();
 
   //Per inputat select lendet
   const [lendet, setLendet] = useState([]);
-  const [selectedLenda, setSelectedLenda] = useState('');
+  const [selectedLenda, setSelectedLenda] = useState(item.lenda);
 
   //Per inputat select profesoret
   const [profesoret, setProfesoret] = useState([]);
-  const [selectedProfesori, setSelectedProfesori] = useState('');
+  const [selectedProfesori, setSelectedProfesori] = useState(item.professor);
 
-  const [formData, setFormData] = useState(formDataJson);
+  const [formData, setFormData] = useState(item);
 
   const handleClick = () => {
     setConfirmExit();
   }
 
   useEffect(() => {
-    getLigjerata();
     getLendet();
     getProfesoret();
   }, []);
 
-
-  const getLigjerata = async () => {
-    try{
-      const fetchLigjerata = await axios.get(urlLigjerata + `${ligjerataID}`);
-      setFormData(fetchLigjerata.data)
-    }catch(error) {
-      console.log(error)
-    }
-  }
   
   const getLendet = async () => {
     try {
@@ -209,7 +198,7 @@ export const ligjerataEditButton = ({setConfirmExit, ligjerataID, formDataJson, 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + `${ligjerataID}`, formData);
+      await axios.put(urlUpdate + item.id, formData);
       setConfirmExit();
       onLigjerataEdit();
       

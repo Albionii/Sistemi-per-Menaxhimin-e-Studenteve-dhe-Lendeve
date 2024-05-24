@@ -1,8 +1,8 @@
 import TopTable from './TopTable.jsx'
 import BottomTable from './BottomTable.jsx'
-import { useState } from 'react';
+import {useState } from 'react';
 import { errorAlert } from '../APIRequests.js';
-export default function Crud({rows, createAPI,getAllAPI, getByIDAPI, updateAPI,deleteAPI, isPreviewAvailable, formDataJson,jsonName}){
+export default function Crud({rows, createAPI,getAllAPI, getByIDAPI, updateAPI,deleteAPI,formDataJson, isPreviewAvailable, isAddAvailable, jsonName}){
   const[num, setNum] = useState(0);
 
   const renderBot = () => {
@@ -17,16 +17,17 @@ export default function Crud({rows, createAPI,getAllAPI, getByIDAPI, updateAPI,d
     update: updateAPI,
     errorAlert : errorAlert
   };
+
+
   
 
   return(
     <>
-      <TopTable renderBot={renderBot} formDataJson={formDataJson} API={API}/>
+      <TopTable renderBot={renderBot} formDataJson={formDataJson} isAddAvailable={isAddAvailable} API={API}/>
       <BottomTable 
         theKey={num} 
         rows={rows} 
         API={API} 
-        formDataJson={formDataJson}
         isPreviewAvailable={isPreviewAvailable}
         jsonName={jsonName}
       />
