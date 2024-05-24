@@ -13,8 +13,6 @@ import { Routes, Route } from "react-router-dom";
 import Profesori from "./TableTranskripta.jsx";
 import CrudCategories from "../pages/CrudCategories.jsx";
 import Transkripta from "../pages/Transkripta.jsx";
-
-import Ligjerata from "../pages/ligjerata.jsx";
 import Ligjeratat from "../pages/ligjeratat.jsx";
 import Provimi from "./Provimi/Provimi.jsx";
 import Postimi from "../pages/Postimi.jsx";
@@ -57,7 +55,6 @@ function loggedIn() {
           <Route path="/provimet" element={<Provimet />} />
 
           <Route path="/ligjeratat" element={<Ligjeratat />} />
-          <Route path="/ligjeratat/:name//*" element={<Ligjerata />} />
           <Route path="/cruds" element={<CrudCategories />} />
           <Route path="/transkripta" element={<Transkripta />} />
 

@@ -1,6 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.LendaSemesterRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfessorRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.UserRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.CreateLendaReq;

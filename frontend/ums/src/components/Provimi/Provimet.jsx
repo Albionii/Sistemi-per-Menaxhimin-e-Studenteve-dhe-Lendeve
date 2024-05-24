@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 const Provimet = () => {
   const [provimet, setProvimet] = useState([]);
   const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTU4ODEzMTcsImV4cCI6MTcxNTg4OTk1NywiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.atscXOQTqNJBRjBG-sLWrdp5BLuiKYGG7Hui_FyHMhA";
+    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTY1NzQ1NjQsImV4cCI6MTcxNjU4MzIwNCwiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.P049jBtqBoZIxcBc4RUczls-8HZNFAuB6c0UtcyPPl0";
 
   useEffect(() => {
     fetchProvimet();

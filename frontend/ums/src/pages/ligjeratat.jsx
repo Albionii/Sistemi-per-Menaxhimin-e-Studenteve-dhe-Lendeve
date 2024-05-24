@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "@mui/system"; // Changed import
+import { useTheme } from "@mui/system"; 
 import { tokens } from "../theme";
 import { Box, Typography, Grid } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -9,16 +9,22 @@ import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
+import { useNavigate } from "react-router-dom";
 
-// Function to generate random image URL
+
 const getRandomImage = () => {
   const randomIndex = Math.floor(Math.random() * 10) + 1;
-  return `https://source.unsplash.com/random/1080x720?sig=${randomIndex}`;
+  return `https://source.unsplash.com/random/1920x1080?sig=${randomIndex}`;
 };
 
 const CourseCard = ({ name, professor, imageUrl }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/postimi", { state: { imageUrl } });
+  };
 
   return (
     <Card
@@ -26,15 +32,17 @@ const CourseCard = ({ name, professor, imageUrl }) => {
         height: "100%",
         borderRadius: "8px",
         background: colors.primary[600],
+        zIndex:20
       }}
     >
-      <CardActionArea component={Link} to={'/postimi'}>
+      <CardActionArea onClick={handleClick}>
         <CardMedia
           component="div"
           sx={{
             height: 200,
             backgroundImage: `url(${imageUrl})`,
             backgroundSize: "cover",
+            zIndex:21
           }}
         />
         <CardContent
@@ -50,7 +58,7 @@ const CourseCard = ({ name, professor, imageUrl }) => {
               sx={{
                 fontSize: { xs: "h4.fontSize", md: "h3.fontSize" },
                 fontWeight: "bold",
-                marginBottom: "0.5rem", 
+                marginBottom: "0.5rem",
               }}
             >
               {name}
@@ -61,13 +69,16 @@ const CourseCard = ({ name, professor, imageUrl }) => {
           </Box>
           <Button
             sx={{
+              position:"relative",
               background: colors.blueAccent[600],
               color: "#fff",
               "&:hover": { background: colors.blueAccent[700] },
-              padding: '15px 30px'
+              padding: "15px 30px",
+              zIndex:"50"
             }}
             component={Link}
             to={name}
+            onClick={(e) => e.stopPropagation()}
           >
             Enroll
           </Button>

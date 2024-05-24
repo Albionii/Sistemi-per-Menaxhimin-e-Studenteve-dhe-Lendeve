@@ -3,7 +3,7 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.*;
 import com.projekti.sistemimenaxhimittefakulltetit.request.AssignmentResponse;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -22,6 +22,8 @@ import java.util.Optional;
 public class AssignmentServiceImpl implements AssignmentService{
 
     @Autowired
+    private EntityManager entityManager;
+    @Autowired
     private AssignmentRepository assignmentRepository;
 
     @Autowired
@@ -30,14 +32,13 @@ public class AssignmentServiceImpl implements AssignmentService{
     @Autowired
     private UserService userService;
 
-    @Autowired
+    @Autowired @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private LendaRepository lendaRepository;
 
     @Autowired
     private ProfesoriLendaRepository profesoriLendaRepository;
 
-    @Autowired
-    private PostimiRepository postimiRepository;
+
 
 
 
@@ -48,13 +49,11 @@ public class AssignmentServiceImpl implements AssignmentService{
 
 
     @Override
-    public Assignment createAssignment(AssignmentResponse req, User user) throws Exception {
-        Assignment created = new Assignment();
-
-        ProfesoriLenda ligjerata = profesoriLendaRepository.findById(req.getId())
+    public Assignment createAssignment(AssignmentResponse req, User user, Long id) throws Exception {
+        ProfesoriLenda ligjerata = profesoriLendaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Postimi nuk u gjet!"));
 
-//        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaRepository.findById(req.getLendaId());
+        Assignment created = new Assignment();
 
         if (user != null && ligjerata != null) {
             created.setTitulli(req.getTitulli());
@@ -72,6 +71,7 @@ public class AssignmentServiceImpl implements AssignmentService{
         }
         return null;
     }
+
 
     @Override
     public Assignment getAssignmentById(Long id) throws Exception {
@@ -101,7 +101,6 @@ public class AssignmentServiceImpl implements AssignmentService{
 
             assignmentRepository.save(updatedAssignment);
 
-            ligjerata.getAssignments().add(updatedAssignment);
             profesoriLendaRepository.save(ligjerata);
 
             return updatedAssignment;
@@ -111,7 +110,6 @@ public class AssignmentServiceImpl implements AssignmentService{
     }
 
     public List<AssignmentSubmission> submit(Long assignmentId, AssignmentSubmission submittedAssignment, User user) throws Exception {
-
         Assignment assignment = getAssignmentById(assignmentId);
         if (assignment == null) {
             throw new Exception("Assignment not found with id: " + assignmentId);
@@ -119,16 +117,12 @@ public class AssignmentServiceImpl implements AssignmentService{
 
         submittedAssignment.setSubmiter(user);
         submittedAssignment.setSubmitedAt(LocalDateTime.now());
+        if (assignment.getSubmissions() == null) {
+            assignment.setSubmissions(new ArrayList<>());
+        }
+        assignment.getSubmissions().add(submittedAssignment);
+        assignmentRepository.save(  assignment);
 
-        assignmentSubmissionRepository.save(submittedAssignment);
-
-        List<AssignmentSubmission> submissions = new ArrayList<>();
-
-        submissions.add(submittedAssignment);
-
-        assignment.setSubmissions(submissions);
-
-        assignmentRepository.save(assignment);
         return assignment.getSubmissions();
     }
 
@@ -149,15 +143,20 @@ public class AssignmentServiceImpl implements AssignmentService{
     }
 
     @Override
-    public AssignmentSubmission updateAssignmentSubmission(Long id, AssignmentSubmission update) {
-        AssignmentSubmission old = assignmentSubmissionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Submission with id {" + id +"} was not found!"));
+    public AssignmentSubmission updateAssignmentSubmission(Long id, AssignmentSubmission update, User user) {
 
-        old.setMesazhi(update.getMesazhi());
-        old.setFileNames(update.getFileNames());
-        old.setSubmitedAt(LocalDateTime.now());
 
-        return assignmentSubmissionRepository.save(old);
+
+        AssignmentSubmission old = findSubmissionByUser(user, id);
+
+        if (old != null) {
+            old.setMesazhi(update.getMesazhi());
+            old.setFileNames(update.getFileNames());
+            old.setSubmitedAt(LocalDateTime.now());
+            return assignmentSubmissionRepository.save(old);
+
+        }
+        return null;
     }
 
 
@@ -183,4 +182,27 @@ public class AssignmentServiceImpl implements AssignmentService{
 
         return ligjerata.getAssignments();
     }
+
+    public List<AssignmentSubmission> getSubmissions(Long id) {
+        Optional<Assignment> assignment = assignmentRepository.findById(id);
+        return assignment.get().getSubmissions();
+    }
+
+    @Override
+    public AssignmentSubmission findSubmissionByUser(User user, Long assignmentId) {
+
+        Optional<Assignment> optionalAssignment = assignmentRepository.findById(assignmentId);
+
+        if (optionalAssignment.isPresent()) {
+            Assignment assignment = optionalAssignment.get();
+
+            for (AssignmentSubmission submission : assignment.getSubmissions()) {
+                if (submission.getSubmiter().equals(user)) {
+                    return submission;
+                }
+            }
+        }
+        return null;
+    }
+
 }

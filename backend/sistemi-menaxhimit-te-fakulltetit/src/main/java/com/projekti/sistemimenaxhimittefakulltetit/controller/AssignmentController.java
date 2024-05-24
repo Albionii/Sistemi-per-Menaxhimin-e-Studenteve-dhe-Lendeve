@@ -1,9 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Assignment;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Postimi;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.PostimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.AssignmentResponse;
@@ -51,32 +48,24 @@ public class AssignmentController {
         return new ResponseEntity<>(assignment, HttpStatus.FOUND);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Assignment> createAssignment(@RequestParam(name="id")Long id,
+    @PostMapping("/create/{id}")
+    public ResponseEntity<Assignment> createAssignment(@PathVariable Long id,
                                                        @RequestBody AssignmentResponse assignment,
-                                                    @RequestHeader("Authorization") String token ) throws Exception {
+                                                       @RequestHeader("Authorization") String token ) throws Exception {
 
-        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaService.findById(id);
+        Optional<ProfesoriLenda> profesoriLendaOptional = profesoriLendaService.findById(id);
 
-        User user = userService.findUserByJwtToken(token);
-
-        List<Assignment> assignments = new ArrayList<>();
-
-
-        Assignment created = assignmentService.createAssignment(assignment, user);
-
-        assignments.add(created);
-
-
-        if (profesoriLenda.isEmpty()) {
+        if (profesoriLendaOptional.isEmpty()) {
             throw new EntityNotFoundException("Ligjerata nuk ekziston!");
         }
 
-        profesoriLenda.get().setAssignments(assignments);
-        profesoriLendaRepository.save(profesoriLenda.get());
+        User user = userService.findUserByJwtToken(token);
+
+        Assignment created = assignmentService.createAssignment(assignment, user, id);
 
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Assignment> updateAssignment(@RequestBody AssignmentResponse assignment,
@@ -98,5 +87,10 @@ public class AssignmentController {
     @GetMapping("/get/ligjerata/{id}")
     public ResponseEntity<List<Assignment>> getAssignmentsOfLigjerata(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfLigjerata(id));
+    }
+
+    @GetMapping("/get/submissions/{id}")
+    public ResponseEntity<List<AssignmentSubmission>> getSubmissionsOfAssignment(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getSubmissions(id));
     }
 }

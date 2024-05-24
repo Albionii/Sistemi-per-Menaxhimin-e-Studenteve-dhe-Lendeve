@@ -8,7 +8,7 @@ const Paraqitura = () => {
     const [selectedProvimiId, setSelectedProvimiId] = useState(null);
 
     const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTU4ODEzMTcsImV4cCI6MTcxNTg4OTk1NywiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.atscXOQTqNJBRjBG-sLWrdp5BLuiKYGG7Hui_FyHMhA";
+    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTYzMjAzMTksImV4cCI6MTcxNjMyODk1OSwiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.QsCDkHfDWw7QP_VHpJUOXKAG7ruLT7IqdECY1kVNQN0";
 
 
     const config = {
