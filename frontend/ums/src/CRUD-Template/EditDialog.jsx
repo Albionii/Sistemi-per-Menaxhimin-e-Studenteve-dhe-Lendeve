@@ -1,20 +1,27 @@
-import { updateLendaByID, updateLigjerataByID, updateProfessorByID, updateProvimiByID } from "../APIRequests.js";
+import { updateLendaByID, updateLigjerataByID, updateProfessorByID, updateProvimiByID, updateSallaByID } from "../APIRequests.js";
 import { lendaEditButton } from "./AddEditButtons/AddEditLenda.jsx";
 import { ligjerataEditButton } from "./AddEditButtons/AddEditLigjerata.jsx";
+import { professorEditButton } from "./AddEditButtons/AddEditProfesori.jsx";
 import { provimiEditButton } from "./AddEditButtons/AddEditProvimet.jsx";
+import { sallaEditButton } from "./AddEditButtons/AddEditSalla.jsx";
 
-export default function EditDialog({setConfirmExit, ligjerataID, onLigjerataEdit, formDataJson, API}){
+export default function EditDialog({setConfirmExit, item, onLigjerataEdit, API}){
   
+  let prompt = {setConfirmExit, item, onLigjerataEdit, API};
   const whichEdit = () => {
     switch (API.update()[0]){
       case updateProvimiByID()[0] : 
-        return provimiEditButton({setConfirmExit, ligjerataID, onLigjerataEdit, formDataJson, API});
+        return provimiEditButton(prompt);
       case updateLigjerataByID()[0] : 
-        return ligjerataEditButton({setConfirmExit, ligjerataID, onLigjerataEdit, formDataJson, API});
+        return ligjerataEditButton(prompt);
       case updateLendaByID()[0] : 
-        return lendaEditButton({setConfirmExit, ligjerataID, onLigjerataEdit, formDataJson, API});
+        return lendaEditButton(prompt);
+      case updateSallaByID()[0]:
+        return sallaEditButton(prompt);
+      case updateProfessorByID()[0]:
+        return professorEditButton(prompt);
       default:
-        return null;
+        return API.errorAlert("Nuk ekziston edit butoni per kete CRUD ose nuk e keni shtuar ne EditDialog.jsx");
     }
   }
   

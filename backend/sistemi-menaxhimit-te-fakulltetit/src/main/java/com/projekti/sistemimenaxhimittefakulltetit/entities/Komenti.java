@@ -1,29 +1,26 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+@Data
 @Entity
+@Table(name = "komenti")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class Postimi {
+public class Komenti {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titulli;
-    private LocalDateTime data_Postimit;
+    private String teksti;
 
-    @OneToMany
-    private List<Assignment> assignments;
+    @ManyToOne
+    private User userID;
 
-    @OneToMany
-    private List<Komenti> komentet;
-
+    @ManyToOne
+    private Postimi postimi;
 }

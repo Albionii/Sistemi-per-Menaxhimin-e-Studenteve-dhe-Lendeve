@@ -1,14 +1,14 @@
 import React from 'react'
-import Crud from './CRUD-Template/Crud'
+import Crud from '../CRUD-Template/Crud'
 
 import {
   createProvimi,
   getAllProvimet,
   getProvimiByID,
   updateProvimiByID,
-  deleteProvimiByID,
-} from './APIRequests'
-function SampleCrud() {
+  deleteProvimiByID
+} from '../APIRequests'
+function Provimi() {
   const rowsNames = [
     "Lenda",
     "Emri",
@@ -19,6 +19,7 @@ function SampleCrud() {
   
   const jsonNames = ["ligjerata.lenda.emri", "ligjerata.professor.user.firstName", "ligjerata.professor.user.lastName", "data","location"];
   const isPreviewAvailable = false;
+  const isAddAvailable = true;
 
   const formDataJson = {
     ligjerata : {
@@ -41,7 +42,6 @@ function SampleCrud() {
   }
 
 
-
   return (
     <>
       <Crud 
@@ -51,12 +51,13 @@ function SampleCrud() {
         getByIDAPI = {getProvimiByID}
         updateAPI = {updateProvimiByID}
         deleteAPI = {deleteProvimiByID}
-        formDataJson={formDataJson}
         isPreviewAvailable = {isPreviewAvailable}
+        isAddAvailable={isAddAvailable}
+        formDataJson = {formDataJson}
         jsonName={jsonNames}
          />
     </>
   )
 }
 
-export default SampleCrud
+export default Provimi

@@ -42,27 +42,27 @@
   
   export const deleteProfessorByID = () => {
     const url = BASE_URL + `/professor/delete/`;
-    return [url, "Studenti nuk është fshirë!"];
+    return [url, "Profesori nuk është fshirë!"];
   }
   
   export const createProfessor = () => {
     const url = BASE_URL + `/professor/create`;
-    return [url, "Studenti nuk është shtuar!"];
+    return [url, "Profesori nuk është shtuar!"];
   }
 
   export const getAllProfessors = () => {
     const url = BASE_URL + `/professor`;
-    return [url, "Gabim në marrjen e studentëve!"];
+    return [url, "Gabim në marrjen e profesoreve!"];
   }
 
   export const getProfessorByID = () => {
     const url = BASE_URL + `/professor/getProfessor/`;
-    return [url, "Gabim në marrjen e studentit!"];
+    return [url, "Gabim në marrjen e profesorit!"];
   }
 
   export const updateProfessorByID = () => {
     const url = BASE_URL + `/professor/update/`;
-    return [url, "Gabim në përditësimin e studentit!"];
+    return [url, "Gabim në përditësimin e profesorit!"];
   }
 
 
@@ -166,6 +166,34 @@
 
 
   
+
+  //Sallat
+
+  export const deleteSallaByID = () => {
+    const url = BASE_URL + `/salla/delete/`;
+    return [url, "Gabim në fshirjen e salles!"];
+  }
+
+  export const createSalla = () => {
+    const url = BASE_URL + `/salla/create`;
+    return [url, "Gabim në krijimin e salles!"];
+  }
+
+  export const getAllSallat = () => {
+    const url = BASE_URL + `/salla`;
+    return [url, "Gabim në marrjen e sallave!"];
+  }
+  
+  export const getSallaByID = () => {
+    const url = BASE_URL + `/salla/`;
+    return [url, "Gabim në marrjen e salles!"];
+  }
+
+  export const updateSallaByID = () => {
+    const url = BASE_URL + `/salla/update/`;
+    return [url, "Gabim në përditësimin e salles!"];
+  }
+
 
   //Users
 

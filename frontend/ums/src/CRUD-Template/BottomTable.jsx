@@ -19,6 +19,7 @@ export default function BottomTable({ theKey, rows, API, isPreviewAvailable, jso
     getAllRows();
   }, [theKey]);
 
+
   const onLigjerataEdit = () => {
     getAllRows();
   };
@@ -92,8 +93,9 @@ return (
               <td className="px-4 py-3 font-medium whitespace-nowrap">
                 <div className="flex items-center space-x-4 justify-center">
                   <EditButton
-                    ligjerataID={p.id}
+                    item={p}
                     onLigjerataEdit={onLigjerataEdit}
+                    API={API}
                   />
                   {isPreviewAvailable ? <PreviewButton /> : ""}
                   <DeleteButton id={p.id} onDelete={deleteRow} />

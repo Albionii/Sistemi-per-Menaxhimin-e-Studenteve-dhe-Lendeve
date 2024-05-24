@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { useEffect } from 'react';
 import axios from 'axios';
-import { getLendaByID, getLigjerataByID, getProfessorByID } from '../../APIRequests';
+import { useTheme } from '@mui/material';
+import { tokens } from '../../theme';
 export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [urlCreate, errorCreate] = API.create();
   const[lendaEmri, setLendaEmri] = useState("");
   const[kodiLendes, setKodiLendes] = useState("");
@@ -69,9 +72,9 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
 
   return (
     <>
-      <div className="relative bg-white w-full rounded-lg shadow dark:bg-gray-700">
+      <div className="relativew-full rounded-lg shadow" style={{background: colors.primary[500]}}>
         <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <h3 className="text-lg font-semibold">
             Krijo Lëndën
           </h3>
           <button
@@ -103,13 +106,13 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
             <div className="col-span-1 sm:col-span-1">
               <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
                   Kodi i Lëndës
                 </label>
                 <input 
                   type="text" 
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
                   value={kodiLendes}
                   onInput={handleKodi}
                   placeholder='Kodi Lendes'  
@@ -119,13 +122,13 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
             <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
               >
                 ECTS
               </label>
               <input 
                 type="text"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                 placeholder='Kredite'
                 value={kredite}
                 onInput={handleKredite}
@@ -134,13 +137,13 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
             <div className="col-span-2 sm:col-span-2">
               <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
                   Emri i Lëndës
                 </label>
                 <input 
                   type="text" 
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={lendaEmri}
                   onInput={handleLenda}
                   placeholder='Emri Lendes'  
@@ -149,17 +152,17 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
             <div className="col-span-2 sm:col-span-2">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
               >
                 Obligative
               </label>
               <div>
-                <div className="flex items-center ps-4 border border-gray-200 rounded px-6">
+                <div className="flex items-center ps-4 border border-gray-400 rounded px-6"  style={{background: colors.primary[400]}}>
                   <input
                     id="bordered-radio-1"
                     type="radio"
                     name="bordered-radio"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4  border-gray-400 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2" style={{background: colors.primary[400]}}
                     defaultChecked={true}
                     value={true}
                     onInput={handleObligative}
@@ -167,24 +170,24 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
                   />
                   <label
                     htmlFor="bordered-radio-1"
-                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="w-full py-4 ms-2 text-sm font-medium"
                   >
                     Po
                   </label>
                 </div>
-                <div className="flex items-center ps-4 border border-gray-200 rounded px-6">
+                <div className="flex items-center ps-4 border border-gray-400 rounded px-6"  style={{background: colors.primary[400]}}>
                   <input
                     id="bordered-radio-2"
                     type="radio"
                     name="bordered-radio"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4  border-gray-400 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 " style={{background: colors.primary[400]}}
                     defaultChecked={false}
                     value={false}
                     onInput={handleObligative}
                   />
                   <label
                     htmlFor="bordered-radio-2"
-                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="w-full py-4 ms-2 text-sm font-medium"
                   >
                     Jo
                   </label>
@@ -216,18 +219,18 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
     </>
   )
 }
-export const lendaEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLigjerataEdit, API}) => {
+export const lendaEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [urlUpdate, errorUpdate] = API.update();
-  const [urlGetLenda, errorGetLenda] = API.getByID();
   //Per inputat select lendet
-  const [lenda, setLenda] = useState({});
+  const [formData, setFormData] = useState(item);
 
-  const [formData, setFormData] = useState(formDataJson);
-
-  const[lendaEmri, setLendaEmri] = useState("");
-  const[kodiLendes, setKodiLendes] = useState(0);
-  const[kredite, setKredite] = useState(0);
-  const[obligative, setObligative] = useState(null);
+  const[lendaEmri, setLendaEmri] = useState(item.emri);
+  const[kodiLendes, setKodiLendes] = useState(item.kodi);
+  const[kredite, setKredite] = useState(item.ects);
+  const[obligative, setObligative] = useState(item.obligative);
 
 
   const handleClick = () => {
@@ -274,47 +277,12 @@ export const lendaEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLi
     });
   }
 
-
-  const getLenda = async () => {
-    try {
-      const response = await axios.get(urlGetLenda+ ligjerataID);
-      setFormData(response.data);
-    }catch(error) {
-      console.log(error);
-    }
-  }
-
-  const setDefaultValues = () => {
-    setLendaEmri(formData.emri);
-    setKodi(formData.kodi);
-    setKredite(formData.ects);
-    setObligative(formData.obligative);
-  }
-
-
-  useEffect(() => {
-    getLenda();
-  }, []);
-  
-  // useEffect(()=>{
-  //   setDefaultValues();
-  // },[formData])
-
-
-  const handleChangedLendet = (e) => {
-    setSelectedLenda(e.target.value);
-    setFormData({
-      ...formData,
-      lenda : lendet.find(lenda => lenda.id == e.target.value)
-    })
-  };
-
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       console.log(formData)
-      await axios.put(urlUpdate + ligjerataID, formData);
+      await axios.put(urlUpdate + item.id, formData);
       setConfirmExit();
       onLigjerataEdit();
       
@@ -327,9 +295,9 @@ export const lendaEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLi
 
   return (
     <>
-      <div className="relative bg-white w-full rounded-lg shadow dark:bg-gray-700">
+      <div className="relative w-full rounded-lg shadow" style={{background: colors.primary[500]}}>
         <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <h3 className="text-lg font-semibold">
             Edito Lëndën
           </h3>
           <button
@@ -361,13 +329,13 @@ export const lendaEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLi
             <div className="col-span-1 sm:col-span-1">
               <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
                   Kodi i Lëndës
                 </label>
                 <input 
                   type="text" 
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={kodiLendes==''&& formData != null?formData.kodi:kodiLendes}
                   onInput={handleKodi}
                   placeholder='Kodi Lendes'  
@@ -377,13 +345,13 @@ export const lendaEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLi
             <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
               >
                 ECTS
               </label>
               <input 
                 type="text"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                 placeholder='Kredite'
                 value={kredite == 0 && formData != null? formData.ects : kredite}
                 onInput={handleKredite}
@@ -392,13 +360,13 @@ export const lendaEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLi
             <div className="col-span-2 sm:col-span-2">
               <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
                   Emri i Lëndës
                 </label>
                 <input 
                   type="text" 
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={lendaEmri == '' && formData != null ? formData.emri : lendaEmri}
                   onInput={handleLenda}
                   placeholder='Emri Lendes'  
@@ -407,17 +375,17 @@ export const lendaEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLi
             <div className="col-span-2 sm:col-span-2">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
               >
                 Obligative
               </label>
               <div>
-                <div className="flex items-center ps-4 border border-gray-200 rounded px-6">
+                <div className="flex items-center ps-4 border border-gray-400 rounded px-6"  style={{background: colors.primary[400]}} >
                   <input
                     id="bordered-radio-1"
                     type="radio"
                     name="bordered-radio"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 border-gray-400 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 " style={{background: colors.primary[400]}}
                     defaultChecked={obligative == null  && formData != null? formData.obligative : obligative}
                     value={true}
                     onInput={handleObligative}
@@ -425,24 +393,24 @@ export const lendaEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLi
                   />
                   <label
                     htmlFor="bordered-radio-1"
-                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="w-full py-4 ms-2 text-sm font-medium"
                   >
                     Po
                   </label>
                 </div>
-                <div className="flex items-center ps-4 border border-gray-200 rounded px-6">
+                <div className="flex items-center ps-4 border border-gray-400 rounded px-6"  style={{background: colors.primary[400]}}>
                   <input
                     id="bordered-radio-2"
                     type="radio"
                     name="bordered-radio"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 border-gray-400 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 " style={{background: colors.primary[400]}}
                     defaultChecked={obligative == null  && formData != null ? !formData.obligative : !obligative}
                     value={false}
                     onInput={handleObligative}
                   />
                   <label
                     htmlFor="bordered-radio-2"
-                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="w-full py-4 ms-2 text-sm font-medium"
                   >
                     Jo
                   </label>

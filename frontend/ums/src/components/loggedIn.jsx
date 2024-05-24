@@ -9,10 +9,8 @@ import Paraqitura from "./Provimi/Paraqitura.jsx";
 import Dashboard from "../pages/dashboard.jsx";
 import Profili from "../pages/Profili.jsx";
 import CRUD from "../CRUD-Template/Crud.jsx";
-import MenaxhoUsers from '../usersCrud.jsx';
 import { Routes, Route } from "react-router-dom";
 import Profesori from "./TableTranskripta.jsx";
-import SampleCrud from "../SampleCrud.jsx";
 import CrudCategories from "../pages/CrudCategories.jsx";
 import Transkripta from "../pages/Transkripta.jsx";
 
@@ -23,6 +21,12 @@ import Postimi from "../pages/Postimi.jsx";
 import SemestriCrud from "../CRUD-Template/SemesterCrud.jsx";
 import Semestrat from "../pages/Semestrat.jsx";
 import Departmentat from "../pages/Departmentat.jsx";
+
+import ProvimiCRUD from "../CRUD-at/Provimi.jsx";
+
+import ProfesorLenda from '../CRUD-at/ProfesorLenda.jsx';
+import Profesoret from "../CRUD-at/Profesoret.jsx";
+import Lenda from "../CRUD-at/Lenda.jsx";
 
 
 function loggedIn() {
@@ -62,7 +66,10 @@ function loggedIn() {
           <Route path="/Profili" element={<Profili />} />
           <Route path="/postimi" element={<Postimi />} />
 
-          <Route path="/MenaxhoUsers" element={<MenaxhoUsers />} />
+          <Route path="/profesorLenda" element={<ProfesorLenda/>} />
+          <Route path="/provimi" element={<ProvimiCRUD/>} />
+          <Route path="/profesoret" element={<Profesoret/>} />
+          <Route path="/lendet" element={<Lenda/>} />
           <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
           <Route path="/semestrat" element={<Semestrat />} />
           <Route path="/department" element={<Departmentat />} />

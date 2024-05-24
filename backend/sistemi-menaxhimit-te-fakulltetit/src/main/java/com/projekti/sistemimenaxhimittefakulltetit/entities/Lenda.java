@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.antlr.v4.runtime.misc.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 @Data
 @Entity
@@ -31,6 +28,10 @@ public class Lenda {
     private String ects;
     @NotNull
     private boolean isObligative;
+
+    @OneToMany(mappedBy = "lenda", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ProfesoriLenda> profesoriLendet;
 
 
 

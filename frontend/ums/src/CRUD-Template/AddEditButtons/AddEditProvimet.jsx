@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { getAllLendet, getAllLigjeratat, getLigjerataByID, getProvimiByID } from '../../APIRequests';
+import { getAllLendet, getAllLigjeratat} from '../../APIRequests';
+import { useTheme } from '@mui/material';
+import { tokens } from '../../theme';
 
 export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [urlCreate, errorCreate] = API.create();
   const [urlLendet, errorLendet] = getAllLendet();
   const [urlLigjeratat, errorLigjeratat] = getAllLigjeratat();
@@ -92,14 +97,14 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
 
   return (
     <>
-      <div className="relative bg-white w-full rounded-lg shadow dark:bg-gray-700">
-        <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="relative w-full rounded-lg shadow" style={{background: colors.primary[500]}}>
+        <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-500">
+          <h3 className="text-lg font-semibold"  >
             Krijo Provimin
           </h3>
           <button
             type="button"
-            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            className="bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-toggle="crud-modal"
             onClick={handleClick}
           >
@@ -126,12 +131,12 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
             <div className="col-span-1 sm:col-span-1">
                 <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
                   Lenda
                 </label>
                 <select
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={selectedLenda}
                   onInput={handleChangedLendet}
                 >
@@ -145,12 +150,12 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
             <div className="col-span-1 sm:col-span-1">
                 <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
                   Emri Profesorit
                 </label>
                 <select
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="border text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 border-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={profesori}
                   onChange={handleChangedProfesori}
                 >
@@ -171,13 +176,13 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
             <div className="col-span-1 sm:col-span-1">
                 <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
                   Data
                 </label>
                 <input 
                   type="date" 
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="border text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 border-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={dataMbajtjes}
                   onInput={handleDataMbajtjes}
                   />
@@ -186,13 +191,13 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
             <div className="col-span-1 sm:col-span-1">
                 <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
                 >
                   Lokacioni
                 </label>
                 <input 
                   type="text" 
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="border text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 border-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={lokacioni}
                   onInput={handleLokacioni}
                   placeholder='Lokacioni i Provimit'  
@@ -222,22 +227,23 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
     </>
   )
 }
-export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, onLigjerataEdit, API}) => {
+export const provimiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [urlUpdate, errorUpdate] = API.update();
-  const [urlProvimi, errorProvimi] = getProvimiByID();
-  // const [urlLigjerata, errorLigjerata] = getLigjerataByID();
+  
   const [urlLigjeratat, errorLigjeratat] = getAllLigjeratat();
   const [urlLendet, errorLendet] = getAllLendet();
 
   const [dataMbajtjes, setDataMbajtjes] = useState("");
   const [lokacioni, setLokacioni] = useState("");
-  const [profesori, setProfesori] = useState('');
+  const [profesori, setProfesori] = useState("");
+  const [selectedLenda, setSelectedLenda] = useState("");
 
   const [ligjeratat, setLigjeratat] = useState([]);
   const [lendet, setLendet] = useState([]);
-  const [selectedLenda, setSelectedLenda] = useState('');
 
-  const [formData, setFormData] = useState(formDataJson);
+  const [formData, setFormData] = useState(item);
   
   
   const handleClick = () => {
@@ -291,22 +297,9 @@ export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, on
       console.log(error);
     }
   };
-
-  const getProvimin = async() => {
-    try {
-      const fetchProvimin = await axios.get(urlProvimi + ligjerataID);
-      setFormData(fetchProvimin.data);
-    } catch (error) {
-      API.errorAlert(errorLendet);
-      console.log(error);
-    }
-  }
-
-  
  
 
   useEffect(() => {
-    getProvimin();
     getLigjeratat();
     getLendet();
   }, []);
@@ -317,7 +310,7 @@ export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, on
     e.preventDefault();
     try {
       console.log(formData)
-      await axios.put(urlUpdate + ligjerataID, formData);
+      await axios.put(urlUpdate + item.id, formData);
       setConfirmExit();
       onLigjerataEdit();
       
@@ -330,9 +323,9 @@ export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, on
 
   return (
     <>
-    <div className="relative bg-white w-full rounded-lg shadow dark:bg-gray-700">
+    <div className="relative w-full rounded-lg shadow" style={{background: colors.primary[500]}}>
       <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <h3 className="text-lg font-semibold">
           Edito Provimin
         </h3>
         <button
@@ -364,16 +357,17 @@ export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, on
           <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
               >
                 Lenda
               </label>
               <select
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500"style={{background: colors.primary[400]}} 
                 value={selectedLenda}
                 onInput={handleChangedLendet}
               >
-                <option value="">{selectedLenda == "" && formData != null ? formData.ligjerata.lenda.emri:''}</option>
+              
+                <option value="">{selectedLenda == ""? item.ligjerata.lenda.emri:selectedLenda}</option>
                 {lendet.map(lenda => (
                   <option key={lenda.id} value={lenda.id}>{lenda.emri}</option>
                 ))}
@@ -383,12 +377,12 @@ export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, on
           <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium "
               >
                 Emri Profesorit
               </label>
               <select
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="border border-gray-400  text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                 value={profesori}
                 onChange={handleChangedProfesori}
               >
@@ -401,7 +395,7 @@ export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, on
                       </option>
                     );
                   }
-                  return null; // Explicitly return null if the condition is not met
+                  return null;
                 }) : ''}
 
               </select>
@@ -409,13 +403,13 @@ export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, on
           <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
               >
                 Data
               </label>
               <input 
                 type="date" 
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="border border-gray-400  text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                 value={dataMbajtjes}
                 onInput={handleDataMbajtjes}
                 />
@@ -424,13 +418,13 @@ export const provimiEditButton = ({setConfirmExit, ligjerataID, formDataJson, on
           <div className="col-span-1 sm:col-span-1">
               <label
                 htmlFor="category"
-                className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block text-left mb-2 text-sm font-medium "
               >
                 Lokacioni
               </label>
               <input 
                 type="text" 
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
                 value={lokacioni == "" && formData != null? formData.location : lokacioni}
                 onInput={handleLokacioni}
                 placeholder='Lokacioni i Provimit'  
