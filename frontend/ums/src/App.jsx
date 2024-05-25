@@ -7,11 +7,15 @@ import 'slick-carousel/slick/slick-theme.css';
 // import Signup from './pages/signup.jsx';
 import { ColorModeContext, useMode } from "./theme.js";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+
+
 import Authentication from "./pages/authentication.jsx";
 import LoggedIn from "./components/loggedIn.jsx";
 
 function App() {
   const [theme, colorMode] = useMode();
+
+
   let token;
 
   const value = `; ${document.cookie}`;
@@ -45,7 +49,6 @@ function App() {
   // }
 
   const [loggedIn, setLoggedIn] = useState(token ? true : false);
-
   // // const [loggedIn, setLoggedIn] = useState(document.cookie.split('=')[1].length !== 0);
 
 

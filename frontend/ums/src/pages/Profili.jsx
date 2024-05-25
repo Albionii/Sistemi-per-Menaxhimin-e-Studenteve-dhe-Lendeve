@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Card from '@mui/material/Card';
 import { tokens } from '../theme';
-import { useTheme, Typography } from '@mui/material'
+import { useTheme, Typography, TextField } from '@mui/material'
 import Prophilepic from '../../src/assets/foto.png';
 import { CardMedia } from '@mui/material';
-import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+
 
 
 // import { useHistory } from "react-router-dom";
@@ -16,7 +17,6 @@ function Profili({ changeLoggedInState, user }) {
     function logOut() {
         document.cookie = `Token=`;
         changeLoggedInState();
-
     }
 
     function formatDate(date) {
@@ -31,27 +31,36 @@ function Profili({ changeLoggedInState, user }) {
     }
 
     const [loading, setLoading] = useState(true);
+    const [shfaq, setShfaq] = useState(false);
+
+    const changeShfaq = () => {
+        setShfaq(!shfaq);
+    }
 
     useEffect(() => {
-        if(user.firstName !== "Loading"){
+        if (user.firstName !== "Loading") {
             setLoading(false);
         }
 
 
-    }),[user];
+    }), [user];
 
     if (loading) {
         return (<h1>LOADING...</h1>)
     } else {
 
 
+
+
+
+
         return (
             <>
                 <div className='m-5' style={{ height: '80svh' }}>
-                    <div className='flex h-full justify-around items-center'>
-                        <Card style={{ height: '40rem', width: '25rem' }} sx={{ background: colors.primary[400] }}>
+                    <div className='flex h-full justify-around items-center '>
+                        <Card style={{ height: '30rem', width: '25rem', display: shfaq ? "none" : "block" }} sx={{ background: colors.primary[400], borderRadius: '8rem', }}>
                             <div className='flex flex-col justify-between items-center h-full '>
-                                <div className='h-2/5 mt-5 w-full  flex flex-col items-center' >
+                                <div className='h-1/2 mt-5 w-full  flex flex-col items-center ' >
                                     <CardMedia component="picture" style={{ maxHeight: '10rem', maxWidth: '10rem', borderRadius: '50%' }}>
                                         <img src={Prophilepic} className='rounded-full'></img>
                                     </CardMedia>
@@ -62,32 +71,12 @@ function Profili({ changeLoggedInState, user }) {
                                         </Typography>
                                     </div>
                                 </div>
-                                <div className='h-3/5 flex flex-col gap-4'>
+                                <div className='h-1/2 flex flex-col gap-4'>
 
                                     <Typography variant="h4" color={colors.gray[100]}>
                                         Viti Studimeve: 22/23
                                     </Typography>
-                                    <TextField
-                                        label="Email"
-                                        variant="filled"
-                                        defaultValue={user.email}
-                                        inputProps={{ readOnly: true }}
-                                        sx={{ input: { cursor: 'pointer' } }}
-                                    />
-                                    <TextField
-                                        label="Numri Telefonit"
-                                        variant="filled"
-                                        defaultValue={user.nrTelefonit}
-                                        inputProps={{ readOnly: true }}
-                                        sx={{ input: { cursor: 'pointer' } }}
-                                    />
-                                    <TextField
-                                        label="Adressa"
-                                        variant="filled"
-                                        defaultValue={user.rruga}
-                                        inputProps={{ readOnly: true }}
-                                        sx={{ input: { cursor: 'pointer' } }}
-                                    />
+                                    <Button color="info" variant="outlined" onClick={changeShfaq}>Shfaq me shume te dhena</Button>
                                     <Button color="error" variant="outlined" onClick={logOut}>LogOut</Button>
 
                                 </div>
@@ -96,72 +85,101 @@ function Profili({ changeLoggedInState, user }) {
 
 
                         </Card>
-                        <Card style={{ height: '40rem', width: '25rem' }} sx={{ background: colors.primary[400] }}>
-                            <div className='mt-10 w-full h-full flex flex-col items-center gap-5' >
-                                <TextField
-                                    label="Id"
-                                    variant="outlined"
-                                    defaultValue={user.id}
-                                    inputProps={{ readOnly: true }}
-                                    sx={{ input: { cursor: 'pointer' } }}
+                        <Card style={{ height: '45rem', width: '60rem', display: shfaq ? "block" : "none" }} sx={{ background: colors.primary[400], }}>
 
-                                />
-                                <TextField
-                                    label="Leternjoftimi"
-                                    variant="outlined"
-                                    defaultValue="Not In Entity"
-                                    inputProps={{ readOnly: true }}
-                                    sx={{ input: { cursor: 'pointer' } }}
-                                />
-                                <TextField
-                                    label="Gjinia"
-                                    variant="outlined"
-                                    defaultValue={user.gjinia}
-                                    inputProps={{ readOnly: true }}
-                                    sx={{ input: { cursor: 'pointer' } }}
-                                />
-                                <TextField
-                                    label="Emri"
-                                    variant="outlined"
-                                    defaultValue={user.firstName}
-                                    inputProps={{ readOnly: true }}
-                                    sx={{ input: { cursor: 'pointer' } }}
-                                />
-                                <TextField
-                                    label="Emri Prindit"
-                                    variant="outlined"
-                                    defaultValue={user.firstName}
-                                    inputProps={{ readOnly: true }}
-                                    sx={{ input: { cursor: 'pointer' } }}
-                                />
-                                <TextField
-                                    label="Mbiemri"
-                                    variant="outlined"
-                                    defaultValue={user.lastName}
-                                    inputProps={{ readOnly: true }}
-                                    sx={{ input: { cursor: 'pointer' } }}
-                                />
-                                <TextField
-                                    label="Vendlindja"
-                                    variant="outlined"
-                                    defaultValue={user.qyteti}
-                                    inputProps={{ readOnly: true }}
-                                    sx={{ input: { cursor: 'pointer' } }}
-                                />
-                                <TextField
-                                    label="Date Lindja"
-                                    variant="outlined"
-                                    defaultValue={formatDate(user.dateLindja)}
-                                    inputProps={{ readOnly: true }}
-                                    sx={{ input: { cursor: 'pointer' } }}
-                                />
+                            <div style={{ height: "80svh", width: "120svh" }} className="flex flex-row justify-center items-center  content-center gap-4">
+                                <div className="flex flex-col w-full h-full items-center justify-center gap-4">
+                                    <div>
+                                        <InputLabel>Name</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.firstName}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputLabel>Surname</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.lastName}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputLabel>Gender</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.gjinia}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputLabel>Student ID</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.id}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputLabel>Email</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.email}
+                                        />
+                                    </div>
+                                    <Button color="info" variant="outlined" onClick={changeShfaq}>Back</Button>
+                                </div>
 
+                                <div className="flex flex-col items-center justify-center w-full h-full gap-4">
+                                    <div>
+                                        <InputLabel>Phone</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.nrTelefonit}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputLabel>Country</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.shteti}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputLabel>City</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.qyteti}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputLabel>Street</InputLabel>
+
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.rruga}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputLabel>ZIP Code</InputLabel>
+                                        <TextField
+                                            type="text"
+                                            inputProps={{ readOnly: true }}
+                                            value={user.zipcode}
+                                        />
+                                    </div>
+                                    <Button color="error" variant="outlined" onClick={logOut}>LogOut</Button>
+                                </div>
                             </div>
-
-
-
-
                         </Card>
+                        {/* x</Card> */}
+                        {console.log(user)}
                     </div>
                 </div>
             </>
