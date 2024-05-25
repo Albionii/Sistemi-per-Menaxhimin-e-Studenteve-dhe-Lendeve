@@ -12,11 +12,17 @@ import LoggedIn from "./components/loggedIn.jsx";
 
 function App() {
   const [theme, colorMode] = useMode();
+  let token;
 
-  let loggedIn = true;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; Token=`);
+  if (parts.length === 2) { 
+    token = parts.pop().split(';').shift();
+  }
+
 
   // let isLoggedIn = document.cookie ? true : false;
-  // console.log(document.cookie);
+  // // console.log(document.cookie);
 
   // if (isLoggedIn) {
   //   const documentSplited = document.cookie.split('=');
@@ -38,18 +44,22 @@ function App() {
   //   }
   // }
 
-  // const [loggedIn, setLoggedIn] = useState(isLoggedIn);
+  const [loggedIn, setLoggedIn] = useState(token ? true : false);
 
-  // const [loggedIn, setLoggedIn] = useState(document.cookie.split('=')[1].length !== 0);
+  // // const [loggedIn, setLoggedIn] = useState(document.cookie.split('=')[1].length !== 0);
+
+
+
 
 
 
 
   // const loggedIn = ;
-  // const changeLoggedInState = () => {
-  //   setLoggedIn(!loggedIn);
-  // }
+  const changeLoggedInState = () => {
+    setLoggedIn(!loggedIn);
+  }
   // console.log(document.cookie);
+  // console.log(loggedIn);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -58,10 +68,10 @@ function App() {
 
         {loggedIn ? (
           <div className="app">
-            <LoggedIn/>
+            <LoggedIn changeLoggedInState={changeLoggedInState} token={token} />
           </div>
         ) : (
-          <Authentication />
+          <Authentication changeLoggedInState={changeLoggedInState} />
         )}
       </ThemeProvider>
     </ColorModeContext.Provider>

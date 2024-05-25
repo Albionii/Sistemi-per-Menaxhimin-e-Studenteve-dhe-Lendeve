@@ -19,7 +19,7 @@ import Postimi from "../pages/Postimi.jsx";
 import SemestriCrud from "../CRUD-Template/SemesterCrud.jsx";
 import Semestrat from "../pages/Semestrat.jsx";
 import Departmentat from "../pages/Departmentat.jsx";
-
+import {getFromCookies} from '../getUserFromJWT.js';
 import ProvimiCRUD from "../CRUD-at/Provimi.jsx";
 
 import ProfesorLenda from '../CRUD-at/ProfesorLenda.jsx';
@@ -27,26 +27,26 @@ import Profesoret from "../CRUD-at/Profesoret.jsx";
 import Lenda from "../CRUD-at/Lenda.jsx";
 
 
-function loggedIn() {
-// const [sideBarInfo, setSideBarInfo] = useState(null);
+function loggedIn({changeLoggedInState,token}) {
+const [sideBarInfo, setSideBarInfo] = useState(null);
 
 
-// const [user,setUser] = useState({
-//   firstName: "Loading",
-//   lastName: "Loading"
-// });
+const [user,setUser] = useState({
+  firstName: "Loading",
+  lastName: "Loading"
+});
 
-// const setUserData = (data) =>{
-//   setUser(data);
-// }
+const setUserData = (data) =>{
+  setUser(data);
+}
 
-// getFromCookies({setUserData});
+getFromCookies({setUserData});
 
 
 
   return (
     <>
-      <Sidebar user={'Albin Kurti'}/>
+      <Sidebar user={user}/>
       <main className="content">
         <Topbar />
         <Routes>
@@ -60,8 +60,8 @@ function loggedIn() {
 
           <Route path="/paraqitura" element={<Paraqitura />} />
 
-          <Route path="/Profili" element={<Profili />} />
-          <Route path="/postimi" element={<Postimi />} />
+          <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user}/>} />
+          <Route path="/postimi" element={<Postimi token={token}/>} />
 
           <Route path="/profesorLenda" element={<ProfesorLenda/>} />
           <Route path="/provimi" element={<ProvimiCRUD/>} />

@@ -55,7 +55,7 @@ const SubItem = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({user}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -156,7 +156,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Albin Kurti
+                  {user.firstName + " " +user.lastName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Prime Minister

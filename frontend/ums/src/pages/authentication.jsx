@@ -8,16 +8,16 @@ import Signup from './signup.jsx';
 import Login from './login.jsx';
 
 
-function authentication() {
+function authentication({changeLoggedInState}) {
     return (
         <Routes>
             <Route exact path='/'
-                // element={<Signup changeLoggedInState={changeLoggedInState} />}>
-                element={<Signup />}>
+                element={<Signup changeLoggedInState={changeLoggedInState} />}>
+                {/* element={<Signup />}> */}
             </Route>
             <Route exact path='/login'
-                // element={<Login changeLoggedInState={changeLoggedInState} />}>
-                element={<Login />}>
+                element={<Login changeLoggedInState={changeLoggedInState} />}>
+                {/* element={<Login />}> */}
             </Route>
             <Route path="*" element={<Signup />} />
 

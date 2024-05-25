@@ -42,12 +42,18 @@ const style = {
   p: 4,
 };
 
-const Postimi = () => {
+const Postimi = ({token}) => {
+  let role;
+
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; Role=`);
+  if (parts.length === 2) { 
+    role = parts.pop().split(';').shift();
+  }
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const ligjerataId = 2;
-  const USER_ROLE = "ROLE_STUDENT";
-  const token = `eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTY1NzM2NDIsImV4cCI6MTcxNjU4MjI4MiwiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.Lu7uWoYB9zTca0J5aoeULAOVRoTB5GG6078jS2pap44`;
+  const USER_ROLE = role;
   const location = useLocation();
   const imageUrl = location.state?.imageUrl;
 

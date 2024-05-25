@@ -48,6 +48,7 @@ function Login({changeLoggedInState}) {
 
 
         const token = jwt.jwt;
+        console.log(jwt.role);
 
         const url = 'http://localhost:8080/api/user';
         const userDetails = await fetch(url, {
@@ -62,7 +63,9 @@ function Login({changeLoggedInState}) {
 
 
             document.cookie = `Token=${encodeURIComponent(token)}`;
+            document.cookie = `Role=${encodeURIComponent(jwt.role)}`;
             console.log(token);
+            console.log(document.cookie);
             // console.log(document.cookie);
             changeLoggedInState();
             // window.location.href = "";
