@@ -44,7 +44,7 @@ const setUserData = (data) =>{
   setUser(data);
 }
 
-getFromCookies({setUserData});
+getFromCookies({setUserData,changeLoggedInState});
 
 
 

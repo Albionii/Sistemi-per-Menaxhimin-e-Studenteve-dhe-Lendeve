@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 
 
-function Login({changeLoggedInState}) {
+function Login({ changeLoggedInState }) {
     const [signupData, setSignupData] = useState({
         email: '',
         password: ''
@@ -62,13 +62,21 @@ function Login({changeLoggedInState}) {
         const user = await userDetails.json();
 
 
-            document.cookie = `Token=${encodeURIComponent(token)}`;
-            document.cookie = `Role=${encodeURIComponent(jwt.role)}`;
-            console.log(token);
-            console.log(document.cookie);
+        document.cookie = `Token=${encodeURIComponent(token)}`;
+        document.cookie = `Role=${encodeURIComponent(jwt.role)}`;
+        // console.log(token);
+        // console.log(document.cookie);
+        if (user.status == 500) {
+            Swal.fire({
+                icon: "error",
+                title: "GABIM",
+                text: "Email apo password Gabim!"
+              });
+        } else {
             // console.log(document.cookie);
             changeLoggedInState();
-            // window.location.href = "";
+        }
+        // window.location.href = "";
     }
 
     return (

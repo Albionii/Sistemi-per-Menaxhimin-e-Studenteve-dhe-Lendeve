@@ -20,7 +20,7 @@ function App() {
 
   const value = `; ${document.cookie}`;
   const parts = value.split(`; Token=`);
-  if (parts.length === 2) { 
+  if (parts.length === 2) {
     token = parts.pop().split(';').shift();
   }
 
@@ -48,7 +48,19 @@ function App() {
   //   }
   // }
 
-  const [loggedIn, setLoggedIn] = useState(token ? true : false);
+  console.log(typeof token);
+  console.log(token);
+  let logginStatus;
+  if (typeof token === "undefined") {
+    logginStatus = false;
+  } else {
+    logginStatus = true;
+
+  }
+
+  const [loggedIn, setLoggedIn] = useState(logginStatus);
+
+
   // // const [loggedIn, setLoggedIn] = useState(document.cookie.split('=')[1].length !== 0);
 
 

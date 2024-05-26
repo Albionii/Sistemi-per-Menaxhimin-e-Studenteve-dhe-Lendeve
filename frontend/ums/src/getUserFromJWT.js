@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 
-export const getFromCookies = ({ setUserData }) => {
+export const getFromCookies = ({ setUserData,changeLoggedInState }) => {
     let cookie = {};
     document.cookie.split(';').forEach(function (el) {
         let split = el.split('=');
@@ -36,7 +36,11 @@ export const getFromCookies = ({ setUserData }) => {
 
     useEffect(() => {
         if (user != null) {
-            // console.log(user);
+            if (user.status == 500) {
+                document.cookie = "Token=";
+                changeLoggedInState();
+                // window.location.reload();
+            }
             returnUser(user);
         }
     }), [user];
