@@ -5,6 +5,8 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.DepartamentiReposi
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +20,7 @@ public class DepartamentiService {
     }
     public void deleteDepartamentiById(Long id){ departamentiRepository.deleteById(id);
     }
+    public List<Departamenti> findAll(){return departamentiRepository.findAll();}
 
     public void createDepartamenti(Departamenti d){
         departamentiRepository.save(d);

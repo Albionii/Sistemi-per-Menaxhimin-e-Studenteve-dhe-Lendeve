@@ -8,6 +8,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +28,12 @@ public class DepartamentiController {
     public Optional<Departamenti> getDepartamenti(@PathVariable Long id){
         return departamentiService.findByDepartamentiId(id);
     }
+
+    @GetMapping()
+    public List<Departamenti> getAllDepartamenti(){
+        return departamentiService.findAll();
+    }
+
     @DeleteMapping("/{id}")
     public void deleteDepartamenti(@PathVariable Long id){
         Optional<Departamenti> d = departamentiService.findByDepartamentiId(id);
@@ -37,10 +44,11 @@ public class DepartamentiController {
 
     @PostMapping("/{fakultetiId}/{dekaniId}")
     public void createDepartamenti(@RequestBody Departamenti d,@PathVariable("fakultetiId") Long fkId,@PathVariable("dekaniId") Long dekId) throws Exception {
-//        d.setFakulteti(fakultetiService.findFakultetiById(fkId).get());
+        d.setFakulteti(fakultetiService.findFakultetiById(fkId).get());
         d.setUser(userService.findUserById(dekId));
         departamentiService.createDepartamenti(d);
     }
+
     @PutMapping("/{id}")
     public void updateDepartamenti(@RequestBody Departamenti d ,@PathVariable Long id){
         Optional<Departamenti> dSave = departamentiService.findByDepartamentiId(id);
@@ -49,7 +57,7 @@ public class DepartamentiController {
         dSave.get().setLokacioni(d.getLokacioni());
         dSave.get().setEmail(d.getEmail());
 
-        departamentiService.updateDepartamenti(d);
+        departamentiService.updateDepartamenti(dSave.get());
     }
 
 

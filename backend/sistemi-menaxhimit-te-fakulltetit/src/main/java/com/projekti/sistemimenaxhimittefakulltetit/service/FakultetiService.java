@@ -6,6 +6,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.FakultetiRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,4 +31,6 @@ public class FakultetiService {
     public void updateDrejtori(Fakulteti f){
         fakultetiRepository.save(f);
     }
+
+    public List<Fakulteti> getAllFakulteti(){return fakultetiRepository.findAll();}
 }

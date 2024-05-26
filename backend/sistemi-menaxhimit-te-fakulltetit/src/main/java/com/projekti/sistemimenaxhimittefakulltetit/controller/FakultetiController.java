@@ -7,6 +7,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,6 +32,9 @@ public class FakultetiController {
         f.get().setUser(null);
         fakultetiService.deleteFakultetiById(f.get().getId());
     }
+
+    @GetMapping()
+    public List<Fakulteti> getAllFakulteti(){return fakultetiService.getAllFakulteti();}
 
     @PostMapping("/{id}")
     public void createFakulteti(@RequestBody Fakulteti f,@PathVariable Long id) throws Exception {
