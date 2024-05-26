@@ -36,8 +36,8 @@ const [sideBarInfo, setSideBarInfo] = useState(null);
 
 
 const [user,setUser] = useState({
-  firstName: "Loading",
-  lastName: "Loading"
+  firstName: "",
+  lastName: ""
 });
 
 const setUserData = (data) =>{
@@ -72,7 +72,7 @@ getFromCookies({setUserData,changeLoggedInState});
           <Route path="/profesoret" element={<Profesoret/>} />
           <Route path="/lendet" element={<Lenda/>} />
           <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
-          <Route path="/semestrat" element={<Semestrat />} />
+          <Route path="/semesters/:departamentiId" element={<Semestrat />} />
           <Route path="/department" element={<Departmentat />} />
           <Route path="/DepartamentiCrud" element={<DepartamentiCrud/>}></Route>
           <Route path="/FakultetiCrud" element={<FakultetetCrud/>}></Route>

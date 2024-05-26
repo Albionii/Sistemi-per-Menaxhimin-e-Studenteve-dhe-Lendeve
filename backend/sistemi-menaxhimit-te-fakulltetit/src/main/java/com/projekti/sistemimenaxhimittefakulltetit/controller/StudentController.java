@@ -108,56 +108,56 @@ public class StudentController {
     @GetMapping("/semesters/{id}")
     public ResponseEntity<List<StudentSemester>> getSemesters(
             @RequestHeader("Authorization") String jwt,
-            @PathVariable Long id) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
-        List<StudentSemester> semesters = studentSemesterRegistrationService.getSemesters(id);
+            @PathVariable Long id)
+ throws Exception  {
+        List<StudentSemester> semesters = studentSemesterRegistrationService.getSemesters(jwt, id);
         return new ResponseEntity<>(semesters, HttpStatus.OK);
     }
 
 
 
-    @GetMapping("/provimet/")
-    public ResponseEntity<List<ProvimiResponse>> getSemesterProvimet(@RequestHeader("Authorization")String token)
-                                                                        throws Exception{
-
-        int countSemester= 0;
-        int countLenda = 0;
-        User user = userService.findUserByJwtToken(token);
-        Student student = studentService.findStudentByUserId(user.getId());
-
-        List<StudentProvimi> paraqitura = studentPrvService.getProvimet(student.getId());
-
-        List<StudentSemester> semesterRegistrations = studentSemesterRegistrationService.getSemesters(student.getId());
-        List<ProvimiResponse> responses = new ArrayList<>();
-
-        for (StudentSemester registration : semesterRegistrations) {
-            countSemester++;
-            Semester semester = registration.getSemester();
-
-            List<Lenda> lendet = lendaSemesterService.getAllLendaBySemesterId(semester.getId());
-
-            for(Lenda lenda : lendet) {
-                countLenda++;
-
-                List<Provimi> prov = getProvimetLenda(lenda.getId(), token).getBody();
-                System.out.println("Lenda:" + lenda.getEmri() + "LendaID" + lenda.getId() + "   Provimet" + prov);
-
-                if (!prov.isEmpty()) {
-                    ProvimiResponse response = new ProvimiResponse();
-
-                    response.setEmriLendes(lenda.getEmri());
-                    response.setProvimet(prov);
-                    responses.add(response);
-                    System.out.println(response);
-                }
-
-            }
-        }
-
-        System.out.println("CounteSemester" + countSemester +  "   CountLenda" + countLenda);
-
-        return ResponseEntity.status(HttpStatus.OK).body(responses);
-    }
+//    @GetMapping("/provimet/")
+//    public ResponseEntity<List<ProvimiResponse>> getSemesterProvimet(@RequestHeader("Authorization")String token)
+//                                                                        throws Exception{
+//
+//        int countSemester= 0;
+//        int countLenda = 0;
+//        User user = userService.findUserByJwtToken(token);
+//        Student student = studentService.findStudentByUserId(user.getId());
+//
+//        List<StudentProvimi> paraqitura = studentPrvService.getProvimet(student.getId());
+//
+//        List<StudentSemester> semesterRegistrations = studentSemesterRegistrationService.getSemesters(student.getId());
+//        List<ProvimiResponse> responses = new ArrayList<>();
+//
+//        for (StudentSemester registration : semesterRegistrations) {
+//            countSemester++;
+//            Semester semester = registration.getSemester();
+//
+//            List<Lenda> lendet = lendaSemesterService.getAllLendaBySemesterId(semester.getId());
+//
+//            for(Lenda lenda : lendet) {
+//                countLenda++;
+//
+//                List<Provimi> prov = getProvimetLenda(lenda.getId(), token).getBody();
+//                System.out.println("Lenda:" + lenda.getEmri() + "LendaID" + lenda.getId() + "   Provimet" + prov);
+//
+//                if (!prov.isEmpty()) {
+//                    ProvimiResponse response = new ProvimiResponse();
+//
+//                    response.setEmriLendes(lenda.getEmri());
+//                    response.setProvimet(prov);
+//                    responses.add(response);
+//                    System.out.println(response);
+//                }
+//
+//            }
+//        }
+//
+//        System.out.println("CounteSemester" + countSemester +  "   CountLenda" + countLenda);
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(responses);
+//    }
 
     @GetMapping("/transkripta")
     public ResponseEntity<TranskriptaResponse> generateTranskripta(@RequestHeader("Authorization")String token) throws Exception {

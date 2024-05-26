@@ -60,6 +60,8 @@ const Sidebar = ({user}) => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const role = user.role; 
+  const formattedRole = role && role.includes('_') ? role.split('_')[1].toLowerCase().replace(/^\w/, (c) => c.toUpperCase()) : '';
 
   useEffect(() => {
     const handleResize = () => {
@@ -79,7 +81,10 @@ const Sidebar = ({user}) => {
     };
   }, []);
 
+  
+
   return (
+    
     <Box
       width={isCollapsed ? "80px" : "320px"}
       sx={{
@@ -159,7 +164,8 @@ const Sidebar = ({user}) => {
                   {user.firstName + " " +user.lastName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Prime Minister
+                  
+                  {formattedRole}
                 </Typography>
               </Box>
             </Box>

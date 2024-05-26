@@ -113,7 +113,7 @@ const Ligjeratat = () => {
             sx={{ fontSize: "16px", mb: "20px" }}
           >
             <Link to="/department">Shkenca Kompjuterike</Link>
-            <Link to={"/semestrat"}>Semestri 2</Link>
+            <Link to={`/semesters/${semestriId}`}>Semestri 2</Link>
             <Link to={"/"}>Ligjeratat</Link>
           </Breadcrumbs>
         </div>

@@ -54,7 +54,10 @@ public class StudentSemesterRegistrationService {
 //        return sem;
 //    }
 
-    public List<StudentSemester> getSemesters(Long id) {
+    public List<StudentSemester> getSemesters(String jwt, Long id) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
+        Student student = studentService.findStudentByUserId(user.getId());
+        id = student.getId();
         return registrationRepository.findAllByStudentId(id);
     }
 }

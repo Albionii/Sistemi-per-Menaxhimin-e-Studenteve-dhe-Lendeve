@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "@mui/system";
 import { tokens } from "../theme";
 import { Box, Typography, Grid } from "@mui/material";
@@ -6,7 +6,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Header from "../components/Header";
@@ -15,6 +15,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import axios from "axios";
 
 // Function to generate random image URL
 const getRandomImage = () => {
@@ -43,11 +44,16 @@ const MenuProps = {
   },
 };
 
-const CourseCard = ({ name, imageUrl }) => {
+const CourseCard = ({ name, imageUrl, departamentiId }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [personName, setPersonName] = React.useState([]);
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/semesters/${departamentiId}`)
+  }
 
   const handleChange = (event) => {
     const {
@@ -65,6 +71,7 @@ const CourseCard = ({ name, imageUrl }) => {
         borderRadius: "8px",
         background: colors.primary[600],
       }}
+      onClick={handleClick}
     >
       <CardActionArea component={Link} to={"/semestrat"}>
         <CardMedia
@@ -127,11 +134,25 @@ const Departmentat = () => {
     event.preventDefault();
     console.info("You clicked a breadcrumb.");
   }
-  const departmentat = Array.from(Array(9)).map((_, index) => ({
-    name: "Shkenca Kompjuterike",
-    imageUrl: getRandomImage(),
-    key: index,
-  }));
+  // const departmentat = Array.from(Array(9)).map((_, index) => ({
+  //   name: "Shkenca Kompjuterike",
+  //   imageUrl: getRandomImage(),
+  //   key: index,
+  // }));
+
+  const [departmentet, setDepartmentet] = useState([]);
+
+  useEffect(()=> {
+    axios
+      .get("http://localhost:8080/departamenti")
+      .then((response)=>{
+        console.log(response.data)
+        setDepartmentet(response.data)
+    })
+    .catch(error => {
+      console.error("Error fetchin the departments: "+error);
+    })
+  }, [])
 
   return (
     <>
@@ -149,11 +170,13 @@ const Departmentat = () => {
             justifyContent="center"
             alignItems="center"
           >
-            {departmentat.map((course) => (
-              <Grid item xs={12} sm={6} md={4} key={course.key}>
+            {departmentet.map((department) => (
+              <Grid item xs={12} sm={6} md={4} key={department.key}>
                 <CourseCard
-                  name={course.name}
-                  imageUrl={course.imageUrl}
+                  key={department.id}
+                  name={department.emri}
+                  imageUrl={getRandomImage()}
+                  departamentiId={department.id}
                 />
               </Grid>
             ))}

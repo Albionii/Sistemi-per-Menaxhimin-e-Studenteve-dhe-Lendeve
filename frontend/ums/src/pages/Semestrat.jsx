@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, useTheme } from "@mui/material";
 import { tokens } from "../theme";
-import { Link, useNavigate }   from "react-router-dom";
+import { Link, useNavigate, useParams }   from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import SchoolIcon from "@mui/icons-material/School";
 import EastIcon from "@mui/icons-material/East";
@@ -32,7 +32,6 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId }) => {
           textAlign="center"
           borderRadius={5}
           mt={3}
-          mb={2}
           boxShadow="0px 2px 3px rgba(0, 0, 0, 0.2)"
         >
           <Box
@@ -131,10 +130,12 @@ const Semestrat = () => {
   const colors = tokens(theme.palette.mode);
 
   const [semestrat, setSemestrat] = useState([]);
+  const { departamentiId } = useParams();
+
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/admin/semesters")
+      .get(`http://localhost:8080/api/admin/semester/${departamentiId}`)
       .then((response) => {
         console.log(response.data);
         setSemestrat(response.data);
@@ -172,30 +173,6 @@ const Semestrat = () => {
               semestriId={semestri.id}
             />
           ))}
-        </Grid>
-      </Box>
-      <Box mt={4}>
-        <Typography variant="h2">Viti i II-te</Typography>
-        <Box
-          borderBottom={`2px solid ${colors.gray[300]}`}
-          width="100%"
-          mt={2}
-        />
-        <Grid container spacing={3}>
-          <SemestriItem semester="Semestri 3" linkTo="kosova1" key="3" />
-          <SemestriItem semester="Semestri 4" linkTo="kosova2" key="4" />
-        </Grid>
-      </Box>
-      <Box mt={4}>
-        <Typography variant="h2">Viti i III-te</Typography>
-        <Box
-          borderBottom={`2px solid ${colors.gray[300]}`}
-          width="100%"
-          mt={2}
-        />
-        <Grid container spacing={3}>
-          <SemestriItem semester="Semestri 5" linkTo="kosova1" key="5" />
-          <SemestriItem semester="Semestri 6" linkTo="kosova2" key="6" />
         </Grid>
       </Box>
     </Box>

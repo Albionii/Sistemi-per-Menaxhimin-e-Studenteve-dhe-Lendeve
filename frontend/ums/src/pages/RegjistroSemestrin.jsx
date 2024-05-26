@@ -7,34 +7,48 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TableSemestrat from "../components/TableSemestrat";
 import axios from "axios"; // Import axios
+import { getFromCookies } from "../getUserFromJWT";
+
 
 const RegjistroSemestrin = () => {
   const [lokacioni, setLokacioni] = useState("");
   const [semester, setSemester] = useState({});
   const [nderrimiOrarit, setOrari] = useState("");
   const [semestriList, setSemestriList] = useState([]); // Use an array for semestri list
-  const [semestrat, setSemestrat] = useState([]); // Use an array for semestrat
+  const [semestrat, setSemestrat] = useState([]);
+  const [userData, setUserData] = useState(null); // Use an array for semestrat
+
+  getFromCookies({setUserData});
+
+  console.log(userData);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTY3MTY4ODAsImV4cCI6MTcxNjcyNTUyMCwiZW1haWwiOiJzeWxhamRyZW40QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.js7GfCc5WzgISEYvmY7ofNUk9z_6gQWddHTgCkAooAs'; // Retrieve the JWT token from localStorage
+  const getCookieValue = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  };
+
 
   useEffect(() => {
-    const id = 1; 
-    axios.get(`http://localhost:8080/student/semesters/${id}`,{
-      headers: {
-        'Authorization': `Bearer ${token}`, // Include the Authorization header
-        'Content-Type': 'application/json' // Set content type to JSON
-      }
-    })
-      .then(response => {
+    const fetchSemesters = async () => {
+      try {
+        const token = getCookieValue('Token');
+        const response = await axios.get(`http://localhost:8080/student/semesters/${userData.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setSemestrat(response.data);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error("There was an error fetching the semesters!", error);
-      });
-  }, []);
+      }
+    };
+
+    fetchSemesters();
+  }, [userData]);
 
   useEffect(() => {
     axios.get("http://localhost:8080/api/admin/semesters")
