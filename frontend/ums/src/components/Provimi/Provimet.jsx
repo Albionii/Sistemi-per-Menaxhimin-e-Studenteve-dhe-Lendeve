@@ -1,26 +1,50 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Dropdown, Button } from "flowbite-react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Dropdown, Button } from "flowbite-react";
 import { Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 
-const Provimet = () => {
+const Provimet = ({ token }) => {
   const [provimet, setProvimet] = useState([]);
-  const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTY1NzQ1NjQsImV4cCI6MTcxNjU4MzIwNCwiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.P049jBtqBoZIxcBc4RUczls-8HZNFAuB6c0UtcyPPl0";
+  const [paraqitjet, setParaqitjet] = useState([]);
 
   useEffect(() => {
     fetchProvimet();
+    fetchParaqitjet();
   }, []);
 
   const fetchProvimet = () => {
     axios
-      .get("http://localhost:8080/student/provimet/", {
+      .get("http://localhost:8080/student/get/provimet/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         setProvimet(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const fetchParaqitjet = () => {
+    axios
+      .get("http://localhost:8080/student", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setParaqitjet(response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -36,8 +60,8 @@ const Provimet = () => {
           },
         })
         .then((response) => {
-          setProvimet([]);
           fetchProvimet();
+          fetchParaqitjet();
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -47,33 +71,109 @@ const Provimet = () => {
     }
   };
 
+  const anuloParaqitjen = (id) => {
+    axios
+      .delete(`http://localhost:8080/student/anulo/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        fetchProvimet();
+        fetchParaqitjet();
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  };
+
   return (
-    <div className="overflow-x-auto h-full">
-      <Box sx={{ width: "100%", height: "100%", alignItems: "center" }}>
-        <Table hoverable>
-          <Table.Head>
-            <Table.HeadCell>Lenda</Table.HeadCell>
-            <Table.HeadCell>Profesori</Table.HeadCell>
-            <Table.HeadCell>Data</Table.HeadCell>
-            <Table.HeadCell>ECTS</Table.HeadCell>
-            <Table.HeadCell>Operation</Table.HeadCell>
-          </Table.Head>
-          <Table.Body className="divide-y">
-            {provimet.map((provimi, index) => (
-              <TableRow
-                key={index}
-                provimi={provimi}
-                paraqitProvimin={paraqitProvimin}
-              />
-            ))}
-          </Table.Body>
-        </Table>
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+        }}
+      >
+        <Box
+          sx={{
+            borderRadius: "10px",
+            padding: "20px",
+            flex: "1",
+          }}
+        >
+          <Typography variant="h4" align="center" gutterBottom>
+            Lista e Provimeve
+          </Typography>
+          <TableContainer
+            component={Paper}
+            sx={{ height: "400px", borderRadius: "20px", padding:"10px", overflowX:"auto", overflowY:"auto"}}
+          >
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Lenda</TableCell>
+                  <TableCell>Profesori</TableCell>
+                  <TableCell>Data</TableCell>
+                  <TableCell>ECTS</TableCell>
+                  <TableCell>Operation</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {provimet.map((provimi, index) => (
+                  <TableRou
+                    key={index}
+                    provimi={provimi}
+                    paraqitProvimin={paraqitProvimin}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+        <Box
+          sx={{
+            borderRadius: "10px",
+            padding: "20px",
+            flex: "1",
+          }}
+        >
+          <Typography variant="h4" align="center" gutterBottom>
+            Lista e Paraqitjeve
+          </Typography>
+          <TableContainer
+            component={Paper}
+            sx={{ height: "400px", borderRadius: "20px", overflowX:"auto", overflowY:"auto"}}
+          >
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Lenda</TableCell>
+                  <TableCell>Profesori</TableCell>
+                  <TableCell>Data Paraqitjes</TableCell>
+                  <TableCell>Nota</TableCell>
+                  <TableCell>Operation</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {paraqitjet.map((paraqitja, index) => (
+                  <PaRow
+                    key={index}
+                    item={paraqitja}
+                    anuloParaqitjen={anuloParaqitjen}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Box>
-    </div>
+    </Container>
   );
 };
 
-const TableRow = ({ provimi, paraqitProvimin }) => {
+const TableRou = ({ provimi, paraqitProvimin }) => {
   const [placeholder, setPlaceholder] = useState("Zgjidh Provimin");
   const [selectedProvimiId, setSelectedProvimiId] = useState(null);
 
@@ -83,16 +183,12 @@ const TableRow = ({ provimi, paraqitProvimin }) => {
   };
 
   return (
-    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-        {provimi.emriLendes}
-      </Table.Cell>
-
-      <Table.Cell>
+    <TableRow>
+      <TableCell>{provimi.emriLendes}</TableCell>
+      <TableCell>
         <Dropdown label={placeholder}>
           {provimi.provimet.map((item, idx) => (
             <Dropdown.Item
-              className="z-40"
               key={idx}
               onClick={() =>
                 handleDropdownItemClick(
@@ -107,20 +203,41 @@ const TableRow = ({ provimi, paraqitProvimin }) => {
             </Dropdown.Item>
           ))}
         </Dropdown>
-      </Table.Cell>
-      <Table.Cell>
-        {new Date(provimi.provimet[0].data).toLocaleString()}
-      </Table.Cell>
-      <Table.Cell>{provimi.provimet[0].ligjerata.lenda.ects}</Table.Cell>
-      <Table.Cell>
+      </TableCell>
+      <TableCell>{provimi.provimet[0]?.data}</TableCell>
+      <TableCell>{provimi.provimet[0]?.ligjerata.lenda.ects}</TableCell>
+      <TableCell>
         <Button
           disabled={selectedProvimiId === null}
-          onClick={() => paraqitProvimin(selectedProvimiId)}
+          onClick={() => {
+            paraqitProvimin(selectedProvimiId);
+            setSelectedProvimiId(null);
+            setPlaceholder("Zgjidh Provimin");
+          }}
         >
           Paraqit Provimin
         </Button>
-      </Table.Cell>
-    </Table.Row>
+      </TableCell>
+    </TableRow>
+  );
+};
+
+const PaRow = ({ item, anuloParaqitjen }) => {
+  return (
+    <TableRow>
+      <TableCell>{item.emriLendes}</TableCell>
+      <TableCell>
+        {item.provimi.ligjerata.professor.user.firstName}{" "}
+        {item.provimi.ligjerata.professor.user.lastName}
+      </TableCell>
+      <TableCell>{item.dataVendosjes || "null"}</TableCell>
+      <TableCell>{item.nota === 0 ? " " : item.nota}</TableCell>
+      <TableCell>
+        <Button onClick={() => anuloParaqitjen(item.id)}>
+          Anulo Paraqitjen
+        </Button>
+      </TableCell>
+    </TableRow>
   );
 };
 

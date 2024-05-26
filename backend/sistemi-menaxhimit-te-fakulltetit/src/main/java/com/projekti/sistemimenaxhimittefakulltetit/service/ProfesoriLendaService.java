@@ -68,4 +68,5 @@ public class ProfesoriLendaService {
     public List<ProfesoriLenda> getBySemesterId(Long semesterId){
         return profesoriLendaRepository.findBySemesterId(semesterId);
     }
+
 }

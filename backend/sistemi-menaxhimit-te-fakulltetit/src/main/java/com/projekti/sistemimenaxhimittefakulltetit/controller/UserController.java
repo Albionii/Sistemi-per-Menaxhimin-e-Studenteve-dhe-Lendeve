@@ -39,6 +39,8 @@ public class UserController {
 
     @Autowired
     private ProfesoriLendaService profesoriLendaService;
+
+    @Autowired
     private StudentService studentService;
     private ProvimiService provimiService;
     private ProfesoriProvimiService profesoriProvimiService;
@@ -99,8 +101,10 @@ public class UserController {
     }
 
     @GetMapping("/get/user/info")
-    public User getUserInfo(@RequestHeader("Authorization")String token) throws Exception {
-        return userService.findUserByJwtToken(token);
+    public Student getUserInfo(@RequestHeader("Authorization")String token) throws Exception {
+
+        Student student = studentService.findStudentByUserId(userService.findUserByJwtToken(token).getId());
+        return student;
     }
 
 

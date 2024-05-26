@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -98,8 +99,6 @@ public class StudentController {
                     provimet.add(provimi);
                 }
             }
-
-
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(provimet);
@@ -116,48 +115,48 @@ public class StudentController {
 
 
 
-//    @GetMapping("/provimet/")
-//    public ResponseEntity<List<ProvimiResponse>> getSemesterProvimet(@RequestHeader("Authorization")String token)
-//                                                                        throws Exception{
-//
-//        int countSemester= 0;
-//        int countLenda = 0;
-//        User user = userService.findUserByJwtToken(token);
-//        Student student = studentService.findStudentByUserId(user.getId());
-//
-//        List<StudentProvimi> paraqitura = studentPrvService.getProvimet(student.getId());
-//
-//        List<StudentSemester> semesterRegistrations = studentSemesterRegistrationService.getSemesters(student.getId());
-//        List<ProvimiResponse> responses = new ArrayList<>();
-//
-//        for (StudentSemester registration : semesterRegistrations) {
-//            countSemester++;
-//            Semester semester = registration.getSemester();
-//
-//            List<Lenda> lendet = lendaSemesterService.getAllLendaBySemesterId(semester.getId());
-//
-//            for(Lenda lenda : lendet) {
-//                countLenda++;
-//
-//                List<Provimi> prov = getProvimetLenda(lenda.getId(), token).getBody();
-//                System.out.println("Lenda:" + lenda.getEmri() + "LendaID" + lenda.getId() + "   Provimet" + prov);
-//
-//                if (!prov.isEmpty()) {
-//                    ProvimiResponse response = new ProvimiResponse();
-//
-//                    response.setEmriLendes(lenda.getEmri());
-//                    response.setProvimet(prov);
-//                    responses.add(response);
-//                    System.out.println(response);
-//                }
-//
-//            }
-//        }
-//
-//        System.out.println("CounteSemester" + countSemester +  "   CountLenda" + countLenda);
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(responses);
-//    }
+
+    @GetMapping("/get/provimet/")
+    public ResponseEntity<List<ProvimiResponse>> getProvimet(@RequestHeader("Authorization") String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<StudentProvimi> paraqitura = studentPrvService.getProvimet(student.getId());
+        Set<String> registeredLendet = paraqitura.stream()
+                .map(sp -> sp.getProvimi().getLigjerata().getLenda().getEmri())
+                .collect(Collectors.toSet());
+
+        List<StudentSemester> semesterRegistrations = studentSemesterRegistrationService.getSemesters(token, student.getId());
+        List<ProvimiResponse> responses = new ArrayList<>();
+        Map<String, ProvimiResponse> provimiMap = new HashMap<>();
+
+
+        for (StudentSemester registration : semesterRegistrations) {
+            Semester semester = registration.getSemester();
+            List<ProfesoriLenda> ligjeratat = profesoriLendaService.getBySemesterId(semester.getId());
+
+            for (ProfesoriLenda ligjerat : ligjeratat) {
+                Provimi provimi = provimiService.findProvimiByLigjerataId(ligjerat.getId());
+
+                if (provimi != null) {
+                    String lendaName = provimi.getLigjerata().getLenda().getEmri();
+                    if (!registeredLendet.contains(lendaName)) {
+                        ProvimiResponse provimiResponse = provimiMap.getOrDefault(lendaName, new ProvimiResponse());
+                        if (provimiResponse.getEmriLendes() == null) {
+                            provimiResponse.setEmriLendes(lendaName);
+                        }
+                        provimiResponse.getProvimet().add(provimi);
+                        provimiMap.put(lendaName, provimiResponse);
+                    }
+                }
+            }
+        }
+
+        responses.addAll(provimiMap.values());
+
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
+    }
+
 
     @GetMapping("/transkripta")
     public ResponseEntity<TranskriptaResponse> generateTranskripta(@RequestHeader("Authorization")String token) throws Exception {

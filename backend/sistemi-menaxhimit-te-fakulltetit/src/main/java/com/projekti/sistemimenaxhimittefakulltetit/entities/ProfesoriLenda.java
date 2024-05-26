@@ -7,6 +7,7 @@ import jdk.jfr.MemoryAddress;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +40,11 @@ public class ProfesoriLenda {
 
     @OneToMany(mappedBy = "ligjerata", cascade = CascadeType.ALL)
     @JsonIgnore
+    @ToString.Exclude
     private List<Provimi> provimet;
 
     @ManyToOne
     private Semester semester;
 
-    public ProfesoriLenda(Professor professor, Lenda lenda) {
-        this.professor = professor;
-        this.lenda = lenda;
-    }
 }
 

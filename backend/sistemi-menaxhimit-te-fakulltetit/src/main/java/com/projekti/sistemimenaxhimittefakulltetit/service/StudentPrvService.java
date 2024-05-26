@@ -33,6 +33,7 @@ public class StudentPrvService {
         studentProvimi.setStudent(student);
         studentProvimi.setProvimi(prv);
         studentProvimi.setEmriLendes(lenda.getEmri());
+        studentProvimi.setDataVendosjes(LocalDateTime.now());
 
         if (studentPrvRepository.existsByProvimiAndStudent(prv, student)) {
             throw new Exception("Provimi veqse eshte paraqitur per ju!");

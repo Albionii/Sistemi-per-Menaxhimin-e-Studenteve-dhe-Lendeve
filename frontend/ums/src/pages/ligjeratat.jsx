@@ -12,13 +12,13 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const CourseCard = ({ name, professor, imageUrl }) => {
+const CourseCard = ({ name, professor, imageUrl, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/postimi", { state: { imageUrl, name, professor } });
+    navigate("/postimi", { state: { imageUrl, name, professor, id} });
   };
 
   return (
@@ -135,6 +135,7 @@ const Ligjeratat = () => {
                   name={course.lenda.emri}
                   professor={course.professor.user.firstName+" "+course.professor.user.lastName} // Adjust this based on your API response structure
                   imageUrl={getRandomImage()}
+                  id={course.id}
                 />
               </Grid>
             ))}

@@ -53,10 +53,12 @@ const Postimi = ({ token }) => {
   }
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const ligjerataId = 2;
+ 
   const USER_ROLE = role;
   const location = useLocation();
+  const ligjerataId = location.state?.id;
   const imageUrl = location.state?.imageUrl;
+
 
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -188,9 +190,9 @@ const Postimi = ({ token }) => {
       >
         <Box position="absolute" bottom={0} left={0} ml={4} mb={3} zIndex={1}>
           <Typography variant="h2" fontWeight="bold">
-            Hyrje ne Shkenca Kompjuterike
+            {location.state.name}
           </Typography>
-          <Typography variant="h5">Blerim Zylfiu</Typography>
+          <Typography variant="h5">{location.state.professor}</Typography>
         </Box>
       </Box>
       <Box

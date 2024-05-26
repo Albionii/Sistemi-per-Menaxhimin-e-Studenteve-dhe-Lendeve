@@ -1,96 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Table, Dropdown, Button } from 'flowbite-react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Button } from "flowbite-react";
 
-const Paraqitura = () => {
-    
-    const [provimet, setProvimet] = useState([]);
-    const [selectedProvimiId, setSelectedProvimiId] = useState(null);
+const Paraqitura = ({ token }) => {
+  const [provimet, setProvimet] = useState([]);
 
-    const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTYzMjAzMTksImV4cCI6MTcxNjMyODk1OSwiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.QsCDkHfDWw7QP_VHpJUOXKAG7ruLT7IqdECY1kVNQN0";
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
+  useEffect(() => {
+    fetchProvimet();
+  }, []);
 
-    const config = {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      };
+  const fetchProvimet = () => {
+    axios
+      .get("http://localhost:8080/student", config)
+      .then((response) => {
+        setProvimet(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
-    useEffect(() => {
+  const anuloParaqitjen = (id) => {
+    axios
+      .delete(`http://localhost:8080/student/anulo/${id}`, config)
+      .then((response) => {
         fetchProvimet();
-    }, []);
-
-    const handleSelectedChange = (parqaitjaId) => {
-        setSelectedProvimiId(parqaitjaId);
-    }
-
-    const fetchProvimet = () => {
-
-        axios.get('http://localhost:8080/student', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-          })
-          .then(response => {
-    
-            setProvimet(response.data); 
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-    
-    }
-
-    const anuloParaqitjen = (id) => {
-        axios.delete(`http://localhost:8080/student/anulo/${id}`, config)
-            .then(response => {
-               fetchProvimet();
-            })
-            .catch(error => {
-                console.log("Error: ", error);
-            })
-    }
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  };
 
   return (
-    <div className="overflow-x-auto">
-      <Table hoverable>
-        <Table.Head>
-          <Table.HeadCell>Lenda</Table.HeadCell>
-          <Table.HeadCell>Profesori</Table.HeadCell>
-          <Table.HeadCell>Data Paraqitjes</Table.HeadCell>
-          <Table.HeadCell>Nota</Table.HeadCell>
-          <Table.HeadCell>
-            Operation
-          </Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y">
-            {provimet.map((item, index) =>(
-                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {item.emriLendes}
-                </Table.Cell>
-
-                <Table.Cell>
-                    {item.provimi.ligjerata.professor.user.firstName} {item.provimi.ligjerata.professor.user.lastName}
-                </Table.Cell>           
-                <Table.Cell>                   
-                    {item.dataVendosjes=== null ? "null" : item.dataVendosjes}
-                </Table.Cell>
-                <Table.Cell>
-                    {item.nota === 0 ? " " : item.nota}
-                </Table.Cell>
-                <Table.Cell>
-                    <Button onClick={() => anuloParaqitjen(item.id)}>Anulo Paraqitjen</Button>
-                </Table.Cell>
-            
-              </Table.Row>
-            ))}
-        
-        </Table.Body>
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Lenda</TableCell>
+            <TableCell>Profesori</TableCell>
+            <TableCell>Data Paraqitjes</TableCell>
+            <TableCell>Nota</TableCell>
+            <TableCell>Operation</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {provimet.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>{item.emriLendes}</TableCell>
+              <TableCell>
+                {item.provimi.ligjerata.professor.user.firstName}{" "}
+                {item.provimi.ligjerata.professor.user.lastName}
+              </TableCell>
+              <TableCell>{item.dataVendosjes || "null"}</TableCell>
+              <TableCell>{item.nota === 0 ? " " : item.nota}</TableCell>
+              <TableCell>
+                <Button onClick={() => anuloParaqitjen(item.id)}>
+                  Anulo Paraqitjen
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
-    </div>
-  )
-}
+    </TableContainer>
+  );
+};
 
-export default Paraqitura
+export default Paraqitura;

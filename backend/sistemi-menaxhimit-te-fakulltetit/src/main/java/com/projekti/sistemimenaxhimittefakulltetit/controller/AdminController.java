@@ -52,20 +52,6 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedLenda);
     }
 
-    @PostMapping("add-ligjerata")
-    public ResponseEntity<ProfesoriLenda> createLenda(@RequestBody LigjerataReq ligjerataReq,
-                                                      @RequestHeader("Authorization") String jwt) throws Exception {
-
-        Professor professor = professorService.findProfessorById(ligjerataReq.getProfessor());
-
-        Lenda created_lenda = lendaService.findLendaById(ligjerataReq.getLenda());
-
-        ProfesoriLenda ligjerata = new ProfesoriLenda(professor, created_lenda);
-
-        ProfesoriLenda savedLigjerata = profesoriLendaService.createLigjerata(ligjerata);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedLigjerata);
-    }
 
     @GetMapping("/semester/{departamentiId}")
     public List<Semester> getByDepartamentiId(@PathVariable Long departamentiId){

@@ -241,12 +241,7 @@ const Sidebar = ({user}) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              <SubItem
-                title="Paraqitura"
-                to="/paraqitura"
-                selected={selected}
-                setSelected={setSelected}
-              />
+
             </SubMenu>
             <SubMenu title="CRUD's" icon={<ReceiptOutlinedIcon />}>
               <SubItem

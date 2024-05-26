@@ -56,13 +56,13 @@ getFromCookies({setUserData,changeLoggedInState});
         <Routes>
         <Route path="/" element={<Home />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
-          <Route path="/provimet" element={<Provimet />} />
+          <Route path="/provimet" element={<Provimet token={token} />} />
 
           <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
           <Route path="/cruds" element={<CrudCategories />} />
           <Route path="/transkripta" element={<Transkripta />} />
 
-          <Route path="/paraqitura" element={<Paraqitura />} />
+          <Route path="/paraqitura" element={<Paraqitura token={token}/>} />
 
           <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user}/>} />
           <Route path="/postimi" element={<Postimi token={token}/>} />

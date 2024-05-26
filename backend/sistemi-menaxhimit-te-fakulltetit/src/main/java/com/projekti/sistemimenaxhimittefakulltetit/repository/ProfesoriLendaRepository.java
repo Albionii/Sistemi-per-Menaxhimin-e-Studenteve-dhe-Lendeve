@@ -18,7 +18,7 @@ public interface ProfesoriLendaRepository extends JpaRepository<ProfesoriLenda, 
 
     ProfesoriLenda findByMaterialiContaining(Materiali materiali);
     ProfesoriLenda findByPostimetContaining(Postimi postimi);
-    ProfesoriLenda findByLendaId(Long id);
+
 
     List<ProfesoriLenda> findBySemesterId(Long id);
 }
