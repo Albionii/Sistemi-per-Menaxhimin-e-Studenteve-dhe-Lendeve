@@ -19,8 +19,8 @@ import axios from "axios";
 
 // Function to generate random image URL
 const getRandomImage = () => {
-  const randomIndex = Math.floor(Math.random() * 10) + 1;
-  return `https://source.unsplash.com/random/1080x720?sig=${randomIndex}`;
+  const randomIndex = Math.floor(Math.random() * 1000) + 1;
+  return `https://picsum.photos/seed/${randomIndex}/1080/720`;
 };
 
 const names = [

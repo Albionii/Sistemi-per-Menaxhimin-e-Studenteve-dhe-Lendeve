@@ -8,13 +8,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Dropdown, Button } from "flowbite-react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { tokens } from "../../theme";
 
 const Provimet = ({ token }) => {
   const [provimet, setProvimet] = useState([]);
   const [paraqitjet, setParaqitjet] = useState([]);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   useEffect(() => {
     fetchProvimet();
@@ -101,6 +104,7 @@ const Provimet = ({ token }) => {
             borderRadius: "10px",
             padding: "20px",
             flex: "1",
+            
           }}
         >
           <Typography variant="h4" align="center" gutterBottom>
@@ -108,16 +112,16 @@ const Provimet = ({ token }) => {
           </Typography>
           <TableContainer
             component={Paper}
-            sx={{ height: "400px", borderRadius: "20px", padding:"10px", overflowX:"auto", overflowY:"auto"}}
+            sx={{ height: "400px", borderRadius: "20px", padding:"10px", overflowX:"auto", overflowY:"auto", background: colors.primary[600]}}
           >
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Lenda</TableCell>
-                  <TableCell>Profesori</TableCell>
-                  <TableCell>Data</TableCell>
-                  <TableCell>ECTS</TableCell>
-                  <TableCell>Operation</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Lenda</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Profesori</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Data</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>ECTS</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Operation</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -144,16 +148,16 @@ const Provimet = ({ token }) => {
           </Typography>
           <TableContainer
             component={Paper}
-            sx={{ height: "400px", borderRadius: "20px", overflowX:"auto", overflowY:"auto"}}
+            sx={{ height: "400px", borderRadius: "20px", padding: "10px", overflowX:"auto", overflowY:"auto", background: colors.primary[600]}}
           >
             <Table>
               <TableHead>
-                <TableRow>
-                  <TableCell>Lenda</TableCell>
-                  <TableCell>Profesori</TableCell>
-                  <TableCell>Data Paraqitjes</TableCell>
-                  <TableCell>Nota</TableCell>
-                  <TableCell>Operation</TableCell>
+                <TableRow >
+                  <TableCell sx={{textAlign: 'center'}}>Lenda</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Profesori</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Data Paraqitjes</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Nota</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Operation</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

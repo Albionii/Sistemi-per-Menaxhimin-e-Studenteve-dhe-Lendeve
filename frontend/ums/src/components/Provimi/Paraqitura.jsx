@@ -8,9 +8,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "flowbite-react";
+import { useTheme } from "@mui/material";
+import { tokens } from "../../theme";
 
 const Paraqitura = ({ token }) => {
   const [provimet, setProvimet] = useState([]);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const config = {
     headers: {
@@ -46,7 +50,7 @@ const Paraqitura = ({ token }) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650, background: colors.primary[500] }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Lenda</TableCell>

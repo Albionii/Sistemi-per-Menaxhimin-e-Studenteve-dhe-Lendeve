@@ -73,6 +73,7 @@ const RegjistroSemestrin = () => {
   };
 
   const handleSubmit = () => {
+    const token = getCookieValue('Token');
     const newSemester = { lokacioni, nderrimiOrarit, semester };
     console.log(newSemester); 
     console.log(semester);

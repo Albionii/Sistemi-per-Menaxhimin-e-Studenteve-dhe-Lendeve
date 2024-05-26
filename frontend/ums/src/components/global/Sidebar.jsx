@@ -17,7 +17,12 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
+import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
+import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -174,7 +179,7 @@ const Sidebar = ({user}) => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/dashboard"
+              to="/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -187,27 +192,14 @@ const Sidebar = ({user}) => {
             >
               Data
             </Typography>
-            <SubMenu
-              style={{
-                color: colors.gray[100],
-              }}
-              // iconShape="square"
+
+            <Item
+              title="Transkripta"
+              to="/transkripta"
               icon={<SchoolOutlinedIcon />}
-              title={"ManageTeam"}
-            >
-              <SubItem
-                title="Menaxho Profesoret"
-                to="/profesoret"
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <SubItem
-                title="Menaxho Studentet"
-                to="/team"
-                selected={selected}
-                setSelected={setSelected}
-              />
-            </SubMenu>
+              selected={selected}
+              setSelected={setSelected}
+            />
             
             <Item
               title="Departmentet"
@@ -218,13 +210,13 @@ const Sidebar = ({user}) => {
             />
 
             <Item
-              title="Contacts Information"
-              to="/contacts"
+              title="Profili"
+              to="/profili"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Lectures"
               to="/ligjeratat"
               icon={<ReceiptOutlinedIcon />}
@@ -257,6 +249,7 @@ const Sidebar = ({user}) => {
                 setSelected={setSelected}
               />
             </SubMenu>
+            /> */}
 
             <Typography
               variant="h6"
@@ -266,23 +259,23 @@ const Sidebar = ({user}) => {
               Pages
             </Typography>
             <Item
-              title="Profile Form"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
+              title="Regjistro Semestrin"
+              to="/regjistroSemestrin"
+              icon={<LibraryBooksOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
+              title="Regjistro Grupin"
+              to="/regjistroGrupin"
+              icon={<GroupsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="FAQ Page"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
+              title="CRUD's"
+              to="/cruds"
+              icon={<EditCalendarOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -295,9 +288,9 @@ const Sidebar = ({user}) => {
               Charts
             </Typography>
             <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
+              title="Paraqit Provimet"
+              to="/provimet"
+              icon={<QuizOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
