@@ -10,11 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -110,6 +109,27 @@ public class FileStorageService {
         } catch (MalformedURLException ex) {
             throw new RuntimeException("File not found " + fileName, ex);
         }
+    }
+
+    public List<Resource> loadFilesAsResources(String mother, Long parentId) {
+        List<Resource> resources = new ArrayList<>();
+        try {
+            Path folderPath = this.fileStorageLocation.resolve(mother).resolve(String.valueOf(parentId)).normalize();
+            if (Files.exists(folderPath) && Files.isDirectory(folderPath)) {
+                try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath)) {
+                    for (Path filePath : stream) {
+                        if (Files.isRegularFile(filePath)) {
+                            resources.add(new UrlResource(filePath.toUri()));
+                        }
+                    }
+                }
+            } else {
+                throw new RuntimeException("Folder not found: " + folderPath);
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException("Failed to load files from folder", ex);
+        }
+        return resources;
     }
 
     public void deleteAssignmentFiles(Long assignmentId, String folderName) {

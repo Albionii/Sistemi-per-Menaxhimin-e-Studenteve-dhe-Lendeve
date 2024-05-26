@@ -4,12 +4,10 @@ import { Box, Grid } from "@mui/material";
 import axios from "axios";
 import { Table, Dropdown, Button } from "flowbite-react";
 
-const Provimet = () => {
+const Provimet = ({token}) => {
   const [provimet, setProvimet] = useState([]);
   const [paraqitjet, setParaqitjet] = useState([]);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTYzMjAzMTksImV4cCI6MTcxNjMyODk1OSwiZW1haWwiOiJzdHVkZW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9TVFVERU5UIn0.QsCDkHfDWw7QP_VHpJUOXKAG7ruLT7IqdECY1kVNQN0";
 
   const config = {
     headers: {

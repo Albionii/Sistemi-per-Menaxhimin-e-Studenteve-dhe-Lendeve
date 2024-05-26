@@ -151,6 +151,28 @@ export default function ViewSubmissions({
         });
     }
   }, [open, assignmentId, token]);
+  const downloadSubmission = (submissionId) => {
+    axios
+      .get(`http://localhost:8080/api/storage/${assignmentId}/${submissionId}`, {
+        responseType: "blob", 
+      })
+      .then((response) => {
+        const blob = new Blob([response.data], {
+          type: "application/zip",
+        });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "submissions.zip"); 
+        document.body.appendChild(link);
+        link.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        console.error("Error downloading submission:", error);
+      });
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -179,6 +201,10 @@ export default function ViewSubmissions({
     getComparator(order, orderBy)
   ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
+  const handleDownload = () => {
+
+  }
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
@@ -202,7 +228,7 @@ export default function ViewSubmissions({
                     role="checkbox"
                     tabIndex={-1}
                     key={row.id}
-                    sx={{ cursor: "pointer" }}
+
                   >
                     <TableCell component="th" scope="row" padding="none">
                       {row.submiter.firstName + " " + row.submiter.lastName}
@@ -211,10 +237,11 @@ export default function ViewSubmissions({
                     <TableCell align="left">{row.mesazhi}</TableCell>
                     <TableCell align="left">
                       <a
-                        href="#"
-                        style={{ textDecoration: "none" }}
+                        onClick={() => downloadSubmission(row.id)}
+                        style={{ textDecoration: "none", cursor:"pointer"}}
                         onMouseEnter={(e) =>
                           (e.target.style.textDecoration = "underline")
+
                         }
                         onMouseLeave={(e) =>
                           (e.target.style.textDecoration = "none")
