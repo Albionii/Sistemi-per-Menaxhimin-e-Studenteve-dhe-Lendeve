@@ -1,9 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
 import com.fasterxml.jackson.annotation.*;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import jakarta.persistence.*;
-import jdk.jfr.MemoryAddress;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -13,13 +13,18 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class StudentProvimi {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int nota;
     private LocalDateTime dataVendosjes;
+    private LocalDateTime dataParaqitjes;
+
+    @PrePersist
+    protected void onCreateDataParaqitjes() {
+        dataParaqitjes = LocalDateTime.now();
+    }
 
     private String emriLendes;
 

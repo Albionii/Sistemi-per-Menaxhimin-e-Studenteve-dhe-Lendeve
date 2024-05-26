@@ -11,18 +11,14 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import Authentication from "./pages/authentication.jsx";
 import LoggedIn from "./components/loggedIn.jsx";
+import { getToken } from "./GetToken.js";
 
 function App() {
   const [theme, colorMode] = useMode();
 
 
-  let token;
-
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; Token=`);
-  if (parts.length === 2) {
-    token = parts.pop().split(';').shift();
-  }
+  const token = getToken();
+  console.log(token);
 
 
   // let isLoggedIn = document.cookie ? true : false;
@@ -51,7 +47,7 @@ function App() {
   console.log(typeof token);
   console.log(token);
   let logginStatus;
-  if (typeof token === "undefined") {
+  if (typeof token === "undefined" || token.length === 0) {
     logginStatus = false;
   } else {
     logginStatus = true;

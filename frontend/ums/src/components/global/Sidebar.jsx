@@ -110,7 +110,7 @@ const Sidebar = ({user}) => {
         id="sidebar"
         collapsed={isCollapsed}
         style={{ position: "fixed" }}
-        rootStyles={{
+        rootstyles={{
           position: "sticky",
           top: 0,
           height: "100vh",

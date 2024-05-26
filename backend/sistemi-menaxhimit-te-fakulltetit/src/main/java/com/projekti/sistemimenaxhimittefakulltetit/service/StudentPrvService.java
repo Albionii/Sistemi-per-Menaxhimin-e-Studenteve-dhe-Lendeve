@@ -64,6 +64,13 @@ public class StudentPrvService {
         return studentProvimi;
     }
 
+    public StudentProvimi createParaqitjaProvimit(StudentProvimi studentProvimi) throws Exception {
+        if (studentProvimi == null) {
+            throw new IllegalArgumentException("ParaqitjaProvimit object is null");
+        }
+
+        return studentPrvRepository.save(studentProvimi);
+    }
 
 
     public List<StudentProvimi> findAllStudentProvimiByProvimiId(Long provimiId) {
@@ -130,6 +137,8 @@ public class StudentPrvService {
 
         return  mesatarja;
     }
+
+    public void deleteParaqitjaProvimit(Long id) {studentPrvRepository.deleteById(id);}
 
 
 

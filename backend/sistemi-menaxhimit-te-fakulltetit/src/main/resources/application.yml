@@ -1,10 +1,10 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/UMS
+    url: jdbc:mysql://localhost:3307/UMS
 #    url: jdbc:mysql://localhost:3306/backendjavaspring
     username: root
 #    password:
-    password: root
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   servlet:

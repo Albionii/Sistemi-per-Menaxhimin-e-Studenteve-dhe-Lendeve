@@ -120,6 +120,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(assignmentService.findSubmissionByUser(user, assignmentID));
     }
 
+    @PutMapping("/updateRole/{id}")
+    public ResponseEntity<User> updateUserRole(@PathVariable Long id, @RequestBody User u) throws Exception {
+        User user = userService.updateRole(id, u);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @GetMapping("materiali/get/{ligjerataId}")
     public ResponseEntity<List<Materiali>> getMaterialiOfLenda(@PathVariable Long ligjerataId) {

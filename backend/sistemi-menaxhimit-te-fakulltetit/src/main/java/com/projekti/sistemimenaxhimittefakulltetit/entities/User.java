@@ -1,5 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,7 +44,6 @@ public class User {
     private String rruga;
 
     private USER_ROLE role = USER_ROLE.ROLE_STUDENT;
-
 
 }
 

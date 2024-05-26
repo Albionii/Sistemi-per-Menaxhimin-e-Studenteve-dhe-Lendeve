@@ -3,31 +3,33 @@ import Crud from '../CRUD-Template/Crud'
 
 import {
   createLenda,
-  getAllLendet,
+  deleteLendaByID,
+  getAllUsers,
   getLendaByID,
-  updateLendaByID,
-  deleteLendaByID
+  updateUserByID
 } from '../APIRequests'
-function Lenda() {
+function UserRole() {
   const rowsNames = [
-    "Kodi",
-    "Lenda",
-    "Obligative",
-    "Kredite",
+    "ID",
+    "Emri",
+    "Mbiemri",
+    "Roli",
   ]
   
-  const jsonNames = ["kodi", "emri","obligative","ects"];
+  const jsonNames = ["id", "firstName","lastName","role"];
+
+  const formDataJson = {
+    id:"",
+    firstName:"",
+    lastName:"",
+    role:""
+  }
+
   const buttonsAvailable = {
     preview: false,
-    add: true,
+    add: false,
     edit: true,
     delete: false
-  }
-  const formDataJson = {
-    emri:"",
-    ects:"",
-    obligative:"",
-    kodi:""
   }
 
 
@@ -36,9 +38,9 @@ function Lenda() {
       <Crud 
         rows={rowsNames}  
         createAPI = {createLenda} 
-        getAllAPI = {getAllLendet} 
+        getAllAPI = {getAllUsers} 
         getByIDAPI = {getLendaByID}
-        updateAPI = {updateLendaByID}
+        updateAPI = {updateUserByID}
         deleteAPI = {deleteLendaByID}
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
@@ -48,4 +50,4 @@ function Lenda() {
   )
 }
 
-export default Lenda
+export default UserRole

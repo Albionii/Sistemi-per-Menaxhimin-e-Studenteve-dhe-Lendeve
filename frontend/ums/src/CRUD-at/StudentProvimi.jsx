@@ -25,9 +25,13 @@ function Profesoret() {
   ]
   
   const jsonNames = ["id", "user.firstName","user.lasttName","user.email","user.datelindja", "user.gjinia", "user.nrTelefonit", "user.shteti", "user.qyteti", "user.rruga", "user.zip", "user.role"];
-  const isPreviewAvailable = false;
-  const isAddAvailable = true;
-
+  const buttonsAvailable = {
+    preview: false,
+    add: true,
+    edit: true,
+    delete: true
+  }
+  
   const formDataJson = {
     id: 3,
     user: {
@@ -56,8 +60,7 @@ function Profesoret() {
         getByIDAPI = {getProfessorByID}
         updateAPI = {updateProfessorByID}
         deleteAPI = {deleteProfessorByID}
-        isPreviewAvailable = {isPreviewAvailable}
-        isAddAvailable={isAddAvailable}
+        buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
          />

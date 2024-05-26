@@ -18,7 +18,7 @@ public class Student {
     private Long id;
     private String vitiAkademik;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
 }

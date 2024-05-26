@@ -18,9 +18,12 @@ function Provimi() {
   ]
   
   const jsonNames = ["ligjerata.lenda.emri", "ligjerata.professor.user.firstName", "ligjerata.professor.user.lastName", "data","location"];
-  const isPreviewAvailable = false;
-  const isAddAvailable = true;
-
+  const buttonsAvailable = {
+    preview: false,
+    add: true,
+    edit: true,
+    delete: true
+  }
   const formDataJson = {
     ligjerata : {
       professor : {
@@ -51,8 +54,7 @@ function Provimi() {
         getByIDAPI = {getProvimiByID}
         updateAPI = {updateProvimiByID}
         deleteAPI = {deleteProvimiByID}
-        isPreviewAvailable = {isPreviewAvailable}
-        isAddAvailable={isAddAvailable}
+        buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
          />

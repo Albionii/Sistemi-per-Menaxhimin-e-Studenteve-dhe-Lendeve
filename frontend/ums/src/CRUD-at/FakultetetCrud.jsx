@@ -17,8 +17,13 @@ function DepartamentiCrud() {
         "Drejtori",
     ]
     const jsonNames = ["id", "emri", "lokacioni", "user.firstName"];
-    const isPreviewAvailable = false;
-    const isAddAvailable = true;
+
+    const buttonsAvailable = {
+      preview: false,
+      add: true,
+      update:true,
+      delete:true
+    }
 
     const formDataJson =   {
         id: null,
@@ -50,8 +55,7 @@ function DepartamentiCrud() {
                 getByIDAPI={getFakultetiById}
                 updateAPI={updateFakultetiByID}
                 deleteAPI={deleteFakultetiById}
-                isPreviewAvailable={isPreviewAvailable}
-                isAddAvailable={isAddAvailable}
+                buttonsAvailable={buttonsAvailable}
                 formDataJson={formDataJson}
                 jsonName={jsonNames}
             />

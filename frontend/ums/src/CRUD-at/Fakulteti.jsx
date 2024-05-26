@@ -17,9 +17,12 @@ function Lenda() {
   ]
   
   const jsonNames = ["kodi", "emri","obligative","ects"];
-  const isPreviewAvailable = false;
-  const isAddAvailable = true;
-
+  const buttonsAvailable = {
+    preview: false,
+    add: true,
+    edit: true,
+    delete: true
+  }
   const formDataJson = {
     emri:"",
     ects:"",
@@ -37,8 +40,7 @@ function Lenda() {
         getByIDAPI = {getLendaByID}
         updateAPI = {updateLendaByID}
         deleteAPI = {deleteLendaByID}
-        isPreviewAvailable = {isPreviewAvailable}
-        isAddAvailable={isAddAvailable}
+        buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
          />

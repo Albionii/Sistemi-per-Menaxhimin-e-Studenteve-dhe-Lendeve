@@ -18,9 +18,12 @@ function ProfesorLenda() {
   ]
   
   const jsonNames = ["professor.id", "professor.user.firstName","professor.user.lastName", "lenda.emri", "lenda.ects"];
-  const isPreviewAvailable = false;
-  const isAddAvailable = true;
-
+  const buttonsAvailable = {
+    preview: false,
+    add: true,
+    edit: true,
+    delete: true
+  }
   const formDataJson = {
     professor : {
       id: "",
@@ -49,8 +52,7 @@ function ProfesorLenda() {
         updateAPI = {updateLigjerataByID}
         deleteAPI = {deleteLigjerataByID}
         formDataJson={formDataJson}
-        isPreviewAvailable = {isPreviewAvailable}
-        isAddAvailable = {isAddAvailable}
+        buttonsAvailable={buttonsAvailable}
         jsonName={jsonNames}
          />
     </>

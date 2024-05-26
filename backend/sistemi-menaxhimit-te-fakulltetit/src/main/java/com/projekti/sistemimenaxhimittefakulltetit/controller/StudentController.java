@@ -67,7 +67,13 @@ public class StudentController {
     }
 
 
-    @GetMapping
+    @GetMapping("/paraqitjaProvimit")
+    public ResponseEntity<List<Provimi>> getProvimet() throws Exception {
+        List<Provimi> provimet = provimiService.getAllProvimet();
+        return ResponseEntity.status(HttpStatus.OK).body(provimet);
+    }
+
+    @GetMapping("/provimetParaqitura")
     public ResponseEntity<List<StudentProvimi>> getProvimetParaqitura(@RequestHeader("Authorization")String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
         Student student = studentService.findStudentByUserId(user.getId());
@@ -76,6 +82,22 @@ public class StudentController {
 
         return ResponseEntity.status(HttpStatus.OK).body(provimet);
     }
+
+    @GetMapping("/paraqitjaProvimit/{id}")
+    public ResponseEntity<StudentProvimi> findParaqitjaProvimitByID(@PathVariable Long id) throws Exception {
+        StudentProvimi studentProvimi = studentPrvService.findById(id);
+        return ResponseEntity.ok().body(studentProvimi);
+    }
+
+    @DeleteMapping("/paraqitjaProvimit/delete/{id}")
+    public void deleteParaqitjaProvimitByID(@PathVariable Long id){
+        studentPrvService.deleteParaqitjaProvimit(id);
+    }
+
+
+
+
+
 
     @GetMapping("/provimet/{lendaId}")
     public ResponseEntity<List<Provimi>> getProvimetLenda(@PathVariable Long lendaId,

@@ -79,6 +79,18 @@ public class UserServiceImpl implements UserService{
         if(userDetails.getRole() == null){
             throw new Exception("The inputted role is not correct");
         }
+        if(updateUser.getRole() == USER_ROLE.ROLE_STUDENT){
+            Student student = studentRepository.findStudentByUserId(id);
+            student.setUser(null);
+            studentRepository.save(student);
+            studentRepository.deleteById(id);
+        }
+        else if(updateUser.getRole() == USER_ROLE.ROLE_PROFESSOR){
+            Professor professor = professorRepository.findProfessorById(id);
+            professor.setUser(null);
+            professorRepository.save(professor);
+            professorRepository.deleteById(id);
+        }
 
         updateUser.setRole(userDetails.getRole());
 

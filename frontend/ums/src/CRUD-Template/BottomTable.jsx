@@ -7,7 +7,7 @@ import PreviewButton from "./PreviewButton";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
 
-export default function BottomTable({ theKey, rows, API, isPreviewAvailable, jsonName}) {
+export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonName}) {
   const [formData, setFormData] = useState([]);
   const [urlGetAll, messageGetAll] = API.getAll();
   const [urlDelete, messageDelete] = API.delete();
@@ -84,7 +84,7 @@ return (
               {jsonName.map(jsonNames => (
                 <td className="px-4 py-3 font-medium whitespace-nowrap">
                   <div className="flex items-center justify-center">
-                    {accessJsonNames(p, jsonNames)}
+                    {accessJsonNames(p, jsonNames)+""}
                     {/* {console.log(p)} */}
                   </div>
                 </td>
@@ -92,13 +92,9 @@ return (
 
               <td className="px-4 py-3 font-medium whitespace-nowrap">
                 <div className="flex items-center space-x-4 justify-center">
-                  <EditButton
-                    item={p}
-                    onLigjerataEdit={onLigjerataEdit}
-                    API={API}
-                  />
-                  {isPreviewAvailable ? <PreviewButton /> : ""}
-                  <DeleteButton id={p.id} onDelete={deleteRow} />
+                  {buttonsAvailable.edit && <EditButton item={p} onLigjerataEdit={onLigjerataEdit} API={API}/>}
+                  {buttonsAvailable.preview && <PreviewButton />}
+                  {buttonsAvailable.delete && <DeleteButton id={p.id} onDelete={deleteRow} />}
                 </div>
               </td>
             </tr>
