@@ -24,6 +24,8 @@ export const getFromCookies = ({ setUserData }) => {
                 setUser(await userDetails.json());
             } catch (error) {
                 console.error('Error fetching user details:', error);
+                document.cookie = "Token=";
+                window.location.reload();
             } finally {
 
             }

@@ -97,8 +97,8 @@ const CrudCategories = () => {
         )}
         {renderCategory(
           "Administrator",
-          ["Ligjeratat", "Provimet", "Profesoret", "Lëndet"],
-          ["/profesorLenda", "/provimi", "/profesoret", "/lendet"],
+          ["Ligjeratat", "Provimet", "Profesoret", "Lëndet","Departamenti","Fakulteti"],
+          ["/profesorLenda", "/provimi", "/profesoret", "/lendet","/DepartamentiCrud","/FakultetiCrud"],
           "#004F95",
           "#00396b",
           SupervisorAccountIcon

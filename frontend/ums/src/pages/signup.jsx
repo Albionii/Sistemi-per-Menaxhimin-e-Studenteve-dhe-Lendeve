@@ -184,7 +184,7 @@ const About = () => {
     qyteti.innerHTML = "";
 
     if (shteti === "Kosova") {
-      const qytetet = ["Ferizaj", "Prishtina", "Gjakova","Peja"];
+      const qytetet = ["-","Ferizaj", "Prishtina", "Gjakova","Peja"];
       qytetet.forEach((city) => {
         var option = document.createElement("option");
         option.text = city;
@@ -193,7 +193,7 @@ const About = () => {
       })
     }
     if (shteti === "Maqedoni") {
-      const qytetet = ["Tetova", "Gostivari", "Shkupi"];
+      const qytetet = ["-","Tetova", "Gostivari", "Shkupi"];
       qytetet.forEach((city) => {
         var option = document.createElement("option");
         option.text = city;
@@ -204,7 +204,7 @@ const About = () => {
     }
 
     if (shteti === "Shqiperi") {
-      const qytetet = ["Durres", "Shkup", "Tiran"];
+      const qytetet = ["-","Durres", "Shkup", "Tiran"];
       qytetet.forEach((city) => {
         var option = document.createElement("option");
         option.text = city;

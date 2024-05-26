@@ -21,10 +21,11 @@ import Semestrat from "../pages/Semestrat.jsx";
 import Departmentat from "../pages/Departmentat.jsx";
 import {getFromCookies} from '../getUserFromJWT.js';
 import ProvimiCRUD from "../CRUD-at/Provimi.jsx";
-
+import DepartamentiCrud from "../CRUD-at/DepartamentiCrud.jsx";
 import ProfesorLenda from '../CRUD-at/ProfesorLenda.jsx';
 import Profesoret from "../CRUD-at/Profesoret.jsx";
 import Lenda from "../CRUD-at/Lenda.jsx";
+import FakultetetCrud from "../CRUD-at/FakultetetCrud.jsx";
 
 
 function loggedIn({changeLoggedInState,token}) {
@@ -70,6 +71,8 @@ getFromCookies({setUserData});
           <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
           <Route path="/semestrat" element={<Semestrat />} />
           <Route path="/department" element={<Departmentat />} />
+          <Route path="/DepartamentiCrud" element={<DepartamentiCrud/>}></Route>
+          <Route path="/FakultetiCrud" element={<FakultetetCrud/>}></Route>
           
 
 

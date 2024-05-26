@@ -223,10 +223,61 @@
   //   return [url, "Gabim në përditësimin e ligjeratës!"];
   // }
 
+
+
+
+  // departamenti
+
+
+
+
+  export const deleteDepartamentiByID = () => {
+    const url = BASE_URL + `/departamenti/`;
+    return [url, "Gabim në fshirjen e Departamentit!"];
+  }
+
+  export const createDepartamenti = () => {
+    const url = BASE_URL + `/departamenti/`;
+    return [url, "Gabim në krijimin e Departamentit!"];
+  }
+
+  export const getAllDepartamenti = () => {
+    const url = BASE_URL + `/departamenti`;
+    return [url, "Gabim në marrjen e Departamentit!"];
+  }
+  
+  export const getDepartamentiByID = () => {
+    const url = BASE_URL + `/departamenti/`;
+    return [url, "Gabim në marrjen e Departamentit!"];
+  }
+
+  export const updateDepartamentiByID = () => {
+    const url = BASE_URL + `/departamenti/`;
+    return [url, "Gabim në përditësimin e Departamentit"];
+  }
+
   
 
+//fakultetet
 
 
-
-  
-
+export const getAllFakulteti = () => {
+  const url = BASE_URL + `/fakulteti`;
+  return [url, "Gabim në marrjen e Fakultetit!"];
+}
+export const deleteFakultetiById = () => {
+  const url = BASE_URL + `/fakulteti/`;
+    return [url, "Gabim në fshirjen e Fakultetit!"];
+}
+export const createFakulteti = () => {
+  const url = BASE_URL + `/fakulteti/`;
+  return [url, "Gabim në krijimin e Fakultetit!"];
+}
+export const getFakultetiById = () => {
+  const url = BASE_URL + `/fakulteti/`;
+  return [url, "Gabim në marrjen e Fakultetit!"];
+}
+export const updateFakultetiByID = () => {
+  const url = BASE_URL + `/fakulteti/`;
+  return [url, "Gabim në përditësimin e Fakultetit!"];
+}
