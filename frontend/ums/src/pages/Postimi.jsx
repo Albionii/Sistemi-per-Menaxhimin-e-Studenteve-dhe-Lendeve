@@ -27,6 +27,7 @@ import HasSubmission from "../components/Assignments/HasSubmission";
 import Postim from "../components/Postimet/Postim";
 import usePostimi from "../components/Postimet/usePostimi";
 import Materiali from "../components/Materiali/Materiali";
+import extractFileName from "../components/global/extractFileName";
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
@@ -42,13 +43,13 @@ const style = {
   p: 4,
 };
 
-const Postimi = ({token}) => {
+const Postimi = ({ token }) => {
   let role;
 
   const value = `; ${document.cookie}`;
   const parts = value.split(`; Role=`);
-  if (parts.length === 2) { 
-    role = parts.pop().split(';').shift();
+  if (parts.length === 2) {
+    role = parts.pop().split(";").shift();
   }
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -57,6 +58,8 @@ const Postimi = ({token}) => {
   const location = useLocation();
   const imageUrl = location.state?.imageUrl;
 
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
   const {
     assignments,
     createAssignment,
@@ -64,7 +67,8 @@ const Postimi = ({token}) => {
     updateAssignment,
     submitAssignment,
     updateSubmission,
-  } = useAssignments(ligjerataId, token);
+    downloadFile,
+  } = useAssignments(ligjerataId, token, setHasSubmitted);
 
   const {
     postimet,
@@ -103,12 +107,7 @@ const Postimi = ({token}) => {
   const handleEditClose = () => setEditOpen(false);
 
   const [materiali, setMateriali] = useState(false);
-  const openMateriali = () => setMateriali(true);
-  const closeMateriali = () => setMateriali(false);
 
-  const [data, setData] = useState([]);
-
-  
 
 
   const handleMaterialiClick = () => {
@@ -117,6 +116,10 @@ const Postimi = ({token}) => {
 
   const handlePostFilter = () => {
     getPostimetUser();
+  };
+
+  const handleDownload = (assignmentId, fileName) => {
+    downloadFile(assignmentId, fileName);
   };
 
   const getFileIcon = (fileName) => {
@@ -284,13 +287,13 @@ const Postimi = ({token}) => {
           </Box>
           {assignments.map((assignment) => (
             <Box key={assignment.id}>
-              <Link
-                onClick={() => {
-                  setViewAssignment(assignment);
-                  handleEditOpen();
-                }}
-              >
-                <Box>
+                <Box
+                  onClick={() => {
+                    setViewAssignment(assignment);
+                    handleEditOpen();
+                  }}
+                  sx={{":hover":{cursor:"pointer"}}}
+                >
                   <Box
                     display={"flex"}
                     justifyContent={"space-between"}
@@ -315,7 +318,7 @@ const Postimi = ({token}) => {
                     </Box>
                   </Box>
                 </Box>
-              </Link>
+
               {viewAssignment && viewAssignment.id === assignment.id && (
                 <Modal
                   open={editOpen}
@@ -387,7 +390,9 @@ const Postimi = ({token}) => {
                                   backgroundColor: colors.primary[300],
                                 },
                               }}
-                              onClick={() => handleDownload(fileName)}
+                              onClick={() =>
+                                handleDownload(assignment.id, fileName)
+                              }
                             >
                               {fileName}
                             </Typography>
@@ -427,7 +432,15 @@ const Postimi = ({token}) => {
                             assignmentId={viewAssignment.id}
                             token={token}
                             onSubmit={openCreateSubmission}
+                            updateSubmission={updateSubmission}
+                            closeEditSubmission={closeEditSubmission}
+                            submissionData={submissionData}
+                            ligjerataId={ligjerataId}
+                            editSubmission={editSubmission}
+                            viewAssignment={viewAssignment}
                             onUpdate={openEditSubmission}
+                            hasSubmitted={hasSubmitted}
+                            setHasSubmitted={setHasSubmitted}
                           />
                         )}
                       </Box>
@@ -462,23 +475,7 @@ const Postimi = ({token}) => {
                     open={submissionsOpen}
                     onClose={handleSubmissionsClose}
                   />
-                  <Modal
-                    open={editSubmission}
-                    onClose={closeEditSubmission}
-                    aria-labelledby="Create Submission"
-                    aria-describedby="Assignment Submission"
-                  >
-                    <Box sx={style}>
-                      <UpdateSubmission
-                        onSubmit={updateSubmission}
-                        onClose={closeEditSubmission}
-                        initialData={submissionData}
-                        ligjerataId={viewAssignment.id}
-                        assignmentId={viewAssignment.id}
-                        token={token}
-                      />
-                    </Box>
-                  </Modal>
+
                   <Modal
                     open={createSubmission}
                     onClose={closeCreateSubmission}
@@ -490,7 +487,9 @@ const Postimi = ({token}) => {
                         onSubmit={submitAssignment}
                         onClose={closeCreateSubmission}
                         initialData={submissionData}
-                        ligjerataId={viewAssignment.id}
+                        assignmentId={viewAssignment.id}
+                        hasSubmitted={hasSubmitted}
+                        setHasSubmitted={setHasSubmitted}
                       />
                     </Box>
                   </Modal>
@@ -504,14 +503,16 @@ const Postimi = ({token}) => {
           gridColumn={{ xs: "span 12", sm: "span 12", md: "span 9" }}
           sx={{ height: "100%" }}
         >
-          <IconButton
-            onClick={() => {
-              handlePostFilter();
-            }}
-          >
-            <FilterAltIcon />
-            <Typography>Mine Only</Typography>
-          </IconButton>
+          {!materiali && (
+            <IconButton
+              onClick={() => {
+                handlePostFilter();
+              }}
+            >
+              <FilterAltIcon />
+              <Typography>Mine Only</Typography>
+            </IconButton>
+          )}
 
           {!materiali ? (
             postimet
@@ -551,5 +552,3 @@ const Postimi = ({token}) => {
 };
 
 export default Postimi;
-
-

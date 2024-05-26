@@ -1,6 +1,9 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentSubmissionRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProvimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.response.ProvimiResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.response.TranskriptaResponse;
@@ -12,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -28,6 +33,8 @@ public class StudentController {
     private final StudentSemesterRegistrationService studentSemesterRegistrationService;
     private final ProvimiService provimiService;
     private final LendaSemesterService lendaSemesterService;
+    private final FileStorageService fileStorageService;
+    private final AssignmentSubmissionRepository assignmentSubmissionRepository;
 
     @PostMapping("/paraqit/{id}")
     public ResponseEntity<StudentProvimi> paraqitProvimin(@PathVariable Long id,
@@ -183,6 +190,52 @@ public class StudentController {
         return ResponseEntity.ok().body(student);
     }
 
+    @PostMapping("/{assignmentId}/upload/{submissionId}")
+    public ResponseEntity<String> uploadFile(
+            @PathVariable Long assignmentId,
+            @RequestParam("assignment") String materialiJson,
+            @PathVariable Long submissionId,
+            @RequestParam("files") List<MultipartFile> files) {
+
+        AssignmentSubmission assignmentSubmission = parseSubmissionJson(materialiJson);
+
+        Optional<AssignmentSubmission> assignmentOptional = assignmentSubmissionRepository.findById(submissionId);
+        if (!assignmentOptional.isPresent()) {
+            throw new RuntimeException("Assignment not found");
+        }
+        AssignmentSubmission existingSubmission = assignmentOptional.get();
+
+
+
+        if (!files.isEmpty()) {
+            fileStorageService.deleteSubmissionFiles(assignmentId, submissionId);
+
+            List<String> fileNames = new ArrayList<>();
+            for (MultipartFile file : files) {
+                String fileName = fileStorageService.storeSubmission(file, "Assignments", assignmentId, submissionId);
+                fileNames.add(fileName);
+            }
+            existingSubmission.setFileNames(fileNames);
+            assignmentSubmissionRepository.save(existingSubmission);
+
+        }
+
+
+
+        return ResponseEntity.ok("Files uploaded successfully");
+    }
+
+
+
+    private AssignmentSubmission parseSubmissionJson(String submissionJson) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        try {
+            return objectMapper.readValue(submissionJson, AssignmentSubmission.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Error parsing submission JSON", e);
+        }
+    }
 
 
 

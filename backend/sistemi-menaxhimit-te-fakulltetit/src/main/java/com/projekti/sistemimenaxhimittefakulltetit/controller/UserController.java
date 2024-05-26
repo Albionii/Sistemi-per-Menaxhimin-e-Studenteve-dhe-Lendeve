@@ -1,5 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 
 import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentRepository;
@@ -7,16 +9,20 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentSubmissi
 import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.expression.spel.ast.Assign;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -30,9 +36,15 @@ public class UserController {
     private AssignmentSubmissionRepository assignmentSubmissionRepository;
     @Autowired
     private AssignmentRepository assignmentRepository;
+
+    @Autowired
+    private ProfesoriLendaService profesoriLendaService;
     private StudentService studentService;
     private ProvimiService provimiService;
     private ProfesoriProvimiService profesoriProvimiService;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
 
     @GetMapping("/{id}")
@@ -56,15 +68,15 @@ public class UserController {
 
 
     @PostMapping("/submit/{id}")
-    public List<AssignmentSubmission> submitAssignment(@PathVariable Long id,
+    public ResponseEntity<AssignmentSubmission> submitAssignment(@PathVariable Long id,
                                                        @RequestBody AssignmentSubmission submitedAssignment,
                                                        @RequestHeader("Authorization") String token) throws Exception {
 
         User user = userService.findUserByJwtToken(token);
 
-        List<AssignmentSubmission> list = assignmentService.submit(id, submitedAssignment, user);
+        AssignmentSubmission submission = assignmentService.submit(id, submitedAssignment, user);
 
-        return list;
+        return ResponseEntity.status(HttpStatus.OK).body(submission);
     }
 
     @DeleteMapping("/submit/delete/{id}")
@@ -92,7 +104,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/get/postimi/{id}")
+    @GetMapping("assignment/get/ligjerata/{id}")
     public ResponseEntity<List<Assignment>> getAssignmentsOfLigjerata(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(assignmentService.getAssignmentsOfLigjerata(id));
     }
@@ -102,6 +114,17 @@ public class UserController {
                                                                     @RequestHeader("Authorization") String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
         return ResponseEntity.status(HttpStatus.OK).body(assignmentService.findSubmissionByUser(user, assignmentID));
+    }
+
+
+    @GetMapping("materiali/get/{ligjerataId}")
+    public ResponseEntity<List<Materiali>> getMaterialiOfLenda(@PathVariable Long ligjerataId) {
+        Optional<ProfesoriLenda> profesoriLenda =profesoriLendaService.findById(ligjerataId);
+
+        if (profesoriLenda.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(profesoriLenda.get().getMateriali());
+        }
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 

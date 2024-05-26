@@ -7,7 +7,7 @@ import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import CreateMaterial from "./CreateMaterial";
 const Materiali = ({ ligjerataId, token, USER_ROLE }) => {
-  const { materiali, createMaterial, deleteMaterial, updateMaterial } =
+  const { materiali, createMaterial, deleteMaterial, updateMaterial, downloadFile} =
     useMateriali(ligjerataId, token);
 
   const initialData = {
@@ -15,6 +15,8 @@ const Materiali = ({ ligjerataId, token, USER_ROLE }) => {
     mesazhi: "",
     fileNames: [],
   };
+
+
 
   const [create, setCreate] = useState(false);
   const openCreate = () => setCreate(true);
@@ -45,7 +47,9 @@ const Materiali = ({ ligjerataId, token, USER_ROLE }) => {
             deleteMaterial={deleteMaterial}
             updateMaterial={updateMaterial}
             USER_ROLE={USER_ROLE}
+            downloadFile={downloadFile}
           />
+          
         ))}
       </Box>
       <Modal open={create} onClose={closeCreate}>
@@ -58,6 +62,7 @@ const Materiali = ({ ligjerataId, token, USER_ROLE }) => {
           />
         </Box>
       </Modal>
+      
     </Box>
   );
 };

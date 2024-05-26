@@ -1,16 +1,24 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import ConfirmationModal from "./ConfirmationModal";
+import extractFileName from "../global/extractFileName";
 
-const UpdateAssignment = ({ onSubmit, onClose, initialData, ligjerataId, onUpdateAssignment }) => {
+const UpdateAssignment = ({
+  onSubmit,
+  onClose,
+  initialData,
+  ligjerataId,
+  onUpdateAssignment,
+}) => {
   const [Assignment, setAssignment] = useState(initialData);
   const [confirmation, setConfirmation] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [originalFileNames, setOriginalFileNames] = useState([]);
+
+  useEffect(() => {
+    setOriginalFileNames(initialData.fileNames);
+  }, [initialData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,25 +29,35 @@ const UpdateAssignment = ({ onSubmit, onClose, initialData, ligjerataId, onUpdat
   };
 
   const handleFileChange = (e) => {
-    const fileNames = Array.from(e.target.files).map((file) => file.name);
+    const fileList = Array.from(e.target.files);
+    const fileNames = fileList.map((file) => file.name);
     setAssignment((prevState) => ({
       ...prevState,
       fileNames,
     }));
+    setFiles(fileList);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setConfirmation(true);
   };
-  
+
   const handleConfirm = () => {
     setConfirmation(false);
-    onSubmit(Assignment, ligjerataId);
+    const formData = new FormData();
+    formData.append("assignment", JSON.stringify(Assignment));
+
+    if (files.length > 0) {
+      for (const file of files) {
+        formData.append("files", file);
+      }
+    }
+    onSubmit(Assignment, ligjerataId, formData);
     onUpdateAssignment(Assignment);
     onClose();
-    setAssignment(initialData); 
-  }
+    setAssignment(initialData);
+  };
 
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -98,27 +116,16 @@ const UpdateAssignment = ({ onSubmit, onClose, initialData, ligjerataId, onUpdat
         {Assignment.fileNames.length > 0 && (
           <Box display="flex" flexWrap="wrap" mb={2}>
             {Assignment.fileNames.map((file, index) => (
-              <Box
-                key={index}
-                display="flex"
-                alignItems="center"
-                mr={2}
-                mb={1}
-              >
+              <Box key={index} display="flex" alignItems="center" mr={2} mb={1}>
                 <InsertDriveFileIcon sx={{ mr: 1 }} />
-                <Typography>{file}</Typography>
+                <Typography>{extractFileName(file)}</Typography>
               </Box>
             ))}
           </Box>
         )}
         <Button variant="contained" component="label">
           Upload File
-          <input
-            type="file"
-            hidden
-            multiple
-            onChange={handleFileChange}
-          />
+          <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>
       <Box mt={2}>

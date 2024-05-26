@@ -7,7 +7,6 @@ const usePostimi = (ligjerataId, token) => {
   const [userInfo, setUserInfo] = useState([]);
   const [viewMyPosts, setViewMyPosts] = useState(true);
 
-  console.log(viewMyPosts);
 
   const getPostimet = () => {
     axios

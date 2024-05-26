@@ -3,6 +3,9 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import ConfirmationModal from "./ConfirmationModal";
 import axios from "axios";
+import extractFileName from "../global/extractFileName";
+
+
 
 const UpdateSubmission = ({
   onSubmit,
@@ -11,11 +14,13 @@ const UpdateSubmission = ({
   ligjerataId,
   assignmentId,
   token,
+  setHasSubmitted,
 }) => {
   const [Submission, setSubmission] = useState(initialData);
   const [confirmation, setConfirmation] = useState(false);
   const [confirmMsg, setConfirmMsg] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [files, setFiles] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,22 +31,29 @@ const UpdateSubmission = ({
   };
 
   const handleFileChange = (e) => {
-    const fileNames = Array.from(e.target.files).map((file) => file.name);
+    const fileList = Array.from(e.target.files);
+    const fileNames = fileList.map((file) => file.name);
     setSubmission((prevState) => ({
       ...prevState,
       fileNames,
     }));
+    setFiles(fileList);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setConfirmMsg("Are you sure you want to update this assignment?");
+    setConfirmMsg("Are you sure you want to update your submission?");
     setConfirmation(true);
   };
 
   const handleConfirm = () => {
     setConfirmation(false);
-    onSubmit(ligjerataId, Submission);
+    const formData = new FormData();
+    formData.append("assignment", JSON.stringify(Submission));
+    for (const file of files) {
+      formData.append("files", file);
+    }
+    onSubmit(formData, ligjerataId, Submission);
     onClose();
     setSubmission(initialData);
   };
@@ -70,7 +82,8 @@ const UpdateSubmission = ({
       })
       .then((response) => {
         console.log("Deleted");
-        onClose(); // Close the modal after deletion
+        setHasSubmitted(false);
+        onClose();
       })
       .catch((error) => {
         console.log("Error: " + error);
@@ -105,7 +118,7 @@ const UpdateSubmission = ({
             {Submission.fileNames.map((file, index) => (
               <Box key={index} display="flex" alignItems="center" mr={2} mb={1}>
                 <InsertDriveFileIcon sx={{ mr: 1 }} />
-                <Typography>{file}</Typography>
+                <Typography>{extractFileName(file)}</Typography>
               </Box>
             ))}
           </Box>
@@ -115,7 +128,7 @@ const UpdateSubmission = ({
           <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>
-      <Box mt={2} sx={{display:"flex", justifyContent:"space-between"}}>
+      <Box mt={2} sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
           <Button
             variant="contained"
@@ -123,7 +136,7 @@ const UpdateSubmission = ({
             type="submit"
             sx={{ mr: 2 }}
           >
-            Update
+            Submit
           </Button>
           <Button variant="outlined" color="error" onClick={onClose}>
             Anulo

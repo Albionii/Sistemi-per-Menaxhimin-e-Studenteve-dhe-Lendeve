@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ public class Materiali {
 
     @NotNull
     private String mesazhi;
+
+    @Transient
+    private List<MultipartFile> files = new ArrayList<>();
 
     @NotNull
     @Column(length = 500)

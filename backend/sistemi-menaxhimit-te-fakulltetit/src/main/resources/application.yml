@@ -4,7 +4,7 @@ spring:
 #    url: jdbc:mysql://localhost:3306/backendjavaspring
     username: root
 #    password:
-    password:
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -22,3 +22,4 @@ spring:
 
   application:
     name: SistemiMenaxhimitTeFakulltetit
+

@@ -16,6 +16,7 @@ public class MaterialiService {
 
     private MaterialiRepository materialiRepository;
     private ProfesoriLendaRepository profesoriLendaRepository;
+    private FileStorageService fileStorageService;
 
 
     public Materiali createMateriali(ProfesoriLenda profesoriLenda, Materiali materiali) {
@@ -39,9 +40,8 @@ public class MaterialiService {
         materiali.ifPresent((material) -> {
             material.setTitulli(updated.getTitulli());
             material.setMesazhi(updated.getMesazhi());
-             material.setFileNames(updated.getFileNames());
 
-             materialiRepository.save(material);
+            materialiRepository.save(material);
         });
 
         return null;

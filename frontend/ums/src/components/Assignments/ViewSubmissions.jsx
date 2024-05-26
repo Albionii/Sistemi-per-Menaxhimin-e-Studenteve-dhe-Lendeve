@@ -119,9 +119,7 @@ function EnhancedTableToolbar() {
   );
 }
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+
 
 export default function ViewSubmissions({
   assignmentId,

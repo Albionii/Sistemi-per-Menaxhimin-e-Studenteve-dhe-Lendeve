@@ -37,6 +37,9 @@ public class AssignmentServiceImpl implements AssignmentService{
 
     @Autowired
     private ProfesoriLendaRepository profesoriLendaRepository;
+    @Autowired
+    private FileStorageService fileStorageService;
+
 
 
 
@@ -95,9 +98,9 @@ public class AssignmentServiceImpl implements AssignmentService{
             updatedAssignment.setTitulli(update.getTitulli());
             updatedAssignment.setMesazhi(update.getMesazhi());
             updatedAssignment.setExpireAt(update.getExpireAt());
-            updatedAssignment.setFileNames(update.getFileNames());
             updatedAssignment.setUpdatedBy(user);
             updatedAssignment.setUpdatedAt(LocalDateTime.now());
+//            fileStorageService.deleteAssignmentFiles(updatedAssignment.getId(), "Assignments");
 
             assignmentRepository.save(updatedAssignment);
 
@@ -109,7 +112,7 @@ public class AssignmentServiceImpl implements AssignmentService{
 
     }
 
-    public List<AssignmentSubmission> submit(Long assignmentId, AssignmentSubmission submittedAssignment, User user) throws Exception {
+    public AssignmentSubmission submit(Long assignmentId, AssignmentSubmission submittedAssignment, User user) throws Exception {
         Assignment assignment = getAssignmentById(assignmentId);
         if (assignment == null) {
             throw new Exception("Assignment not found with id: " + assignmentId);
@@ -120,10 +123,16 @@ public class AssignmentServiceImpl implements AssignmentService{
         if (assignment.getSubmissions() == null) {
             assignment.setSubmissions(new ArrayList<>());
         }
-        assignment.getSubmissions().add(submittedAssignment);
-        assignmentRepository.save(  assignment);
 
-        return assignment.getSubmissions();
+        if (submittedAssignment == null) {
+            throw new NullPointerException("Submission is null!");
+        }
+        assignmentSubmissionRepository.save(submittedAssignment);
+
+        assignment.getSubmissions().add(submittedAssignment);
+        assignmentRepository.save(assignment);
+
+        return submittedAssignment;
     }
 
     @Override
@@ -136,6 +145,8 @@ public class AssignmentServiceImpl implements AssignmentService{
         if (assignment != null) {
             assignment.getSubmissions().remove(submission);
             assignmentRepository.save(assignment);
+            fileStorageService.deleteSubmissionFiles(assignment.getId(), submission.getId());
+            assignmentSubmissionRepository.deleteById(submission.getId());
         }
         assignmentSubmissionRepository.delete(submission);
 
@@ -151,7 +162,6 @@ public class AssignmentServiceImpl implements AssignmentService{
 
         if (old != null) {
             old.setMesazhi(update.getMesazhi());
-            old.setFileNames(update.getFileNames());
             old.setSubmitedAt(LocalDateTime.now());
             return assignmentSubmissionRepository.save(old);
 
@@ -174,6 +184,7 @@ public class AssignmentServiceImpl implements AssignmentService{
         }
 
         assignmentRepository.delete(assignment);
+
     }
 
     public List<Assignment> getAssignmentsOfLigjerata(Long id) {

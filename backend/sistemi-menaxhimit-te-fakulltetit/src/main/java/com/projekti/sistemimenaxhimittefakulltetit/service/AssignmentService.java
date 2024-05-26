@@ -14,7 +14,7 @@ public interface AssignmentService {
     public Assignment updateAssignment(AssignmentResponse update, User user, Long id) throws Exception;
     public void deleteAssignment(Long id) throws Exception;
     public Assignment deleteAssignmentSubmission(Long id, User user) throws Exception;
-    public List<AssignmentSubmission> submit(Long assignment_id,AssignmentSubmission submission, User user) throws Exception;
+    public AssignmentSubmission submit(Long assignment_id,AssignmentSubmission submission, User user) throws Exception;
     public List<Assignment> getAssignmentsOfLigjerata(Long id);
     public AssignmentSubmission updateAssignmentSubmission(Long id, AssignmentSubmission update, User user);
     public List<AssignmentSubmission> getSubmissions(Long id);

@@ -14,8 +14,9 @@ import { tokens } from "../../theme";
 import ConfirmationModal from "../Postimet/ConfirmationModal";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import UpdateMaterial from "./UpdateMaterial";
+import extractFileName from "../global/extractFileName";
 
-const Material = ({ material, deleteMaterial, updateMaterial, USER_ROLE }) => {
+const Material = ({ material, deleteMaterial, updateMaterial, downloadFile, USER_ROLE }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -45,6 +46,11 @@ const Material = ({ material, deleteMaterial, updateMaterial, USER_ROLE }) => {
     setDeleteMod(false);
   };
 
+  const handleDownload = (assignmentId,fileName) => {
+    downloadFile(assignmentId, fileName)
+  } 
+
+
   return (
     <Box
       sx={{
@@ -67,15 +73,14 @@ const Material = ({ material, deleteMaterial, updateMaterial, USER_ROLE }) => {
           flexWrap: "wrap",
         }}
       >
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" sx={{ flexGrow: 1, paddingTop:"5px"}}>
           {material.titulli}
         </Typography>
-        <hr width="80%" noshade />
+        <hr width="88%" noshade />
       </Box>
 
       <Box
         sx={{
-          border: "1px solid",
           borderRadius: "15px",
           display: "flex",
           background: colors.primary[600],
@@ -101,7 +106,7 @@ const Material = ({ material, deleteMaterial, updateMaterial, USER_ROLE }) => {
           }}
         >
           {material.fileNames.map((item, index) => (
-            <Link to="" key={index}>
+
               <Box
                 sx={{
                   padding: "2px",
@@ -110,12 +115,17 @@ const Material = ({ material, deleteMaterial, updateMaterial, USER_ROLE }) => {
                   gap: "5px",
                   border: "1px dashed",
                   borderRadius: "10px",
+                  ":hover": {
+                    cursor:"pointer"
+                  }
                 }}
+                key={index}
+                onClick={() => handleDownload(material.id,item)}
               >
                 <PictureAsPdfIcon />
-                <Typography>{item}</Typography>
+                <Typography>{extractFileName(item)}</Typography>
               </Box>
-            </Link>
+
           ))}
         </Box>
       </Box>

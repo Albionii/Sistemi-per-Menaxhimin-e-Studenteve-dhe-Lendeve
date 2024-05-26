@@ -7,10 +7,12 @@ import {
 } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import ConfirmationModal from "./ConfirmationModal";
+import extractFileName from "../global/extractFileName";
 
-const SubmitSubmission = ({ onSubmit, onClose, initialData, ligjerataId }) => {
+const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
   const [Submission, setSubmission] = useState(initialData);
-  const [confirmation, setConfirmation] = useState(false);
+  const [files, setFiles] = useState([]);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,16 +23,22 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, ligjerataId }) => {
   };
 
   const handleFileChange = (e) => {
-    const fileNames = Array.from(e.target.files).map((file) => file.name);
+    const fileList = Array.from(e.target.files);
+    const fileNames = fileList.map((file) => file.name);
     setSubmission((prevState) => ({
       ...prevState,
       fileNames,
     }));
+    setFiles(fileList);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(ligjerataId, Submission);
+    const formData = new FormData();
+    formData.append("assignment", JSON.stringify(Submission));
+    for (const file of files) {
+      formData.append("files", file);
+    }
+    onSubmit(assignmentId, Submission, formData);
     onClose();
     setSubmission(initialData);
   };
@@ -72,7 +80,7 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, ligjerataId }) => {
                 mb={1}
               >
                 <InsertDriveFileIcon sx={{ mr: 1 }} />
-                <Typography>{file}</Typography>
+                <Typography>{extractFileName(file)}</Typography>
               </Box>
             ))}
           </Box>

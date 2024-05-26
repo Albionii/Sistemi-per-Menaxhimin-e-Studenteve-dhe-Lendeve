@@ -4,10 +4,13 @@ import ConfirmationModal from "../Postimet/ConfirmationModal";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { tokens } from "../../theme";
 import { Link } from "react-router-dom";
+import extractFileName from "../global/extractFileName";
 
 const UpdateMaterial = ({ onSubmit, onClose, initialData, materialId }) => {
   const [material, setMaterial] = useState(initialData);
   const [confirmation, setConfirmation] = useState(false);
+  const [files, setFiles] = useState([]);
+
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -21,11 +24,13 @@ const UpdateMaterial = ({ onSubmit, onClose, initialData, materialId }) => {
   };
 
   const handleFileChange = (e) => {
-    const fileNames = Array.from(e.target.files).map((file) => file.name);
+    const fileList = Array.from(e.target.files);
+    const fileNames = fileList.map((file) => file.name);
     setMaterial((prevState) => ({
       ...prevState,
       fileNames,
     }));
+    setFiles(fileList);
   };
 
   const handleSubmit = (e) => {
@@ -35,7 +40,12 @@ const UpdateMaterial = ({ onSubmit, onClose, initialData, materialId }) => {
 
   const handleConfirm = () => {
     setConfirmation(false);
-    onSubmit(materialId, material);
+    const formData = new FormData();
+    formData.append("assignment", JSON.stringify(material));
+    for (const file of files) {
+      formData.append("files", file);
+    }
+    onSubmit(materialId, material, formData);
     onClose();
   };
 
@@ -77,7 +87,7 @@ const UpdateMaterial = ({ onSubmit, onClose, initialData, materialId }) => {
             {material.fileNames.map((file, index) => (
               <Box key={index} display="flex" alignItems="center" mr={2} mb={1}>
                 <InsertDriveFileIcon sx={{ mr: 1 }} />
-                <Typography>{file}</Typography>
+                <Typography>{extractFileName(file)}</Typography>
               </Box>
             ))}
           </Box>

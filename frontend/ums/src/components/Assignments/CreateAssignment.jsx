@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
 const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
   const [newAssignment, setNewAssignment] = useState(initialData);
+  const [files, setFiles] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,16 +15,23 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
   };
 
   const handleFileChange = (e) => {
-    const fileNames = Array.from(e.target.files).map((file) => file.name);
+    const fileList = Array.from(e.target.files);
+    const fileNames = fileList.map((file) => file.name);
     setNewAssignment((prevState) => ({
       ...prevState,
       fileNames,
     }));
+    setFiles(fileList);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(newAssignment, ligjerataId);
+    const formData = new FormData();
+    formData.append("assignment", JSON.stringify(newAssignment));
+    for (const file of files) {
+      formData.append("files", file);
+    }
+    onSubmit(newAssignment, formData, ligjerataId);
     onClose();
     setNewAssignment(initialData); 
   };
@@ -79,7 +82,7 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
         }}
         value={newAssignment.expireAt}
         onChange={handleInputChange}
-        required
+        
         inputProps={{
           min: getCurrentDateTime(),
         }}
@@ -88,13 +91,7 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
         {newAssignment.fileNames.length > 0 && (
           <Box display="flex" flexWrap="wrap" mb={2}>
             {newAssignment.fileNames.map((file, index) => (
-              <Box
-                key={index}
-                display="flex"
-                alignItems="center"
-                mr={2}
-                mb={1}
-              >
+              <Box key={index} display="flex" alignItems="center" mr={2} mb={1}>
                 <InsertDriveFileIcon sx={{ mr: 1 }} />
                 <Typography>{file}</Typography>
               </Box>
@@ -103,12 +100,7 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
         )}
         <Button variant="contained" component="label">
           Upload File
-          <input
-            type="file"
-            hidden
-            multiple
-            onChange={handleFileChange}
-          />
+          <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>
       <Box mt={2}>
