@@ -85,9 +85,9 @@ function Profili({ changeLoggedInState, user }) {
 
 
                         </Card>
-                        <Card style={{ height: '45rem', width: '60rem', display: shfaq ? "block" : "none" }} sx={{ background: colors.primary[400], }}>
+                        <Card style={{ maxHeight: '45rem', maxWidth: '60rem', display: shfaq ? "block" : "none" }} sx={{ background: colors.primary[400], }}>
 
-                            <div style={{ height: "80svh", width: "120svh" }} className="flex flex-row justify-center items-center  content-center gap-4">
+                            <div style={{ maxHeight: "80svh", maxWidth: "120svh", padding: "5rem" }} className="flex flex-row justify-center items-center  content-center gap-4">
                                 <div className="flex flex-col w-full h-full items-center justify-center gap-4">
                                     <div>
                                         <InputLabel>Name</InputLabel>
