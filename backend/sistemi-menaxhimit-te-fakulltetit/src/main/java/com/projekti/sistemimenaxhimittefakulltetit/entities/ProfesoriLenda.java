@@ -41,6 +41,9 @@ public class ProfesoriLenda {
     @JsonIgnore
     private List<Provimi> provimet;
 
+    @ManyToOne
+    private Semester semester;
+
     public ProfesoriLenda(Professor professor, Lenda lenda) {
         this.professor = professor;
         this.lenda = lenda;

@@ -19,12 +19,15 @@ import Postimi from "../pages/Postimi.jsx";
 import SemestriCrud from "../CRUD-Template/SemesterCrud.jsx";
 import Semestrat from "../pages/Semestrat.jsx";
 import Departmentat from "../pages/Departmentat.jsx";
+import RegjistroSemestrin from "../pages/RegjistroSemestrin.jsx";
+
 import {getFromCookies} from '../getUserFromJWT.js';
 import ProvimiCRUD from "../CRUD-at/Provimi.jsx";
 import DepartamentiCrud from "../CRUD-at/DepartamentiCrud.jsx";
 import ProfesorLenda from '../CRUD-at/ProfesorLenda.jsx';
 import Profesoret from "../CRUD-at/Profesoret.jsx";
 import Lenda from "../CRUD-at/Lenda.jsx";
+import RegjistroGrupin from "../pages/RegjistroGrupin.jsx";
 import FakultetetCrud from "../CRUD-at/FakultetetCrud.jsx";
 
 
@@ -55,7 +58,7 @@ getFromCookies({setUserData});
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/provimet" element={<Provimet />} />
 
-          <Route path="/ligjeratat" element={<Ligjeratat />} />
+          <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
           <Route path="/cruds" element={<CrudCategories />} />
           <Route path="/transkripta" element={<Transkripta />} />
 
@@ -73,6 +76,9 @@ getFromCookies({setUserData});
           <Route path="/department" element={<Departmentat />} />
           <Route path="/DepartamentiCrud" element={<DepartamentiCrud/>}></Route>
           <Route path="/FakultetiCrud" element={<FakultetetCrud/>}></Route>
+          <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
+          <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
+
           
 
 

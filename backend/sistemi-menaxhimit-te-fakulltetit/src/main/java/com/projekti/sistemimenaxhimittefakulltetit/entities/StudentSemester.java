@@ -4,13 +4,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "Student_Semester_Registration")
 @Data
-public class StudentSemesterRegistration {
+public class StudentSemester{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +21,9 @@ public class StudentSemesterRegistration {
     @JoinColumn(name="semester_id")
     private Semester semester;
 
+    private String lokacioni;
 
-    @ManyToMany
-    @JoinTable (
-            name = "student_course_registration",
-            joinColumns = @JoinColumn(name="registration_id"),
-            inverseJoinColumns = @JoinColumn(name="lenda_id")
-    )
-    private Set<Lenda> lendet = new HashSet<>();
+    private String nderrimiOrarit;
 
     private LocalDateTime registrationDate;
 }

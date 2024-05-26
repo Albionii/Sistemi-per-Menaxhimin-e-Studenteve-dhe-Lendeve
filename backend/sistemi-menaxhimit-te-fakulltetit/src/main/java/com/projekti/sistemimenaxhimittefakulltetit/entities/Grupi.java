@@ -1,5 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,6 @@ public class Grupi {
     private String emri;
 
     @ManyToOne
+    @JsonIgnore
     private Semester semester;
 }

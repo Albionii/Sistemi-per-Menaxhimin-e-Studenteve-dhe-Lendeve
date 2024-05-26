@@ -67,6 +67,11 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedLigjerata);
     }
 
+    @GetMapping("/semester/{departamentiId}")
+    public List<Semester> getByDepartamentiId(@PathVariable Long departamentiId){
+        return semesterService.getByDepartamentiId(departamentiId);
+    }
+
     @DeleteMapping("/lenda/{id}")
     public void deleteLenda(@PathVariable Long id,
                             @RequestHeader("Authorization") String jwt){

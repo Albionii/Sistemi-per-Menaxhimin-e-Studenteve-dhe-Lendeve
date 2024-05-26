@@ -20,6 +20,7 @@ public class OrariLigjerata {
     @ManyToOne
     private ProfesoriLenda ligjerata;
 
+    private String dita;
     private String ora;
     private String salla;
 }

@@ -27,8 +27,11 @@ public class Semester {
     private LocalDateTime endDate;
 
     @OneToMany(mappedBy = "semester")
+    @JsonIgnore
     private Set<Grupi> grupet;
 
+    @ManyToOne
+    private Departamenti departamenti;
 
 
     @Override

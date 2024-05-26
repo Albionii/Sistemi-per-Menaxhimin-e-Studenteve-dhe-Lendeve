@@ -32,6 +32,11 @@ public class ProfesoriLendaController {
 //                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("semester/{semesterId}")
+    public List<ProfesoriLenda> findBySemesterId(@PathVariable Long semesterId){
+        return profesoriLendaService.getBySemesterId(semesterId);
+    }
+
     @PostMapping("/createLigjerata")
     public ResponseEntity<ProfesoriLenda> createLigjerate(@RequestBody ProfesoriLenda p) throws Exception {
         ProfesoriLenda profesoriLenda = profesoriLendaService.createLigjerata(p);

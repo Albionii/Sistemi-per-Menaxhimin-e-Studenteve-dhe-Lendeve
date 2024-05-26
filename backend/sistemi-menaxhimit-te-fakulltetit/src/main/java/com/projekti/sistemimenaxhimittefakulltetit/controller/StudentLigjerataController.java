@@ -66,21 +66,21 @@ public class StudentLigjerataController {
 
 
     //alternativ(Mos e shlyni)
-    @PostMapping("course/enroll/{id}")
-    public ResponseEntity<StudentSemesterRegistration> registerStudentForCourse(@PathVariable Long id,
-                                                      @RequestHeader("Authorization")String token) throws Exception {
-
-        User user = userService.findUserByJwtToken(token);
-        Student student = studentService.findStudentByUserId(user.getId());
-        Lenda lenda = lendaService.findLendaById(id);
-
-
-
-        StudentSemesterRegistration enrollments = studentSemesterRegistrationService.EnrollStudent(lenda, student.getId());
+//    @PostMapping("course/enroll/{id}")
+//    public ResponseEntity<StudentSemester> registerStudentForCourse(@PathVariable Long id,
+//                                                      @RequestHeader("Authorization")String token) throws Exception {
+//
+//        User user = userService.findUserByJwtToken(token);
+//        Student student = studentService.findStudentByUserId(user.getId());
+//        Lenda lenda = lendaService.findLendaById(id);
 
 
-        return new ResponseEntity<>(enrollments, HttpStatus.CREATED);
-    }
+
+//        StudentSemester enrollments = studentSemesterRegistrationService.EnrollStudent(lenda, student.getId());
+//
+//
+//        return new ResponseEntity<>(enrollments, HttpStatus.CREATED);
+//    }
 
     @GetMapping("mesataret/{id}")
     public List<Double[]> mesataretPerNote(@PathVariable Long id){

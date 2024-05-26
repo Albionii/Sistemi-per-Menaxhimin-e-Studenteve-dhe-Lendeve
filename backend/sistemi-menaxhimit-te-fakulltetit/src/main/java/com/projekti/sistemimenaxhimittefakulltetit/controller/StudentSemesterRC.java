@@ -8,6 +8,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.request.SemesterRegistrationR
 import com.projekti.sistemimenaxhimittefakulltetit.service.StudentSemesterRegistrationService;
 import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,20 +25,11 @@ public class StudentSemesterRC {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerStudentSemester(@RequestBody SemesterRegistrationReq req,
+    public ResponseEntity<?> registerStudentSemester(@RequestBody StudentSemester studentSemester,
                                                      @RequestHeader("Authorization") String token) throws Exception {
-        User user = userService.findUserByJwtToken(token);
-        Student student = studentRepository.findStudentByUserId(user.getId());
-        Semester semester = semesterRepository.findSemesterById(req.getSemester_id());
+        StudentSemester reg = registrationService.registerStudentForSemester(token, studentSemester);
 
-        if(student == null || semester == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-
-        StudentSemesterRegistration registration = registrationService.registerStudentForSemester(student, semester);
-
-        return ResponseEntity.ok(registration);
+        return new ResponseEntity<>(reg, HttpStatus.OK);
     }
 
 

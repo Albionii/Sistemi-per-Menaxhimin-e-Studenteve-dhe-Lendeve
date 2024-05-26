@@ -1,17 +1,22 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Data
-public class Orari {
+public class StudentGrupi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     @ManyToOne
+    @JoinColumn(name="grupi_id")
     private Grupi grupi;
+
+    private LocalDateTime registrationDate;
 }

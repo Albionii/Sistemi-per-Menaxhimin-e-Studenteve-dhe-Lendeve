@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, useTheme } from "@mui/material";
 import { tokens } from "../theme";
-import { Link } from "react-router-dom";
+import { Link, useNavigate }   from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Header from "../components/Header";
 import SchoolIcon from "@mui/icons-material/School";
 import EastIcon from "@mui/icons-material/East";
+import axios from "axios";
 
-const SemestriItem = ({ semester, linkTo }) => {
+const SemestriItem = ({ semester, startDate, endDate, semestriId }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/ligjeratat/${semestriId}`)
+  }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${day}-${month}-${year}`;
+  };
   return (
-    <Grid item xs={12} sm={6} md={6}>
-      <Link to={linkTo} style={{ textDecoration: "none", width: "100%" }}>
+    <Grid item xs={12} sm={6} md={6} onClick={handleClick}>
         <Box
           bgcolor={colors.primary[400]}
           p={2}
@@ -47,7 +60,7 @@ const SemestriItem = ({ semester, linkTo }) => {
                 >
                   <Typography color={colors.gray[100]}>Data e nisjes:</Typography>
                   <Box p={2} bgcolor={colors.greenAccent[600]} borderRadius={3}>
-                    <Typography>15/05/2024</Typography>
+                    <Typography>{formatDate(startDate)}</Typography>
                   </Box>
                 </Box>
                 <Box
@@ -58,7 +71,7 @@ const SemestriItem = ({ semester, linkTo }) => {
                 >
                   <Typography color={colors.gray[100]}>Data e perfundimit:</Typography>
                   <Box p={2} bgcolor={colors.greenAccent[600]} borderRadius={3}>
-                    <Typography>15/08/2024</Typography>
+                    <Typography>{formatDate(endDate)}</Typography>
                   </Box>
                 </Box>
               </Box>
@@ -109,7 +122,6 @@ const SemestriItem = ({ semester, linkTo }) => {
             </Box>
           </Box>
         </Box>
-      </Link>
     </Grid>
   );
 };
@@ -117,18 +129,32 @@ const SemestriItem = ({ semester, linkTo }) => {
 const Semestrat = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [semestrat, setSemestrat] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/admin/semesters")
+      .then((response) => {
+        console.log(response.data);
+        setSemestrat(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching the semester " + error);
+      });
+  }, []);
+
   return (
     <Box m={3}>
       <div role="presentation">
-          <Breadcrumbs
-            aria-label="breadcrumb"
-            sx={{ fontSize: "16px", mb: "20px" }}
-          >
-            <Link to="/department">Shkenca Kompjuterike </Link>
-            <Link to="/department">Semestrat </Link>
-
-          </Breadcrumbs>
-        </div>
+        <Breadcrumbs
+          aria-label="breadcrumb"
+          sx={{ fontSize: "16px", mb: "20px" }}
+        >
+          <Link to="/department">Shkenca Kompjuterike </Link>
+          <Link to="/department">Semestrat </Link>
+        </Breadcrumbs>
+      </div>
       <Box mt={4}>
         <Typography variant="h2">Viti i I-re</Typography>
         <Box
@@ -137,8 +163,15 @@ const Semestrat = () => {
           mt={2}
         />
         <Grid container spacing={3}>
-          <SemestriItem semester="Semestri 1" linkTo="/ligjeratat" />
-          <SemestriItem semester="Semestri 2" linkTo="/ligjeratat" />
+          {semestrat.map((semestri) => (
+            <SemestriItem
+              key={semestri.id} // Adding unique key prop
+              semester={semestri.name}
+              startDate={semestri.startDate}
+              endDate={semestri.endDate}
+              semestriId={semestri.id}
+            />
+          ))}
         </Grid>
       </Box>
       <Box mt={4}>
@@ -149,8 +182,8 @@ const Semestrat = () => {
           mt={2}
         />
         <Grid container spacing={3}>
-          <SemestriItem semester="Semestri 3" linkTo="kosova1" />
-          <SemestriItem semester="Semestri 4" linkTo="kosova2" />
+          <SemestriItem semester="Semestri 3" linkTo="kosova1" key="3" />
+          <SemestriItem semester="Semestri 4" linkTo="kosova2" key="4" />
         </Grid>
       </Box>
       <Box mt={4}>
@@ -161,8 +194,8 @@ const Semestrat = () => {
           mt={2}
         />
         <Grid container spacing={3}>
-          <SemestriItem semester="Semestri 5" linkTo="kosova1" />
-          <SemestriItem semester="Semestri 6" linkTo="kosova2" />
+          <SemestriItem semester="Semestri 5" linkTo="kosova1" key="5" />
+          <SemestriItem semester="Semestri 6" linkTo="kosova2" key="6" />
         </Grid>
       </Box>
     </Box>

@@ -2,6 +2,7 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentSemesterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,37 +16,45 @@ import java.util.Set;
 public class StudentSemesterRegistrationService {
 
     private final StudentSemesterRepository registrationRepository;
+    private final StudentRepository studentRepository;
     private final StudentLigjerataService studentLigjerataService;
     private final ProfesoriLendaRepository profesoriLendaRepository;
+    private final UserService userService;
+    private final StudentService studentService;
 
 
-    public StudentSemesterRegistration registerStudentForSemester(Student student, Semester semester) throws Exception {
-        StudentSemesterRegistration registration = new StudentSemesterRegistration();
-        if (registrationRepository.existsByStudentAndSemester(student, semester)) {
-            throw new Exception("Student is already registered for this semester");
-        }
+    public StudentSemester registerStudentForSemester(String jwt, StudentSemester studentSemester) throws Exception {
+        StudentSemester registration = new StudentSemester();
+
+//
+
+        User user = userService.findUserByJwtToken(jwt);
+        Student student = studentService.findStudentByUserId(user.getId());
+
         registration.setStudent(student);
-        registration.setSemester(semester);
+        registration.setSemester(studentSemester.getSemester());
+        registration.setLokacioni(studentSemester.getLokacioni());
+        registration.setNderrimiOrarit(studentSemester.getNderrimiOrarit());
         registration.setRegistrationDate(LocalDateTime.now());
 
 
         return registrationRepository.save(registration);
     }
 
-    public StudentSemesterRegistration EnrollStudent(Lenda lenda, Long id) {
+//    public StudentSemester EnrollStudent(Lenda lenda, Long id) {
+//
+//        StudentSemester sem = registrationRepository.findByStudentId(id);
+//
+//        Set<Lenda> lendet = sem.getLendet();
+//        lendet.add(lenda);
+//        sem.setLendet(lendet);
+//
+//        registrationRepository.save(sem);
+//
+//        return sem;
+//    }
 
-        StudentSemesterRegistration sem = registrationRepository.findByStudentId(id);
-
-        Set<Lenda> lendet = sem.getLendet();
-        lendet.add(lenda);
-        sem.setLendet(lendet);
-
-        registrationRepository.save(sem);
-
-        return sem;
-    }
-
-    public List<StudentSemesterRegistration> getSemesters(Long id) {
+    public List<StudentSemester> getSemesters(Long id) {
         return registrationRepository.findAllByStudentId(id);
     }
 }

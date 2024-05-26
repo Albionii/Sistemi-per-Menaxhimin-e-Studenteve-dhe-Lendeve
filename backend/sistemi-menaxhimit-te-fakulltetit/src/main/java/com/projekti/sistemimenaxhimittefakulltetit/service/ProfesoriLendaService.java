@@ -64,4 +64,8 @@ public class ProfesoriLendaService {
             return null; // Or handle the case where the product with the given id is not found
         }
     }
+
+    public List<ProfesoriLenda> getBySemesterId(Long semesterId){
+        return profesoriLendaRepository.findBySemesterId(semesterId);
+    }
 }

@@ -26,6 +26,10 @@ public class SemesterService {
         semesterRepository.delete(semester);
     }
 
+    public List<Semester> getByDepartamentiId(Long id){
+        return semesterRepository.findByDepartamentiId(id);
+    }
+
     public List<Semester> getSemesters(){
         return semesterRepository.findAll();
     }
