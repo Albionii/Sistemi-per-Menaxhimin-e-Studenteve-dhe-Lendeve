@@ -66,15 +66,29 @@ public class StudentController {
         studentPrvService.anulo(id);
     }
 
+    @GetMapping("/getStudentByUserID/{id}")
+    public Student getStudent(@PathVariable Long id) {
+        return studentService.findStudentByUserId(id);
+    }
+
 
     @GetMapping("/paraqitjaProvimit")
     public ResponseEntity<List<Provimi>> getProvimet() throws Exception {
         List<Provimi> provimet = provimiService.getAllProvimet();
         return ResponseEntity.status(HttpStatus.OK).body(provimet);
     }
+    @GetMapping
+    public ResponseEntity<List<StudentProvimi>> getProvimetParaqitura(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<StudentProvimi> provimet = studentPrvService.getProvimet(student.getId());
+
+        return ResponseEntity.status(HttpStatus.OK).body(provimet);
+    }
 
     @GetMapping("/provimetParaqitura")
-    public ResponseEntity<List<StudentProvimi>> getProvimetParaqitura(@RequestHeader("Authorization")String token) throws Exception {
+    public ResponseEntity<List<StudentProvimi>> getProvimetParaqitura2(@RequestHeader("Authorization")String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
         Student student = studentService.findStudentByUserId(user.getId());
 
@@ -277,6 +291,15 @@ public class StudentController {
     }
 
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student s) {
+        Student student = studentService.updateStudent(id, s);
+        if (student != null) {
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 }

@@ -32,6 +32,7 @@ import ProvimetParaqitura from "../CRUD-at/ProvimetParaqitura.jsx";
 import ProvimetNota from "./Provimi/ProvimetNota.jsx";
 import RegjistroGrupin from "../pages/RegjistroGrupin.jsx";
 import FakultetetCrud from "../CRUD-at/FakultetetCrud.jsx";
+import Studentet from "../CRUD-at/Studentet.jsx";
 
 
 function loggedIn({changeLoggedInState,token}) {
@@ -63,7 +64,7 @@ getFromCookies({setUserData,changeLoggedInState});
 
           <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
           <Route path="/cruds" element={<CrudCategories />} />
-          <Route path="/transkripta" element={<Transkripta />} />
+          <Route path="/transkripta" element={<Transkripta user={user} />} />
 
           <Route path="/paraqitura" element={<Paraqitura token={token}/>} />
 
@@ -73,6 +74,7 @@ getFromCookies({setUserData,changeLoggedInState});
           <Route path="/profesorLenda" element={<ProfesorLenda/>} />
           <Route path="/provimi" element={<ProvimiCRUD/>} />
           <Route path="/profesoret" element={<Profesoret/>} />
+          <Route path="/studentet" element={<Studentet/>} />
           <Route path="/lendet" element={<Lenda/>} />
           <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
           <Route path="/semesters/:departamentiId" element={<Semestrat />} />
