@@ -345,7 +345,7 @@ export const studentetEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
               <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={zip == "" && formData != null ? formData.user.zipcode:zipcode}
+                  value={zip == "" && formData != null ? formData.user.zipcode:zip}
                   onInput={handleZip}
                   placeholder='ZIP'  
               />
