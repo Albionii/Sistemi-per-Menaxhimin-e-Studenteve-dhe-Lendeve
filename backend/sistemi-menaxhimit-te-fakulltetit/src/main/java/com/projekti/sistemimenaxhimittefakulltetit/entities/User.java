@@ -44,7 +44,6 @@ public class User {
     private String rruga;
 
     private USER_ROLE role = USER_ROLE.ROLE_STUDENT;
-
 }
 
 

@@ -1,4 +1,6 @@
-import { updateLendaByID, updateLigjerataByID, updateProfessorByID, updateProvimiByID, updateSallaByID, updateUserByID } from "../APIRequests.js";
+import { updateDepartamentiByID, updateFakultetiByID, updateLendaByID, updateLigjerataByID, updateProfessorByID, updateProvimiByID, updateSallaByID, updateUserByID } from "../APIRequests.js";
+import { departamentiEditButton } from "./AddEditButtons/AddEditDepartamenti.jsx";
+import { fakultetiEditButton } from "./AddEditButtons/AddEditFakulteti.jsx";
 import { lendaEditButton } from "./AddEditButtons/AddEditLenda.jsx";
 import { ligjerataEditButton } from "./AddEditButtons/AddEditLigjerata.jsx";
 import { professorEditButton } from "./AddEditButtons/AddEditProfesori.jsx";
@@ -23,6 +25,10 @@ export default function EditDialog({setConfirmExit, item, onLigjerataEdit, API})
         return professorEditButton(prompt);
       case updateUserByID()[0]:
         return userRoleEditButton(prompt);
+      case updateFakultetiByID()[0]:
+        return fakultetiEditButton(prompt);
+      case updateDepartamentiByID()[0]:
+        return departamentiEditButton(prompt);
       default:
         return API.errorAlert("Nuk ekziston edit butoni per kete CRUD ose nuk e keni shtuar ne EditDialog.jsx");
     }

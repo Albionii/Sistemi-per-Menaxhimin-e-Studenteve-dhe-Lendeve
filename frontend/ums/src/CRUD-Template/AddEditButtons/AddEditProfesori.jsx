@@ -12,16 +12,16 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
   
   const [formData, setFormData] = useState(item);
 
-  const [emri, setEmri] = useState(item.user.firstName);
-  const [mbiemri, setMbiemri] = useState(item.user.lastName);
-  const [email, setEmail] = useState(item.user.email);
-  const [data, setData] = useState(item.user.dateLindja);
-  const [shteti, setShteti] = useState(item.user.shteti);
-  const [qyteti, setQyteti] = useState(item.user.qyteti); 
-  const [rruga, setRruga] = useState(item.user.rruga);
-  const [zip, setZip] = useState(item.user.zip);
-  const [roli, setRoli] = useState(item.user.role);
-  const [obligative, setObligative] = useState(false);
+  const [emri, setEmri] = useState("");
+  const [mbiemri, setMbiemri] = useState("");
+  const [email, setEmail] = useState("");
+  const [dataLindjes, setData] = useState("");
+  const [shteti, setShteti] = useState("");
+  const [qyteti, setQyteti] = useState(""); 
+  const [rruga, setRruga] = useState("");
+  const [zip, setZip] = useState("");
+  const [roli, setRoli] = useState("");
+  const [gjinia, setGjinia] = useState(null);
 
 
   const handleClick = () => {
@@ -33,6 +33,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
+        ...formData.user,
         firstName : e.target.value
       }}
     )
@@ -43,6 +44,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
+        ...formData.user,
         lastName : e.target.value
       }}
     )
@@ -53,6 +55,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
+        ...formData.user,
         dateLindja : e.target.value
       }}
     )
@@ -63,6 +66,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
+        ...formData.user,
         email : e.target.value
       }}
     )
@@ -73,6 +77,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
+        ...formData.user,
         role : e.target.value
       }}
     )
@@ -83,6 +88,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
+        ...formData.user,
         shteti : e.target.value
       }}
     )
@@ -93,6 +99,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
+        ...formData.user,
         qyteti : e.target.value
       }}
     )
@@ -102,6 +109,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
+        ...formData.user,
         rruga : e.target.value
       }}
     )
@@ -113,7 +121,18 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     setFormData({
       ...formData,
       user:{
-        zip : e.target.value
+        ...formData.user,
+        zipcode : e.target.value
+      }}
+    )
+  }
+  const handleGjinia = (e) => {
+    setGjinia(e.target.value);
+    setFormData({
+      ...formData,
+      user:{
+        ...formData.user,
+        gjinia : e.target.value == true ? "male" : "female"
       }}
     )
   }
@@ -127,6 +146,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     e.preventDefault();
     try {
       await axios.put(urlUpdate + item.id, formData);
+      console.log(JSON.stringify(formData))
       setConfirmExit();
       onLigjerataEdit();
       
@@ -180,7 +200,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
                 <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={emri}
+                  value={emri == "" && formData != null ? formData.user.firstName:emri}
                   onInput={handleEmri}
                   placeholder='Emri Profesorit'  
                   />
@@ -195,7 +215,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
               <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={mbiemri}
+                  value={mbiemri == "" && formData != null ? formData.user.lastName:mbiemri}
                   onInput={handleMbiemri}
                   placeholder='Mbiemri Profesorit'  
                   />
@@ -210,7 +230,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
               <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={email}
+                  value={email == "" && formData != null ? formData.user.email:email}
                   onInput={handleEmail}
                   placeholder='Emaili Profesorit'  
               />
@@ -226,7 +246,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
               <input 
                   type="date" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={data}
+                  value={dataLindjes == "" && formData != null ? formData.user.dateLindja:dataLindjes}
                   onInput={handleDate}
                   placeholder='Datelindja'  
               />
@@ -247,9 +267,9 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
                     type="radio"
                     name="bordered-radio"
                     className="w-4 h-4 border-gray-400 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 "
-                    defaultChecked={obligative == null  && formData != null? formData.obligative : obligative}
+                    defaultChecked={gjinia == null  && formData != null? formData.user.gjinia : gjinia}
                     value={true}
-                    // onInput={handleObligative}
+                    onInput={handleGjinia}
 
                   />
                   <label
@@ -265,9 +285,9 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
                     type="radio"
                     name="bordered-radio"
                     className="w-4 h-4  border-gray-400 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2"
-                    defaultChecked={obligative == null  && formData != null ? !formData.obligative : !obligative}
+                    // defaultChecked={gjinia == null  && formData != null? !formData.user.gjinia : !gjinia}
                     value={false}
-                    // onInput={handleObligative}
+                    onInput={handleGjinia}
                   />
                   <label
                     htmlFor="bordered-radio-2"
@@ -289,7 +309,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
               <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={shteti}
+                  value={shteti == "" && formData != null ? formData.user.shteti:shteti}
                   onInput={handleShteti}
                   placeholder='Emaili Profesorit'  
               />
@@ -305,7 +325,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
               <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={qyteti}
+                  value={qyteti == "" && formData != null ? formData.user.qyteti:qyteti}
                   onInput={handleQyteti}
                   placeholder='Emaili Profesorit'  
               />
@@ -321,9 +341,9 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
               <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={rruga}
+                  value={rruga == "" && formData != null ? formData.user.rruga:rruga}
                   onInput={handleRruga}
-                  placeholder='Emaili Profesorit'  
+                  placeholder='Rruga'  
               />
             </div>
 
@@ -338,9 +358,9 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
               <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={zip}
+                  value={zip == "" && formData != null ? formData.user.zipcode:zipcode}
                   onInput={handleZip}
-                  placeholder='Emaili Profesorit'  
+                  placeholder='ZIP'  
               />
             </div>
 

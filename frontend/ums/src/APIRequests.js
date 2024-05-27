@@ -221,6 +221,11 @@
     return [url, "Gabim në marrjen e paraqitjes së provimeve!"];
   }
 
+  export const getAllParaqitjaProvimeveByID = () => {
+    const url = BASE_URL + `/student/paraqitjaProvimit/`;
+    return [url, "Gabim në marrjen e paraqitjes së provimeve!"];
+  }
+
   
   export const deleteParaqitjaProvimeveByID = () => {
     const url = BASE_URL + `/student/paraqitjaProvimit/delete/`;
@@ -237,12 +242,12 @@
 
 
   export const deleteDepartamentiByID = () => {
-    const url = BASE_URL + `/departamenti/`;
+    const url = BASE_URL + `/departamenti/delete/`;
     return [url, "Gabim në fshirjen e Departamentit!"];
   }
 
   export const createDepartamenti = () => {
-    const url = BASE_URL + `/departamenti/`;
+    const url = BASE_URL + `/departamenti/create`;
     return [url, "Gabim në krijimin e Departamentit!"];
   }
 
@@ -257,7 +262,7 @@
   }
 
   export const updateDepartamentiByID = () => {
-    const url = BASE_URL + `/departamenti/`;
+    const url = BASE_URL + `/departamenti/update/`;
     return [url, "Gabim në përditësimin e Departamentit"];
   }
 
@@ -271,11 +276,11 @@ export const getAllFakulteti = () => {
   return [url, "Gabim në marrjen e Fakultetit!"];
 }
 export const deleteFakultetiById = () => {
-  const url = BASE_URL + `/fakulteti/`;
+  const url = BASE_URL + `/fakulteti/delete/`;
     return [url, "Gabim në fshirjen e Fakultetit!"];
 }
 export const createFakulteti = () => {
-  const url = BASE_URL + `/fakulteti/`;
+  const url = BASE_URL + `/fakulteti/create`;
   return [url, "Gabim në krijimin e Fakultetit!"];
 }
 export const getFakultetiById = () => {
@@ -283,6 +288,6 @@ export const getFakultetiById = () => {
   return [url, "Gabim në marrjen e Fakultetit!"];
 }
 export const updateFakultetiByID = () => {
-  const url = BASE_URL + `/fakulteti/`;
+  const url = BASE_URL + `/fakulteti/update/`;
   return [url, "Gabim në përditësimin e Fakultetit!"];
 }

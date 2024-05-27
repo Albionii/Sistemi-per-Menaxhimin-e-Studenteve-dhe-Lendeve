@@ -140,6 +140,10 @@ public class StudentPrvService {
 
     public void deleteParaqitjaProvimit(Long id) {studentPrvRepository.deleteById(id);}
 
+    public List<StudentProvimi> findAllStudentProvimiByStudentId(Long id) {
+        return studentPrvRepository.findAllByStudentId(id);
+    }
+
 
 
 }

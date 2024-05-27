@@ -1,28 +1,47 @@
 import { useState } from 'react';
-import { useEffect } from 'react';
 import axios from 'axios';
-import { getAllLendet, getAllProfessors } from '../../APIRequests';
+import { useTheme } from '@mui/material';
+import { tokens } from '../../theme';
 export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [urlCreate, errorCreate] = API.create();
-  
-  const [emri, setEmri] = useState('')
-  const [lokacioni, setLokacioni] = useState('')
-  const [email, setEmail] = useState('')
-  const [user, setUser] = useState(null);
-
-
   const [formData, setFormData] = useState(formDataJson);
 
-
-
+  const [emri, setEmri] = useState('');
+  const [email, setEmail] = useState('');
+  const [lokacioni, setLokacioni] = useState('');
+  
   const handleClick = () => {
     setConfirmExit();
   }
 
-  
-  useEffect(() => {
-  }, []);
+  const handleEmri = (e) => {
+    setEmri(e.target.value);
+    setFormData({
+      ...formData,
+      emri : e.target.value
+    });
+  }
 
+  const handleLokacioni = (e) => {
+    setLokacioni(e.target.value);
+    setFormData({
+      ...formData,
+      lokacioni : e.target.value
+    });
+  }
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    setFormData({
+      ...formData,
+      email : e.target.value
+    });
+  }
+  
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,10 +58,10 @@ export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API
 
   return (
     <>
-      <div className="relative bg-white w-full rounded-lg shadow dark:bg-gray-700">
+      <div className="relativew-full rounded-lg shadow" style={{background: colors.primary[500]}}>
         <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Krijo Ligjeraten
+          <h3 className="text-lg font-semibold">
+            Krijo Fakultetin
           </h3>
           <button
             type="button"
@@ -73,41 +92,50 @@ export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API
             <div className="col-span-1 sm:col-span-1">
               <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
-                  Emri dhe Mbiemri i Profesorit
+                  Emri
                 </label>
-                <select
-                  // id="pr"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  value={selectedProfesori}
-                  onChange={handleChangedProfesoret}
-                >
-                  <option value="">Selekto Profesorin</option>
-                  {profesoret.map(profesori => (
-                    <option key={profesori.id} value={profesori.id}>{profesori.user.firstName + " " + profesori.user.lastName}</option>
-                  ))}
-                </select>
+                <input 
+                  type="text" 
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
+                  value={emri}
+                  onInput={handleEmri}
+                  placeholder='Emri Fakultetit'  
+                />
             </div>
+            
             <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
               >
-                Lënda
+                Email
               </label>
-              <select
-                id="lenda"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={selectedLenda}
-                onChange={handleChangedLendet}
-              >
-                <option value="">Selekto Lëndën</option>
-                {lendet.map(lenda => (
-                  <option key={lenda.id} value={lenda.id}>{lenda.emri}</option>
-                ))}
-              </select>
+              <input 
+                type="text"
+                className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                placeholder='Emaili'
+                value={email}
+                onInput={handleEmail}
+               />
             </div>
+            <div className="col-span-2 sm:col-span-2">
+              <label
+                    htmlFor="category"
+                    className="block text-left mb-2 text-sm font-medium"
+                >
+                  Lokacioni
+                </label>
+                <input 
+                  type="text" 
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                  value={lokacioni}
+                  onInput={handleLokacioni}
+                  placeholder='Lokacioni'  
+                  />
+            </div>
+            
           </div>
           <button
             type="submit"
@@ -125,75 +153,53 @@ export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API
                 clipRule="evenodd"
               />
             </svg>
-            Add Ligjerata
+            Add Fakulteti
           </button>
         </form>
       </div>
     </>
   )
 }
-export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const fakultetiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [urlUpdate, errorUpdate] = API.update();
-  const [urlLendet, messageLendet] = getAllLendet();
-  const [urlProfessor, messageProfessor] = getAllProfessors();
-
-  //Per inputat select lendet
-  const [lendet, setLendet] = useState([]);
-  const [selectedLenda, setSelectedLenda] = useState(item.lenda);
-
-  //Per inputat select profesoret
-  const [profesoret, setProfesoret] = useState([]);
-  const [selectedProfesori, setSelectedProfesori] = useState(item.professor);
-
   const [formData, setFormData] = useState(item);
 
+  const [emri, setEmri] = useState('');
+  const [email, setEmail] = useState('');
+  const [lokacioni, setLokacioni] = useState('');
+  
   const handleClick = () => {
     setConfirmExit();
   }
 
-  useEffect(() => {
-    getLendet();
-    getProfesoret();
-  }, []);
-
-  
-  const getLendet = async () => {
-    try {
-      const fetchLendet = await axios.get(urlLendet);
-      setLendet(fetchLendet.data);
-    } catch (error) {
-      API.errorAlert(messageLendet);
-      console.log(error);
-    }
-  };
-
-  const getProfesoret = async () => {
-    try {
-      const fetchProfesoret = await axios.get(urlProfessor);
-      setProfesoret(fetchProfesoret.data);
-    } catch (error) {
-      API.errorAlert(messageProfessor);
-      console.log(error);
-    }
-  };
-
-
-
-  const handleChangedLendet = (e) => {
-    setSelectedLenda(e.target.value);
+  const handleEmri = (e) => {
+    setEmri(e.target.value);
     setFormData({
       ...formData,
-      lenda : lendet.find(lenda => lenda.id == e.target.value)
-    })
-  };
-
-  const handleChangedProfesoret = (e) => {
-    setSelectedProfesori(e.target.value);
-    setFormData({
-      ...formData,
-      professor : profesoret.find(profesori => profesori.id == e.target.value)
-    })
+      emri : e.target.value
+    });
   }
+
+  const handleLokacioni = (e) => {
+    setLokacioni(e.target.value);
+    setFormData({
+      ...formData,
+      lokacioni : e.target.value
+    });
+  }
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    setFormData({
+      ...formData,
+      email : e.target.value
+    });
+  }
+  
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -211,10 +217,10 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
 
   return (
     <>
-      <div className="relative bg-white w-full rounded-lg shadow dark:bg-gray-700">
+      <div className="relativew-full rounded-lg shadow" style={{background: colors.primary[500]}}>
         <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Edito Ligjeraten
+          <h3 className="text-lg font-semibold">
+            Edito Fakultetin
           </h3>
           <button
             type="button"
@@ -245,41 +251,50 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
             <div className="col-span-1 sm:col-span-1">
               <label
                     htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block text-left mb-2 text-sm font-medium"
                 >
-                  Emri dhe Mbiemri i Profesorit
+                  Emri
                 </label>
-                <select
-                  // id="pr"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  value={selectedProfesori}
-                  onChange={handleChangedProfesoret}
-                >
-                  <option value="">{formData != null ? formData.professor.user.firstName + " " + formData.professor.user.lastName:""}</option>
-                  {profesoret.map(profesori => (
-                    <option key={profesori.id} value={profesori.id}>{profesori.user.firstName + " " + profesori.user.lastName}</option>
-                  ))}
-                </select>
+                <input 
+                  type="text" 
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
+                  value={emri == "" && formData != null ? formData.emri : emri}
+                  onInput={handleEmri}
+                  placeholder='Emri Fakultetit'  
+                />
             </div>
+            
             <div className="col-span-1 sm:col-span-1">
               <label
                   htmlFor="category"
-                  className="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block text-left mb-2 text-sm font-medium"
               >
-                Lënda
+                Email
               </label>
-              <select
-                id="lenda"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={selectedLenda}
-                onChange={handleChangedLendet}
-              >
-                <option value="">{formData != null ? formData.lenda.emri : ""}</option>
-                {lendet.map(lenda => (
-                  <option key={lenda.id} value={lenda.id}>{lenda.emri}</option>
-                ))}
-              </select>
+              <input 
+                type="text"
+                className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                placeholder='Emaili'
+                value={email == "" && formData != null ? formData.email : email}
+                onInput={handleEmail}
+               />
             </div>
+            <div className="col-span-2 sm:col-span-2">
+              <label
+                    htmlFor="category"
+                    className="block text-left mb-2 text-sm font-medium"
+                >
+                  Lokacioni
+                </label>
+                <input 
+                  type="text" 
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                  value={lokacioni == "" && formData != null ? formData.lokacioni : lokacioni}
+                  onInput={handleLokacioni}
+                  placeholder='Lokacioni'  
+                  />
+            </div>
+            
           </div>
           <button
             type="submit"
@@ -297,7 +312,7 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
                 clipRule="evenodd"
               />
             </svg>
-            Edit Ligjerata
+            Edit Fakulteti
           </button>
         </form>
       </div>

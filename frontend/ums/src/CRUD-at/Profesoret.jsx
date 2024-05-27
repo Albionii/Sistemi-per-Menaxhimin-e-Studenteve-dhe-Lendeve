@@ -10,7 +10,6 @@ import {
 } from '../APIRequests'
 function Profesoret() {
   const rowsNames = [
-    "ID",
     "Emri",
     "Mbiemri",
     "Email",
@@ -24,7 +23,7 @@ function Profesoret() {
     "Roli",
   ]
   
-  const jsonNames = ["id", "user.firstName","user.lasttName","user.email","user.datelindja", "user.gjinia", "user.nrTelefonit", "user.shteti", "user.qyteti", "user.rruga", "user.zip", "user.role"];
+  const jsonNames = ["user.firstName","user.lastName","user.email","user.dateLindja", "user.gjinia", "user.nrTelefonit", "user.shteti", "user.qyteti", "user.rruga", "user.zipcode", "user.role"];
   const buttonsAvailable = {
     preview: false,
     add: false,
@@ -32,20 +31,18 @@ function Profesoret() {
     delete: true
   }
   const formDataJson = {
-    id: 3,
     user: {
-        id: 3,
-        firstName: "Blend",
-        lastName: "Elezi",
+        firstName: "",
+        lastName: "",
         email: "",
-        dateLindja: null,
-        gjinia: null,
-        nrTelefonit: null,
-        qyteti: null,
-        zipcode: null,
-        shteti: null,
-        rruga: null,
-        role: null
+        dateLindja: "",
+        gjinia: "",
+        nrTelefonit: "",
+        qyteti: "",
+        zipcode: "",
+        shteti: "",
+        rruga: "",
+        role: ""
     }  
   }
 

@@ -1,5 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +21,10 @@ public class Student {
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
+
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<StudentProvimi> studentProvimet;
 
 }

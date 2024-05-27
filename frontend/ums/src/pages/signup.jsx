@@ -61,9 +61,6 @@ const About = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(JSON.stringify(formData));
-    // formData.nrTelefonit.push(formData.nrTelefonit);
-    // formData.birthday;
     postData(formData);
   };
 

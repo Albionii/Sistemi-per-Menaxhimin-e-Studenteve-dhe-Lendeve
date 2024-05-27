@@ -68,6 +68,7 @@ return (
                 {row}
               </th>
             ))}
+            <th>Butonat</th>
           </tr>
         </thead>
         <tbody>
@@ -85,10 +86,11 @@ return (
                 <td className="px-4 py-3 font-medium whitespace-nowrap">
                   <div className="flex items-center justify-center">
                     {accessJsonNames(p, jsonNames)+""}
-                    {/* {console.log(p)} */}
                   </div>
                 </td>
               ))}
+              
+              
 
               <td className="px-4 py-3 font-medium whitespace-nowrap">
                 <div className="flex items-center space-x-4 justify-center">

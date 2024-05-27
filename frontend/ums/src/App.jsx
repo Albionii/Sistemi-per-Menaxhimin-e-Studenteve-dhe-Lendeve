@@ -18,7 +18,6 @@ function App() {
 
 
   const token = getToken();
-  console.log(token);
 
 
   // let isLoggedIn = document.cookie ? true : false;
@@ -45,7 +44,6 @@ function App() {
   // }
 
   console.log(typeof token);
-  console.log(token);
   let logginStatus;
   if (typeof token === "undefined" || token.length === 0) {
     logginStatus = false;

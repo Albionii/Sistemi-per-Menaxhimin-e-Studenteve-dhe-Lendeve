@@ -80,7 +80,9 @@ public class ProfessorController {
 
     @DeleteMapping("/delete/{id}")
     public void deleteProfessorByID(@PathVariable Long id){
+        Professor professor = professorService.findProfessorById(id);
         professorService.deleteProfessorByID(id);
+        userService.deleteUserById(professor.getUser().getId());
     }
 
     @PutMapping("/update/{id}")

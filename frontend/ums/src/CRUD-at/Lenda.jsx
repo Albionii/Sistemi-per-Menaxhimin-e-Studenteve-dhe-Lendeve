@@ -21,7 +21,7 @@ function Lenda() {
     preview: false,
     add: true,
     edit: true,
-    delete: false
+    delete: true
   }
   const formDataJson = {
     emri:"",

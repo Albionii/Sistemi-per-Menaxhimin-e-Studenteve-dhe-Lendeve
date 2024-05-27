@@ -14,56 +14,55 @@ function DepartamentiCrud() {
         "Kodi",
         "Emri",
         "Lokacioni",
-        "Dekanti",
+        "Email",
+        "Fakulteti",
     ]
-    const jsonNames = ["id", "emri", "lokacioni", "user.firstName"];
+    const jsonNames = ["id", "emri", "lokacioni","email", "fakulteti.emri"];
     const buttonsAvailable = {
       preview: false,
       add: true,
-      update: true,
+      edit: true,
       delete: true
 
     }
 
     const formDataJson = {
-        id: null,
         emri: "",
         lokacioni: "",
         email: "",
         fakulteti: {
-            id: null,
             emri: "",
             lokacioni: "",
             email: "",
-            user: {
-                id: null,
-                firstName: "",
-                lastName: "",
-                email: "",
-                dateLindja: "",
-                gjinia: "",
-                nrTelefonit: "",
-                qyteti: "",
-                zipcode: "",
-                shteti: "",
-                rruga: "",
-                role: ""
-            }
+            // user: {
+            //     id: null,
+            //     firstName: "",
+            //     lastName: "",
+            //     email: "",
+            //     dateLindja: "",
+            //     gjinia: "",
+            //     nrTelefonit: "",
+            //     qyteti: "",
+            //     zipcode: "",
+            //     shteti: "",
+            //     rruga: "",
+            //     role: ""
+            // }
         },
-        user: {
-            id: null,
-            firstName: "",
-            lastName: "",
-            email: "",
-            dateLindja: "",
-            gjinia: "",
-            nrTelefonit: "",
-            qyteti: null,
-            zipcode: "",
-            shteti: null,
-            rruga: null,
-            role: ""
-        }
+        // user: {
+        //     id: null,
+        //     firstName: "",
+        //     lastName: "",
+        //     email: "",
+        //     dateLindja: "",
+        //     gjinia: "",
+        //     nrTelefonit: "",
+        //     qyteti: null,
+        //     zipcode: "",
+        //     shteti: null,
+        //     rruga: null,
+        //     role: ""
+        // }
     }
 
     return (

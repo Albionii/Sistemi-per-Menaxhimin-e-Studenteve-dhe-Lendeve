@@ -83,13 +83,13 @@ public class UserServiceImpl implements UserService{
             Student student = studentRepository.findStudentByUserId(id);
             student.setUser(null);
             studentRepository.save(student);
-            studentRepository.deleteById(id);
+            studentRepository.deleteById(student.getId());
         }
         else if(updateUser.getRole() == USER_ROLE.ROLE_PROFESSOR){
-            Professor professor = professorRepository.findProfessorById(id);
+            Professor professor = professorRepository.findProfessorByUserId(id);
             professor.setUser(null);
             professorRepository.save(professor);
-            professorRepository.deleteById(id);
+            professorRepository.deleteById(professor.getId());
         }
 
         updateUser.setRole(userDetails.getRole());

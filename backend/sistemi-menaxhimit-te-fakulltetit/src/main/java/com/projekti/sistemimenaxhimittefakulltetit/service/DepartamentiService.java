@@ -1,6 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Departamenti;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Fakulteti;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.DepartamentiRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,22 @@ public class DepartamentiService {
     }
     public List<Departamenti> findAll(){return departamentiRepository.findAll();}
 
-    public void createDepartamenti(Departamenti d){
-        departamentiRepository.save(d);
+    public Departamenti createDepartamenti(Departamenti d){
+        return departamentiRepository.save(d);
     }
-    public void updateDepartamenti(Departamenti departamenti){
-        departamentiRepository.save(departamenti);
+
+
+    public Departamenti updateDepartamenti(Long id, Departamenti newDepartamenti){
+        Optional<Departamenti> departamenti = departamentiRepository.findById(id);
+        if (departamenti.isPresent()) {
+            Departamenti d = departamenti.get();
+            d.setId(newDepartamenti.getId());
+            d.setEmri(newDepartamenti.getEmri());
+            d.setLokacioni(newDepartamenti.getLokacioni());
+            d.setEmail(newDepartamenti.getEmail());
+            return departamentiRepository.save(d);
+        } else {
+            return null;
+        }
     }
 }

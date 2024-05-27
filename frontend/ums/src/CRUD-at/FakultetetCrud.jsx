@@ -9,41 +9,40 @@ import {
     deleteFakultetiById
 } from '../APIRequests'
 
-function DepartamentiCrud() {
+function FakultetetCrud() {
     const rowsNames = [
         "Kodi",
         "Emri",
-        "Lokacioni",
-        "Drejtori",
+        "Email",
+        "Lokacioni"
     ]
-    const jsonNames = ["id", "emri", "lokacioni", "user.firstName"];
+    const jsonNames = ["id", "emri", "email", "lokacioni"];
 
     const buttonsAvailable = {
       preview: false,
       add: true,
-      update:true,
+      edit:true,
       delete:true
     }
 
     const formDataJson =   {
-        id: null,
+        id:"",
         emri: "",
         lokacioni: "",
-        email: "",
-        user: {
-            id: null,
-            firstName: "",
-            lastName: "",
-            email: "",
-            dateLindja: "",
-            gjinia: "",
-            nrTelefonit: "",
-            qyteti: "",
-            zipcode: "",
-            shteti: "",
-            rruga: "",
-            role: ""
-        }
+        email: ""
+        // user: {
+        //     firstName: "",
+        //     lastName: "",
+        //     email: "",
+        //     dateLindja: "",
+        //     gjinia: "",
+        //     nrTelefonit: "",
+        //     qyteti: "",
+        //     zipcode: "",
+        //     shteti: "",
+        //     rruga: "",
+        //     role: ""
+        // }
     }
 
     return (
@@ -63,4 +62,4 @@ function DepartamentiCrud() {
     )
 }
 
-export default DepartamentiCrud
+export default FakultetetCrud

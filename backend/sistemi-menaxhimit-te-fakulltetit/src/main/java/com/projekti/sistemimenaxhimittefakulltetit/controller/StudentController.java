@@ -84,10 +84,16 @@ public class StudentController {
     }
 
     @GetMapping("/paraqitjaProvimit/{id}")
-    public ResponseEntity<StudentProvimi> findParaqitjaProvimitByID(@PathVariable Long id) throws Exception {
-        StudentProvimi studentProvimi = studentPrvService.findById(id);
+    public ResponseEntity<List<StudentProvimi>> findParaqitjaProvimitByStudentID(@PathVariable Long id) throws Exception {
+        List<StudentProvimi> studentProvimi = studentPrvService.findAllStudentProvimiByStudentId(id);
         return ResponseEntity.ok().body(studentProvimi);
     }
+
+//    @GetMapping("/paraqitjaProvimit/{id}")
+//    public ResponseEntity<StudentProvimi> findParaqitjaProvimitByID(@PathVariable Long id) throws Exception {
+//        StudentProvimi studentProvimi = studentPrvService.findById(id);
+//        return ResponseEntity.ok().body(studentProvimi);
+//    }
 
     @DeleteMapping("/paraqitjaProvimit/delete/{id}")
     public void deleteParaqitjaProvimitByID(@PathVariable Long id){
@@ -204,8 +210,11 @@ public class StudentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteStudentByID(@PathVariable Long id) {
+    public void deleteStudentByID(@PathVariable Long id)
+    {
+        Student student = studentService.getStudentByID(id).get();
         studentService.deleteByID(id);
+        userService.deleteUserById(student.getUser().getId());
     }
 
     @GetMapping("/getAllStudents")
