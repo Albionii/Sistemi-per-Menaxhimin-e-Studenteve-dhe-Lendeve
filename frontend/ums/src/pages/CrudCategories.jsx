@@ -65,7 +65,7 @@ const CrudCategories = () => {
         {renderCategory(
           "Profesori",
           [
-            "/notoStudentin",
+            "Profesori 1",
             "Profesori 2",
             "Profesori 3",
             "Profesori 4",
@@ -97,8 +97,8 @@ const CrudCategories = () => {
         )}
         {renderCategory(
           "Administrator",
-          ["Ligjeratat", "Provimet", "Profesoret", "Lëndet","Departamenti","Fakulteti","UserRoles"],
-          ["/profesorLenda", "/provimi", "/profesoret", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole"],
+          ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet","Departamenti","Fakulteti","UserRoles"],
+          ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole"],
           "#004F95",
           "#00396b",
           SupervisorAccountIcon

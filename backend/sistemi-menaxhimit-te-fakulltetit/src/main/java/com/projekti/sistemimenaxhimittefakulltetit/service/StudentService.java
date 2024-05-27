@@ -1,5 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,18 @@ public class StudentService {
 
     public Optional<Student> getStudentByID(Long id) {
         return studentRepository.findById(id);
+    }
+
+    public Student updateStudent(Long id, Student newStudent){
+        Optional<Student> student = studentRepository.findById(id);
+        if (student.isPresent()) {
+            Student s = student.get();
+            s.setId(newStudent.getId());
+            s.setUser(newStudent.getUser());
+            return studentRepository.save(s);
+        } else {
+            return null; // Or handle the case where the product with the given id is not found
+        }
+
     }
 }

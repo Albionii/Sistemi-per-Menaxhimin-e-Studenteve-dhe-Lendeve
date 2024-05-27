@@ -3,20 +3,7 @@ import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { useTheme } from "@mui/material";
-import axios from "axios";
-import { getAllParaqitjaProvimeveByID } from "../APIRequests";
 
-
-const [mockTranskipta, setMockTranskripta] = useState([]);
-const [url, urlError] = getAllParaqitjaProvimeveByID();
-const getTranskripta = async () => {
-  try{
-    const response = await axios.get(url)
-    setMockTranskripta(response.data);
-  }catch(error){
-    console.log(error)
-  }
-}
 const mockData = [
   {
     id: 1,

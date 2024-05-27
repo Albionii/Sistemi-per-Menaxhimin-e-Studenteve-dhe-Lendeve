@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 
-export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const studentetEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -134,7 +134,6 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
     e.preventDefault();
     try {
       await axios.put(urlUpdate + item.id, formData);
-      console.log(JSON.stringify(formData))
       setConfirmExit();
       onLigjerataEdit();
       
@@ -150,7 +149,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
       <div className="relative w-full rounded-lg shadow"  style={{background: colors.primary[500]}}>
         <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-400">
           <h3 className="text-lg font-semibold">
-            Edito Profesorin
+            Edito Studentin
           </h3>
           <button
             type="button"
@@ -371,7 +370,7 @@ export const professorEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
                 clipRule="evenodd"
               />
             </svg>
-            Edito Profesorin
+            Edito Studentin
           </button>
         </form>
       </div>

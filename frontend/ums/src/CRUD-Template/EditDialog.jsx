@@ -1,4 +1,4 @@
-import { updateDepartamentiByID, updateFakultetiByID, updateLendaByID, updateLigjerataByID, updateProfessorByID, updateProvimiByID, updateSallaByID, updateUserByID } from "../APIRequests.js";
+import { updateDepartamentiByID, updateFakultetiByID, updateLendaByID, updateLigjerataByID, updateProfessorByID, updateProvimiByID, updateSallaByID, updateStudentByID, updateUserByID } from "../APIRequests.js";
 import { departamentiEditButton } from "./AddEditButtons/AddEditDepartamenti.jsx";
 import { fakultetiEditButton } from "./AddEditButtons/AddEditFakulteti.jsx";
 import { lendaEditButton } from "./AddEditButtons/AddEditLenda.jsx";
@@ -6,6 +6,7 @@ import { ligjerataEditButton } from "./AddEditButtons/AddEditLigjerata.jsx";
 import { professorEditButton } from "./AddEditButtons/AddEditProfesori.jsx";
 import { provimiEditButton } from "./AddEditButtons/AddEditProvimet.jsx";
 import { sallaEditButton } from "./AddEditButtons/AddEditSalla.jsx";
+import { studentetEditButton } from "./AddEditButtons/AddEditStudentet.jsx";
 import { userRoleEditButton } from "./AddEditButtons/AddEditUserRole.jsx";
 
 export default function EditDialog({setConfirmExit, item, onLigjerataEdit, API}){
@@ -23,6 +24,8 @@ export default function EditDialog({setConfirmExit, item, onLigjerataEdit, API})
         return sallaEditButton(prompt);
       case updateProfessorByID()[0]:
         return professorEditButton(prompt);
+      case updateStudentByID()[0]:
+        return studentetEditButton(prompt);
       case updateUserByID()[0]:
         return userRoleEditButton(prompt);
       case updateFakultetiByID()[0]:
