@@ -10,7 +10,7 @@ import Dashboard from "../pages/dashboard.jsx";
 import Profili from "../pages/Profili.jsx";
 import CRUD from "../CRUD-Template/Crud.jsx";
 import { Routes, Route } from "react-router-dom";
-import Profesori from "./TableTranskripta.jsx";
+// import Profesori from "./TableTranskripta.jsx";
 import CrudCategories from "../pages/CrudCategories.jsx";
 import Transkripta from "../pages/Transkripta.jsx";
 import Ligjeratat from "../pages/ligjeratat.jsx";

@@ -130,6 +130,7 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
                   value={emri}
                   onInput={handleEmri}
                   placeholder='Emri Departamentit'  
+                  required
                 />
             </div>
             
@@ -146,6 +147,7 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
                 placeholder='Emaili'
                 value={email}
                 onInput={handleEmail}
+                required
                />
             </div>
             <div className="col-span-2 sm:col-span-2">
@@ -161,6 +163,7 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
                   value={lokacioni}
                   onInput={handleLokacioni}
                   placeholder='Lokacioni'  
+                  required
                   />
             </div>
             <div className="col-span-2 sm:col-span-2">
@@ -174,6 +177,7 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={fakulteti}
                   onChange={handleFakulteti}
+                  required
                 >
                   {fakulteti == null && <option value="">Selektoni fakultetin</option>}
                   {fakultetet.map(fakulteti => (

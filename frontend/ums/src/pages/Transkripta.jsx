@@ -2,13 +2,13 @@ import { Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/material'
 import React from 'react'
 import { tokens } from '../theme';
-import TableTranskripta from '../components/TableTranskripta2';
+// import TableTranskripta from '../components/TableTranskripta2';
 import Pie from '../components/charts/Piechart';
 import Table from '../components/Table';
 import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import FunctionsOutlinedIcon from '@mui/icons-material/FunctionsOutlined';
-import Profesori from '../components/TableTranskripta';
+// import Profesori from '../components/TableTranskripta';
 
 
 

@@ -116,6 +116,7 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
                   value={kodiLendes}
                   onInput={handleKodi}
                   placeholder='Kodi Lendes'  
+                  required
                 />
             </div>
             
@@ -132,6 +133,7 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
                 placeholder='Kredite'
                 value={kredite}
                 onInput={handleKredite}
+                required
                />
             </div>
             <div className="col-span-2 sm:col-span-2">
@@ -147,6 +149,7 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
                   value={lendaEmri}
                   onInput={handleLenda}
                   placeholder='Emri Lendes'  
+                  required
                   />
             </div>
             <div className="col-span-2 sm:col-span-2">
@@ -166,6 +169,7 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
                     defaultChecked={true}
                     value={true}
                     onInput={handleObligative}
+                    required
 
                   />
                   <label
@@ -184,6 +188,7 @@ export const lendaAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
                     defaultChecked={false}
                     value={false}
                     onInput={handleObligative}
+                    required
                   />
                   <label
                     htmlFor="bordered-radio-2"

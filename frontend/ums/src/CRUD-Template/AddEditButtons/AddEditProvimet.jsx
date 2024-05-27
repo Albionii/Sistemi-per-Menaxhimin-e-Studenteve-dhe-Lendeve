@@ -139,6 +139,7 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={selectedLenda}
                   onInput={handleChangedLendet}
+                  required
                 >
                   {selectedLenda === '' && <option value="">Selekto Ligjeraten</option>}
                   {lendet.map(lenda => (
@@ -158,6 +159,7 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
                   className="border text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 border-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={profesori}
                   onChange={handleChangedProfesori}
+                  required
                 >
                   {profesori === '' && <option value="">Selekto Profesorin</option>}
                   {selectedLenda !== '' ? ligjeratat.map(ligjerata => {
@@ -185,6 +187,7 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
                   className="border text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 border-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={dataMbajtjes}
                   onInput={handleDataMbajtjes}
+                  required
                   />
             </div>
             
@@ -201,6 +204,7 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
                   value={lokacioni}
                   onInput={handleLokacioni}
                   placeholder='Lokacioni i Provimit'  
+                  required
                   />
             </div>
           </div>

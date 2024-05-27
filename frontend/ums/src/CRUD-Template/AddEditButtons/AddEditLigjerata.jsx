@@ -124,6 +124,7 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
                   className="border border-gray-400  text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                   value={selectedProfesori}
                   onChange={handleChangedProfesoret}
+                  required
                 >
                   <option value="">Selekto Profesorin</option>
                   {profesoret.map(profesori => (
@@ -143,6 +144,7 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
                 className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                 value={selectedLenda}
                 onChange={handleChangedLendet}
+                required
               >
                 <option value="">Selekto Lëndën</option>
                 {lendet.map(lenda => (
