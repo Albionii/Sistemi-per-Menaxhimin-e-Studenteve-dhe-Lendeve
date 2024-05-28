@@ -6,6 +6,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentProvimi;
 import org.apache.logging.log4j.message.LoggerNameAwareMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -21,6 +22,9 @@ public interface StudentPrvRepository extends JpaRepository<StudentProvimi, Long
     List<StudentProvimi> findAllStudentProvimiByProvimiId(Long provimiId);
 
     boolean existsByEmriLendes(String emriLendes);
+
+    @Query("SELECT sp.nota, COUNT(sp) FROM StudentProvimi sp WHERE sp.student.id = :student_id GROUP BY sp.nota")
+    List<Object[]> countGrades(Long student_id);
 
 
 }

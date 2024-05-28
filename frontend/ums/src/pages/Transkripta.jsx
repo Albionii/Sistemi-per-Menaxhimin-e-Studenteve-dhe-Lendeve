@@ -9,13 +9,16 @@ import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import FunctionsOutlinedIcon from '@mui/icons-material/FunctionsOutlined';
 import Profesori from '../components/TableTranskripta';
+import useTranskriptaData from "../getMesatarjaSemesterEcts"
 
 
 
 
-const Transkripta = () => {
+const Transkripta = ({ token }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+
+    const { mesatarja, ects, semester } = useTranskriptaData(token);
   
     return (
     <Box margin={'20px'}>
@@ -36,7 +39,7 @@ const Transkripta = () => {
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box borderRadius={'50%'} backgroundColor={'#d94348'} padding={'15px'}><FunctionsOutlinedIcon style={{ fontSize: 48 }}/></Box>
                         
-                        <Typography variant='h1' fontWeight={'bold'}>9.6</Typography>
+                        <Typography variant='h1' fontWeight={'bold'}>{mesatarja}</Typography>
                     </Box>
                 </Box>
             </Box>
@@ -51,7 +54,7 @@ const Transkripta = () => {
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box borderRadius={'50%'} backgroundColor={'#ed8c42'} padding={'15px'}><StickyNote2OutlinedIcon style={{ fontSize: 48 }}/></Box>
                         
-                        <Typography variant='h1' fontWeight={'bold'}>85</Typography>
+                        <Typography variant='h1' fontWeight={'bold'}>{ects}</Typography>
                     </Box>
                 </Box>
             </Box>
@@ -66,7 +69,7 @@ const Transkripta = () => {
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box borderRadius={'50%'} backgroundColor={'#3a6f9e'} padding={'15px'}><SchoolOutlinedIcon style={{ fontSize: 48 }}/></Box>
                         
-                        <Typography variant='h1' fontWeight={'bold'}>2</Typography>
+                        <Typography variant='h1' fontWeight={'bold'}>{semester}</Typography>
                     </Box>
                 </Box>
             </Box>
@@ -78,7 +81,7 @@ const Transkripta = () => {
             padding={'15px'}>
                 <Typography variant='h4'>Notat tuaja:</Typography>
                 <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                    <Pie/>
+                    <Pie token={token}/>
                 </Box>
             </Box>
             {/* ROW 2 */}

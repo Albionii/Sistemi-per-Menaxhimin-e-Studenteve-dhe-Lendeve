@@ -8,13 +8,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "flowbite-react";
-import { useTheme } from "@mui/material";
-import { tokens } from "../../theme";
+
 
 const Paraqitura = ({ token }) => {
   const [provimet, setProvimet] = useState([]);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  
 
   const config = {
     headers: {

@@ -10,12 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 @RequiredArgsConstructor
 public class StudentPrvService {
 
     private final StudentPrvRepository studentPrvRepository;
     private final VleresimiService vleresimiService;
+    private final UserService userService;
+    private final StudentService studentService;
+
     public StudentProvimi paraqitProvimin(Student student, Provimi prv) throws Exception {
 
         if (student == null)
@@ -41,6 +45,35 @@ public class StudentPrvService {
 
 
             return studentPrvRepository.save(studentProvimi);
+    }
+
+    public Integer findSumOfEctsByStudentId(String jwt) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<StudentProvimi> studentProvimiList = studentPrvRepository.findAllByStudentId(student.getId());
+        int ects = 0;
+        for (StudentProvimi studentProvimi : studentProvimiList){
+            ects += studentProvimi.getProvimi().getLigjerata().getLenda().getEcts();
+        }
+
+        return ects;
+    }
+
+    public int[] getGradeCounts(String jwt) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<Object[]> counts = studentPrvRepository.countGrades(student.getId());
+        int[] gradeCounts = new int[5];
+
+        for (Object[] count : counts) {
+            int grade = (int) count[0];
+            long gradeCount = (long) count[1];
+            gradeCounts[grade - 6] = (int) gradeCount;
+        }
+
+        return gradeCounts;
     }
 
     public StudentProvimi noto(StudentProvimi paraqitja, int nota) {
@@ -124,6 +157,13 @@ public class StudentPrvService {
         }
         return notat;
     }
+
+//    public Integer findSumOfEctsByStudentId(String jwt) throws Exception {
+//        User user = userService.findUserByJwtToken(jwt);
+//        Student student = studentService.findStudentByUserId(user.getId());
+//
+//        List<StudentProvimi> studentProvimiList = student;
+//    }
 
     public double getMesatarja(List<Double> notat) {
         double mesatarja = 0;

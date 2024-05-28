@@ -25,7 +25,7 @@ public class Lenda {
     @NotNull
     private String emri;
     @NotNull
-    private String ects;
+    private Integer ects;
     @NotNull
     private boolean isObligative;
 

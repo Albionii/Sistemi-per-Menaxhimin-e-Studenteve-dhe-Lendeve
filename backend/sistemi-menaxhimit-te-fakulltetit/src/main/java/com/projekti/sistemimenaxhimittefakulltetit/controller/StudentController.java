@@ -4,14 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentSubmissionRepository;
-import com.projekti.sistemimenaxhimittefakulltetit.repository.ProvimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.response.ProvimiResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.response.TranskriptaResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.*;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.connector.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +44,26 @@ public class StudentController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(prv);
     }
+
+    @GetMapping("/ects")
+    public ResponseEntity<Integer> getEcts(@RequestHeader("Authorization") String token) throws Exception{
+        Integer ects = studentPrvService.findSumOfEctsByStudentId(token);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ects);
+    }
+
+    @GetMapping("/notatCount")
+    public ResponseEntity<int[]> getNotatCount(@RequestHeader("Authorization") String token) throws Exception{
+        int[] notat = studentPrvService.getGradeCounts(token);
+        return ResponseEntity.status(HttpStatus.OK).body(notat);
+    }
+
+    @GetMapping("/semestri")
+    public Optional<StudentSemester> getSemestri(@RequestHeader("Authorization") String token) throws Exception{
+        return studentSemesterRegistrationService.findSemesterByStudent(token);
+    }
+
+
     @DeleteMapping("/anulo/{id}")
     public void anuloProvimin(@PathVariable Long id,
                               @RequestHeader("Authorization") String token) throws Exception {
@@ -217,7 +233,6 @@ public class StudentController {
 
 
         TranskriptaResponse response = new TranskriptaResponse();
-        response.setTranskripta(transkripta);
         response.setMesatarja(mesatarja);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);

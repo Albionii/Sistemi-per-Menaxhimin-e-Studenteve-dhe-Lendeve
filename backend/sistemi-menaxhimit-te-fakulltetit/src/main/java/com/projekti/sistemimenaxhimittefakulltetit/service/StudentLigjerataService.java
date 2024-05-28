@@ -35,6 +35,8 @@ public class StudentLigjerataService {
     }
 
 
+
+
     //enroll in a Ligjerate
     public StudentLigjerata enroll (Long id, Student student) throws Exception{
         ProfesoriLenda profesoriLenda = findProfesoriLendaById(id);

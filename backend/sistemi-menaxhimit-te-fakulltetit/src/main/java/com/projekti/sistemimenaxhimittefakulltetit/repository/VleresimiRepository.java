@@ -15,11 +15,11 @@ public interface VleresimiRepository extends JpaRepository<Vleresimi, Long> {
     List<Vleresimi> getAllNotat(@Param("studentId") Long studentId);
 
     @Query("SELECT " +
-            "    CAST(SUM(IF(v.nota = 6, 1, 0)) * 100.0 / COUNT(*) AS double), " +
-            "    CAST(SUM(IF(v.nota = 7, 1, 0)) * 100.0 / COUNT(*) AS double), " +
-            "    CAST(SUM(IF(v.nota = 8, 1, 0)) * 100.0 / COUNT(*) AS double), " +
-            "    CAST(SUM(IF(v.nota = 9, 1, 0)) * 100.0 / COUNT(*) AS double), " +
-            "    CAST(SUM(IF(v.nota = 10, 1, 0)) * 100.0 / COUNT(*) AS double) " +
+            "    SUM(IF(v.nota = 6, 1, 0)), " +
+            "    SUM(IF(v.nota = 7, 1, 0)), " +
+            "    SUM(IF(v.nota = 8, 1, 0)), " +
+            "    SUM(IF(v.nota = 9, 1, 0)), " +
+            "    SUM(IF(v.nota = 10, 1, 0))" +
             "FROM Vleresimi v WHERE v.studentLigjerata.student.id = :studentId")
     List<Double[]> mesataretPerNote(@Param("studentId") Long studentId);
 

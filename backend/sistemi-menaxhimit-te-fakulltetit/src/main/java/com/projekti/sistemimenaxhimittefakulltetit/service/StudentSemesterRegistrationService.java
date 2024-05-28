@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -39,6 +40,13 @@ public class StudentSemesterRegistrationService {
 
 
         return registrationRepository.save(registration);
+    }
+
+    public Optional<StudentSemester> findSemesterByStudent(String jwt) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        return registrationRepository.findFirstByStudentIdOrderByRegistrationDateDesc(student.getId());
     }
 
 //    public StudentSemester EnrollStudent(Lenda lenda, Long id) {

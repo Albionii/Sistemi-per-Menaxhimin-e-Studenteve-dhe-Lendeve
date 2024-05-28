@@ -58,13 +58,13 @@ getFromCookies({setUserData,changeLoggedInState});
       <main className="content">
         <Topbar />
         <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Home token={token} />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/provimet" element={<Provimet token={token} />} />
 
           <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
           <Route path="/cruds" element={<CrudCategories />} />
-          <Route path="/transkripta" element={<Transkripta user={user} />} />
+          <Route path="/transkripta" element={<Transkripta token={token} />} />
 
           <Route path="/paraqitura" element={<Paraqitura token={token}/>} />
 

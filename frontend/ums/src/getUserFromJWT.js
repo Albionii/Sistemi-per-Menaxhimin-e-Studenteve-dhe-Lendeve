@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 
-
-export const getFromCookies = ({ setUserData,changeLoggedInState }) => {
+export const getFromCookies = ({ setUserData, changeLoggedInState }) => {
     let cookie = {};
     document.cookie.split(';').forEach(function (el) {
         let split = el.split('=');
         cookie[split[0].trim()] = split.slice(1).join("=");
-    })
+    });
     const token = cookie["Token"];
+    getFromCookies.token = token;
+
     const [user, setUser] = useState(null);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -20,32 +22,30 @@ export const getFromCookies = ({ setUserData,changeLoggedInState }) => {
                         'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({})
-                })
-                setUser(await userDetails.json());
+                });
+                const data = await userDetails.json();
+                setUser(data);
             } catch (error) {
                 console.error('Error fetching user details:', error);
                 document.cookie = "Token=";
                 window.location.reload();
-            } finally {
-
             }
         };
 
         fetchData();
-    }, []);
+    }, [token]); // Add token to the dependency array
 
     useEffect(() => {
         if (user != null) {
-            if (user.status == 500) {
+            if (user.status === 500) {
                 document.cookie = "Token=";
                 changeLoggedInState();
                 // window.location.reload();
+            } else {
+                setUserData(user); // Directly set user data here
             }
-            returnUser(user);
         }
-    }), [user];
+    }, [user, changeLoggedInState, setUserData]); // Add dependencies
 
-    function returnUser(user) {
-        setUserData(user);
-    }
-}
+    return token; // Optionally, return the token if needed
+};

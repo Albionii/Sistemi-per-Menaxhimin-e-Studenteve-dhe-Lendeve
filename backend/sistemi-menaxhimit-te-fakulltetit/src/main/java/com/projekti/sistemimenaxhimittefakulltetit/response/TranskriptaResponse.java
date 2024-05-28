@@ -7,6 +7,5 @@ import java.util.List;
 
 @Data
 public class TranskriptaResponse {
-    private List<StudentProvimi> transkripta;
     private Double mesatarja;
 }
