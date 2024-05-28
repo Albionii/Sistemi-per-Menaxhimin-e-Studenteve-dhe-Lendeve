@@ -11,13 +11,15 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import Authentication from "./pages/authentication.jsx";
 import LoggedIn from "./components/loggedIn.jsx";
-import { getToken } from "./GetToken.js";
+import { getToken} from "./GetToken.js";
+import { SignalCellularNoSimOutlined } from "@mui/icons-material";
 
 function App() {
   const [theme, colorMode] = useMode();
 
 
   const token = getToken();
+  // console.log(getRole());
 
 
   // let isLoggedIn = document.cookie ? true : false;
@@ -77,7 +79,7 @@ function App() {
 
         {loggedIn ? (
           <div className="app">
-            <LoggedIn changeLoggedInState={changeLoggedInState} token={token} />
+            <LoggedIn changeLoggedInState={changeLoggedInState} token={token}/>
           </div>
         ) : (
           <Authentication changeLoggedInState={changeLoggedInState} />
