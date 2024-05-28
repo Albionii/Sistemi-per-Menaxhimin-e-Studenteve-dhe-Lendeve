@@ -60,12 +60,12 @@ const SubItem = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = ({user}) => {
+const Sidebar = ({ user }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const role = user.role; 
+  const role = user.role;
   const formattedRole = role && role.includes('_') ? role.split('_')[1].toLowerCase().replace(/^\w/, (c) => c.toUpperCase()) : '';
 
   useEffect(() => {
@@ -86,10 +86,10 @@ const Sidebar = ({user}) => {
     };
   }, []);
 
-  
+
 
   return (
-    
+
     <Box
       width={isCollapsed ? "80px" : "320px"}
       sx={{
@@ -166,10 +166,10 @@ const Sidebar = ({user}) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {user.firstName + " " +user.lastName}
+                  {user.firstName + " " + user.lastName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  
+
                   {formattedRole}
                 </Typography>
               </Box>
@@ -192,22 +192,25 @@ const Sidebar = ({user}) => {
             >
               Data
             </Typography>
+            {role === "ROLE_STUDENT" &&
+              <Item
+                title="Transkripta"
+                to="/transkripta"
+                icon={<SchoolOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            }
+            {role === "ROLE_STUDENT" &&
 
-            <Item
-              title="Transkripta"
-              to="/transkripta"
-              icon={<SchoolOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            
-            <Item
-              title="Departmentet"
-              to="/department"
-              icon={<AccountBalanceOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+              <Item
+                title="Departmentet"
+                to="/department"
+                icon={<AccountBalanceOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            }
 
             <Item
               title="Profili"
@@ -258,20 +261,26 @@ const Sidebar = ({user}) => {
             >
               Pages
             </Typography>
-            <Item
-              title="Regjistro Semestrin"
-              to="/regjistroSemestrin"
-              icon={<LibraryBooksOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Regjistro Grupin"
-              to="/regjistroGrupin"
-              icon={<GroupsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {role === "ROLE_STUDENT" &&
+
+              <Item
+                title="Regjistro Semestrin"
+                to="/regjistroSemestrin"
+                icon={<LibraryBooksOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            }
+            {role === "ROLE_STUDENT" &&
+
+              <Item
+                title="Regjistro Grupin"
+                to="/regjistroGrupin"
+                icon={<GroupsOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            }
             <Item
               title="CRUD's"
               to="/cruds"
@@ -287,13 +296,16 @@ const Sidebar = ({user}) => {
             >
               Charts
             </Typography>
-            <Item
-              title="Paraqit Provimet"
-              to="/provimet"
-              icon={<QuizOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {role === "ROLE_STUDENT" &&
+
+              <Item
+                title="Paraqit Provimet"
+                to="/provimet"
+                icon={<QuizOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            }
             <Item
               title="Pie Chart"
               to="/pie"
