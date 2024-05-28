@@ -20,6 +20,17 @@ public class SemesterService {
         return semesterRepository.save(semester);
     }
 
+    public Semester updateSemester(Long id,Semester updated) {
+        Semester semester = semesterRepository.findSemesterById(id);
+        semester.setName(updated.getName());
+//        semester.setGrupet(updated.getGrupet());
+        semester.setStartDate(updated.getStartDate());
+        semester.setEndDate(updated.getEndDate());
+        semester.setDepartamenti(updated.getDepartamenti());
+
+        return semesterRepository.save(semester);
+    }
+
     public void deleteSemester(Long id) {
         Semester semester = semesterRepository.findSemesterById(id);
 

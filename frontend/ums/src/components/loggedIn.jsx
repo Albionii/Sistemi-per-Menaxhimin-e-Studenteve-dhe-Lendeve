@@ -33,6 +33,7 @@ import ProvimetNota from "./Provimi/ProvimetNota.jsx";
 import RegjistroGrupin from "../pages/RegjistroGrupin.jsx";
 import FakultetetCrud from "../CRUD-at/FakultetetCrud.jsx";
 import Studentet from "../CRUD-at/Studentet.jsx";
+import AltiniCrud from "../CRUD-at/SemestriCrud.jsx";
 
 
 function loggedIn({changeLoggedInState,token}) {
@@ -86,8 +87,7 @@ getFromCookies({setUserData,changeLoggedInState});
           <Route path="/FakultetiCrud" element={<FakultetetCrud/>}></Route>
           <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
           <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
-
-          
+          <Route path="/semestri" element={<AltiniCrud />} />
 
 
 

@@ -66,8 +66,7 @@ public class AdminController {
 
 
     @PostMapping("/semester/create")
-    public ResponseEntity<Semester> createSemester(@RequestBody Semester req,
-                               @RequestHeader("Authorization")String jwt) {
+    public ResponseEntity<Semester> createSemester(@RequestBody Semester req) {
 
         Semester created = semesterService.createSemester(req);
 
@@ -107,6 +106,11 @@ public class AdminController {
     public ResponseEntity<Semester> getSemester(@PathVariable Long id) {
         Semester semester = semesterService.getSemester(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(semester);
+    }
+
+    @PutMapping("/semester/update/{id}")
+    public ResponseEntity<Semester> updateSemester(@PathVariable Long id, @RequestBody Semester semester) {
+        return ResponseEntity.status(HttpStatus.OK).body(semesterService.updateSemester(id, semester));
     }
 
 
