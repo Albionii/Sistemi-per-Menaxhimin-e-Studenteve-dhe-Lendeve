@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -47,6 +46,12 @@ public class StudentPrvService {
             return studentPrvRepository.save(studentProvimi);
     }
 
+    public List<StudentProvimi> getByStudentId(String jwt) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
+        Student student = studentService.findStudentByUserId(user.getId());
+        return studentPrvRepository.findAllByStudentId(student.getId());
+    }
+
     public Integer findSumOfEctsByStudentId(String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
         Student student = studentService.findStudentByUserId(user.getId());
@@ -65,11 +70,12 @@ public class StudentPrvService {
         Student student = studentService.findStudentByUserId(user.getId());
 
         List<Object[]> counts = studentPrvRepository.countGrades(student.getId());
-        int[] gradeCounts = new int[5];
+        int[] gradeCounts = new int[5]; // Grades are from 6 to 10, so 5 elements
 
         for (Object[] count : counts) {
             int grade = (int) count[0];
             long gradeCount = (long) count[1];
+            // Adjust index for grades from 6 to 10
             gradeCounts[grade - 6] = (int) gradeCount;
         }
 

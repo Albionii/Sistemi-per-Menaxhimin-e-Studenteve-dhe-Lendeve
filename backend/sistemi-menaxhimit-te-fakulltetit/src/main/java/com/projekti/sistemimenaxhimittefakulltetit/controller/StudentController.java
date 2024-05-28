@@ -63,6 +63,11 @@ public class StudentController {
         return studentSemesterRegistrationService.findSemesterByStudent(token);
     }
 
+    @GetMapping("/provimetC")
+    public List<StudentProvimi> getProvimetC(@RequestHeader("Authorization") String token) throws Exception{
+        return studentPrvService.getByStudentId(token);
+    }
+
 
     @DeleteMapping("/anulo/{id}")
     public void anuloProvimin(@PathVariable Long id,

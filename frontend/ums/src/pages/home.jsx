@@ -118,7 +118,7 @@ const Home = ({ token }) => {
           padding={{ xs: "15px 40px", sm: "15px 40px 15px 40px" }}
           backgroundColor={colors.primary[400]}
         >
-          <Calendar />
+          <Calendar token={token} />
         </Box>
       </Box>
     </Box>
