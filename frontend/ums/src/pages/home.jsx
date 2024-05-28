@@ -33,7 +33,7 @@ const Home = ({ token }) => {
           textAlign={"center"}
           padding={{ xs: "25px", sm: "45px" }}
         >
-          <SimpleSlider />
+          <SimpleSlider token={token}/>
         </Box>
         {/* ROW 2 */}
         <Box

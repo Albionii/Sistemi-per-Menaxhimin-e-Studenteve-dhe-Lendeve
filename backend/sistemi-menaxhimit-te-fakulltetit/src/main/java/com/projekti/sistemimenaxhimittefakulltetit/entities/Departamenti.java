@@ -37,6 +37,8 @@ public class Departamenti {
     @JoinColumn(name = "dekani_id")
     private User user;
 
+    @OneToMany
+    private List<Semester> semesters;
 
 
 

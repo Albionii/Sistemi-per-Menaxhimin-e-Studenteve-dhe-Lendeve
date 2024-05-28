@@ -17,5 +17,6 @@ public class Lajmi {
     private String mesazhi;
 
     @ManyToOne
+    @JoinColumn(name = "departamenti_id")
     private Departamenti departamenti;
 }

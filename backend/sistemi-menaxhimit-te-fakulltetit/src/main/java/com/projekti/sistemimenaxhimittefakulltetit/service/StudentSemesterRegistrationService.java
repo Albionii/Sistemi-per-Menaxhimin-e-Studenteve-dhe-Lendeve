@@ -42,7 +42,7 @@ public class StudentSemesterRegistrationService {
         return registrationRepository.save(registration);
     }
 
-    public Optional<StudentSemester> findSemesterByStudent(String jwt) throws Exception {
+    public StudentSemester findSemesterByStudent(String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
         Student student = studentService.findStudentByUserId(user.getId());
 
@@ -62,10 +62,9 @@ public class StudentSemesterRegistrationService {
 //        return sem;
 //    }
 
-    public List<StudentSemester> getSemesters(String jwt, Long id) throws Exception {
+    public List<StudentSemester> getSemesters(String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
         Student student = studentService.findStudentByUserId(user.getId());
-        id = student.getId();
-        return registrationRepository.findAllByStudentId(id);
+        return registrationRepository.findAllByStudentId(student.getId());
     }
 }

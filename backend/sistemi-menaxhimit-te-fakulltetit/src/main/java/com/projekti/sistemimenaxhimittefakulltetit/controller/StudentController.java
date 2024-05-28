@@ -59,7 +59,7 @@ public class StudentController {
     }
 
     @GetMapping("/semestri")
-    public Optional<StudentSemester> getSemestri(@RequestHeader("Authorization") String token) throws Exception{
+    public StudentSemester getSemestri(@RequestHeader("Authorization") String token) throws Exception{
         return studentSemesterRegistrationService.findSemesterByStudent(token);
     }
 
@@ -169,10 +169,9 @@ public class StudentController {
 
     @GetMapping("/semesters/{id}")
     public ResponseEntity<List<StudentSemester>> getSemesters(
-            @RequestHeader("Authorization") String jwt,
-            @PathVariable Long id)
+            @RequestHeader("Authorization") String jwt)
  throws Exception  {
-        List<StudentSemester> semesters = studentSemesterRegistrationService.getSemesters(jwt, id);
+        List<StudentSemester> semesters = studentSemesterRegistrationService.getSemesters(jwt);
         return new ResponseEntity<>(semesters, HttpStatus.OK);
     }
 
@@ -189,7 +188,7 @@ public class StudentController {
                 .map(sp -> sp.getProvimi().getLigjerata().getLenda().getEmri())
                 .collect(Collectors.toSet());
 
-        List<StudentSemester> semesterRegistrations = studentSemesterRegistrationService.getSemesters(token, student.getId());
+        List<StudentSemester> semesterRegistrations = studentSemesterRegistrationService.getSemesters(token);
         List<ProvimiResponse> responses = new ArrayList<>();
         Map<String, ProvimiResponse> provimiMap = new HashMap<>();
 
