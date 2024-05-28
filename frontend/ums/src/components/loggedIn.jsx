@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Home from "../pages/home.jsx"
 import Services from "../pages/services.jsx";
 import LogIn from "../pages/login.jsx";
@@ -21,7 +21,7 @@ import Semestrat from "../pages/Semestrat.jsx";
 import Departmentat from "../pages/Departmentat.jsx";
 import RegjistroSemestrin from "../pages/RegjistroSemestrin.jsx";
 
-import {getFromCookies} from '../getUserFromJWT.js';
+import { getFromCookies } from '../getUserFromJWT.js';
 import ProvimiCRUD from "../CRUD-at/Provimi.jsx";
 import DepartamentiCrud from "../CRUD-at/DepartamentiCrud.jsx";
 import ProfesorLenda from '../CRUD-at/ProfesorLenda.jsx';
@@ -37,65 +37,111 @@ import AltiniCrud from "../CRUD-at/SemestriCrud.jsx";
 import NotoStudentin from "../CRUD-at/NotoStudentin.jsx";
 
 
-function loggedIn({changeLoggedInState,token}) {
-const [sideBarInfo, setSideBarInfo] = useState(null);
+function loggedIn({ changeLoggedInState, token }) {
+  const [sideBarInfo, setSideBarInfo] = useState(null);
 
 
-const [user,setUser] = useState({
-  firstName: "",
-  lastName: ""
-});
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: ""
+  });
 
-const setUserData = (data) =>{
-  setUser(data);
-}
+  const setUserData = (data) => {
+    setUser(data);
+  }
 
-getFromCookies({setUserData,changeLoggedInState});
+  getFromCookies({ setUserData, changeLoggedInState });
 
 
 
   return (
     <>
-      <Sidebar user={user}/>
+      <Sidebar user={user} />
       <main className="content">
         <Topbar />
         <Routes>
-        <Route path="/" element={<Home token={token} />}/>
-          <Route path="/dashboard" element={<Dashboard />}/>
-          <Route path="/provimet" element={<Provimet token={token} />} />
+          <Route path="/" element={<Home token={token} />} />
+          <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
-          <Route path="/cruds" element={<CrudCategories role={user.role}/>} />
+          <Route path="/cruds" element={<CrudCategories role={user.role} />} />
           <Route path="/transkripta" element={<Transkripta user={user} />} />
 
-          <Route path="/paraqitura" element={<Paraqitura token={token}/>} />
+          <Route path="/paraqitura" element={<Paraqitura token={token} />} />
 
-          <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user}/>} />
-          <Route path="/postimi" element={<Postimi token={token}/>} />
+          <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} />} />
+          <Route path="/postimi" element={<Postimi token={token} />} />
 
-          <Route path="/profesorLenda" element={<ProfesorLenda/>} />
-          <Route path="/provimi" element={<ProvimiCRUD/>} />
-          <Route path="/profesoret" element={<Profesoret/>} />
-          <Route path="/studentet" element={<Studentet/>} />
-          <Route path="/lendet" element={<Lenda/>} />
+
+
+
+          {/* {user.role === "ROLE_ADMIN" ? <Route path="/profesorLenda" element={<ProfesorLenda />} /> : null}
+
+          {user.role === "ROLE_ADMIN" ? <Route path="/provimi" element={<ProvimiCRUD />} /> : null}
+
+          {user.role === "ROLE_ADMIN" ? <Route path="/profesoret" element={<Profesoret />} /> : null}
+
+          {user.role === "ROLE_ADMIN" ? <Route path="/studentet" element={<Studentet />} /> : null}
+
+          {user.role === "ROLE_ADMIN" ? <Route path="/lendet" element={<Lenda />} /> : null}
+
+          {user.role === "ROLE_ADMIN" ? <Route path="/DepartamentiCrud" element={<DepartamentiCrud />}></Route> : null}
+
+          {user.role === "ROLE_ADMIN" ? <Route path="/FakultetiCrud" element={<FakultetetCrud />}></Route> : null}
+
+          {user.role === "ROLE_ADMIN" ? <Route path="/userRole" element={<UserRole />} /> : null}
+
+          {user.role === "ROLE_ADMIN" ? <Route path="/semestri" element={<AltiniCrud />} /> : null}
+
+          {user.role === "ROLE_STUDENT" ? <Route path="/provimet" element={<Provimet token={token} />} /> : null}
+
+          {user.role === "ROLE_PROFESSOR" ? <Route path="/notoStudentin" element={<NotoStudentin />} />: null}
+ */}
+          <Route path="/profesorLenda" element={<ProfesorLenda />} />
+
+
+
+
+          <Route path="/provimet" element={<Provimet token={token} />} />
+
+          <Route path="/notoStudentin" element={<NotoStudentin />} />
+
+          <Route path="/provimi" element={<ProvimiCRUD />} />
+
+
+          <Route path="/profesoret" element={<Profesoret />} />
+
+
+          <Route path="/studentet" element={<Studentet />} />
+
+          <Route path="/lendet" element={<Lenda />} />
+
+          <Route path="/DepartamentiCrud" element={<DepartamentiCrud />}></Route>
+
+          <Route path="/FakultetiCrud" element={<FakultetetCrud />}></Route>
+
+          <Route path="/userRole" element={<UserRole />} />
+
+          <Route path="/semestri" element={<AltiniCrud />} />
+
+
+
+
+
           <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
+
           <Route path="/semesters/:departamentiId" element={<Semestrat />} />
           <Route path="/department" element={<Departmentat />} />
-          <Route path="/userRole" element={<UserRole/>} />
-          <Route path="/paraqitProvimin" element={<ProvimetParaqitura/>} />
-          <Route path="/refuzoNoten" element={<ProvimetNota/>} />
-          <Route path="/DepartamentiCrud" element={<DepartamentiCrud/>}></Route>
-          <Route path="/FakultetiCrud" element={<FakultetetCrud/>}></Route>
+          <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
+          <Route path="/refuzoNoten" element={<ProvimetNota />} />
           <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
           <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
-          <Route path="/semestri" element={<AltiniCrud />} />
-          <Route path="/notoStudentin" element={<NotoStudentin/>} />
-
-          
 
 
 
-          <Route path="*" element={<Home />} /> 
+
+
+          <Route path="*" element={<Home />} />
 
 
         </Routes>
