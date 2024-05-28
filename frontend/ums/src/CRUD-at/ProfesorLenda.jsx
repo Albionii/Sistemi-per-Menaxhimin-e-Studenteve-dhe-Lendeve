@@ -15,9 +15,10 @@ function ProfesorLenda() {
     "Mbiemri",
     "Lenda",
     "Kredite",
+    "Semestri"
   ]
   
-  const jsonNames = ["professor.id", "professor.user.firstName","professor.user.lastName", "lenda.emri", "lenda.ects"];
+  const jsonNames = ["professor.id", "professor.user.firstName","professor.user.lastName", "lenda.emri", "lenda.ects", "semester.name"];
   const buttonsAvailable = {
     preview: false,
     add: true,
@@ -37,6 +38,21 @@ function ProfesorLenda() {
       emri:"",
       ects:"",
       obligative:""
+    },
+    semester:{
+      name : "",
+      startDate: "",
+      endDate: "",
+      departamenti: {
+        emri: "",
+        lokacioni:"",
+        email:"",
+        fakulteti:{
+          emri:"",
+          lokacioni:"",
+          email:""
+        }
+      }
     }
   }
 

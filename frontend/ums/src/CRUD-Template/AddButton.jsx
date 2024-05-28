@@ -1,10 +1,12 @@
-import { createLenda, createLigjerata, createProfessor,createDepartamenti, createProvimi, createSalla, createFakulteti } from "../APIRequests";
+import { createLenda, createLigjerata, createProfessor,createDepartamenti, createProvimi, createSalla, createFakulteti, createSemester } from "../APIRequests";
 import { lendaAddButton } from "./AddEditButtons/AddEditLenda"
 import { ligjerataAddButton } from "./AddEditButtons/AddEditLigjerata"
 import { provimiAddButton } from "./AddEditButtons/AddEditProvimet"
 import { sallaAddButton } from "./AddEditButtons/AddEditSalla";
 import {departamentiAddButton} from "./AddEditButtons/AddEditDepartamenti";
 import { fakultetiAddButton } from "./AddEditButtons/AddEditFakulteti";
+import { AddEditSemester } from "./AddEditButtons/AddEditSemester";
+
 export default function AddButton ({setConfirmExit, renderBot, formDataJson, API}) {
   let prompt = {setConfirmExit, renderBot, formDataJson, API};
 
@@ -22,6 +24,8 @@ export default function AddButton ({setConfirmExit, renderBot, formDataJson, API
         return departamentiAddButton(prompt);
       case createFakulteti()[0]:
         return fakultetiAddButton(prompt);
+      case createSemester()[0]:
+        return AddEditSemester(prompt);
       default:
         return API.errorAlert("Nuk ekziston add butoni per kete CRUD ose nuk e keni shtuar ne AddButton.jsx");
     }

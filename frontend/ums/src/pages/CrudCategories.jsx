@@ -65,7 +65,7 @@ const CrudCategories = () => {
         {renderCategory(
           "Profesori",
           [
-            "Profesori 1",
+            "Notimi Studenteve",
             "Profesori 2",
             "Profesori 3",
             "Profesori 4",
@@ -74,7 +74,7 @@ const CrudCategories = () => {
             "Profesori 7",
           ],
           [
-            "/Ligjeratat",
+            "/notoStudentin",
             "/profesori2",
             "/profesori3",
             "/profesori4",
@@ -97,8 +97,8 @@ const CrudCategories = () => {
         )}
         {renderCategory(
           "Administrator",
-          ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet","Departamenti","Fakulteti","UserRoles"],
-          ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole"],
+          ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet","Departamenti","Fakulteti","UserRoles", "Semestri"],
+          ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole", "/semestri"],
           "#004F95",
           "#00396b",
           SupervisorAccountIcon

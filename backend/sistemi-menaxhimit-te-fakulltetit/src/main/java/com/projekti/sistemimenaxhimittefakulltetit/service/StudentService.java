@@ -2,6 +2,7 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,23 @@ public class StudentService {
         Optional<Student> student = studentRepository.findById(id);
         if (student.isPresent()) {
             Student s = student.get();
+            User existingUser = s.getUser();
+            User updatedUser = newStudent.getUser();
+            if (updatedUser != null) {
+                if (updatedUser.getFirstName() != null) existingUser.setFirstName(updatedUser.getFirstName());
+                if (updatedUser.getLastName() != null) existingUser.setLastName(updatedUser.getLastName());
+                if (updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
+                if (updatedUser.getDateLindja() != null) existingUser.setDateLindja(updatedUser.getDateLindja());
+                if (updatedUser.getGjinia() != null) existingUser.setGjinia(updatedUser.getGjinia());
+                if (updatedUser.getNrTelefonit() != null) existingUser.setNrTelefonit(updatedUser.getNrTelefonit());
+                if (updatedUser.getQyteti() != null) existingUser.setQyteti(updatedUser.getQyteti());
+                if (updatedUser.getZipcode() != null) existingUser.setZipcode(updatedUser.getZipcode());
+                if (updatedUser.getShteti() != null) existingUser.setShteti(updatedUser.getShteti());
+                if (updatedUser.getRruga() != null) existingUser.setRruga(updatedUser.getRruga());
+                if (updatedUser.getRole() != null) existingUser.setRole(updatedUser.getRole());
+            }
             s.setId(newStudent.getId());
-            s.setUser(newStudent.getUser());
+            s.setUser(existingUser);
             return studentRepository.save(s);
         } else {
             return null; // Or handle the case where the product with the given id is not found

@@ -147,26 +147,6 @@
     return [url, "Gabim në përditësimin e provimit!"];
   }
 
-  //Semestri
-
-  export const createSemestri = () => {
-    const url = BASE_URL + `/api/admin/semester/create`;
-    return [url, "Gabim ne shtimin e semestrit!"];
-  }
-
-  export const deleteSemestriById = () => {
-    const url = BASE_URL + `/api/admin/semester/delete/`;
-    return [url, "Gabim ne fshirjen e semestrit!"];
-  }
-
-  export const getAllSemesters = () => {
-    const url = BASE_URL + `/api/admin/semesters`;
-    return [url, "Gabim ne marrjen e semestrave!"];
-  }
-
-
-  
-
   //Sallat
 
   export const deleteSallaByID = () => {
@@ -290,4 +270,29 @@ export const getFakultetiById = () => {
 export const updateFakultetiByID = () => {
   const url = BASE_URL + `/fakulteti/update/`;
   return [url, "Gabim në përditësimin e Fakultetit!"];
+}
+
+
+
+// Semester
+
+export const getAllSemester = () => {
+  const url = BASE_URL + `/api/admin/semesters`;
+  return [url, "Gabim në marrjen e Semestrit!"];
+}
+export const deleteSemesterById = () => {
+  const url = BASE_URL + `/api/admin/semester/delete/`;
+    return [url, "Gabim në fshirjen e Semestrit!"];
+}
+export const createSemester = () => {
+  const url = BASE_URL + `/api/admin/semester/create`;
+  return [url, "Gabim në krijimin e Semestrit!"];
+}
+export const getSemesterById = () => {
+  const url = BASE_URL + `/api/admin/semester/get/`;
+  return [url, "Gabim në marrjen e semestrit!"];
+}
+export const updateSemesterById = () => {
+  const url = BASE_URL + `/api/admin/semester/update/`;
+  return [url, "Gabim në përditësimin e semestrit!"];
 }
