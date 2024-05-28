@@ -37,7 +37,7 @@ export default function SimpleSlider({ token }) {
     <Slider {...settings} style={{ width: '100%', height: '100%', color: '#fff' }}>
       {lajmet.map(lajmi => (
         <Box key={lajmi.id} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-          <h3>{lajmet.length > 0 ? lajmi.mesazhi : 'Regjistroni semestrin'}</h3>
+          <h3>{lajmet.length > 0 ? lajmi.mesazhi : 'Ju nuk keni regjistruar semestrin apo nuk ka lajme momentalisht'}</h3>
         </Box>
       ))}
     </Slider>

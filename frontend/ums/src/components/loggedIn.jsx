@@ -65,7 +65,7 @@ function loggedIn({ changeLoggedInState, token }) {
 
           <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
           <Route path="/cruds" element={<CrudCategories role={user.role} />} />
-          <Route path="/transkripta" element={<Transkripta user={user} />} />
+          <Route path="/transkripta" element={<Transkripta token={token} />} />
 
           <Route path="/paraqitura" element={<Paraqitura token={token} />} />
 
