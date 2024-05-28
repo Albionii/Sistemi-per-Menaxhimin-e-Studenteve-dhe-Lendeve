@@ -1,13 +1,7 @@
 import React from "react";
 import Crud from '../CRUD-Template/Crud'
 
-import {
-  createSemestri,
-  deleteSemestriById,
-  getAllSemesters,
-  getStudentByID,
-  updateStudentByID,
-} from "../APIRequests";
+import { createSemester, deleteSemesterById, getAllSemester, getStudentByID, updateStudentByID } from "../APIRequests";
 import { Box } from "@mui/material";
 
 function SemestriCrud() {
@@ -31,11 +25,11 @@ function SemestriCrud() {
     <Box m={'20px'}>
     <Crud
       rows={rowsNames}
-      createAPI={createSemestri}
-      getAllAPI={getAllSemesters}
+      createAPI={createSemester}
+      getAllAPI={getAllSemester}
       getByIDAPI={getStudentByID}
       updateAPI={updateStudentByID}
-      deleteAPI={deleteSemestriById}
+      deleteAPI={deleteSemesterById}
       isPreviewAvailable={isPreviewAvailable}
       jsonName={jsonNames}
     />

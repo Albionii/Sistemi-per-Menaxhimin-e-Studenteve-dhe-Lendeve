@@ -65,7 +65,7 @@ const CrudCategories = () => {
         {renderCategory(
           "Profesori",
           [
-            "Profesori 1",
+            "Notimi Studenteve",
             "Profesori 2",
             "Profesori 3",
             "Profesori 4",
@@ -74,7 +74,7 @@ const CrudCategories = () => {
             "Profesori 7",
           ],
           [
-            "/Ligjeratat",
+            "/notoStudentin",
             "/profesori2",
             "/profesori3",
             "/profesori4",

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { getAllLendet, getAllProfessors } from '../../APIRequests';
+import { getAllLendet, getAllProfessors, getAllSemester} from '../../APIRequests';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
@@ -10,6 +10,7 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
   const [urlCreate, errorCreate] = API.create();
   const [urlLendet, messageLendet] = getAllLendet();
   const [urlProfessor, messageProfessor] = getAllProfessors();
+  const [urlSemester, errorSemester] = getAllSemester();
 
   const handleClick = () => {
     setConfirmExit();
@@ -20,12 +21,15 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
 
   const [profesoret, setProfesoret] = useState([]);
   const [selectedProfesori, setSelectedProfesori] = useState('');
+  const [semestrat, setSemestrat] = useState([]);
+  const [selectedSemestri, setSelectedSemestri] = useState('');
 
   const [formData, setFormData] = useState(formDataJson);
   
   useEffect(() => {
     getLendet();
     getProfesoret();
+    getSemestrat();
   }, []);
 
   const getLendet = async () => {
@@ -48,6 +52,16 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
     }
   };
 
+  const getSemestrat = async () => {
+    try {
+      const fetchSemestrat = await axios.get(urlSemester);
+      setSemestrat(fetchSemestrat.data);
+    } catch (error) {
+      API.errorAlert(errorSemester);
+      console.log(error);
+    }
+  };
+
 
 
   const handleChangedLendet = (e) => {
@@ -63,6 +77,14 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
     setFormData({
       ...formData,
       professor : profesoret.find(profesori => profesori.id == e.target.value)
+    })
+  }
+
+  const handleChangedSemestrat = (e) => {
+    setSelectedSemestri(e.target.value);
+    setFormData({
+      ...formData,
+      semester : semestrat.find(s => s.id == e.target.value)
     })
   }
   
@@ -112,7 +134,7 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
         </div>
         <form onSubmit={handleSubmit} className="p-6 md:p-5 text-center">
           <div className="grid gap-4 mb-4 grid-cols-2">
-            <div className="col-span-1 sm:col-span-1">
+            <div className="col-span-2 sm:col-span-2">
               <label
                     htmlFor="category"
                     className="block text-left mb-2 text-sm font-medium"
@@ -151,6 +173,25 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
                   <option key={lenda.id} value={lenda.id}>{lenda.emri}</option>
                 ))}
               </select>
+            </div>
+            <div className="col-span-1 sm:col-span-1">
+              <label
+                    htmlFor="category"
+                    className="block text-left mb-2 text-sm font-medium"
+                >
+                  Semestri
+                </label>
+                <select
+                  // id="pr"
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                  value={selectedSemestri}
+                  onChange={handleChangedSemestrat}
+                >
+                  <option value="">Selekto Semestrin</option>
+                  {semestrat.map(s => (
+                    <option key={s.id} value={s.id}>{s.name}</option>
+                  ))}
+                </select>
             </div>
           </div>
           <button
@@ -326,6 +367,25 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
                   <option key={lenda.id} value={lenda.id}>{lenda.emri}</option>
                 ))}
               </select>
+            </div>
+            <div className="col-span-1 sm:col-span-1">
+              <label
+                    htmlFor="category"
+                    className="block text-left mb-2 text-sm font-medium"
+                >
+                  Semestri
+                </label>
+                <select
+                  // id="pr"
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                  value={selectedProfesori}
+                  onChange={handleChangedProfesoret}
+                >
+                  <option value="">{formData != null ? formData.professor.user.firstName + " " + formData.professor.user.lastName:""}</option>
+                  {profesoret.map(profesori => (
+                    <option key={profesori.id} value={profesori.id}>{profesori.user.firstName + " " + profesori.user.lastName}</option>
+                  ))}
+                </select>
             </div>
           </div>
           <button
