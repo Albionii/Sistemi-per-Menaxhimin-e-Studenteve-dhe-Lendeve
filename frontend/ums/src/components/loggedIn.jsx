@@ -65,8 +65,8 @@ getFromCookies({setUserData,changeLoggedInState});
           <Route path="/provimet" element={<Provimet token={token} />} />
 
           <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
-          <Route path="/cruds" element={<CrudCategories />} />
-          <Route path="/transkripta" element={<Transkripta token={token} />} />
+          <Route path="/cruds" element={<CrudCategories role={user.role}/>} />
+          <Route path="/transkripta" element={<Transkripta user={user} />} />
 
           <Route path="/paraqitura" element={<Paraqitura token={token}/>} />
 
