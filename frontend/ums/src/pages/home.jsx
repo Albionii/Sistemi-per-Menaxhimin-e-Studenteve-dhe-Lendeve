@@ -117,6 +117,8 @@ const Home = ({ token }) => {
           borderRadius={"7px"}
           padding={{ xs: "15px 40px", sm: "15px 40px 15px 40px" }}
           backgroundColor={colors.primary[400]}
+          sx={{ '--fc-button-bg-color': colors.primary[500], '--fc-button-hover-bg-color': colors.primary[700], '--fc-button-hover-border-color': colors.primary[700],'--fc-button-border-color': colors.primary[600], '--fc-button-text-color': colors.gray[100], '--fc-today-bg-color': colors.primary[400] }}
+
         >
           <Calendar token={token} />
         </Box>

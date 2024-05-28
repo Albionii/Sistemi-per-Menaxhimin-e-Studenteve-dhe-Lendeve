@@ -49,6 +49,7 @@ export default function Calendar({ token }) {
       padding: 3,
       textAlign: 'center',
       background: eventInfo.event.extendedProps.type === 'provim' ? colors.redAccent[500] : colors.blueAccent[500],
+      color: '#fff',
       width: '100%',
       borderRadius: 3,
       overflow: 'hidden',
@@ -63,6 +64,7 @@ export default function Calendar({ token }) {
       </div>
     );
   };
+  
 
   const events = [...assignments2, ...provimet2];
 

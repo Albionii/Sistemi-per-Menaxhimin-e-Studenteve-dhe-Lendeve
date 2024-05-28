@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react'
-
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; 
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
-import FooterSmes from '../components/footer.jsx';
 import Swal from 'sweetalert2';
-// import { useHistory } from 'react-router-dom';
-
-//auth/signin
-
-
 
 function Login({ changeLoggedInState }) {
+    const navigate = useNavigate(); 
+
     const [signupData, setSignupData] = useState({
         email: '',
         password: ''
@@ -23,33 +18,27 @@ function Login({ changeLoggedInState }) {
             [name]: value
         })
     }
-    // useEffect(() => {
-    //     console.log(signupData);
-    //  }, [signupData]);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        postData(signupData);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = await postData(signupData);
+        if (token) {
+            changeLoggedInState();
+            navigate('/'); 
+        }
     }
+
     const postData = async (data) => {
-        // const postdata = axios.post('http://localhost:8080/auth/signin', data);
-        // console.log('SHKOJ DATA');
-        // console.log(postData);
         const response = await fetch('http://localhost:8080/auth/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        })
+        });
         const jwt = await response.json();
 
-
-
-
         const token = jwt.jwt;
-        console.log(jwt.role);
-
         const url = 'http://localhost:8080/api/user';
         const userDetails = await fetch(url, {
             method: 'POST',
@@ -58,25 +47,21 @@ function Login({ changeLoggedInState }) {
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({})
-        })
+        });
         const user = await userDetails.json();
-
 
         document.cookie = `Token=${encodeURIComponent(token)}`;
         document.cookie = `Role=${encodeURIComponent(jwt.role)}`;
-        // console.log(token);
-        // console.log(document.cookie);
-        if (user.status == 500) {
+
+        if (user.status === 500) {
             Swal.fire({
                 icon: "error",
                 title: "GABIM",
                 text: "Email apo password Gabim!"
-              });
+            });
         } else {
-            // console.log(document.cookie);
-            changeLoggedInState();
+            return token;
         }
-        // window.location.href = "";
     }
 
     return (
@@ -107,12 +92,9 @@ function Login({ changeLoggedInState }) {
                     </form>
 
                 </div>
-                {/* <div className='w-full'>
-                    <FooterSmes />
-                </div> */}
             </div>
         </>
     )
 }
 
-export default Login
+export default Login;
