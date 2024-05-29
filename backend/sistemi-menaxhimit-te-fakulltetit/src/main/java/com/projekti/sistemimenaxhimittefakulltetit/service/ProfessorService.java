@@ -63,7 +63,6 @@ public class ProfessorService {
                 if (updatedUser.getShteti() != null) existingUser.setShteti(updatedUser.getShteti());
                 if (updatedUser.getRruga() != null) existingUser.setRruga(updatedUser.getRruga());
                 if (updatedUser.getRole() != null) existingUser.setRole(updatedUser.getRole());
-
             }
             p.setId(newProfessor.getId());
             p.setUser(existingUser);

@@ -296,3 +296,34 @@ export const updateSemesterById = () => {
   const url = BASE_URL + `/api/admin/semester/update/`;
   return [url, "Gabim në përditësimin e semestrit!"];
 }
+
+
+// StudentProvimi
+
+export const getAllStudentProvimet = () => {
+  const url = BASE_URL + `/student`;
+  return [url, "Gabim në marrjen e provimeve të paraqitura!"];
+}
+
+
+export const getAllLigjeratatByProfessorID = () => {
+  const url = BASE_URL + `/professor/provimetOfProfessor`;
+  return [url, "Gabim në marrjen e provimeve të paraqitura!"];
+}
+
+export const deleteStudentProvimiById = () => {
+  const url = BASE_URL + `/student/delete/`;
+    return [url, "Gabim në fshirjen e Semestrit!"];
+}
+export const createStudentProvimi = () => {
+  const url = BASE_URL + `/student/create`;
+  return [url, "Gabim në krijimin e Semestrit!"];
+}
+export const getStudentProvimiById = () => {
+  const url = BASE_URL + `/student/get/`;
+  return [url, "Gabim në marrjen e semestrit!"];
+}
+export const updateStudentProvimiById = () => {
+  const url = BASE_URL + `/student/update/`;
+  return [url, "Gabim në përditësimin e semestrit!"];
+}

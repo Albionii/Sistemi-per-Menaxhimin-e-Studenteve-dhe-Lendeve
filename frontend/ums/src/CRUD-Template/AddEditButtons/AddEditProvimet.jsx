@@ -313,7 +313,6 @@ export const provimiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData)
       await axios.put(urlUpdate + item.id, formData);
       setConfirmExit();
       onLigjerataEdit();

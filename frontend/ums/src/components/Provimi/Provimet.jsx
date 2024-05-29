@@ -54,6 +54,14 @@ const Provimet = ({ token }) => {
       });
   };
 
+  const refuzoNoten = (id) => {
+    try{
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
   const paraqitProvimin = (provimiId) => {
     if (provimiId) {
       axios
@@ -158,6 +166,7 @@ const Provimet = ({ token }) => {
                   <TableCell sx={{textAlign: 'center'}}>Data Paraqitjes</TableCell>
                   <TableCell sx={{textAlign: 'center'}}>Nota</TableCell>
                   <TableCell sx={{textAlign: 'center'}}>Operation</TableCell>
+                  <TableCell sx={{textAlign: 'center'}}>Refuzo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -234,11 +243,16 @@ const PaRow = ({ item, anuloParaqitjen }) => {
         {item.provimi.ligjerata.professor.user.firstName}{" "}
         {item.provimi.ligjerata.professor.user.lastName}
       </TableCell>
-      <TableCell>{item.dataVendosjes || "null"}</TableCell>
+      <TableCell>{item.dataParaqitjes || "null"}</TableCell>
       <TableCell>{item.nota === 0 ? " " : item.nota}</TableCell>
       <TableCell>
         <Button onClick={() => anuloParaqitjen(item.id)}>
           Anulo Paraqitjen
+        </Button>
+      </TableCell>
+      <TableCell>
+        <Button disabled={item.nota === 0 || item.nota === 5 || item.nota === 10} onClick={() => refuzoNoten(item.id)}>
+          Refuzo Noten
         </Button>
       </TableCell>
     </TableRow>

@@ -3,113 +3,37 @@ import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { useTheme } from "@mui/material";
+import axios from "axios";
+import { getToken } from "../GetToken";
+import { useEffect } from "react";
 
-const mockData = [
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-  {
-    id: 1,
-    lenda: "Shkenca Kompjuterike 1",
-    ECTS: "5.00",
-    nota: '9',
-    kategoria: 'Obligative',
-    notaShkronje: "B",
-    statusi: "I rregullte",
-  },
-];
+
 
 
 const Profesori = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const token = getToken();
+  const mockData = [];
+  
+  const getProvimetNotuara = async() => {
+    axios.get('http://localhost:8080/student',{
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        console.log("notimi : " + response.data)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  useEffect(()=>{
+    getProvimetNotuara();
+  },[])
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
