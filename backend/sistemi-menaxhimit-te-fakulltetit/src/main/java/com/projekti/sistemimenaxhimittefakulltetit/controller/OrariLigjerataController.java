@@ -22,4 +22,14 @@ public class OrariLigjerataController {
 //    public List<OrariLigjerata> getByStudentId(@RequestHeader("Authorization") String jwt) throws Exception {
 //        return orariLigjerataService.getOrariByStudentId(jwt);
 //    }
+
+//    @GetMapping("/dita/{dita}")
+//    public List<OrariLigjerata> getByDita(@PathVariable String dita, @RequestHeader("Authorization") String jwt) throws Exception {
+//        return orariLigjerataService.getOrariLigjertaByDita(jwt, dita);
+//    }
+
+    @GetMapping("/dita/{dita}")
+    public List<OrariLigjerata> getByDita(@PathVariable String dita, @RequestHeader("Authorization")String jwt) throws Exception {
+        return orariLigjerataService.getOrariByDita(dita, jwt);
+    }
 }

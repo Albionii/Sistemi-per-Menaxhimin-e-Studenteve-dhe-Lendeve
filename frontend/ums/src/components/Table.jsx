@@ -1,15 +1,17 @@
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const TableRow = ({ subject, lecturer, time, room, colors, hasBorder }) => (
   <tr
     style={{
       background: colors.primary[400],
       borderBottomColor: colors.primary[600],
-      borderBottom: hasBorder ?  colors.primary[600]+" 1px solid" : "none",
+      borderBottom: hasBorder ? colors.primary[600] + " 1px solid" : "none",
     }}
   >
-    <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
+    <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap" sx={{height: "50px",}}>
       {subject}
     </th>
     <td className="px-6 py-4">{lecturer}</td>
@@ -18,9 +20,41 @@ const TableRow = ({ subject, lecturer, time, room, colors, hasBorder }) => (
   </tr>
 );
 
-const Table = () => {
+const Table = ({ token }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const albanianDays = [
+    "E Diel",
+    "E Hene",
+    "E Marte",
+    "E Merkure",
+    "E Enjte",
+    "E Premte",
+    "E Shtune",
+  ];
+
+  const currentDate = new Date();
+
+  const currentDayIndex = currentDate.getDay();
+
+  const currentDay = albanianDays[currentDayIndex];
+
+  const [orariLigjeratat, setOrariLigjerata] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/orariLigjerata/dita/${currentDay}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log("Response data:", response.data);
+        setOrariLigjerata(response.data);
+      })
+      .catch((error) => console.error("Error fetching orari", error));
+  }, []);
 
   return (
     <div className="relative overflow-x-auto h-full w-full rounded">
@@ -45,38 +79,29 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          <TableRow
-            subject="Hyrje ne Shkenca Kompjuterike"
-            lecturer="Blerim Zylfiu"
-            time="09:00-10:30"
-            room="D132"
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            subject="Bazat e Inxhinieries Elektrike"
-            lecturer="Bertan Karahoda"
-            time="10:40-12:10"
-            room="D134"
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            subject="AOK"
-            lecturer="Valdrin Haxhiu"
-            time="12:40-14:10"
-            room="D116"
-            colors={colors}
-            hasBorder
-          />
-          <TableRow
-            subject="Gjuhe Angleze per Inxhinieri"
-            lecturer="George Washington"
-            time="14:20-15:30"
-            room="D140"
-            colors={colors}
-            hasBorder={false}
-          />
+          {orariLigjeratat.length === 0 ? (
+            <tr>
+              <td colSpan="4" className="px-6 py-3 text-center" style={{fontSize: '18px', fontWeight: 'bold'}}>
+                Nuk keni ligjerata për ditën e sotme
+              </td>
+            </tr>
+          ) : (
+            orariLigjeratat.map((orariLigjerata, index) => (
+              <TableRow
+                key={index}
+                subject={orariLigjerata.ligjerata.lenda.emri}
+                lecturer={
+                  orariLigjerata.ligjerata.professor.user.firstName +
+                  " " +
+                  orariLigjerata.ligjerata.professor.user.lastName
+                }
+                time={orariLigjerata.ora}
+                room={orariLigjerata.salla}
+                colors={colors}
+                hasBorder
+              />
+            ))
+          )}
         </tbody>
       </table>
     </div>

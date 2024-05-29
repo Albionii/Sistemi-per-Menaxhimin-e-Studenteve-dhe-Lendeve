@@ -31,6 +31,10 @@ public class Semester {
     @ManyToOne
     private Departamenti departamenti;
 
+    @OneToMany(mappedBy = "semester")
+    @JsonIgnore
+    private Set<StudentSemester> studentSemester;
+
 
     @Override
     public int hashCode() {

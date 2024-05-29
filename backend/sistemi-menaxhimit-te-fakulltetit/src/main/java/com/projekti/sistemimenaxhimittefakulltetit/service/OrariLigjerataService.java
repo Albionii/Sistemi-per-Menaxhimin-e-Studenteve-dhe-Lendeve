@@ -5,6 +5,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.OrariLigjerataRepo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,18 +17,35 @@ public class OrariLigjerataService {
     private final StudentGrupiService studentGrupiService;
     private final StudentService studentService;
     private final UserService userService;
+    private final StudentSemesterRegistrationService studentSemesterRegistrationService;
 
     public List<OrariLigjerata> getByOrariId(Long id){
         return orariLigjerataRepository.findByOrariId(id);
     }
 
-//    public List<OrariLigjerata> getOrariByStudentId(String jwt) throws Exception {
-//        Long studentId = userService.findUserByJwtToken(jwt).getId();
+//    public List<OrariLigjerata> getOrariLigjertaByDita(String jwt, String dita) throws Exception {
+//        StudentSemester studentSemester = studentSemesterRegistrationService.findSemesterByStudent(jwt);
+//        Grupi grupi = (Grupi) grupiService.getGrupiBySemesterId(studentSemester.getSemester().getId());
+//        Orari orari = (Orari) orariService.findByGrupiId(grupi.getId());
+//        List<OrariLigjerata> orariLigjerata = orariLigjerataRepository.findByOrariId(orari.getId());
 //
-//        Student student = studentService.findStudentByUserId(studentId);
+//        List<OrariLigjerata> orariLigjeratat = new ArrayList<>();
 //
-////        List<OrariLigjerata> orariLigjerata = orariLigjerataRepository.findOrariLigjerataByStudentId(student.getId());
-//
-//        return orariLigjerata;
+//        for(OrariLigjerata orariLigjerata1 : orariLigjerata){
+//            if(orariLigjerata1.getDita().equals(dita)){
+//                orariLigjeratat.add(orariLigjerata1);
+//            }
+//        }
+//        return orariLigjeratat;
 //    }
+
+
+    public List<OrariLigjerata> getOrariByDita(String dita, String jwt) throws Exception {
+        Long studentId = userService.findUserByJwtToken(jwt).getId();
+
+        Student student = studentService.findStudentByUserId(studentId);
+
+
+        return orariLigjerataRepository.findByDita(dita, student.getId());
+    }
 }

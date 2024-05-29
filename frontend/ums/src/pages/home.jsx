@@ -43,7 +43,7 @@ const Home = ({ token }) => {
           backgroundColor={colors.primary[400]}
           borderRadius={"7px"}
         >
-          <Table />
+          <Table token={token}/>
         </Box>
         <Box
           gridColumn={{ xs: "span 12", md: "span 3", sm: "span 12" }}
@@ -86,6 +86,7 @@ const Home = ({ token }) => {
           backgroundColor={colors.primary[400]}
           borderRadius={"7px"}
         >
+          
           <Typography variant="h4" pt={"10px"} pl={"10px"}>
             Notat tuaja:
           </Typography>
