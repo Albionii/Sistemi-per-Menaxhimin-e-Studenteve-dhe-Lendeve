@@ -220,6 +220,9 @@ public class StudentController {
     }
 
 
+
+
+
     @GetMapping("/transkripta")
     public ResponseEntity<TranskriptaResponse> generateTranskripta(@RequestHeader("Authorization")String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
@@ -241,6 +244,17 @@ public class StudentController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/getTranskripta")
+    public List<StudentProvimi> getTranskripta(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<StudentProvimi> transkripta = studentPrvService.gjeneroTranskripten(student.getId());
+
+        return transkripta;
+
+    }
+
 
     @DeleteMapping("/delete/{id}")
     public void deleteStudentByID(@PathVariable Long id)

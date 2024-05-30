@@ -35,6 +35,7 @@ import FakultetetCrud from "../CRUD-at/FakultetetCrud.jsx";
 import Studentet from "../CRUD-at/Studentet.jsx";
 import AltiniCrud from "../CRUD-at/SemestriCrud.jsx";
 import NotoStudentin from "../CRUD-at/NotoStudentin.jsx";
+import { OrbitProgress } from "react-loading-indicators";
 
 
 function loggedIn({ changeLoggedInState, token }) {
@@ -47,35 +48,45 @@ function loggedIn({ changeLoggedInState, token }) {
   });
 
   const setUserData = (data) => {
+    setLoading(true);
     setUser(data);
   }
 
   getFromCookies({ setUserData, changeLoggedInState });
 
+  const [loading, setLoading] = useState(false);
+
 
 
   return (
     <>
-      <Sidebar user={user} />
-      <main className="content">
-        <Topbar />
-        <Routes>
-          <Route path="/" element={<Home token={token} />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+      <div className="flex items-center justify-center w-full h-full absolute bg-slate-600" style={{display: loading ? "none" : "" , zIndex: "100000", backgroundColor:"#141b2d"}}>
+        <div style={{ width: "100%",height:"100%" }} className="flex items-center justify-center w-full h-full">
+          <div style={{ display: loading ? "none" : "" }}>
+            <OrbitProgress variant="track-disc" color="#006cff" size="medium" text="" textColor="" />
+          </div>
+        </div>
+      </div>
+        <Sidebar user={user} />
+        <main className="content">
+          <Topbar />
+          <Routes>
+            <Route path="/" element={<Home token={token} />} />
+            <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
-          <Route path="/cruds" element={<CrudCategories role={user.role} />} />
-          <Route path="/transkripta" element={<Transkripta token={token} />} />
+            <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
+            <Route path="/cruds" element={<CrudCategories role={user.role} />} />
+            <Route path="/transkripta" element={<Transkripta token={token} />} />
 
-          <Route path="/paraqitura" element={<Paraqitura token={token} />} />
+            <Route path="/paraqitura" element={<Paraqitura token={token} />} />
 
-          <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} />} />
-          <Route path="/postimi" element={<Postimi token={token} />} />
-
-
+            <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} />} />
+            <Route path="/postimi" element={<Postimi token={token} />} />
 
 
-          {/* {user.role === "ROLE_ADMIN" ? <Route path="/profesorLenda" element={<ProfesorLenda />} /> : null}
+
+
+            {/* {user.role === "ROLE_ADMIN" ? <Route path="/profesorLenda" element={<ProfesorLenda />} /> : null}
 
           {user.role === "ROLE_ADMIN" ? <Route path="/provimi" element={<ProvimiCRUD />} /> : null}
 
@@ -97,55 +108,55 @@ function loggedIn({ changeLoggedInState, token }) {
 
           {user.role === "ROLE_PROFESSOR" ? <Route path="/notoStudentin" element={<NotoStudentin />} />: null}
  */}
-          <Route path="/profesorLenda" element={<ProfesorLenda />} />
+            <Route path="/profesorLenda" element={<ProfesorLenda />} />
 
 
 
 
-          <Route path="/provimet" element={<Provimet token={token} />} />
+            <Route path="/provimet" element={<Provimet token={token} />} />
 
-          <Route path="/notoStudentin" element={<NotoStudentin />} />
+            <Route path="/notoStudentin" element={<NotoStudentin />} />
 
-          <Route path="/provimi" element={<ProvimiCRUD />} />
-
-
-          <Route path="/profesoret" element={<Profesoret />} />
+            <Route path="/provimi" element={<ProvimiCRUD />} />
 
 
-          <Route path="/studentet" element={<Studentet />} />
-
-          <Route path="/lendet" element={<Lenda />} />
-
-          <Route path="/DepartamentiCrud" element={<DepartamentiCrud />}></Route>
-
-          <Route path="/FakultetiCrud" element={<FakultetetCrud />}></Route>
-
-          <Route path="/userRole" element={<UserRole />} />
-
-          <Route path="/semestri" element={<AltiniCrud />} />
+            <Route path="/profesoret" element={<Profesoret />} />
 
 
+            <Route path="/studentet" element={<Studentet />} />
 
+            <Route path="/lendet" element={<Lenda />} />
 
+            <Route path="/DepartamentiCrud" element={<DepartamentiCrud />}></Route>
 
-          <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
+            <Route path="/FakultetiCrud" element={<FakultetetCrud />}></Route>
 
-          <Route path="/semesters/:departamentiId" element={<Semestrat />} />
-          <Route path="/department" element={<Departmentat />} />
-          <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
-          <Route path="/refuzoNoten" element={<ProvimetNota />} />
-          <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
-          <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
+            <Route path="/userRole" element={<UserRole />} />
+
+            <Route path="/semestri" element={<AltiniCrud />} />
 
 
 
 
 
-          <Route path="*" element={<Home />} />
+            <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
+
+            <Route path="/semesters/:departamentiId" element={<Semestrat />} />
+            <Route path="/department" element={<Departmentat />} />
+            <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
+            <Route path="/refuzoNoten" element={<ProvimetNota />} />
+            <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
+            <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
 
 
-        </Routes>
-      </main>
+
+
+
+            <Route path="*" element={<Home />} />
+
+
+          </Routes>
+        </main>
     </>
   );
 }
