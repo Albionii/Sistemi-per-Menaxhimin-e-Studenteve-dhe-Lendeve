@@ -137,7 +137,12 @@ public class StudentController {
 
 
 
+    @GetMapping("/get/user/info")
+    public User getUserInfo(@RequestHeader("Authorization")String token) throws Exception {
 
+        User student = userService.findUserById(userService.findUserByJwtToken(token).getId());
+        return student;
+    }
 
 
     @GetMapping("/provimet/{lendaId}")

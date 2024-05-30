@@ -41,7 +41,7 @@ const Provimet = ({ token }) => {
 
   const fetchParaqitjet = () => {
     axios
-      .get("http://localhost:8080/student", {
+      .get("http://localhost:8080/student/provimetParaqitura", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -197,8 +197,8 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
 
   return (
     <TableRow>
-      <TableCell>{provimi.emriLendes}</TableCell>
-      <TableCell>
+      <TableCell sx={{textAlign: 'center'}}>{provimi.emriLendes}</TableCell>
+      <TableCell sx={{textAlign: 'center'}}>
         <Dropdown label={placeholder}>
           {provimi.provimet.map((item, idx) => (
             <Dropdown.Item
@@ -211,15 +211,17 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
                 )
               }
             >
+              <Typography >
               {item.ligjerata.professor.user.firstName}{" "}
               {item.ligjerata.professor.user.lastName}
+              </Typography>
             </Dropdown.Item>
           ))}
         </Dropdown>
       </TableCell>
-      <TableCell>{provimi.provimet[0]?.data}</TableCell>
-      <TableCell>{provimi.provimet[0]?.ligjerata.lenda.ects}</TableCell>
-      <TableCell>
+      <TableCell sx={{textAlign: 'center'}}>{provimi.provimet[0]?.data}</TableCell>
+      <TableCell sx={{textAlign: 'center'}}>{provimi.provimet[0]?.ligjerata.lenda.ects}</TableCell>
+      <TableCell >
         <Button
           disabled={selectedProvimiId === null}
           onClick={() => {
@@ -228,7 +230,7 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
             setPlaceholder("Zgjidh Provimin");
           }}
         >
-          Paraqit Provimin
+          <Typography>Paraqit Provimin</Typography>
         </Button>
       </TableCell>
     </TableRow>
@@ -238,14 +240,14 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
 const PaRow = ({ item, anuloParaqitjen }) => {
   return (
     <TableRow>
-      <TableCell>{item.emriLendes}</TableCell>
-      <TableCell>
+      <TableCell sx={{textAlign: 'center'}}>{item.emriLendes}</TableCell>
+      <TableCell sx={{textAlign: 'center'}}>
         {item.provimi.ligjerata.professor.user.firstName}{" "}
         {item.provimi.ligjerata.professor.user.lastName}
       </TableCell>
-      <TableCell>{item.dataParaqitjes || "null"}</TableCell>
-      <TableCell>{item.nota === 0 ? " " : item.nota}</TableCell>
-      <TableCell>
+      <TableCell sx={{textAlign: 'center'}}>{item.dataVendosjes || "null"}</TableCell>
+      <TableCell sx={{textAlign: 'center'}}>{item.nota === 0 ? " " : item.nota}</TableCell>
+      <TableCell sx={{textAlign: 'center'}}>
         <Button onClick={() => anuloParaqitjen(item.id)}>
           Anulo Paraqitjen
         </Button>

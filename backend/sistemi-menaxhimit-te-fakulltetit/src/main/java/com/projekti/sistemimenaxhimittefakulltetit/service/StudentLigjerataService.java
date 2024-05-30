@@ -57,4 +57,12 @@ public class StudentLigjerataService {
 
         return sl;
     }
+
+    public void unEnroll(Long id, Student student) throws Exception {
+        ProfesoriLenda profesoriLenda = findProfesoriLendaById(id);
+
+        Optional<StudentLigjerata> existingEnrollment = studentLigjerataRepository.findByStudentIdAndLigjerataId(student.getId(), id);
+
+        studentLigjerataRepository.delete(existingEnrollment.get());
+    }
 }

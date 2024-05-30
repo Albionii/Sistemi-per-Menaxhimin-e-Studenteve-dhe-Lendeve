@@ -7,7 +7,6 @@ const usePostimi = (ligjerataId, token) => {
   const [userInfo, setUserInfo] = useState([]);
   const [viewMyPosts, setViewMyPosts] = useState(true);
 
-
   const getPostimet = () => {
     axios
       .get(`http://localhost:8080/postimi/get/ligjerata/${ligjerataId}`, {
@@ -31,7 +30,11 @@ const usePostimi = (ligjerataId, token) => {
         },
       })
       .then(() => {
-        getPostimet();
+        if (viewMyPosts) {
+          getPostimet();
+        } else {
+          getPostimetUser();
+        }
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -50,7 +53,11 @@ const usePostimi = (ligjerataId, token) => {
         }
       )
       .then(() => {
-        getPostimet();
+        if (viewMyPosts) {
+          getPostimet();
+        } else {
+          getPostimetUser();
+        }
       })
       .catch((error) => {
         console.error("Error:" + error);
@@ -65,7 +72,11 @@ const usePostimi = (ligjerataId, token) => {
         },
       })
       .then(() => {
-        getPostimet();
+        if (viewMyPosts) {
+          getPostimet();
+        } else {
+          getPostimetUser();
+        }
       })
       .catch((error) => {
         console.log("Error: " + error);
@@ -74,7 +85,7 @@ const usePostimi = (ligjerataId, token) => {
 
   const getUserInfo = () => {
     axios
-      .get(`http://localhost:8080/api/user/get/user/info`, {
+      .get(`http://localhost:8080/student/get/user/info`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -86,27 +97,30 @@ const usePostimi = (ligjerataId, token) => {
         console.log(error);
       });
   };
-  
+
   const getPostimetUser = () => {
     axios
-      .get(`http://localhost:8080/postimi/get/user/${ligjerataId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
+      .get(`http://localhost:8080/postimi/get/user/${ligjerataId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setPostimet(response.data);
-        setViewMyPosts(!viewMyPosts)
-        if(viewMyPosts !== true) {
-          getPostimet();
-        }
       })
       .catch((error) => {
         console.error("Error:", error);
-      })
-  }
+      });
+  };
+
+  const toggleViewMyPosts = () => {
+    setViewMyPosts(!viewMyPosts);
+    if (viewMyPosts) {
+      getPostimetUser();
+    } else {
+      getPostimet();
+    }
+  };
 
   useEffect(() => {
     getPostimet();
@@ -119,7 +133,8 @@ const usePostimi = (ligjerataId, token) => {
     userInfo,
     updatePostimi,
     deletePostimi,
-    getPostimetUser
+    getPostimetUser,
+    toggleViewMyPosts,
   };
 };
 

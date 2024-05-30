@@ -30,10 +30,10 @@ public class Postimi {
     @NotNull
     private LocalDateTime data_Postimit;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Assignment> assignments;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Komenti> komentet;
 
 }

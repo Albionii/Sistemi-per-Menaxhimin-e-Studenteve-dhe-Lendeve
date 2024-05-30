@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class StudentLigjerataController {
     private final LendaService lendaService;
     private final StudentSemesterRegistrationService studentSemesterRegistrationService;
     private final VleresimiService vleresimiService;
+    private final SemesterService semesterService;
 
 
     @GetMapping("{id}")
@@ -51,10 +53,11 @@ public class StudentLigjerataController {
         vleresimiService.refuzoNoten(id);
     }
 
-    @PostMapping("enroll/{id}")
+    @PostMapping("/enroll/{id}")
     public ResponseEntity<StudentLigjerata> enrollment(
-            @RequestHeader("Authorization") String jwt,
-            @PathVariable Long id
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String jwt
+
     )throws Exception{
 
         User student1 = userService.findUserByJwtToken(jwt);
@@ -64,23 +67,32 @@ public class StudentLigjerataController {
         return new ResponseEntity<>(sl, HttpStatus.OK);
     }
 
+    @DeleteMapping("/unenroll/{id}")
+    public void unEnroll(@PathVariable Long id,
+                                     @RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+        studentLigjerataService.unEnroll(id, student);
+    }
 
-    //alternativ(Mos e shlyni)
-//    @PostMapping("course/enroll/{id}")
-//    public ResponseEntity<StudentSemester> registerStudentForCourse(@PathVariable Long id,
-//                                                      @RequestHeader("Authorization")String token) throws Exception {
-//
-//        User user = userService.findUserByJwtToken(token);
-//        Student student = studentService.findStudentByUserId(user.getId());
-//        Lenda lenda = lendaService.findLendaById(id);
+    @GetMapping("/get/enrollments/{semesterId}")
+    public List<StudentLigjerata> getEnrollments(@PathVariable Long semesterId,
+                                                 @RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Semester semester = semesterService.getSemester(semesterId);
 
+        List<StudentLigjerata> enrollments =  studentLigjerataService.findLendetByStudentId(user.getId());
 
+        List<StudentLigjerata> response = new ArrayList<>();
 
-//        StudentSemester enrollments = studentSemesterRegistrationService.EnrollStudent(lenda, student.getId());
-//
-//
-//        return new ResponseEntity<>(enrollments, HttpStatus.CREATED);
-//    }
+        for (StudentLigjerata enroll : enrollments) {
+            if(enroll.getLigjerata().getSemester().getId() == semester.getId()) {
+                response.add(enroll);
+            }
+        }
+        return response;
+    }
+
 
     @GetMapping("mesataret/{id}")
     public List<Double[]> mesataretPerNote(@PathVariable Long id){

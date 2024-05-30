@@ -53,12 +53,11 @@ const Postimi = ({ token }) => {
   }
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
- 
+
   const USER_ROLE = role;
   const location = useLocation();
   const ligjerataId = location.state?.id;
   const imageUrl = location.state?.imageUrl;
-
 
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -79,6 +78,7 @@ const Postimi = ({ token }) => {
     updatePostimi,
     deletePostimi,
     getPostimetUser,
+    toggleViewMyPosts
   } = usePostimi(ligjerataId, token);
 
   const [open, setOpen] = useState(false);
@@ -110,7 +110,11 @@ const Postimi = ({ token }) => {
 
   const [materiali, setMateriali] = useState(false);
 
+  const [postimCount, setPostimCount] = useState(10);
 
+  const loadMorePosts = () => {
+    setPostimCount((prevCount) => prevCount + 10);
+  };
 
   const handleMaterialiClick = () => {
     setMateriali(!materiali);
@@ -168,7 +172,6 @@ const Postimi = ({ token }) => {
     e.preventDefault();
     post(postimi);
     setPostimi(PostimiData);
-    console.log("success");
   };
 
   return (
@@ -289,140 +292,146 @@ const Postimi = ({ token }) => {
           </Box>
           {assignments.map((assignment) => (
             <Box key={assignment.id}>
+              <Box
+                onClick={() => {
+                  setViewAssignment(assignment);
+                  handleEditOpen();
+                }}
+                sx={{ ":hover": { cursor: "pointer" } }}
+              >
                 <Box
-                  onClick={() => {
-                    setViewAssignment(assignment);
-                    handleEditOpen();
-                  }}
-                  sx={{":hover":{cursor:"pointer"}}}
+                  display={"flex"}
+                  justifyContent={"space-between"}
+                  padding={"15px"}
+                  sx={{ background: colors.blueAccent[700] }}
+                  mb={2}
+                  borderRadius={3}
                 >
+                  <Box display={"flex"} alignItems={"center"}>
+                    <TaskIcon sx={{ marginRight: 2, fontSize: "25px" }} />
+                    <Typography variant="h5" fontWeight={"bold"}>
+                      {assignment.titulli}
+                    </Typography>
+                  </Box>
                   <Box
-                    display={"flex"}
-                    justifyContent={"space-between"}
                     padding={"15px"}
-                    sx={{ background: colors.blueAccent[700] }}
-                    mb={2}
+                    sx={{ background: colors.blueAccent[800] }}
                     borderRadius={3}
                   >
-                    <Box display={"flex"} alignItems={"center"}>
-                      <TaskIcon sx={{ marginRight: 2, fontSize: "25px" }} />
-                      <Typography variant="h5" fontWeight={"bold"}>
-                        {assignment.titulli}
-                      </Typography>
-                    </Box>
-                    <Box
-                      padding={"15px"}
-                      sx={{ background: colors.blueAccent[800] }}
-                      borderRadius={3}
-                    >
-                      <Typography>Due:</Typography>
-                      <Typography>{assignment.expireAt}</Typography>
-                    </Box>
+                    <Typography>Due:</Typography>
+                    <Typography>{assignment.expireAt}</Typography>
                   </Box>
                 </Box>
+              </Box>
 
               {viewAssignment && viewAssignment.id === assignment.id && (
-               <Modal
-               open={editOpen}
-               onClose={handleEditClose}
-               aria-labelledby="CreateAssignment"
-               aria-describedby="Assignment Creation"
-             >
-               <Box
-                p={4}
-                bgcolor={colors.primary[500]}
-                borderRadius={8}
-                boxShadow={24}
-                sx={{
-                  width: "80%",
-                  maxWidth: "800px",
-                  maxHeight: "80%",
-                  overflowY: "auto",
-                  margin: "auto",
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-               >
-                 <TaskIcon sx={{ fontSize: "50px", color: colors.blueAccent[500] }} />
-                 <Typography variant="h5" sx={{ color: "white", mb: 2 }}>
-                   {viewAssignment.titulli}
-                 </Typography>
-                 <Typography variant="body1" sx={{ color: "white", mb: 2 }}>
-                   {viewAssignment.mesazhi}
-                 </Typography>
-                 <Typography variant="body2" sx={{ color: "white", mb: 2 }}>
-                   Due date: {viewAssignment.expireAt}
-                 </Typography>
-                 <Typography variant="body2" sx={{ color: "white", mb: 2 }}>
-                   Files:
-                 </Typography>
-                 {viewAssignment.fileNames.map((fileName, index) => (
-                   <Box
-                     key={index}
-                     display="flex"
-                     alignItems="center"
-                     mb={1}
-                     sx={{ color: "white", cursor: "pointer", "&:hover": { opacity: 0.8 } }}
-                     onClick={() => handleDownload(assignment.id, fileName)}
-                   >
-                     {getFileIcon(fileName)}
-                     <Typography variant="body2" sx={{ ml: 1 }}>
-                       {extractFileName(fileName)}
-                     </Typography>
-                   </Box>
-                 ))}
-                 <Box mt={3}>
-                   {(USER_ROLE === "ROLE_PROFESSOR" || USER_ROLE === "ROLE_ADMIN") && (
-                     <Box sx={{ display: "flex", gap: "15px" }}>
-                       <Button
-                         variant="contained"
-                         color="secondary"
-                         onClick={openUpdate}
-                       >
-                         Edit
-                       </Button>
-                       <Button
-                         variant="contained"
-                         color="info"
-                         onClick={() => {
-                           setCurrentAssignmentId(viewAssignment.id);
-                           handleSubmissionsOpen();
-                         }}
-                       >
-                         View Submissions
-                       </Button>
-                       <DeleteAssignment
-                         assignmentId={viewAssignment.id}
-                         deleteAssignment={deleteAssignment}
-                       />
-                     </Box>
-                   )}
-                   {USER_ROLE === "ROLE_STUDENT" && (
-                     <HasSubmission
-                       assignmentId={viewAssignment.id}
-                       token={token}
-                       onSubmit={openCreateSubmission}
-                       updateSubmission={updateSubmission}
-                       closeEditSubmission={closeEditSubmission}
-                       submissionData={submissionData}
-                       ligjerataId={ligjerataId}
-                       editSubmission={editSubmission}
-                       viewAssignment={viewAssignment}
-                       onUpdate={openEditSubmission}
-                       hasSubmitted={hasSubmitted}
-                       setHasSubmitted={setHasSubmitted}
-                     />
-                   )}
-                 </Box>
-               </Box>
-             </Modal>
-             
+                <Modal
+                  open={editOpen}
+                  onClose={handleEditClose}
+                  aria-labelledby="CreateAssignment"
+                  aria-describedby="Assignment Creation"
+                >
+                  <Box
+                    p={4}
+                    bgcolor={colors.primary[500]}
+                    borderRadius={8}
+                    boxShadow={24}
+                    sx={{
+                      width: "80%",
+                      maxWidth: "800px",
+                      maxHeight: "80%",
+                      overflowY: "auto",
+                      margin: "auto",
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <TaskIcon
+                      sx={{ fontSize: "50px", color: colors.blueAccent[500] }}
+                    />
+                    <Typography variant="h5" sx={{ color: "white", mb: 2 }}>
+                      {viewAssignment.titulli}
+                    </Typography>
+                    <Typography variant="body1" sx={{ color: "white", mb: 2 }}>
+                      {viewAssignment.mesazhi}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "white", mb: 2 }}>
+                      Due date: {viewAssignment.expireAt}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "white", mb: 2 }}>
+                      Files:
+                    </Typography>
+                    {viewAssignment.fileNames.map((fileName, index) => (
+                      <Box
+                        key={index}
+                        display="flex"
+                        alignItems="center"
+                        mb={1}
+                        sx={{
+                          color: "white",
+                          cursor: "pointer",
+                          "&:hover": { opacity: 0.8 },
+                        }}
+                        onClick={() => handleDownload(assignment.id, fileName)}
+                      >
+                        {getFileIcon(fileName)}
+                        <Typography variant="body2" sx={{ ml: 1 }}>
+                          {extractFileName(fileName)}
+                        </Typography>
+                      </Box>
+                    ))}
+                    <Box mt={3}>
+                      {(USER_ROLE === "ROLE_PROFESSOR" ||
+                        USER_ROLE === "ROLE_ADMIN") && (
+                        <Box sx={{ display: "flex", gap: "15px" }}>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={openUpdate}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="info"
+                            onClick={() => {
+                              setCurrentAssignmentId(viewAssignment.id);
+                              handleSubmissionsOpen();
+                            }}
+                          >
+                            View Submissions
+                          </Button>
+                          <DeleteAssignment
+                            assignmentId={viewAssignment.id}
+                            deleteAssignment={deleteAssignment}
+                          />
+                        </Box>
+                      )}
+                      {USER_ROLE === "ROLE_STUDENT" && (
+                        <HasSubmission
+                          assignmentId={viewAssignment.id}
+                          token={token}
+                          onSubmit={openCreateSubmission}
+                          updateSubmission={updateSubmission}
+                          closeEditSubmission={closeEditSubmission}
+                          submissionData={submissionData}
+                          ligjerataId={ligjerataId}
+                          editSubmission={editSubmission}
+                          viewAssignment={viewAssignment}
+                          onUpdate={openEditSubmission}
+                          hasSubmitted={hasSubmitted}
+                          setHasSubmitted={setHasSubmitted}
+                        />
+                      )}
+                    </Box>
+                  </Box>
+                </Modal>
               )}
 
               {viewAssignment && (
@@ -482,7 +491,7 @@ const Postimi = ({ token }) => {
           {!materiali && (
             <IconButton
               onClick={() => {
-                handlePostFilter();
+                toggleViewMyPosts();
               }}
             >
               <FilterAltIcon />
@@ -491,17 +500,34 @@ const Postimi = ({ token }) => {
           )}
 
           {!materiali ? (
-            postimet
-              .toReversed()
-              .map((post) => (
+            <>
+              {postimet.slice(0, postimCount).map((post) => (
                 <Postim
+                  key={post.id}
                   post={post}
                   user={userInfo}
                   updatePostimi={updatePostimi}
                   deletePostimi={deletePostimi}
                   USER_ROLE={USER_ROLE}
+                  token={token}
                 />
-              ))
+              ))}
+              {postimet.length > postimCount && (
+                <Box width="100%" display="flex" justifyContent="center">
+                  <Button
+                    sx={{
+                      "&:hover": {
+                        textDecoration: "underline",
+                        textDecorationColor: "white",
+                      },
+                    }}
+                    onClick={loadMorePosts}
+                  >
+                    <Typography color="white">Show More Posts</Typography>
+                  </Button>
+                </Box>
+              )}
+            </>
           ) : (
             <Materiali ligjerataId={2} token={token} USER_ROLE={USER_ROLE} />
           )}

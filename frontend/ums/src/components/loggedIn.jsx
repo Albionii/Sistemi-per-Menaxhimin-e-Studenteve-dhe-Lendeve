@@ -41,6 +41,7 @@ import { OrbitProgress } from "react-loading-indicators";
 function loggedIn({ changeLoggedInState, token }) {
   const [sideBarInfo, setSideBarInfo] = useState(null);
 
+console.log(token);
 
   const [user, setUser] = useState({
     firstName: "",
@@ -74,7 +75,7 @@ function loggedIn({ changeLoggedInState, token }) {
             <Route path="/" element={<Home token={token} />} />
             <Route path="/dashboard" element={<Dashboard />} />
 
-            <Route path="/ligjeratat/:semestriId" element={<Ligjeratat />} />
+            <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} />} />
             <Route path="/cruds" element={<CrudCategories role={user.role} />} />
             <Route path="/transkripta" element={<Transkripta token={token} />} />
 
