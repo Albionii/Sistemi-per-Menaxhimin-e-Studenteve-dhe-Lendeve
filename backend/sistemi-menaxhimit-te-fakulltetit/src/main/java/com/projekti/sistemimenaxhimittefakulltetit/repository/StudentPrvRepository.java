@@ -16,7 +16,7 @@ public interface StudentPrvRepository extends JpaRepository<StudentProvimi, Long
 
     boolean existsByProvimiAndStudent(Provimi provimi, Student student);
 
-    StudentProvimi findByProvimi(Provimi provimi);
+    List<StudentProvimi> findByProvimi(Provimi provimi);
 
     List<StudentProvimi> findAllByStudentId(Long id);
     List<StudentProvimi> findAllStudentProvimiByProvimiId(Long provimiId);

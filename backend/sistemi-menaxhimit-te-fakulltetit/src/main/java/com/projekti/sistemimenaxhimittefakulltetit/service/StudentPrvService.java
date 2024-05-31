@@ -96,10 +96,9 @@ public class StudentPrvService {
         return studentPrvRepository.save(studentProvimi);
     }
 
-    public StudentProvimi findByProvimi(Provimi provimi) {
-        StudentProvimi studentProvimi = studentPrvRepository.findByProvimi(provimi);
+    public List<StudentProvimi> findByProvimi(Provimi provimi) {
+        return (List<StudentProvimi>) studentPrvRepository.findByProvimi(provimi);
 
-        return studentProvimi;
     }
 
     public StudentProvimi createParaqitjaProvimit(StudentProvimi studentProvimi) throws Exception {

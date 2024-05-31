@@ -26,6 +26,8 @@ public class ProvimiService {
         return provimiRepository.findAll();
     };
 
+    public List<Provimi> findAllProvimetByLigjerataId(Long id){return provimiRepository.findAllByLigjerataId(id);}
+
     public Optional<Provimi> findProvimiById(Long id){
         return provimiRepository.findById(id);
     }
@@ -86,6 +88,9 @@ public class ProvimiService {
         provimiRepository.deleteById(id);
     }
 
+    public List<Provimi> findAllProvimiByLigjerataId(Long id) {
+        return provimiRepository.findAllByLigjerataId(id);
+    }
     public Provimi findProvimiByLigjerataId(Long id) {
         return provimiRepository.findProvimiByLigjerataId(id);
     }

@@ -86,7 +86,7 @@ function Login({ changeLoggedInState }) {
                             <Label htmlFor="remember">Remember me</Label>
                         </div>
                         <Button type="submit">Submit</Button>
-                        <Link to="/">
+                        <Link to="/signup">
                             <Button as="div" outline gradientDuoTone="cyanToBlue">Sign up</Button>
                         </Link>
                     </form>
