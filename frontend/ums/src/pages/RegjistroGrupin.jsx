@@ -18,7 +18,7 @@ const RegjistroGrupin = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/grupi")
+      .get("http://localhost:8080/grupi/get")
       .then((response) => {
         console.log("Response data:", response.data);
         setGrupet(response.data);

@@ -3,10 +3,11 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.OrariLigjerataRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +48,47 @@ public class OrariLigjerataService {
 
 
         return orariLigjerataRepository.findByDita(dita, student.getId());
+    }
+
+    public List<OrariLigjerata> findAll(){
+        return orariLigjerataRepository.findAll();
+    }
+
+    public void deleteById(Long id){
+        orariLigjerataRepository.deleteById(id);
+    }
+
+    public Optional<OrariLigjerata> findById(Long id){
+        return orariLigjerataRepository.findById(id);
+    }
+
+    public OrariLigjerata create(OrariLigjerata orariLigjerata) throws Exception {
+        if(orariLigjerata == null){
+            throw new Exception("OrariLigjerata nuk duhet te jete null!");
+        }
+        OrariLigjerata orariLigjerata1 = new OrariLigjerata();
+
+        orariLigjerata1.setLigjerata(orariLigjerata.getLigjerata());
+        orariLigjerata1.setOrari(orariLigjerata.getOrari());
+        orariLigjerata1.setOra(orariLigjerata.getOra());
+        orariLigjerata1.setDita(orariLigjerata.getDita());
+        orariLigjerata1.setSalla(orariLigjerata.getSalla());
+
+        return orariLigjerataRepository.save(orariLigjerata1);
+    }
+
+    public OrariLigjerata updateById(Long id, OrariLigjerata orariLigjerata) throws Exception{
+        if(orariLigjerata == null){
+            throw new Exception("OrariLigjerata nuk duhet te jete null!");
+        }
+        OrariLigjerata orariLigjerata1 = orariLigjerataRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+
+        orariLigjerata1.setLigjerata(orariLigjerata.getLigjerata());
+        orariLigjerata1.setOrari(orariLigjerata.getOrari());
+        orariLigjerata1.setOra(orariLigjerata.getOra());
+        orariLigjerata1.setDita(orariLigjerata.getDita());
+        orariLigjerata1.setSalla(orariLigjerata.getSalla());
+
+        return orariLigjerataRepository.save(orariLigjerata1);
     }
 }

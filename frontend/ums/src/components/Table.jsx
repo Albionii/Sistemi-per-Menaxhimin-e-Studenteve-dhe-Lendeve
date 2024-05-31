@@ -86,7 +86,9 @@ const Table = ({ token }) => {
               </td>
             </tr>
           ) : (
+            
             orariLigjeratat.map((orariLigjerata, index) => (
+              
               <TableRow
                 key={index}
                 subject={orariLigjerata.ligjerata.lenda.emri}
@@ -100,8 +102,11 @@ const Table = ({ token }) => {
                 colors={colors}
                 hasBorder
               />
+              
             ))
+            
           )}
+          
         </tbody>
       </table>
     </div>

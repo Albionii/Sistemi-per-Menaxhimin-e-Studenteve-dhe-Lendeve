@@ -99,9 +99,10 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId }) => {
                   "&:hover": {
                     backgroundColor: colors.blueAccent[400],
                   },
+                  cursor: 'pointer'
                 }}
               >
-                <Box display={"flex"} justifyContent={"space-between"}>
+                <Box display={"flex"} justifyContent={"space-between"} >
                   <SchoolIcon sx={{ mr: 1, fontSize: "25px" }} />
                   <Typography variant="h4" fontWeight={"bold"}>
                     Ligjeratat
@@ -112,7 +113,7 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId }) => {
                   sx={{
                     background: 'lightgray',
                     borderRadius: 5,
-                    color: colors.blueAccent[600]
+                    color: colors.blueAccent[600],
                   }}
                 >
                   <EastIcon sx={{ fontSize: "25px" }} />

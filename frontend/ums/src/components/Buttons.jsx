@@ -1,30 +1,42 @@
-import { Grid } from "@mui/material";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Grid, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const ResponsiveButtons = () => {
-
-  const renderButtons = (text, color, Icon, link) => (
+  const renderButtons = (text, color, link, hover) => (
     <Grid item xs={12} sm={6} md={6}>
-      <Link to={link}>
-        <Button
-          startIcon={<Icon />}
-          variant="contained"
-          style={{background: color}}
-          sx={{ width: "100%", padding: "40px", margin: "10px 0" }}
+      <Link to={link} style={{ textDecoration: "none" }}>
+        <Box
+          component="div"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          bgcolor={color}
+          minHeight="60px"
+          padding="50px 20px" 
+          borderRadius="5px"
+          textAlign="center"
+          lineHeight="1.2"
+          color="#FFF"
+          cursor="pointer"
+          fontSize="13px"
+          sx={{
+            "&:hover": {
+              bgcolor: hover, // Change background color on hover
+            }
+          }}
         >
           {text}
-        </Button>
-        </Link>
-      </Grid>
-  )  
+        </Box>
+      </Link>
+    </Grid>
+  );
+
   return (
-    <Grid container spacing={2} justifyContent="center" padding={3}>
-      {renderButtons("Gjenero Transkripten", "#D40E14", DeleteIcon, '/transkripta')}
-      {renderButtons("Paraqit Provimet", "#EC6601", DeleteIcon, '/provimet')}
-      {renderButtons("Kerko Masazh nga Profesori", "#004F95", DeleteIcon, '/masazh')}
-      {renderButtons("Tento me kuptu Shkelqimin", "#B70E77", DeleteIcon, '/kuptoShkelqen')}
+    <Grid container spacing={2} justifyContent="center" p={2}>
+      {renderButtons("GJENERO TRANSKRIPTEN", "#D40E14", "/transkripta", "#B40C11")}
+      {renderButtons("PARAQIT PROVIMET", "#EC6601",  "/provimet", "#CA5701")}
+      {renderButtons("SHIKO LIGJERATAT", "#004F95",  "/ligjeratat/1", "#003D73")}
+      {renderButtons("REGJISTRO SEMESTRIN", "#B70E77", "/regjistroSemestrin", "#970C62")}
     </Grid>
   );
 };

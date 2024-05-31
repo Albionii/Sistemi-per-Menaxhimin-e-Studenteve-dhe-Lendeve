@@ -36,6 +36,10 @@ import Studentet from "../CRUD-at/Studentet.jsx";
 import AltiniCrud from "../CRUD-at/SemestriCrud.jsx";
 import NotoStudentin from "../CRUD-at/NotoStudentin.jsx";
 import { OrbitProgress } from "react-loading-indicators";
+import Grupi from "../CRUD-at/Grupi.jsx"
+import Orari from "../CRUD-at/OrariCrud.jsx"
+import Lajmi from "../CRUD-at/LajmiCrud.jsx";
+import OrariLigjerata from "../CRUD-at/OrariLigjerataCrud.jsx";
 
 
 function loggedIn({ changeLoggedInState, token }) {
@@ -148,6 +152,10 @@ console.log(token);
             <Route path="/refuzoNoten" element={<ProvimetNota />} />
             <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
             <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
+            <Route path="/grupi" element={<Grupi />} />
+            <Route path="/orari" element={<Orari />} />
+            <Route path="/lajmi" element={<Lajmi />} />
+            <Route path="/orariLigjerata" element={<OrariLigjerata />} />
 
 
 

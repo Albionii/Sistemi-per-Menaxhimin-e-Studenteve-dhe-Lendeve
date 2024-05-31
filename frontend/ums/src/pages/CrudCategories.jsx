@@ -141,8 +141,8 @@ const CrudCategories = ({roli}) => {
         )}
         {renderCategory(
           "Student",
-          ["Paraqitni Provimin", "Student 2", "Student 3", "Student 4"],
-          ["/provimet", "/student2", "/student3", "/student4"],
+          ["Paraqitni Provimin", "Regjistro Semestrin", "Regjistro Grupin", "Student 4"],
+          ["/provimet", "/regjistroSemestrin", "/regjistroGrupin", "/student4"],
           "#EC6601",
           "#bf5200",
 
@@ -150,8 +150,8 @@ const CrudCategories = ({roli}) => {
         )}
         {renderCategory(
           "Administrator",
-          ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet","Departamenti","Fakulteti","UserRoles", "Semestri"],
-          ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole", "/semestri"],
+          ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet","Departamenti","Fakulteti","UserRoles", "Semestri", "Grupi", "Orari", "Lajmi", "OrariLigjerata"],
+          ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole", "/semestri", "/grupi", "/orari", "/lajmi", "/orariLigjerata"],
           "#004F95",
           "#00396b",
           SupervisorAccountIcon

@@ -17,6 +17,5 @@ public class Grupi {
     private String emri;
 
     @ManyToOne
-    @JsonIgnore
     private Semester semester;
 }

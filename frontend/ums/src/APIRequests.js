@@ -327,3 +327,108 @@ export const updateStudentProvimiById = () => {
   const url = BASE_URL + `/student/update/`;
   return [url, "Gabim në përditësimin e semestrit!"];
 }
+
+//Grupi
+
+export const getAllGrupet = () => {
+  const url = BASE_URL + `/grupi/get`
+  return [url, "Gabim ne marrjen e grupeve!"];
+}
+
+export const getGrupiById = () => {
+  const url = BASE_URL + `/grupi/`
+  return [url, "Gabim ne marrjen e grupit!"];
+}
+
+export const updateGrupiById = () => {
+  const url = BASE_URL + `/grupi/update/`
+  return [url, "Gabim ne perditesimin e grupit"];
+}
+
+export const deleteGrupiById = () => {
+  const url = BASE_URL + `/grupi/delete/`
+  return [url, "Gabim ne fshirjen e grupit"];
+}
+
+export const createGrupi = () => {
+  const url = BASE_URL + `/grupi/create`
+  return [url, "Gabim ne krijimin e grupit"];
+}
+
+//Orari
+export const createOrari = () => {
+  const url = BASE_URL + `/orari/create`
+  return [url, "Gabim ne krijimin e orarit"];
+}
+
+export const getOrariById = () => {
+  const url = BASE_URL + `/orari/`
+  return [url, "Gabim ne marrjen e orarit!"];
+}
+
+export const updateOrariById = () => {
+  const url = BASE_URL +`/orari/update/`
+  return [url, "Gabim ne perditesimin e orari"];
+}
+
+export const deleteOrariById = () => {
+  const url = BASE_URL + `/orari/delete/`
+  return [url, "Gabim ne fshirjen e orari"];
+}
+
+export const getAllOraret = () => {
+  const url = BASE_URL + `/orari/get`
+  return [url, "Gabim ne marrjen e orareve"];
+}
+
+//Lajmi
+export const createLajmi = () => {
+  const url = BASE_URL + `/lajmet/create`
+  return [url, "Gabim ne krijimin e lajmit"];
+}
+
+export const updateLajmiById = () => {
+  const url = BASE_URL + `/lajmet/update/`
+  return [url, "Gabim ne perditesimin e lajmit"];
+}
+
+export const deleteLajmiById = () => {
+  const url = BASE_URL + `/lajmet/delete/`
+  return [url, "Gabim ne fshirjen e lajmit"];
+}
+
+export const getLajmiById = () => {
+  const url = BASE_URL + '/lajmet/getById/'
+  return [url, "Gabim ne marrjen e lajmit"];
+}
+
+export const getAllLajmet = () => {
+  const url = BASE_URL + `/lajmet/get`
+  return [url, "Gabim ne marrjen e lajmeve"];
+}
+
+//OrariLigjerata
+export const createOrariLigjerata = () => {
+  const url = BASE_URL + `/orariLigjerata/create`
+  return [url, "Gabim ne krijimin e orariLigjerates"];
+}
+
+export const updateOrariLigjerataById = () => {
+  const url = BASE_URL + `/orariLigjerata/update/`
+  return [url, "Gabim ne perditesimin e orariLigjerates"];
+}
+
+export const deleteOrariLigjerataById = () => {
+  const url = BASE_URL + `/orariLigjerata/delete/`
+  return [url, "Gabim ne fshirjen e orariLigjerates"];
+}
+
+export const getOrariLigjerataById = () => {
+  const url = BASE_URL + '/orariLigjerata/getById/'
+  return [url, "Gabim ne marrjen e orariLigjerates"];
+}
+
+export const getAllOrariLigjeratat = () => {
+  const url = BASE_URL + `/orariLigjerata/get`
+  return [url, "Gabim ne marrjen e orariLigjeratave"];
+}

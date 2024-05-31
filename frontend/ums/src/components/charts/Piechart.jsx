@@ -1,10 +1,12 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { tokens } from '../../theme';
 import { useTheme } from '@mui/material';
-import axios from "axios"
+import axios from "axios";
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
-const Pie = ({token}) => {
+const Pie = ({ token }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [countNotat, setCountNotat] = useState([]);
@@ -17,7 +19,7 @@ const Pie = ({token}) => {
             Authorization: `Bearer ${token}`
           }
         });
-        console.log(response.data)
+        console.log(response.data);
         setCountNotat(response.data);
       } catch (error) {
         console.error("There was an error fetching the notat!", error);
@@ -25,7 +27,7 @@ const Pie = ({token}) => {
     };
   
     fetchData();
-  }, []);
+  }, [token]);
 
   const options = {
     colors: ['#EC6601', '#D40E14', '#004F95', '#008B59', '#B70E77'],
@@ -39,11 +41,24 @@ const Pie = ({token}) => {
   };
 
   const series = countNotat;
+  const data = false;
 
   return (
-    <div className="pie">
-      <Chart options={options} series={series} type="pie" width="380" />
-    </div>
+    <Box
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      minWidth={"350px"}
+    >
+      {series.length > 0 ? (
+        <div className="pie">
+          <Chart options={options} series={series} type="pie" width="380" />
+        </div>
+
+      ) : (
+        <Typography alignItems={'center'}>Ju nuk keni dhene ndonje provim</Typography>
+      )}
+    </Box>
   );
 };
 
