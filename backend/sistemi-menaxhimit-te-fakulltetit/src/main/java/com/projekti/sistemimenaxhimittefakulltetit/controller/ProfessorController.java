@@ -78,7 +78,8 @@ public class ProfessorController {
     @GetMapping("/get/statistics")
     public Map<String, String> getProfesoriStatistics(@RequestHeader("Authorization")String token) throws Exception {
         Long id = userService.findUserByJwtToken(token).getId();
-        List<ProfesoriLenda> LigjerataList = profesoriLendaService.getAllProfessorLendaByProfessorID(id);
+        Professor professor = professorService.findProfessorByUserId(id);
+        List<ProfesoriLenda> LigjerataList = profesoriLendaService.getAllProfessorLendaByProfessorID(professor.getId());
         int lendaSize = LigjerataList.size();
 
         List<Provimi> provimiList = new ArrayList<Provimi>();

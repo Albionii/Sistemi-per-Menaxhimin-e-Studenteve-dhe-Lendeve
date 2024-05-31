@@ -70,7 +70,7 @@ public class ProfesoriLendaService {
     }
 
     public List<ProfesoriLenda> getAllProfessorLendaByProfessorID(Long id) {
-//        System.out.println("test : " + profesoriLendaRepository.findAllByProfessorId(id));
+        System.out.println("test : " + profesoriLendaRepository.findAllByProfessorId(id));
         return profesoriLendaRepository.findAllByProfessorId(id);
     }
 
