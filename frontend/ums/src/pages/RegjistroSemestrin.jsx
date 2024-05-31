@@ -37,7 +37,7 @@ const RegjistroSemestrin = () => {
     const fetchSemesters = async () => {
       try {
         const token = getCookieValue('Token');
-        const response = await axios.get(`http://localhost:8080/student/semesters/${userData.id}`, {
+        const response = await axios.get(`http://localhost:8080/student/semesters`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

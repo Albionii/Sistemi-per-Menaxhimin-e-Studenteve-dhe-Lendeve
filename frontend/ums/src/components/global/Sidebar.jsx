@@ -201,7 +201,7 @@ const Sidebar = ({ user }) => {
                 setSelected={setSelected}
               />
             }
-            {role === "ROLE_STUDENT" &&
+            {/* {role === "ROLE_STUDENT" && }*/}
 
               <Item
                 title="Departmentet"
@@ -210,7 +210,14 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            }
+              
+              <Item
+                title="Enrolled"
+                to="/enrolled"
+                icon={<AccountBalanceOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
 
             <Item
               title="Profili"

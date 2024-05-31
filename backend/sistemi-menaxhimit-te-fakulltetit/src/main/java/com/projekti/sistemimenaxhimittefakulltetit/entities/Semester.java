@@ -31,6 +31,7 @@ public class Semester {
     @ManyToOne
     private Departamenti departamenti;
 
+
     @OneToMany(mappedBy = "semester")
     @JsonIgnore
     private Set<StudentSemester> studentSemester;
@@ -50,5 +51,9 @@ public class Semester {
                 Objects.equals(name, other.name) &&
                 Objects.equals(startDate, other.startDate) &&
                 Objects.equals(endDate, other.endDate);
+    }
+    @Override
+    public String toString() {
+        return "Semester{id=" + id + ", name='" + name + "', startDate=" + startDate + ", endDate=" + endDate + "}";
     }
 }

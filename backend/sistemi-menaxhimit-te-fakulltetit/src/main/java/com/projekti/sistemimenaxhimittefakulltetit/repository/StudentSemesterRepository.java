@@ -16,4 +16,5 @@ public interface StudentSemesterRepository extends JpaRepository<StudentSemester
     List<StudentSemester> findAllByStudentId(Long id);
 
     StudentSemester findFirstByStudentIdOrderByRegistrationDateDesc(Long studentId);
+
 }

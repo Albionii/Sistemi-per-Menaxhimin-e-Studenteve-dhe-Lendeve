@@ -146,7 +146,7 @@ const Departmentat = () => {
     axios
       .get("http://localhost:8080/departamenti")
       .then((response)=>{
-        console.log(response.data)
+        // console.log(response.data)
         setDepartmentet(response.data)
     })
     .catch(error => {

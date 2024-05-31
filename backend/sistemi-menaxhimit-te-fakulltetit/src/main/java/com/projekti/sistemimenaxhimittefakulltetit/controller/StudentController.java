@@ -172,12 +172,16 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body(provimet);
     }
 
-    @GetMapping("/semesters/{id}")
-    public ResponseEntity<List<StudentSemester>> getSemesters(
-            @RequestHeader("Authorization") String jwt)
+    @GetMapping("/semesters")
+    public List<StudentSemester> getSemesters(
+            @RequestHeader("Authorization") String token)
  throws Exception  {
-        List<StudentSemester> semesters = studentSemesterRegistrationService.getSemesters(jwt);
-        return new ResponseEntity<>(semesters, HttpStatus.OK);
+        User user = userService.findUserByJwtToken(token);
+        Student student =studentService.findStudentByUserId(user.getId());
+
+        List<StudentSemester> semesters = studentSemesterRegistrationService.getSemesters(student);
+        System.out.println(semesters);
+        return semesters;
     }
 
 
@@ -193,7 +197,7 @@ public class StudentController {
                 .map(sp -> sp.getProvimi().getLigjerata().getLenda().getEmri())
                 .collect(Collectors.toSet());
 
-        List<StudentSemester> semesterRegistrations = studentSemesterRegistrationService.getSemesters(token);
+        List<StudentSemester> semesterRegistrations = studentSemesterRegistrationService.getSemesters(student);
         List<ProvimiResponse> responses = new ArrayList<>();
         Map<String, ProvimiResponse> provimiMap = new HashMap<>();
 

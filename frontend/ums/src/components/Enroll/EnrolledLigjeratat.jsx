@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@mui/system";
-import { tokens } from "../theme";
+import { tokens } from "../../theme";
 import { Box, Typography, Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -37,7 +37,7 @@ const CourseCard = ({
     unEnroll(id);
   };
 
-  const isEnrolled = enrollData && enrollData.some((course) => course.ligjerata && course.ligjerata.id === id);
+  const isEnrolled = enrollData.some((course) => course.ligjerata.id === id);
 
   return (
     <Card
@@ -122,6 +122,22 @@ const CourseCard = ({
               Enroll
             </Button>
           )}
+          {/* <Button
+            sx={{
+              position: "relative",
+              background: colors.blueAccent[600],
+              color: "#fff",
+              "&:hover": { background: colors.blueAccent[700] },
+              padding: "15px 30px",
+              zIndex: "50",
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              handleEnroll();
+            }}
+          >
+            Enroll
+          </Button> */}
         </CardContent>
       </CardActionArea>
     </Card>
@@ -133,14 +149,18 @@ const getRandomImage = () => {
   return `https://picsum.photos/seed/${randomIndex}/1080/720`;
 };
 
-const Ligjeratat = ({ token }) => {
+const EnrolledLigjerata = ({ token }) => {
   const [ligjerataData, setLigjerataData] = useState([]);
   const { semestriId } = useParams();
   const [enrolledData, setEnrolledData] = useState([]);
 
   const getLigjeratat = () => {
     axios
-      .get(`http://localhost:8080/professorLenda/semester/${semestriId}`)
+      .get(`http://localhost:8080/api/student/get/enrolled/${semestriId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         // console.log(response.data);
         setLigjerataData(response.data);
@@ -203,51 +223,55 @@ const Ligjeratat = ({ token }) => {
 
   return (
     <>
-      <Box m={"40px"}>
-        <div role="presentation">
-          <Breadcrumbs
-            aria-label="breadcrumb"
-            sx={{ fontSize: "16px", mb: "20px" }}
-          >
-            <Link to="/department">Shkenca Kompjuterike</Link>
-            <Link to={`/semesters/${semestriId}`}>Semestri 2</Link>
-            <Link to={"/"}>Ligjeratat</Link>
-          </Breadcrumbs>
-        </div>
+      <Box m={"40px"} >
         <Box
-          sx={{ flexGrow: 1, paddingBottom: 5 }}
+          sx={{ flexGrow: 1, paddingBottom: 5}}
           overflow="auto"
           display="flex"
           justifyContent="center"
+          
         >
-          <Grid
-            container
-            spacing={4}
-            justifyContent="center"
-            alignItems="center"
-          >
-            {ligjerataData.map((course) => (
-              <Grid item xs={12} sm={6} md={4} key={course.id}>
-                <CourseCard
-                  name={course.lenda.emri}
-                  professor={
-                    course.professor.user.firstName +
-                    " " +
-                    course.professor.user.lastName
-                  } // Adjust this based on your API response structure
-                  imageUrl={getRandomImage()}
-                  id={course.id}
-                  enroll={enroll}
-                  unEnroll={unEnroll}
-                  enrollData={enrolledData}
-                />
+          {ligjerataData.length === 0 ? (
+            <Typography variant="h4"align="center" pt="35vh">
+              You have not enrolled in any courses for this Semester!
+            </Typography>
+          ) : (
+            <Grid
+              container
+              spacing={4}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid
+                container
+                spacing={4}
+                justifyContent="center"
+                alignItems="center"
+              >
+                {ligjerataData.map((course) => (
+                  <Grid item xs={12} sm={6} md={4} key={course.id}>
+                    <CourseCard
+                      name={course.lenda.emri}
+                      professor={
+                        course.professor.user.firstName +
+                        " " +
+                        course.professor.user.lastName
+                      }
+                      imageUrl={getRandomImage()}
+                      id={course.id}
+                      enroll={enroll}
+                      unEnroll={unEnroll}
+                      enrollData={enrolledData}
+                    />
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
+            </Grid>
+          )}
         </Box>
       </Box>
     </>
   );
 };
 
-export default Ligjeratat;
+export default EnrolledLigjerata;

@@ -3,12 +3,12 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Semester;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -72,6 +72,27 @@ public class ProfesoriLendaService {
     public List<ProfesoriLenda> getAllProfessorLendaByProfessorID(Long id) {
 //        System.out.println("test : " + profesoriLendaRepository.findAllByProfessorId(id));
         return profesoriLendaRepository.findAllByProfessorId(id);
+    }
+
+    public List<ProfesoriLenda> getAllLigjerataBySemester(Professor professor, Semester semester) {
+        System.out.println(professor.getUser().getFirstName() + professor.getUser().getLastName());
+        System.out.println(semester.getName());
+        return profesoriLendaRepository.findByProfessorAndSemester(professor, semester);
+    }
+
+    public List<Semester> findSemesters(Professor professor) {
+        List<ProfesoriLenda> ligjeratata = findLendaByProfesoriIdaaaaaaaa(professor.getId());
+        List<Semester> semesters = new ArrayList<>();
+
+        for (ProfesoriLenda profesoriLenda: ligjeratata) {
+            if (semesters.isEmpty() || !semesters.contains(profesoriLenda.getSemester())) {
+                semesters.add(profesoriLenda.getSemester());
+            }
+        }
+
+        Collections.sort(semesters, Comparator.comparingLong(Semester::getId));
+
+        return semesters;
     }
 
 }

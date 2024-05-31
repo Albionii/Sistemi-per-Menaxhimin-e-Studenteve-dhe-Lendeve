@@ -75,11 +75,11 @@ public class StudentLigjerataController {
         studentLigjerataService.unEnroll(id, student);
     }
 
-    @GetMapping("/get/enrollments/{semesterId}")
-    public List<StudentLigjerata> getEnrollments(@PathVariable Long semesterId,
+    @GetMapping("/get/enrollments/{semestriId}")
+    public List<StudentLigjerata> getEnrollments(@PathVariable Long semestriId,
                                                  @RequestHeader("Authorization")String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
-        Semester semester = semesterService.getSemester(semesterId);
+        Semester semester = semesterService.getSemester(semestriId);
 
         List<StudentLigjerata> enrollments =  studentLigjerataService.findLendetByStudentId(user.getId());
 
@@ -92,6 +92,24 @@ public class StudentLigjerataController {
         }
         return response;
     }
+    @GetMapping("/get/enrolled/{semestriId}")
+    public List<ProfesoriLenda> getEnrolled(@PathVariable Long semestriId,
+                                               @RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Semester semester = semesterService.getSemester(semestriId);
+
+        List<StudentLigjerata> enrollments =  studentLigjerataService.findLendetByStudentId(user.getId());
+
+        List<ProfesoriLenda> response = new ArrayList<>();
+
+        for (StudentLigjerata enroll : enrollments) {
+            if(enroll.getLigjerata().getSemester().getId() == semester.getId()) {
+                response.add(enroll.getLigjerata());
+            }
+        }
+        return response;
+    }
+
 
 
     @GetMapping("mesataret/{id}")

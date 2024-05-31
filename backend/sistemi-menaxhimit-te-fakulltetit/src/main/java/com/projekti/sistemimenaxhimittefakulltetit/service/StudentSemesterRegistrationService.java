@@ -49,22 +49,9 @@ public class StudentSemesterRegistrationService {
         return registrationRepository.findFirstByStudentIdOrderByRegistrationDateDesc(student.getId());
     }
 
-//    public StudentSemester EnrollStudent(Lenda lenda, Long id) {
-//
-//        StudentSemester sem = registrationRepository.findByStudentId(id);
-//
-//        Set<Lenda> lendet = sem.getLendet();
-//        lendet.add(lenda);
-//        sem.setLendet(lendet);
-//
-//        registrationRepository.save(sem);
-//
-//        return sem;
-//    }
 
-    public List<StudentSemester> getSemesters(String jwt) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
-        Student student = studentService.findStudentByUserId(user.getId());
+    public List<StudentSemester> getSemesters(Student student) throws Exception {
+
         return registrationRepository.findAllByStudentId(student.getId());
     }
 }

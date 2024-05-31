@@ -11,14 +11,11 @@ public interface ProfesoriLendaRepository extends JpaRepository<ProfesoriLenda, 
 
     List<ProfesoriLenda> findAllByProfessorId(Long professorId);
     List<ProfesoriLenda> findAllByLendaId(Long id);
-
     ProfesoriLenda findByProfessorAndLenda(Professor professor, Lenda lenda);
-
     ProfesoriLenda findByAssignmentsContaining(Assignment assignment);
-
     ProfesoriLenda findByMaterialiContaining(Materiali materiali);
     ProfesoriLenda findByPostimetContaining(Postimi postimi);
-
-
     List<ProfesoriLenda> findBySemesterId(Long id);
+    List<ProfesoriLenda> findByProfessorAndSemester(Professor professor, Semester semester);
+
 }

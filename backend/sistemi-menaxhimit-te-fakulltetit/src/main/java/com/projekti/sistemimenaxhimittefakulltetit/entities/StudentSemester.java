@@ -26,4 +26,8 @@ public class StudentSemester{
     private String nderrimiOrarit;
 
     private LocalDateTime registrationDate;
+    @Override
+    public String toString() {
+        return "StudentSemester{id=" + id + ", lokacioni='" + lokacioni + "', nderrimiOrarit='" + nderrimiOrarit + "', registrationDate=" + registrationDate + "}";
+    }
 }

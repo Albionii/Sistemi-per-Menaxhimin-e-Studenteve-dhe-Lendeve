@@ -138,7 +138,7 @@ const Semestrat = () => {
     axios
       .get(`http://localhost:8080/api/admin/semester/${departamentiId}`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setSemestrat(response.data);
       })
       .catch((error) => {

@@ -36,6 +36,8 @@ import Studentet from "../CRUD-at/Studentet.jsx";
 import AltiniCrud from "../CRUD-at/SemestriCrud.jsx";
 import NotoStudentin from "../CRUD-at/NotoStudentin.jsx";
 import { OrbitProgress } from "react-loading-indicators";
+import EnrolledSemesters from "./Enroll/EnrolledSemesters.jsx";
+import EnrolledLigjerata from "./Enroll/EnrolledLigjeratat.jsx";
 import Grupi from "../CRUD-at/Grupi.jsx"
 import Orari from "../CRUD-at/OrariCrud.jsx"
 import Lajmi from "../CRUD-at/LajmiCrud.jsx";
@@ -45,7 +47,7 @@ import OrariLigjerata from "../CRUD-at/OrariLigjerataCrud.jsx";
 function loggedIn({ changeLoggedInState, token }) {
   const [sideBarInfo, setSideBarInfo] = useState(null);
 
-console.log(token);
+// console.log(token);
 
   const [user, setUser] = useState({
     firstName: "",
@@ -141,9 +143,6 @@ console.log(token);
             <Route path="/semestri" element={<AltiniCrud />} />
 
 
-
-
-
             <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
 
             <Route path="/semesters/:departamentiId" element={<Semestrat />} />
@@ -156,6 +155,10 @@ console.log(token);
             <Route path="/orari" element={<Orari />} />
             <Route path="/lajmi" element={<Lajmi />} />
             <Route path="/orariLigjerata" element={<OrariLigjerata />} />
+
+            <Route path="/enrolled/" element={<EnrolledSemesters token={token} />} />
+            <Route path="/enrolled/ligjeratat/:semestriId" element={<EnrolledLigjerata token={token} />} />
+
 
 
 
