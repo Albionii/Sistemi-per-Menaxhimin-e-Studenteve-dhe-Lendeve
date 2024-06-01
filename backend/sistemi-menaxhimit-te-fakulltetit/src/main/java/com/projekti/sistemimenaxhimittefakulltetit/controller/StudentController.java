@@ -45,6 +45,11 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(prv);
     }
 
+    @GetMapping("totalProvimet/{semesterId}")
+    public Long getProvimetCbySemester(@RequestHeader("Authorization") String token, @PathVariable Long semesterId) throws Exception{
+        return studentPrvService.countExamsByStudentAndSemester(token ,semesterId);
+    }
+
     @GetMapping("/ects")
     public ResponseEntity<Integer> getEcts(@RequestHeader("Authorization") String token) throws Exception{
         Integer ects = studentPrvService.findSumOfEctsByStudentId(token);

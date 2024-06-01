@@ -1,6 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Semester;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentProvimi;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

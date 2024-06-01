@@ -1,9 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Semester;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -63,6 +60,15 @@ public class ProfesoriLendaService {
         } else {
             return null; // Or handle the case where the product with the given id is not found
         }
+    }
+
+    public Long countLendetBySemester(Long semesterId) throws Exception{
+        List<ProfesoriLenda> lendet = getBySemesterId(semesterId);
+
+        return lendet.stream()
+                .map(ProfesoriLenda::getLenda)
+                .distinct()
+                .count();
     }
 
     public List<ProfesoriLenda> getBySemesterId(Long semesterId){

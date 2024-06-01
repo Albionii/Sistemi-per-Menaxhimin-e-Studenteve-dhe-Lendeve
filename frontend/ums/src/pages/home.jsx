@@ -17,9 +17,8 @@ import ResponsiveButtons from "../components/Buttons";
 import useTranskriptaData from "../getMesatarjaSemesterEcts";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
 import ProfesoriButtons from "../components/ProfessorButtons";
 
 const Home = ({ token }) => {
@@ -45,27 +44,32 @@ const Home = ({ token }) => {
   const [ligjeratat, setLigjeratat] = useState([]);
   const [semesters, setSemesters] = useState([]);
   const [semesterId, setSemesterId] = useState(1);
-  const [currentSemester, setCurrentSemester] = useState([]);
+  const [currentSemester, setCurrentSemester] = useState({});
+  const [studentCounts, setStudentCounts] = useState({});
 
   const handleIncrease = () => {
     if (semesterId < semesters.length) {
       setSemesterId(semesterId + 1);
-      setCurrentSemester(semesters[semesterId]);
     }
   };
 
   const handleDecrease = () => {
     if (semesterId > 1) {
       setSemesterId(semesterId - 1);
-      setCurrentSemester(semesters[semesterId - 2]);
     }
   };
 
   useEffect(() => {
     getSemesters();
-    getLigjeratatSemester(currentSemester.id);
-  }, [semesterId]);
+  }, []); 
 
+  useEffect(() => {
+    if (semesters.length > 0) {
+      const newSemester = semesters[semesterId - 1];
+      setCurrentSemester(newSemester);
+      getLigjeratatSemester(newSemester.id);
+    }
+  }, [semesterId, semesters]); 
   const getSemesters = () => {
     axios
       .get(`http://localhost:8080/professorLenda/professor/semestret/`, {
@@ -75,13 +79,28 @@ const Home = ({ token }) => {
       })
       .then((response) => {
         setSemesters(response.data);
-        if (currentSemester.length === 0) {
-          setCurrentSemester(response.data[0]);
-          getLigjeratatSemester(response.data[0].id);
+        if (response.data.length > 0) {
+          const firstSemester = response.data[0];
+          setCurrentSemester(firstSemester);
+          getLigjeratatSemester(firstSemester.id);
         }
       })
       .catch((error) => {
-        console.error("Error getting ligjeratat: " + error);
+        console.error("Error getting semesters: " + error);
+      });
+  };
+
+  const getStudentsCount = (ligjerataId) => {
+    axios
+      .get(`http://localhost:8080/api/student/count/${ligjerataId}`)
+      .then((response) => {
+        setStudentCounts((prevCounts) => ({
+          ...prevCounts,
+          [ligjerataId]: response.data,
+        }));
+      })
+      .catch((error) => {
+        console.error("Error getting student count: " + error);
       });
   };
 
@@ -94,12 +113,14 @@ const Home = ({ token }) => {
       })
       .then((response) => {
         setLigjeratat(response.data);
+        response.data.forEach((ligjerata) => {
+          getStudentsCount(ligjerata.id);
+        });
       })
       .catch((error) => {
         console.error("Error getting ligjeratat: " + error);
       });
   };
-  const [data, setData] = useState(false);
 
   return (
     <Box m="20px">
@@ -113,7 +134,7 @@ const Home = ({ token }) => {
         <Box
           gridColumn="span 12"
           backgroundColor={colors.blueAccent[400]}
-          gridRow={{ xs: "span ", md: "span 1", sm: "span 2" }}
+          gridRow={{ xs: "span", md: "span 1", sm: "span 2" }}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
@@ -166,7 +187,7 @@ const Home = ({ token }) => {
                     </Box>
                     <Box
                       pt={2}
-                      bgcolor={colors.blueAccent[700]}
+                      bgcolor={'#004F95'}
                       borderRadius={3}
                       pb={2}
                       textAlign={"center"}
@@ -197,7 +218,7 @@ const Home = ({ token }) => {
                     </Box>
                     <Box
                       pt={2}
-                      bgcolor={colors.blueAccent[700]}
+                      bgcolor={'#004F95'}
                       borderRadius={3}
                       pb={2}
                       textAlign={"center"}
@@ -227,7 +248,7 @@ const Home = ({ token }) => {
                     </Box>
                     <Box
                       pt={2}
-                      bgcolor={colors.blueAccent[700]}
+                      bgcolor={'#004F95'}
                       borderRadius={3}
                       pb={2}
                       textAlign={"center"}
@@ -358,7 +379,7 @@ const Home = ({ token }) => {
                         </Box>
                         <Box p={1} bgcolor={colors.blueAccent[900]} borderRadius={3} m={'3px'} >
                           <Typography>Students:</Typography>
-                          <Typography fontWeight={'bold'}>159</Typography>
+                          <Typography fontWeight={'bold'}>{studentCounts[ligjerata.id]}</Typography> {/* Corrected */}
                         </Box>
                         </Box>
                       </Box>
@@ -381,7 +402,7 @@ const Home = ({ token }) => {
           borderRadius={"7px"}
           backgroundColor={colors.primary[400]}
         >
-          {USER_ROLE === "ROLE_STUDENT" ? <ResponsiveButtons /> : <ProfesoriButtons/>}
+          {USER_ROLE === "ROLE_STUDENT" ? <ResponsiveButtons /> : <ProfesoriButtons />}
         </Box>
         <Box
           gridColumn={{ xs: "span 12", md: "span 7", sm: "span 12" }}

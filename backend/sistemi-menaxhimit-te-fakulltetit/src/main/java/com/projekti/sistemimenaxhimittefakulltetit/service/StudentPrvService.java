@@ -1,6 +1,7 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.SemesterRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentPrvRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -18,6 +20,8 @@ public class StudentPrvService {
     private final VleresimiService vleresimiService;
     private final UserService userService;
     private final StudentService studentService;
+    private final StudentSemesterRegistrationService studentSemesterService;
+    private final SemesterRepository semesterRepository;
 
     public StudentProvimi paraqitProvimin(Student student, Provimi prv) throws Exception {
 
@@ -49,6 +53,14 @@ public class StudentPrvService {
         User user = userService.findUserByJwtToken(jwt);
         Student student = studentService.findStudentByUserId(user.getId());
         return studentPrvRepository.findAllByStudentId(student.getId());
+    }
+
+    public Long countExamsByStudentAndSemester(String jwt, Long semesterId) throws Exception {
+        List<StudentProvimi> studentProvimiList = getByStudentId(jwt);
+
+        return studentProvimiList.stream()
+                .filter(sp -> sp.getProvimi().getLigjerata().getSemester().getId().equals(semesterId))
+                .count();
     }
 
     public Integer findSumOfEctsByStudentId(String jwt) throws Exception {

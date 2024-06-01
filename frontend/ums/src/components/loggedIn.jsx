@@ -145,7 +145,7 @@ function loggedIn({ changeLoggedInState, token }) {
 
             <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
 
-            <Route path="/semesters/:departamentiId" element={<Semestrat />} />
+            <Route path="/semesters/:departamentiId" element={<Semestrat token={token} />} />
             <Route path="/department" element={<Departmentat />} />
             <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
             <Route path="/refuzoNoten" element={<ProvimetNota />} />

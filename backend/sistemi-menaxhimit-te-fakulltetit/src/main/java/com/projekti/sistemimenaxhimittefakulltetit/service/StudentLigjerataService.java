@@ -1,9 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Student;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentLigjerata;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.StudentLigjerataRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +19,12 @@ public class StudentLigjerataService {
 
     public List<StudentLigjerata> findLendetByStudentId(Long id){
         return studentLigjerataRepository.findByStudentId(id);
+    }
+    public Long contStudentetByLigjerataId(Long id){
+        List<StudentLigjerata> ligjeratat = studentLigjerataRepository.findByLigjerataId(id);
+        return ligjeratat.stream()
+                .map(StudentLigjerata::getStudent)
+                .count();
     }
 
     public ProfesoriLenda findProfesoriLendaById(Long id) throws Exception {
