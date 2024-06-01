@@ -39,7 +39,7 @@ const Home = ({ token }) => {
   const USER_ROLE = role;
 
   const handleClick = (id, name, professor) => {
-    navigate("/postimi", { state: { id, name, professor} });
+    navigate("/postimi", { state: { id, name, professor } });
   };
 
   const [ligjeratat, setLigjeratat] = useState([]);
@@ -121,7 +121,7 @@ const Home = ({ token }) => {
           textAlign={"center"}
           padding={{ xs: "25px", sm: "45px" }}
         >
-          <SimpleSlider token={token}  />
+          <SimpleSlider token={token} />
         </Box>
 
         {/* ROW 2 */}
@@ -143,31 +143,105 @@ const Home = ({ token }) => {
               borderRadius={"7px"}
             >
               <Box>
-                <Box textAlign={"center"}>
-                  <Box bgcolor={colors.primary[600]} padding={"15px"}>
-                    <Typography variant="h4">Nota mesatare:</Typography>
+                <Box
+                  textAlign={"center"}
+                  bgcolor={colors.primary[400]}
+                  p={2}
+                  pt={2}
+                  borderRadius={"7px"}
+                >
+                  <Box
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    p={2}
+                    alignItems={"center"}
+                    bgcolor={colors.primary[500]}
+                    borderRadius={3}
+                    mb={2}
+                  >
+                    <Box>
+                      <Typography variant="h5" pl={1} fontWeight={"bold"}>
+                        Nota Mesatare:{" "}
+                      </Typography>
+                    </Box>
+                    <Box
+                      pt={2}
+                      bgcolor={colors.blueAccent[700]}
+                      borderRadius={3}
+                      pb={2}
+                      textAlign={"center"}
+                      width={"25%"}
+                    >
+                      <Typography
+                        variant="h4"
+                        fontWeight={"bold"}
+                        color={"white"}
+                      >
+                        {mesatarja}
+                      </Typography>
+                    </Box>
                   </Box>
-                  <Typography variant="h5" style={{ padding: "16px" }}>
-                    {mesatarja < 6
-                      ? "Ju nuk keni dhene ndonje provim akoma"
-                      : mesatarja}
-                  </Typography>{" "}
-                </Box>
-                <Box textAlign={"center"}>
-                  <Box bgcolor={colors.primary[600]} padding={"15px"}>
-                    <Typography variant="h4">ECTS:</Typography>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    p={2}
+                    alignItems={"center"}
+                    bgcolor={colors.primary[500]}
+                    borderRadius={3}
+                    mb={2}
+                  >
+                    <Box>
+                      <Typography variant="h5" pl={1} fontWeight={"bold"}>
+                        ECTS:{" "}
+                      </Typography>
+                    </Box>
+                    <Box
+                      pt={2}
+                      bgcolor={colors.blueAccent[700]}
+                      borderRadius={3}
+                      pb={2}
+                      textAlign={"center"}
+                      width={"25%"}
+                    >
+                      <Typography
+                        variant="h4"
+                        fontWeight={"bold"}
+                        color={"white"}
+                      >
+                        {ects}
+                      </Typography>
+                    </Box>
                   </Box>
-                  <Typography variant="h5" padding={"16px"}>
-                    {ects == 0 ? "Ju nuk keni dhene ndonje provim akoma" : ects}
-                  </Typography>
-                </Box>
-                <Box textAlign={"center"}>
-                  <Box bgcolor={colors.primary[600]} padding={"15px"}>
-                    <Typography variant="h4">Semestri:</Typography>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    p={2}
+                    alignItems={"center"}
+                    bgcolor={colors.primary[500]}
+                    borderRadius={3}
+                  >
+                    <Box>
+                      <Typography variant="h5" pl={1} fontWeight={"bold"}>
+                        Semestri:{" "}
+                      </Typography>
+                    </Box>
+                    <Box
+                      pt={2}
+                      bgcolor={colors.blueAccent[700]}
+                      borderRadius={3}
+                      pb={2}
+                      textAlign={"center"}
+                      width={"25%"}
+                    >
+                      <Typography
+                        variant="h4"
+                        fontWeight={"bold"}
+                        color={"white"}
+                      >
+                        {semester}
+                      </Typography>
+                    </Box>
                   </Box>
-                  <Typography variant="h5" padding={"16px"}>
-                    {semester}
-                  </Typography>
                 </Box>
               </Box>
             </Box>
@@ -192,7 +266,7 @@ const Home = ({ token }) => {
           </>
         ) : (
           <>
-          <Box
+            <Box
               onClick
               gridColumn={{ xs: "span 12", md: "span 5", sm: "span 12" }}
               gridRow={"span 2"}
@@ -201,81 +275,98 @@ const Home = ({ token }) => {
             >
               <Table token={token} />
             </Box>
-          <Box
-            gridColumn={{ xs: "span 12", md: "span 7", sm: "span 12" }}
-            gridRow={{ md: "span 2", xs: "span 3" }}
-            backgroundColor={colors.primary[400]}
-            borderRadius={"7px"}
-            padding="10px"
-          >
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
+              gridColumn={{ xs: "span 12", md: "span 7", sm: "span 12" }}
+              gridRow={{ md: "span 2", xs: "span 3" }}
+              backgroundColor={colors.primary[400]}
+              borderRadius={"7px"}
+              padding={1}
             >
-              <Typography variant="h3">Ligjeratat: </Typography>
               <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                p={1}
+                bgcolor={colors.primary[600]}
+                borderRadius={3}
               >
-                <Typography variant="h6">{currentSemester.name}</Typography>
-                <Box>
-                  <IconButton onClick={handleDecrease} size="small">
-                    <ArrowBackIosIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton onClick={handleIncrease} size="small">
-                    <ArrowForwardIosIcon fontSize="small" />
-                  </IconButton>
+                <Typography variant="h4">Ligjeratat: </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="h6" pl={2} pr={2} bgcolor={colors.blueAccent[700]} borderRadius={3} fontWeight={'bold'} color={'white'}>{currentSemester.name}</Typography>
+                  <Box display={'flex'} alignItems={'center'} textAlign={'center'} justifyContent={'space-between'}>
+                    <IconButton onClick={handleDecrease} size="small">
+                      <ArrowBackIosIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton onClick={handleIncrease} size="small">
+                      <ArrowForwardIosIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-            <Box mt={3}>
-              <Grid container spacing={2}>
-                {ligjeratat.map((ligjerata, index) => (
-                  <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-                    <Box
-                      onClick={() => {
-                        handleClick(ligjerata.id, ligjerata.lenda.emri, ligjerata.professor.user.firstName + " " + ligjerata.professor.user.lastName);
-                      }}
-                      underline="none"
-                      sx={{ ":hover": { cursor: "pointer" } }}
-                    >
+              <Box mt={3}>
+                <Grid container spacing={2}>
+                  {ligjeratat.map((ligjerata, index) => (
+                    <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
                       <Box
-                        bgcolor="#D40E14"
-                        p={2}
-                        textAlign="center"
-                        borderRadius={5}
-                        border={"#D40E14" + " 1.5px solid"}
-                        sx={{
-                          transition: "background-color 0.3s",
-                          "&:hover": {
-                            backgroundColor: "#D40E14",
-                          },
-                          ":hover": {
-                            cursor: "pointer",
-                            bgcolor: [colors.redAccent[600]],
-                          },
+                        onClick={() => {
+                          handleClick(
+                            ligjerata.id,
+                            ligjerata.lenda.emri,
+                            ligjerata.professor.user.firstName +
+                              " " +
+                              ligjerata.professor.user.lastName
+                          );
                         }}
-                        boxShadow="0px 2px 3px rgba(0, 0, 0, 0.2)"
+                        underline="none"
+                        sx={{ ":hover": { cursor: "pointer" } }}
                       >
-                        <Box
-                          display="flex"
-                          justifyContent="center"
-                          alignItems="center"
-                          color="#fff"
-                        >
-                          <Typography ml={1}>{ligjerata.lenda.emri}</Typography>
+                        <Box 
+                          display={'flex'}
+                          justifyContent={'space-between'}
+                          bgcolor={colors.blueAccent[800]}
+                          textAlign="center"
+                          borderRadius={3}
+                          sx={{
+                            transition: "background-color 0.3s",
+                            "&:hover": {
+                              backgroundColor: colors.blueAccent[900],
+                            },
+                            ":hover": {
+                              cursor: "pointer",
+                              bgcolor: [colors.blueAccent[900]],
+                            }
+                          }}
+                          alignItems={'center'}
+                          boxShadow="0px 2px 3px rgba(0, 0, 0, 0.2)">
+                        <Box>
+                          <Box
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            color="#fff"
+                          >
+                            <Typography ml={1} >
+                              {ligjerata.lenda.emri}
+                            </Typography>
+                          </Box>
+                        </Box>
+                        <Box p={1} bgcolor={colors.blueAccent[900]} borderRadius={3} m={'3px'} >
+                          <Typography>Students:</Typography>
+                          <Typography fontWeight={'bold'}>159</Typography>
+                        </Box>
                         </Box>
                       </Box>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
             </Box>
-          </Box>
           </>
         )}
 
@@ -290,8 +381,7 @@ const Home = ({ token }) => {
           borderRadius={"7px"}
           backgroundColor={colors.primary[400]}
         >
-          <ProfesoriButtons></ProfesoriButtons>
-          {/* <ResponsiveButtons /> */}
+          {USER_ROLE === "ROLE_STUDENT" ? <ResponsiveButtons /> : <ProfesoriButtons/>}
         </Box>
         <Box
           gridColumn={{ xs: "span 12", md: "span 7", sm: "span 12" }}
@@ -307,7 +397,6 @@ const Home = ({ token }) => {
             "--fc-button-text-color": colors.gray[100],
             "--fc-today-bg-color": colors.primary[400],
           }}
-
         >
           <Calendar token={token} />
         </Box>
