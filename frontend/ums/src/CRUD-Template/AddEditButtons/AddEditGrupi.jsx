@@ -200,7 +200,7 @@ export const GrupiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
     setSemester(e.target.value);
     setFormData({
       ...formData,
-      semester: e.target.value
+      semester: semestrat.find(f => f.id == e.target.value)
     });
   }
     
