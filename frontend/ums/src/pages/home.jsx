@@ -198,7 +198,7 @@ const Home = ({ token }) => {
                         fontWeight={"bold"}
                         color={"white"}
                       >
-                        {mesatarja}
+                        {parseFloat(mesatarja).toFixed(2)}
                       </Typography>
                     </Box>
                   </Box>

@@ -31,11 +31,8 @@ function Profili({ changeLoggedInState, user }) {
     }
 
     const [loading, setLoading] = useState(true);
-    const [shfaq, setShfaq] = useState(false);
 
-    const changeShfaq = () => {
-        setShfaq(!shfaq);
-    }
+
 
     useEffect(() => {
         if (user.firstName !== "Loading") {
@@ -56,130 +53,48 @@ function Profili({ changeLoggedInState, user }) {
 
         return (
             <>
-                <div className='m-5' style={{ height: '80svh' }}>
-                    <div className='flex h-full justify-around items-center '>
-                        <Card style={{ height: '30rem', width: '25rem', display: shfaq ? "none" : "block" }} sx={{ background: colors.primary[400], borderRadius: '8rem', }}>
-                            <div className='flex flex-col justify-between items-center h-full '>
-                                <div className='h-1/2 mt-5 w-full  flex flex-col items-center ' >
-                                    <CardMedia component="picture" style={{ maxHeight: '10rem', maxWidth: '10rem', borderRadius: '50%' }}>
-                                        <img src={Prophilepic} className='rounded-full'></img>
-                                    </CardMedia>
-                                    <div className='mt-3'>
-                                        <Typography variant="h3" color={colors.gray[100]}>
-                                            {/* {console.log(user)} */}
-                                            {user.firstName + " " + user.lastName}
-                                        </Typography>
-                                    </div>
-                                </div>
-                                <div className='h-1/2 flex flex-col gap-4'>
+                <div className='m-5' style={{ height: '88svh' }}>
+                    <div className='w-full h-full flex justify-center align-center justify-center'>
+                        <div className='w-11/12 h-full  p-2 '>
+                            <div className='flex h-full justify-around items-center align-center flex-col'>
+                                <div className='w-full h-full  flex flex-row justify-between items-center align-center '>
+                                    <Card sx={{ background: colors.primary[400] }} className='w-4/12 h-3/4'>
+                                        <div className='flex flex-col justify-between items-center h-full '>
+                                            <div className='h-1/2 mt-5 w-full  flex flex-col items-center ' >
+                                                <CardMedia component="picture" style={{ maxHeight: '10rem', maxWidth: '10rem', borderRadius: '50%' }}>
+                                                    <img src={Prophilepic} className='rounded-full'></img>
+                                                </CardMedia>
+                                                <div className='mt-3'>
+                                                    <Typography variant="h3" color={colors.gray[100]}>
+                                                        {/* {console.log(user)} */}
+                                                        {user.firstName + " " + user.lastName}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                            <div className='h-1/2 flex flex-col gap-4'>
 
-                                    <Typography variant="h4" color={colors.gray[100]}>
-                                        Viti Studimeve: 22/23
-                                    </Typography>
-                                    <Button color="info" variant="outlined" onClick={changeShfaq}>Shfaq me shume te dhena</Button>
-                                    <Button color="error" variant="outlined" onClick={logOut}>LogOut</Button>
+                                                <Typography variant="h4" color={colors.gray[100]}>
+                                                    Viti Studimeve: 22/23
+                                                </Typography>
+                                                <Button color="error" variant="outlined" onClick={logOut}>LogOut</Button>
 
+                                            </div>
+                                        </div>
+                                    </Card>
+                                    <Card sx={{ background: colors.primary[400] }} className='w-7/12 h-3/4'>
+                                        h1
+                                    </Card>
                                 </div>
+                                <div className='w-full h-full flex items-start align-center justify-start '>
+                                    <Card sx={{ background: colors.primary[400] }} className='w-full h-full'>
+
+                                    </Card>
+                                </div>
+
+                                {/* x</Card> */}
+                                {console.log(user)}
                             </div>
-
-
-
-                        </Card>
-                        <Card style={{ maxHeight: '45rem', maxWidth: '60rem', display: shfaq ? "block" : "none" }} sx={{ background: colors.primary[400], }}>
-
-                            <div style={{ maxHeight: "80svh", maxWidth: "120svh", padding: "5rem" }} className="flex flex-row justify-center items-center  content-center gap-4">
-                                <div className="flex flex-col w-full h-full items-center justify-center gap-4">
-                                    <div>
-                                        <InputLabel>Name</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.firstName}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Surname</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.lastName}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Gender</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.gjinia}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Student ID</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.id}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Email</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.email}
-                                        />
-                                    </div>
-                                    <Button color="info" variant="outlined" onClick={changeShfaq}>Back</Button>
-                                </div>
-
-                                <div className="flex flex-col items-center justify-center w-full h-full gap-4">
-                                    <div>
-                                        <InputLabel>Phone</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.nrTelefonit}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Country</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.shteti}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>City</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.qyteti}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Street</InputLabel>
-
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.rruga}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>ZIP Code</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.zipcode}
-                                        />
-                                    </div>
-                                    <Button color="error" variant="outlined" onClick={logOut}>LogOut</Button>
-                                </div>
-                            </div>
-                        </Card>
-                        {/* x</Card> */}
-                        {console.log(user)}
+                        </div>
                     </div>
                 </div>
             </>

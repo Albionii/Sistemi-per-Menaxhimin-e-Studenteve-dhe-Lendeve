@@ -49,8 +49,8 @@ public class AppConfig {
 
                 )
                 );
-                cfg.addAllowedOrigin("*");
-                cfg.setAllowCredentials(false);
+//                cfg.addAllowedOrigin("*");
+                cfg.setAllowCredentials(true);
                 cfg.setAllowedMethods(Collections.singletonList("*"));
 //                cfg.setAllowCredentials(true);
                 cfg.setAllowedHeaders(Collections.singletonList("*"));

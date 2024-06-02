@@ -11,14 +11,15 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import Authentication from "./pages/authentication.jsx";
 import LoggedIn from "./components/loggedIn.jsx";
-import { getToken} from "./GetToken.js";
+import { getToken,getFromRefreshToken} from "./GetToken.js";
 import { SignalCellularNoSimOutlined } from "@mui/icons-material";
+import { isEmptyArray } from "formik";
 
 function App() {
   const [theme, colorMode] = useMode();
 
 
-  const token = getToken();
+  const token = getFromRefreshToken();
   // console.log(getRole());
 
 
@@ -51,8 +52,11 @@ function App() {
     logginStatus = false;
   } else {
     logginStatus = true;
-
   }
+
+  console.log(typeof token === "undefined");
+  console.log("A OSHT UNDEFINED");
+  console.log(isEmptyArray(token));
 
   const [loggedIn, setLoggedIn] = useState(logginStatus);
 

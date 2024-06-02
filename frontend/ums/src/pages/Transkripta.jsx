@@ -39,7 +39,7 @@ const Transkripta = ({ token }) => {
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box borderRadius={'50%'} backgroundColor={'#d94348'} padding={'15px'}><FunctionsOutlinedIcon style={{ fontSize: 48 }}/></Box>
                         
-                        <Typography variant='h1' fontWeight={'bold'}>{mesatarja}</Typography>
+                        <Typography variant='h1' fontWeight={'bold'}>{parseFloat(mesatarja).toFixed(2)}</Typography>
                     </Box>
                 </Box>
             </Box>
