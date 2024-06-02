@@ -20,22 +20,32 @@ const CourseCard = ({
   enroll,
   unEnroll,
   enrollData,
+  index
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
+  const fixedBackgroundColors = [
+    '#FF204E', '#A0153E', '#5D0E41', '#00224D', '#6FDCE3',
+    '#FFA07A', '#20B2AA', '#87CEFA', '#778899'
+  ];
+
   const handleClick = () => {
     navigate("/postimi", { state: { imageUrl, name, professor, id } });
   };
 
-  const handleEnroll = () => {
+  const handleEnroll = (e) => {
+    e.stopPropagation();
     enroll(id);
   };
 
-  const handleUnEnroll = () => {
+  const handleUnEnroll = (e) => {
+    e.stopPropagation();
     unEnroll(id);
   };
+
+  const background = fixedBackgroundColors[index % fixedBackgroundColors.length];
 
   const isEnrolled = enrollData && enrollData.some((course) => course.ligjerata && course.ligjerata.id === id);
 
@@ -59,7 +69,7 @@ const CourseCard = ({
           component="div"
           sx={{
             height: 200,
-            backgroundImage: `url(${imageUrl})`,
+            background: background,
             backgroundSize: "cover",
             zIndex: 21,
           }}
@@ -91,16 +101,13 @@ const CourseCard = ({
             <Button
               sx={{
                 position: "relative",
-                background: colors.redAccent[500],
+                background: 'red',
                 color: "#fff",
                 "&:hover": { background: colors.redAccent[700] },
                 padding: "15px 30px",
                 zIndex: "50",
               }}
-              onClick={(e) => {
-                e.preventDefault();
-                handleUnEnroll();
-              }}
+              onClick={handleUnEnroll}
             >
               UnEnroll
             </Button>
@@ -114,10 +121,7 @@ const CourseCard = ({
                 padding: "15px 30px",
                 zIndex: "50",
               }}
-              onClick={(e) => {
-                e.preventDefault();
-                handleEnroll();
-              }}
+              onClick={handleEnroll}
             >
               Enroll
             </Button>
@@ -126,11 +130,6 @@ const CourseCard = ({
       </CardActionArea>
     </Card>
   );
-};
-
-const getRandomImage = () => {
-  const randomIndex = Math.floor(Math.random() * 1000) + 1;
-  return `https://picsum.photos/seed/${randomIndex}/1080/720`;
 };
 
 const Ligjeratat = ({ token }) => {
@@ -142,7 +141,6 @@ const Ligjeratat = ({ token }) => {
     axios
       .get(`http://localhost:8080/professorLenda/semester/${semestriId}`)
       .then((response) => {
-        // console.log(response.data);
         setLigjerataData(response.data);
         getEnroll();
       })
@@ -226,7 +224,7 @@ const Ligjeratat = ({ token }) => {
             justifyContent="center"
             alignItems="center"
           >
-            {ligjerataData.map((course) => (
+            {ligjerataData.map((course, index) => (
               <Grid item xs={12} sm={6} md={4} key={course.id}>
                 <CourseCard
                   name={course.lenda.emri}
@@ -234,12 +232,12 @@ const Ligjeratat = ({ token }) => {
                     course.professor.user.firstName +
                     " " +
                     course.professor.user.lastName
-                  } // Adjust this based on your API response structure
-                  imageUrl={getRandomImage()}
+                  } 
                   id={course.id}
                   enroll={enroll}
                   unEnroll={unEnroll}
                   enrollData={enrolledData}
+                  index={index}
                 />
               </Grid>
             ))}

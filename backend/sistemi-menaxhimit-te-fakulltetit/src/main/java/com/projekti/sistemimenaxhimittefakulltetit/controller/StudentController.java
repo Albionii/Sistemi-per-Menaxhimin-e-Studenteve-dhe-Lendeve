@@ -63,6 +63,7 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body(notat);
     }
 
+
     @GetMapping("/semestri")
     public StudentSemester getSemestri(@RequestHeader("Authorization") String token) throws Exception{
         return studentSemesterRegistrationService.findSemesterByStudent(token);
@@ -71,6 +72,11 @@ public class StudentController {
     @GetMapping("/provimetC")
     public List<StudentProvimi> getProvimetC(@RequestHeader("Authorization") String token) throws Exception{
         return studentPrvService.getByStudentId(token);
+    }
+
+    @GetMapping("/professorAVG")
+    public List<Object[]> getMesataret(@RequestHeader("Authorization") String token) throws Exception{
+        return studentPrvService.findTop4AvgByProfessor(token);
     }
 
 

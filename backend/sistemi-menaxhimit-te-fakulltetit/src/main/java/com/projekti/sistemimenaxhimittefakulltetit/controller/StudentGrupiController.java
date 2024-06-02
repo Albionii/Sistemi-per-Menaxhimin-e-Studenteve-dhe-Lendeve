@@ -3,10 +3,7 @@ package com.projekti.sistemimenaxhimittefakulltetit.controller;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentGrupi;
 import com.projekti.sistemimenaxhimittefakulltetit.service.StudentGrupiService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +17,10 @@ public class StudentGrupiController {
     @GetMapping("/{id}")
     public List<StudentGrupi> getGrupiByStudentId(@RequestHeader("Authorization")String jwt, Long id) throws Exception {
         return studentGrupiService.getGrupiByStudentId(jwt, id);
+    }
+
+    @PostMapping("/{grupiId}")
+    public StudentGrupi studentGrupi(@RequestHeader("Authorization")String jwt,@PathVariable Long grupiId) throws Exception{
+        return studentGrupiService.studentGrupi(jwt, grupiId);
     }
 }

@@ -63,6 +63,19 @@ public class StudentPrvService {
                 .count();
     }
 
+    public List<Object[]> findTop4AvgByProfessor(String jwt) throws Exception{
+        User user = userService.findUserByJwtToken(jwt);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<Object[]> results = studentPrvRepository.findTop4ProfessorAverageNotaByStudentId(student.getId());
+
+        if (results.size() > 4) {
+            return results.subList(0, 4);
+        } else {
+            return results;
+        }
+    }
+
     public Integer findSumOfEctsByStudentId(String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
         Student student = studentService.findStudentByUserId(user.getId());

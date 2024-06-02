@@ -198,7 +198,7 @@ const Home = ({ token }) => {
                         fontWeight={"bold"}
                         color={"white"}
                       >
-                        {mesatarja}
+                        {mesatarja == null ? 0 : mesatarja.toFixed(1)}
                       </Typography>
                     </Box>
                   </Box>
@@ -319,8 +319,8 @@ const Home = ({ token }) => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography variant="h6" pl={2} pr={2} bgcolor={colors.blueAccent[700]} borderRadius={3} fontWeight={'bold'} color={'white'}>{currentSemester.name}</Typography>
-                  <Box display={'flex'} alignItems={'center'} textAlign={'center'} justifyContent={'space-between'}>
+                  <Typography variant="h6" pl={2} pr={2} bgcolor={colors.blueAccent[700]} borderRadius={3} fontWeight={'bold'} color={'white'} mb={''}>{currentSemester.name}</Typography>
+                  <Box>
                     <IconButton onClick={handleDecrease} size="small">
                       <ArrowBackIosIcon fontSize="small" />
                     </IconButton>
@@ -330,7 +330,7 @@ const Home = ({ token }) => {
                   </Box>
                 </Box>
               </Box>
-              <Box mt={3}>
+              <Box mt={2}>
                 <Grid container spacing={2}>
                   {ligjeratat.map((ligjerata, index) => (
                     <Grid item xs={12} sm={6} md={6} lg={6} key={index}>

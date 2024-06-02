@@ -150,7 +150,7 @@ function loggedIn({ changeLoggedInState, token }) {
             <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
             <Route path="/refuzoNoten" element={<ProvimetNota />} />
             <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
-            <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
+            <Route path="/regjistroGrupin" element={<RegjistroGrupin token={token} />} />
             <Route path="/grupi" element={<Grupi />} />
             <Route path="/orari" element={<Orari />} />
             <Route path="/lajmi" element={<Lajmi />} />
