@@ -97,6 +97,8 @@ public class StudentLigjerataController {
         }
         return response;
     }
+
+    // Mos e shlyni se nuk asht i njejti bash i njejti sen me qito permi. :)
     @GetMapping("/get/enrolled/{semestriId}")
     public List<ProfesoriLenda> getEnrolled(@PathVariable Long semestriId,
                                                @RequestHeader("Authorization")String token) throws Exception {
@@ -114,6 +116,7 @@ public class StudentLigjerataController {
         }
         return response;
     }
+
 
 
 

@@ -37,8 +37,8 @@ const Home = ({ token }) => {
   }
   const USER_ROLE = role;
 
-  const handleClick = (id, name, professor) => {
-    navigate("/postimi", { state: { id, name, professor } });
+  const handleClick = (id, name, professor, professorId) => {
+    navigate("/postimi", { state: { id, name, professor, professorId} });
   };
 
   const [ligjeratat, setLigjeratat] = useState([]);
@@ -198,7 +198,7 @@ const Home = ({ token }) => {
                         fontWeight={"bold"}
                         color={"white"}
                       >
-                        {mesatarja == null ? 0 : mesatarja.toFixed(1)}
+                        {mesatarja == null ? 0 : mesatarja}
                       </Typography>
                     </Box>
                   </Box>
@@ -341,7 +341,8 @@ const Home = ({ token }) => {
                             ligjerata.lenda.emri,
                             ligjerata.professor.user.firstName +
                               " " +
-                              ligjerata.professor.user.lastName
+                              ligjerata.professor.user.lastName,
+                            ligjerata.professor.user.id
                           );
                         }}
                         underline="none"

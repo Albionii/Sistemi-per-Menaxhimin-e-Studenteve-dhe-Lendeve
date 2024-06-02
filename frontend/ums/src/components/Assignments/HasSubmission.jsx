@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Box } from "@mui/material";
+import { Button, Box, CircularProgress  } from "@mui/material";
 import axios from "axios";
 import UpdateSubmission from "./UpdateSubmission";
 import Modal from "@mui/material/Modal";
-
+import { OrbitProgress } from "react-loading-indicators";
 
 
 const HasSubmission = ({
@@ -19,7 +19,8 @@ const HasSubmission = ({
   hasSubmitted,
   setHasSubmitted,
 }) => {
-  // const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -31,12 +32,24 @@ const HasSubmission = ({
       .then((response) => {
         if (response.data) {
           setHasSubmitted(true);
+        } else {
+          setHasSubmitted(false);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.log("Error: " + error);
+        setLoading(false);
       });
   }, [assignmentId, token, onSubmit]);
+
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" width="100px">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -61,7 +74,6 @@ const HasSubmission = ({
           Submit
         </Button>
       )}
-
       <Modal
         open={editSubmission}
         onClose={closeEditSubmission}

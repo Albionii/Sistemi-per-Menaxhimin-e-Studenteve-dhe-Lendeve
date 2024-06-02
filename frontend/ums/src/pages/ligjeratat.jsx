@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@mui/system";
 import { tokens } from "../theme";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, CircularProgress } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -20,6 +20,9 @@ const CourseCard = ({
   enroll,
   unEnroll,
   enrollData,
+  USER_ROLE,
+  professorId,
+  loading,
   index
 }) => {
   const theme = useTheme();
@@ -31,8 +34,16 @@ const CourseCard = ({
     '#FFA07A', '#20B2AA', '#87CEFA', '#778899'
   ];
 
+
+
+  const isEnrolled =
+    enrollData &&
+    enrollData.some((course) => course.ligjerata && course.ligjerata.id === id);
+
   const handleClick = () => {
-    navigate("/postimi", { state: { imageUrl, name, professor, id } });
+    navigate("/postimi", {
+      state: { imageUrl, name, professor, id, professorId, isEnrolled },
+    });
   };
 
   const handleEnroll = (e) => {
@@ -47,7 +58,7 @@ const CourseCard = ({
 
   const background = fixedBackgroundColors[index % fixedBackgroundColors.length];
 
-  const isEnrolled = enrollData && enrollData.some((course) => course.ligjerata && course.ligjerata.id === id);
+
 
   return (
     <Card
@@ -96,35 +107,50 @@ const CourseCard = ({
               {professor}
             </Typography>
           </Box>
-
-          {isEnrolled ? (
-            <Button
-              sx={{
-                position: "relative",
-                background: 'red',
-                color: "#fff",
-                "&:hover": { background: colors.redAccent[700] },
-                padding: "15px 30px",
-                zIndex: "50",
-              }}
-              onClick={handleUnEnroll}
-            >
-              UnEnroll
-            </Button>
-          ) : (
-            <Button
-              sx={{
-                position: "relative",
-                background: colors.blueAccent[600],
-                color: "#fff",
-                "&:hover": { background: colors.blueAccent[700] },
-                padding: "15px 30px",
-                zIndex: "50",
-              }}
-              onClick={handleEnroll}
-            >
-              Enroll
-            </Button>
+          {USER_ROLE === "ROLE_STUDENT" && (
+            <>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <>
+                  {isEnrolled ? (
+                    <Button
+                      sx={{
+                        position: "relative",
+                        background: colors.redAccent[500],
+                        color: "#fff",
+                        "&:hover": { background: colors.redAccent[700] },
+                        padding: "15px 30px",
+                        zIndex: "50",
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleUnEnroll();
+                      }}
+                    >
+                      UnEnroll
+                    </Button>
+                  ) : (
+                    <Button
+                      sx={{
+                        position: "relative",
+                        background: colors.blueAccent[600],
+                        color: "#fff",
+                        "&:hover": { background: colors.blueAccent[700] },
+                        padding: "15px 30px",
+                        zIndex: "50",
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleEnroll();
+                      }}
+                    >
+                      Enroll
+                    </Button>
+                  )}
+                </>
+              )}
+            </>
           )}
         </CardContent>
       </CardActionArea>
@@ -132,10 +158,16 @@ const CourseCard = ({
   );
 };
 
-const Ligjeratat = ({ token }) => {
+const getRandomImage = () => {
+  const randomIndex = Math.floor(Math.random() * 1000) + 1;
+  return `https://picsum.photos/seed/${randomIndex}/1080/720`;
+};
+
+const Ligjeratat = ({ token, user }) => {
   const [ligjerataData, setLigjerataData] = useState([]);
   const { semestriId } = useParams();
   const [enrolledData, setEnrolledData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getLigjeratat = () => {
     axios
@@ -158,6 +190,7 @@ const Ligjeratat = ({ token }) => {
       })
       .then((response) => {
         setEnrolledData(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error: " + error);
@@ -237,6 +270,9 @@ const Ligjeratat = ({ token }) => {
                   enroll={enroll}
                   unEnroll={unEnroll}
                   enrollData={enrolledData}
+                  USER_ROLE={user}
+                  professorId={course.professor.user.id}
+                  loading={loading}
                   index={index}
                 />
               </Grid>

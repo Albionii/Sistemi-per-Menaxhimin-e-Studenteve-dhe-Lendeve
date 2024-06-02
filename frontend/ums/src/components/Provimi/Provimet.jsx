@@ -12,6 +12,7 @@ import { Box, useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { tokens } from "../../theme";
+import dayjs from "dayjs";
 
 const Provimet = ({ token }) => {
   const [provimet, setProvimet] = useState([]);
@@ -240,12 +241,13 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
 const PaRow = ({ item, anuloParaqitjen }) => {
   return (
     <TableRow>
+      {console.log(item)}
       <TableCell sx={{textAlign: 'center'}}>{item.emriLendes}</TableCell>
       <TableCell sx={{textAlign: 'center'}}>
         {item.provimi.ligjerata.professor.user.firstName}{" "}
         {item.provimi.ligjerata.professor.user.lastName}
       </TableCell>
-      <TableCell sx={{textAlign: 'center'}}>{item.dataVendosjes || "null"}</TableCell>
+      <TableCell sx={{textAlign: 'center'}}>{ dayjs(item.dataParaqitjes).format('YYYY-MM-DD/HH:mm:ss') || "null"}</TableCell>
       <TableCell sx={{textAlign: 'center'}}>{item.nota === 0 ? " " : item.nota}</TableCell>
       <TableCell sx={{textAlign: 'center'}}>
         <Button onClick={() => anuloParaqitjen(item.id)}>

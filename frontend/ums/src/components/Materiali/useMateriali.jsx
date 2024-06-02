@@ -5,6 +5,9 @@ import extractFileName from "../global/extractFileName";
 
 const useMateriali = (ligjerataId, token) => {
   const [materiali, setMateriali] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+  const [deleteNotification, setDeleteNotification] = useState(false);
+
 
   const getMateriali = () => {
     axios
@@ -35,6 +38,10 @@ const useMateriali = (ligjerataId, token) => {
       .then((response) => {
         submitFiles(formData, response.data.id);
         getMateriali();
+        setShowNotification(true);
+        setTimeout(() => {
+          setShowNotification(false);
+        }, 3000);
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -74,6 +81,10 @@ const useMateriali = (ligjerataId, token) => {
       )
       .then(() => {
         getMateriali();
+        setDeleteNotification(true);
+        setTimeout(() => {
+          setDeleteNotification(false);
+        }, 3000);
       })
       .catch((error) => {
         console.log("Error: " + error);
@@ -135,7 +146,9 @@ const useMateriali = (ligjerataId, token) => {
     createMaterial,
     deleteMaterial,
     updateMaterial,
-    downloadFile
+    downloadFile,
+    showNotification,
+    deleteNotification
   };
 };
 

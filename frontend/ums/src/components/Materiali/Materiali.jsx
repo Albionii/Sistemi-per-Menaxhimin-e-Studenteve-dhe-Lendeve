@@ -1,69 +1,90 @@
 import React from "react";
 import Material from "./Material";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import useMateriali from "./useMateriali";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import CreateMaterial from "./CreateMaterial";
-const Materiali = ({ ligjerataId, token, USER_ROLE }) => {
-  const { materiali, createMaterial, deleteMaterial, updateMaterial, downloadFile} =
-    useMateriali(ligjerataId, token);
+import CreatedNotifications from "../Notifications/CreatedNoftifications";
+import DeletedNotification from "../Notifications/DeletedNotification";
+const Materiali = ({ ligjerataId, token, USER_ROLE, user, professorId }) => {
+  const {
+    materiali,
+    createMaterial,
+    deleteMaterial,
+    updateMaterial,
+    downloadFile,
+    showNotification,
+    deleteNotification,
+  } = useMateriali(ligjerataId, token);
 
   const initialData = {
     titulli: "",
     mesazhi: "",
     fileNames: [],
   };
-
-
-
   const [create, setCreate] = useState(false);
   const openCreate = () => setCreate(true);
   const closeCreate = () => setCreate(false);
 
   return (
-    <Box>
-      {USER_ROLE !== "ROLE_STUDENT" && (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button variant="contained" color="secondary" onClick={openCreate}>
-            +
-          </Button>
-        </Box>
-      )}
+    <>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "20px",
-        }}
-      >
-        {materiali.map((material) => (
-          <Material
-            key={material.id}
-            material={material}
-            deleteMaterial={deleteMaterial}
-            updateMaterial={updateMaterial}
-            USER_ROLE={USER_ROLE}
-            downloadFile={downloadFile}
-          />
-          
-        ))}
-      </Box>
-      <Modal open={create} onClose={closeCreate}>
-        <Box sx={style}>
-          <CreateMaterial
-            onSubmit={createMaterial}
-            onClose={closeCreate}
-            initialData={initialData}
-            ligjerataId={ligjerataId}
-          />
+      <Box>
+      {showNotification && <CreatedNotifications message={"Material Created Successfully!"} />}
+      {deleteNotification && <DeletedNotification  message={"Material Deleted Succesfully!"}/>}
+
+        {USER_ROLE !== "ROLE_STUDENT" && user.id === professorId && (
+          <Box
+            sx={{ display: "flex" }}
+            justifyContent={{ xs: "center", sm: "flex-end" }}
+          >
+            <Button variant="contained" color="secondary" onClick={openCreate}>
+              +
+            </Button>
+          </Box>
+        )}
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "20px",
+          }}
+        >
+          {materiali.length === 0 ? (
+            <Box>
+              <Typography>No Material Has Been Posted!</Typography>
+            </Box>
+          ) : (
+            <>
+              {materiali.map((material) => (
+                <Material
+                  key={material.id}
+                  material={material}
+                  deleteMaterial={deleteMaterial}
+                  updateMaterial={updateMaterial}
+                  USER_ROLE={USER_ROLE}
+                  downloadFile={downloadFile}
+                />
+              ))}
+            </>
+          )}
         </Box>
-      </Modal>
-      
-    </Box>
+        <Modal open={create} onClose={closeCreate}>
+          <Box sx={style}>
+            <CreateMaterial
+              onSubmit={createMaterial}
+              onClose={closeCreate}
+              initialData={initialData}
+              ligjerataId={ligjerataId}
+            />
+          </Box>
+        </Modal>
+      </Box>
+    </>
   );
 };
 

@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
+import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -17,11 +17,11 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
-import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
-import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
-import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
+import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import SignalCellularAltOutlinedIcon from "@mui/icons-material/SignalCellularAltOutlined";
+import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
+import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -45,18 +45,20 @@ const SubItem = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <MenuItem
-      active={selected === title}
-      style={{
-        color: colors.gray[100],
-        padding: "7px 0",
-      }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-    >
-      <Typography>{title}</Typography>
-      <Link to={to} />
-    </MenuItem>
+
+      <MenuItem
+        active={selected === title}
+        style={{
+          color: colors.gray[100],
+          padding: "7px 0",
+        }}
+        onClick={() => setSelected(title)}
+        icon={icon}
+      >
+        <Typography>{title}</Typography>
+        <Link to={to} />
+      </MenuItem>
+
   );
 };
 
@@ -66,7 +68,13 @@ const Sidebar = ({ user }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const role = user.role;
-  const formattedRole = role && role.includes('_') ? role.split('_')[1].toLowerCase().replace(/^\w/, (c) => c.toUpperCase()) : '';
+  const formattedRole =
+    role && role.includes("_")
+      ? role
+          .split("_")[1]
+          .toLowerCase()
+          .replace(/^\w/, (c) => c.toUpperCase())
+      : "";
 
   useEffect(() => {
     const handleResize = () => {
@@ -86,10 +94,7 @@ const Sidebar = ({ user }) => {
     };
   }, []);
 
-
-
   return (
-
     <Box
       width={isCollapsed ? "80px" : "320px"}
       sx={{
@@ -169,7 +174,6 @@ const Sidebar = ({ user }) => {
                   {user.firstName + " " + user.lastName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-
                   {formattedRole}
                 </Typography>
               </Box>
@@ -192,7 +196,7 @@ const Sidebar = ({ user }) => {
             >
               Data
             </Typography>
-            {role === "ROLE_STUDENT" &&
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Transkripta"
                 to="/transkripta"
@@ -200,24 +204,24 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            }
+            )}
             {/* {role === "ROLE_STUDENT" && }*/}
 
-              <Item
-                title="Departmentet"
-                to="/department"
-                icon={<AccountBalanceOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              
-              <Item
-                title="Enrolled"
-                to="/enrolled"
-                icon={<AccountBalanceOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+            <Item
+              title="Departmentet"
+              to="/department"
+              icon={<AccountBalanceOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Enrolled"
+              to="/enrolled"
+              icon={<AccountBalanceOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
             <Item
               title="Profili"
@@ -268,8 +272,7 @@ const Sidebar = ({ user }) => {
             >
               Pages
             </Typography>
-            {role === "ROLE_STUDENT" &&
-
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Regjistro Semestrin"
                 to="/regjistroSemestrin"
@@ -277,9 +280,8 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            }
-            {role === "ROLE_STUDENT" &&
-
+            )}
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Regjistro Grupin"
                 to="/regjistroGrupin"
@@ -287,7 +289,7 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            }
+            )}
             <Item
               title="CRUD's"
               to="/cruds"
@@ -303,8 +305,7 @@ const Sidebar = ({ user }) => {
             >
               Charts
             </Typography>
-            {role === "ROLE_STUDENT" &&
-
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Paraqit Provimet"
                 to="/provimet"
@@ -312,7 +313,7 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            }
+            )}
             <Item
               title="Pie Chart"
               to="/pie"
