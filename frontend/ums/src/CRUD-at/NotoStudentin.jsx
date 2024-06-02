@@ -19,6 +19,8 @@ const ProvimetNota = () => {
         dataVendosjes: ""
       }
     )
+
+    const notat = [5, 6, 7, 8, 9, 10];
     
     const [provimet, setProvimet] = useState([]);
     const [provimi, setProvimi] = useState(null);
@@ -41,8 +43,12 @@ const ProvimetNota = () => {
     }
 
     const handleNota = (n) => {
-      setNota(n.target.value);
-      setFormaData({...formData, nota: n.target.value})
+      const value = n.target.value;
+      const regex = /^(5|6|7|8|9|10)?$/; 
+      if (value == '' || regex.test(value)) {
+        setNota(value);
+        setFormaData({...formData, nota: value})
+      }
     }
 
 
@@ -198,14 +204,23 @@ const ProvimetNota = () => {
                         >
                           Nota
                         </label>
-                        <input 
-                          type="number" 
-                          className="border text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 border-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                          value={nota == 0 && provimi != null? provimi.nota:nota}
-                          onInput={handleNota}
-                          placeholder='Nota'  
+                        
+                        <select
+                          // id="pr"
+                          className="border border-gray-400  text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
+                          value={nota}
+                          onChange={handleNota}
                           required
-                          />
+                        >
+                          <option value="" disabled hidden>{provimi != null ? provimi.nota:''}</option>
+                          <option value={notat[0]}>{notat[0]}</option>
+                          <option value={notat[1]}>{notat[1]}</option>
+                          <option value={notat[2]}>{notat[2]}</option>
+                          <option value={notat[3]}>{notat[3]}</option>
+                          <option value={notat[4]}>{notat[4]}</option>
+                          <option value={notat[5]}>{notat[5]}</option>
+                          
+                        </select>
                     </div>
                   </div>
                   <button

@@ -63,6 +63,8 @@ function loggedIn({ changeLoggedInState, token }) {
 
   const [loading, setLoading] = useState(false);
 
+  const transitionDuration = "0.5s";
+
 
 
   return (
@@ -75,10 +77,10 @@ function loggedIn({ changeLoggedInState, token }) {
         </div>
       </div>
         <Sidebar user={user} />
-        <main className="content">
+        <main className="flex-1 transition">
           <Topbar />
           <Routes>
-            <Route path="/" element={<Home token={token} />} />
+            <Route path="/" element={<Home token={token}/>} />
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} user={user.role}/>} />

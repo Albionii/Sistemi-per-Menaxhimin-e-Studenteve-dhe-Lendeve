@@ -8,8 +8,11 @@ import com.projekti.sistemimenaxhimittefakulltetit.request.LoginRequest;
 import com.projekti.sistemimenaxhimittefakulltetit.response.AuthResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.CostumerUserDetailsService;
 import com.projekti.sistemimenaxhimittefakulltetit.service.UserServiceImpl;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -82,7 +85,6 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateToken(authentication);
-
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage(jwt);
@@ -91,6 +93,7 @@ public class AuthController {
 
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
+
 
     @PostMapping("signin")
     public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest request){
