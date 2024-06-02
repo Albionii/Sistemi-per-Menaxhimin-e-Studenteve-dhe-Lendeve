@@ -42,12 +42,15 @@ import Grupi from "../CRUD-at/Grupi.jsx"
 import Orari from "../CRUD-at/OrariCrud.jsx"
 import Lajmi from "../CRUD-at/LajmiCrud.jsx";
 import OrariLigjerata from "../CRUD-at/OrariLigjerataCrud.jsx";
+import { getToken } from "../GetToken.js";
 
 
-function loggedIn({ changeLoggedInState, token }) {
+function loggedIn({ changeLoggedInState}) {
+  const token = getToken();
+  console.log(token);
   const [sideBarInfo, setSideBarInfo] = useState(null);
 
-  // console.log(token);
+  console.log("TOKENI TE LOGGED IN " + token);
 
   const [user, setUser] = useState({
     firstName: "",

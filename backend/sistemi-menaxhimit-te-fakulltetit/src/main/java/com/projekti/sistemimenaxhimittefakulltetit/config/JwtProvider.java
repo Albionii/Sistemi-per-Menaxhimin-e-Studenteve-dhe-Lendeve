@@ -80,7 +80,9 @@ public class JwtProvider {
     public String getEmailFromRefreshJwtToken(String jwt){
         Claims claims = null;
         try{
+            if (jwt != null){
             claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+            }
         }catch (JwtException e){
             e.printStackTrace();
         }

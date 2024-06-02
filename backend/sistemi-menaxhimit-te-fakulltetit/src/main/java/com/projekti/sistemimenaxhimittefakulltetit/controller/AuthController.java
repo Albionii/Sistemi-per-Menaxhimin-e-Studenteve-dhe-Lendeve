@@ -7,6 +7,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.repository.UserRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.LoginRequest;
 import com.projekti.sistemimenaxhimittefakulltetit.response.AuthResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.CostumerUserDetailsService;
+import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
 import com.projekti.sistemimenaxhimittefakulltetit.service.UserServiceImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private StudentRepository studentRepository;
@@ -126,6 +130,16 @@ public class AuthController {
         return null;
 //        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
     }
+    @PostMapping("/signout")
+    public ResponseEntity<AuthResponse> signout(HttpServletResponse response) {
+        Cookie refreshTokenCookie = new Cookie("refreshToken", null);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setPath("/");
+        response.addCookie(refreshTokenCookie);
+        return new ResponseEntity<>(null,HttpStatus.OK);
+
+    }
+
 
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping("signin")
@@ -143,6 +157,7 @@ public class AuthController {
         Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setMaxAge(9000);
         response.addCookie(refreshTokenCookie);
 
 
@@ -153,6 +168,17 @@ public class AuthController {
         authResponse.setRole(USER_ROLE.valueOf(role));
 
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
+    }
+    @PostMapping("/verifyjwt")
+    public ResponseEntity<User> verify (@RequestHeader("Authorization") String token){
+        User user = null;
+        System.out.println(token);
+        try {
+            user = userService.findUserByJwtToken(token);
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
     }
 
     private Authentication authenticate(String username, String password){
@@ -168,6 +194,7 @@ public class AuthController {
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
+
 
 
 }

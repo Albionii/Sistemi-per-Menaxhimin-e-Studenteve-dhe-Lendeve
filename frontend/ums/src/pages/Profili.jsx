@@ -15,7 +15,14 @@ function Profili({ changeLoggedInState, user }) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     function logOut() {
-        document.cookie = `Token=`;
+        const response = fetch('http://localhost:8080/auth/signout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        });
+        document.cookie = "Token=";
         changeLoggedInState();
     }
 

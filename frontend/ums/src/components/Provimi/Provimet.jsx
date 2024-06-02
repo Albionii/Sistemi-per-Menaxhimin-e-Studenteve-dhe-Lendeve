@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { tokens } from "../../theme";
 
 const Provimet = ({ token }) => {
+  console.log("TOKEN " +  JSON.stringify(token));
   const [provimet, setProvimet] = useState([]);
   const [paraqitjet, setParaqitjet] = useState([]);
   const theme = useTheme();
