@@ -192,7 +192,7 @@ const Transkripta = ({ token }) => {
                     {profesor[1]+" "+profesor[2]}
                   </Typography>
                 </Box>
-                <Box p={2}  textAlign={'center'} borderRadius={2} bgcolor={colors.blueAccent[800]}>
+                <Box p={2}  textAlign={'center'} borderRadius={2} bgcolor={colors.blueAccent[800]} color={'white'}>
                   <Typography fontWeight={'bold'} variant="h3">{profesor[3].toFixed(1)}</Typography>
                 </Box>
               </Box>

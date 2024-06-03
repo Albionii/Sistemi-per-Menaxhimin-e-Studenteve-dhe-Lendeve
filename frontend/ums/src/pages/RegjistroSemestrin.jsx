@@ -66,11 +66,11 @@ const RegjistroSemestrin = () => {
   };
 
   const handleSemestriChange = (event) => {
-    setSemester(event.target.value); // Updated with the value from the select component
+    setSemester(event.target.value); 
   };
 
   const handleOrariChange = (event) => {
-    setOrari(event.target.value); // Updated with the value from the select component
+    setOrari(event.target.value); 
   };
 
   const handleSubmit = () => {
@@ -80,12 +80,12 @@ const RegjistroSemestrin = () => {
     console.log(semester);
     axios.post("http://localhost:8080/api/user/semester/register", newSemester, {
       headers: {
-        'Authorization': `Bearer ${token}`, // Include the Authorization header
-        'Content-Type': 'application/json' // Set content type to JSON
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json' 
       }
     })
     .then(response => {
-      setSemestrat([...semestrat, response.data]); // Update state with new semester
+      setSemestrat([...semestrat, response.data]);
     })
     .catch(error => {
       console.error("There was an error registering the semester!", error);
@@ -166,7 +166,7 @@ const RegjistroSemestrin = () => {
                     labelId="semestri-select-label"
                     id="semestri-select"
                     value={semester}
-                    label="Semestri"
+                    label="semestri"
                     onChange={handleSemestriChange}
                   >
                     {semestriList.map(semester => (
@@ -209,6 +209,7 @@ const RegjistroSemestrin = () => {
                     },
                   }}
                   onClick={handleSubmit} 
+                  color={'white'}
                 >
                   Ruaj Ndryshimet
                 </Box>

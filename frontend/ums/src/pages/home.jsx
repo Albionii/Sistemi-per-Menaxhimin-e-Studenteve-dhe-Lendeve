@@ -378,7 +378,7 @@ const Home = ({ token }) => {
                             </Typography>
                           </Box>
                         </Box>
-                        <Box p={1} bgcolor={colors.blueAccent[900]} borderRadius={3} m={'3px'} >
+                        <Box p={1} bgcolor={colors.blueAccent[900]} borderRadius={3} m={'3px'} color={'white'}>
                           <Typography>Students:</Typography>
                           <Typography fontWeight={'bold'}>{studentCounts[ligjerata.id]}</Typography> {/* Corrected */}
                         </Box>

@@ -10,6 +10,8 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import Header from "../Header"
+import LiveClock from "../LiveClock";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 
 const Topbar = () => {
@@ -18,17 +20,25 @@ const Topbar = () => {
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
+    <Box display="flex" justifyContent="space-between" pt={2} pr={2} pl={2} pb={1}>
       {/* SEARCH BAR */}
       <Box
         display="flex"
         backgroundColor={colors.primary[400]}
+        pl={4}
+        pr={5}
+        pt={1}
+        pb={1}
         borderRadius="3px"
+        justifyContent={'space-between'}
+        alignItems={'center'}
       >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
+        <AccessTimeIcon sx={{mr: 1}}/>
+        <LiveClock></LiveClock>
+        {/* <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />
-        </IconButton>
+        </IconButton> */}
       </Box>
 
       {/* ICONS */}
@@ -40,12 +50,12 @@ const Topbar = () => {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton>
+        {/* <IconButton>
           <NotificationsOutlinedIcon />
         </IconButton>
         <IconButton>
           <SettingsOutlinedIcon />
-        </IconButton>
+        </IconButton> */}
         <Link to="/Profili">
           <IconButton >
             <PersonOutlinedIcon />

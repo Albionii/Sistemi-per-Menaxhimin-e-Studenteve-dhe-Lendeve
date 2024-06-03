@@ -22,6 +22,7 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import SignalCellularAltOutlinedIcon from "@mui/icons-material/SignalCellularAltOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import "./Sidebar.css"
 
 const Item = ({ title, to, icon, selected, setSelected, handleCollapse }) => {
@@ -223,7 +224,7 @@ const Sidebar = ({ user }) => {
               <Item
                 title="Enrolled"
                 to="/enrolled"
-                icon={<AccountBalanceOutlinedIcon />}
+                icon={<AddBoxOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
                 handleCollapse={handleCollapse}
