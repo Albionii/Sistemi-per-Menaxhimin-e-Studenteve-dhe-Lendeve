@@ -69,7 +69,7 @@ const Postimi = ({ token, user }) => {
     updateSubmission,
     downloadFile,
     showNotification,
-    deleteNotification
+    deleteNotification,
   } = useAssignments(ligjerataId, token, setHasSubmitted);
 
   const {
@@ -177,8 +177,12 @@ const Postimi = ({ token, user }) => {
 
   return (
     <>
-      {showNotification && <CreatedNoftifications message={"Assignment Created Successfully!"}/>}
-      {deleteNotification && <DeletedNotification message={"Assignment Deleted Successfully!"}/>}
+      {showNotification && (
+        <CreatedNoftifications message={"Assignment Created Successfully!"} />
+      )}
+      {deleteNotification && (
+        <DeletedNotification message={"Assignment Deleted Successfully!"} />
+      )}
       <Box
         m={4}
         display="grid"
@@ -216,7 +220,7 @@ const Postimi = ({ token, user }) => {
                 width: "100%",
                 height: "100%",
                 borderRadius: 3,
-                "&:hover": { bgcolor: colors.greenAccent[600] }
+                "&:hover": { bgcolor: colors.greenAccent[600] },
               }}
             >
               <Typography variant="h5" color={"#fff"} fontWeight={"bold"}>
@@ -274,30 +278,6 @@ const Postimi = ({ token, user }) => {
             padding={"20px"}
             borderRadius={3}
           >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              {(USER_ROLE === "ROLE_PROFESSOR" &&
-                user.id === location.state.professorId) && (
-                  <Button
-                    sx={{
-                      background: colors.greenAccent[500],
-                      borderRadius: 3,
-                      "&:hover": { bgcolor: colors.greenAccent[600] }
-                    }}
-                    variant="contained"
-                    onClick={handleOpen}
-                  >
-                    <Typography variant="h5" color={"#fff"} fontWeight={"bold"}>
-                      +
-                    </Typography>
-                  </Button>
-                )}
-            </Box>
             {assignments.length === 0 ? (
               <Box
                 sx={{
@@ -308,13 +288,42 @@ const Postimi = ({ token, user }) => {
                   alignItems: "center",
                 }}
               >
-                <Typography>No Assignments Have been uploaded !</Typography>
+                <Typography>No Assignments Have been uploaded!</Typography>
               </Box>
             ) : (
               <>
-                <Typography variant="h4" fontWeight={"bold"} mb={2}>
-                  Assignments:
-                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    mb:"10px"
+                  }}
+                >
+                  <Typography variant="h4" fontWeight={"bold"} >
+                    Assignments:
+                  </Typography>
+                  {USER_ROLE === "ROLE_PROFESSOR" &&
+                    user.id === location.state.professorId && (
+                      <Button
+                        sx={{
+                          background: colors.greenAccent[500],
+                          borderRadius: 3,
+                          "&:hover": { bgcolor: colors.greenAccent[600] },
+                        }}
+                        variant="contained"
+                        onClick={handleOpen}
+                      >
+                        <Typography
+                          variant="h5"
+                          color={"#fff"}
+                          fontWeight={"bold"}
+                        >
+                          +
+                        </Typography>
+                      </Button>
+                    )}
+                </Box>
 
                 {assignments.map((assignment) => (
                   <Box key={assignment.id}>

@@ -34,8 +34,6 @@ const CourseCard = ({
     '#FFA07A', '#20B2AA', '#87CEFA', '#778899'
   ];
 
-
-
   const isEnrolled =
     enrollData &&
     enrollData.some((course) => course.ligjerata && course.ligjerata.id === id);
@@ -58,15 +56,13 @@ const CourseCard = ({
 
   const background = fixedBackgroundColors[index % fixedBackgroundColors.length];
 
-
-
   return (
     <Card
       sx={{
         height: "100%",
         borderRadius: "8px",
         background: colors.primary[600],
-        zIndex: 20,
+        zIndex: 4,
       }}
     >
       <CardActionArea
@@ -82,7 +78,7 @@ const CourseCard = ({
             height: 200,
             background: background,
             backgroundSize: "cover",
-            zIndex: 21,
+            zIndex: 5,
           }}
         />
         <CardContent
@@ -121,11 +117,11 @@ const CourseCard = ({
                         color: "#fff",
                         "&:hover": { background: colors.redAccent[700] },
                         padding: "15px 30px",
-                        zIndex: "50",
+                        zIndex: 6,
                       }}
                       onClick={(e) => {
                         e.preventDefault();
-                        handleUnEnroll();
+                        handleUnEnroll(e);
                       }}
                     >
                       UnEnroll
@@ -142,7 +138,7 @@ const CourseCard = ({
                       }}
                       onClick={(e) => {
                         e.preventDefault();
-                        handleEnroll();
+                        handleEnroll(e);
                       }}
                     >
                       Enroll

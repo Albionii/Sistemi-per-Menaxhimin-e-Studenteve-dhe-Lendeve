@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { tokens } from "../../theme";
 import dayjs from "dayjs";
+import { ClassNames } from "@emotion/react";
 
 const Provimet = ({ token }) => {
   console.log("TOKEN " +  JSON.stringify(token));
@@ -57,12 +58,11 @@ const Provimet = ({ token }) => {
   };
 
   const refuzoNoten = (id) => {
-    try{
-
-    }catch(error){
-      console.log(error)
+    try {
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   const paraqitProvimin = (provimiId) => {
     if (provimiId) {
@@ -114,7 +114,6 @@ const Provimet = ({ token }) => {
             borderRadius: "10px",
             padding: "20px",
             flex: "1",
-            
           }}
         >
           <Typography variant="h4" align="center" gutterBottom>
@@ -122,7 +121,16 @@ const Provimet = ({ token }) => {
           </Typography>
           <TableContainer
             component={Paper}
-            sx={{ height: "400px", borderRadius: "20px", padding:"10px", overflowX:"auto", overflowY:"auto", background: colors.primary[600]}}
+            sx={{
+              borderRadius: "20px",
+              padding: "10px",
+              overflowX: "auto",
+              overflowY: "auto",
+              background: colors.primary[600],
+              "@media (max-width: 600px)": {
+                height: "300px",
+              },
+            }}
           >
             <Table>
               <TableHead>
@@ -158,7 +166,16 @@ const Provimet = ({ token }) => {
           </Typography>
           <TableContainer
             component={Paper}
-            sx={{ height: "400px", borderRadius: "20px", padding: "10px", overflowX:"auto", overflowY:"auto", background: colors.primary[600]}}
+            sx={{
+              borderRadius: "20px",
+              padding: "10px",
+              overflowX: "auto",
+              overflowY: "auto",
+              background: colors.primary[600],
+              "@media (max-width: 600px)": {
+                height: "300px",
+              },
+            }}
           >
             <Table>
               <TableHead>
@@ -200,42 +217,72 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
   };
 
   return (
-    <TableRow sx={{border: 'none'}}>
-      <TableCell sx={{textAlign: 'center', border: 'none'}}>{provimi.emriLendes}</TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Dropdown label={placeholder} >
-          {provimi.provimet.map((item, idx) => (
-            <Dropdown.Item
-              key={idx}
-              onClick={() =>
-                handleDropdownItemClick(
-                  item.id,
-                  item.ligjerata.professor.user.firstName,
-                  item.ligjerata.professor.user.lastName
-                )
-              }
-            >
-              <Typography >
-              {item.ligjerata.professor.user.firstName}{" "}
-              {item.ligjerata.professor.user.lastName}
-              </Typography>
-            </Dropdown.Item>
-          ))}
-        </Dropdown>
-      </TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none'}}>{provimi.provimet[0]?.data}</TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none'}}>{provimi.provimet[0]?.ligjerata.lenda.ects}</TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Button
-          disabled={selectedProvimiId === null}
-          onClick={() => {
-            paraqitProvimin(selectedProvimiId);
-            setSelectedProvimiId(null);
-            setPlaceholder("Zgjidh Provimin");
+    <TableRow>
+      <TableCell sx={{ textAlign: "center" }}>{provimi.emriLendes}</TableCell>
+      <TableCell sx={{ textAlign: "center" }}>
+        <Box
+          sx={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <Typography>Paraqit Provimin</Typography>
-        </Button>
+          <Dropdown
+            size="xs"
+            label={
+              <Typography fontSize={{ xs: "10px", sm: "12px" }}>
+                {placeholder}
+              </Typography>
+            }
+          >
+            {provimi.provimet.map((item, idx) => (
+              <Dropdown.Item
+                key={idx}
+                onClick={() =>
+                  handleDropdownItemClick(
+                    item.id,
+                    item.ligjerata.professor.user.firstName,
+                    item.ligjerata.professor.user.lastName
+                  )
+                }
+              >
+                <Typography
+                  sx={{ fontSize: { xs: "10px", md: "12px" } }}
+                >
+                  {item.ligjerata.professor.user.firstName}{" "}
+                  {item.ligjerata.professor.user.lastName}
+                </Typography>
+              </Dropdown.Item>
+            ))}
+          </Dropdown>
+        </Box>
+      </TableCell>
+      <TableCell sx={{ textAlign: "center" }}>
+        {provimi.provimet[0]?.data}
+      </TableCell>
+      <TableCell sx={{ textAlign: "center" }}>
+        {provimi.provimet[0]?.ligjerata.lenda.ects}
+      </TableCell>
+      <TableCell>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            size="xs"
+            disabled={selectedProvimiId === null}
+            onClick={() => {
+              paraqitProvimin(selectedProvimiId);
+              setSelectedProvimiId(null);
+              setPlaceholder("Zgjidh Provimin");
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: { xs: "10px", md: "12px" },
+              }}
+            >
+              Paraqit Provimin
+            </Typography>
+          </Button>
+        </Box>
       </TableCell>
     </TableRow>
   );
@@ -245,23 +292,48 @@ const PaRow = ({ item, anuloParaqitjen }) => {
   return (
     <TableRow>
       {console.log(item)}
-      <TableCell sx={{textAlign: 'center', border: 'none'}}>{item.emriLendes}</TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none'}}>
+      <TableCell sx={{ textAlign: "center" }}>{item.emriLendes}</TableCell>
+      <TableCell sx={{ textAlign: "center" }}>
         {item.provimi.ligjerata.professor.user.firstName}{" "}
         {item.provimi.ligjerata.professor.user.lastName}
       </TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none'}}>{ dayjs(item.dataParaqitjes).format('YYYY-MM-DD/HH:mm:ss') || "null"}</TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none'}}>{item.nota === 0 ? " " : item.nota}</TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none'}}>
-        <Button onClick={() => anuloParaqitjen(item.id)}>
-          Anulo Paraqitjen
-        </Button>
+      <TableCell sx={{ textAlign: "center" }}>
+        {dayjs(item.dataParaqitjes).format("YYYY-MM-DD/HH:mm:ss") || "null"}
       </TableCell>
-      <TableCell sx={{textAlign: 'center', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Button disabled={item.nota === 0 || item.nota === 5 || item.nota === 10} onClick={() => refuzoNoten(item.id)}>
-          Refuzo Noten
-        </Button>
+      <TableCell sx={{ textAlign: "center" }}>
+        {item.nota === 0 ? " " : item.nota}
       </TableCell>
+      <TableCell sx={{ textAlign: "center" }}>
+        <Box sx={{display:"flex", flexDirection:{sm:"row", xs:"column"}, justifyContent:{sm:"space-around", xs:"space-between"}, gap:"10px"}}>
+        <Button size="" onClick={() => anuloParaqitjen(item.id)}>
+          <Typography
+            sx={{
+              fontSize: { xs: "10px",  md: "12px" },
+              textAlign:"center",
+              paddingTop:"5px"
+            }}
+          >
+            Anulo Paraqitjen
+          </Typography>
+        </Button>
+        <Button
+          size="xs"
+          disabled={item.nota === 0 || item.nota === 5 || item.nota === 10}
+          onClick={() => refuzoNoten(item.id)}
+        >
+          <Typography
+            sx={{
+              fontSize: { xs: "10px",  md: "12px" },
+              textAlign:"center",
+              padding:"2px"
+            }}
+          >
+            Refuzo Noten
+          </Typography>
+        </Button>
+        </Box>
+      </TableCell>
+  
     </TableRow>
   );
 };

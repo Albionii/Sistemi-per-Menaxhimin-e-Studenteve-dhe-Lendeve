@@ -117,8 +117,38 @@ public class StudentLigjerataController {
         return response;
     }
 
+    @GetMapping("/get/enrollments/student")
+    public List<StudentLigjerata> getEnrollments(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<StudentLigjerata> enrollments =  studentLigjerataService.findLendetByStudentId(student.getId());
+
+        List<StudentLigjerata> response = new ArrayList<>();
+
+        for (StudentLigjerata enroll : enrollments) {
+
+                response.add(enroll);
+        }
+        return response;
+    }
 
 
+    @GetMapping("/get/enrolled/student")
+    public List<ProfesoriLenda> getStudentEnroll(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Student student = studentService.findStudentByUserId(user.getId());
+
+        List<StudentLigjerata> enrollments = studentLigjerataService.findLendetByStudentId(student.getId());
+
+        List<ProfesoriLenda> response = new ArrayList<>();
+
+        for (StudentLigjerata enroll : enrollments) {
+            response.add(enroll.getLigjerata());
+
+        }
+        return response;
+    }
 
     @GetMapping("mesataret/{id}")
     public List<Double[]> mesataretPerNote(@PathVariable Long id){

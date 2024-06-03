@@ -186,8 +186,7 @@ function loggedIn({ changeLoggedInState}) {
           <Route path="/lajmi" element={<Lajmi />} />
           <Route path="/orariLigjerata" element={<OrariLigjerata />} />
 
-          <Route path="/enrolled/" element={<EnrolledSemesters token={token} />} />
-          <Route path="/enrolled/ligjeratat/:semestriId" element={<EnrolledLigjerata token={token} />} />
+            <Route path="/enrolled" element={<EnrolledLigjerata token={token} />} />
 
 
 

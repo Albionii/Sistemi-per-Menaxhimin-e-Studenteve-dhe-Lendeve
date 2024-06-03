@@ -236,6 +236,8 @@ public class StudentController {
 
         responses.addAll(provimiMap.values());
 
+        Collections.sort(responses, Comparator.comparing(ProvimiResponse::getEmriLendes, String.CASE_INSENSITIVE_ORDER));
+
         return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
 
