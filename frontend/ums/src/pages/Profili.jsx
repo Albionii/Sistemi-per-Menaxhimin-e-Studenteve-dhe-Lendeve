@@ -31,11 +31,8 @@ function Profili({ changeLoggedInState, user }) {
     }
 
     const [loading, setLoading] = useState(true);
-    const [shfaq, setShfaq] = useState(false);
 
-    const changeShfaq = () => {
-        setShfaq(!shfaq);
-    }
+
 
     useEffect(() => {
         if (user.firstName !== "Loading") {
@@ -56,130 +53,84 @@ function Profili({ changeLoggedInState, user }) {
 
         return (
             <>
-                <div className='m-5' style={{ height: '80svh' }}>
-                    <div className='flex h-full justify-around items-center '>
-                        <Card style={{ height: '30rem', width: '25rem', display: shfaq ? "none" : "block" }} sx={{ background: colors.primary[400], borderRadius: '8rem', }}>
-                            <div className='flex flex-col justify-between items-center h-full '>
-                                <div className='h-1/2 mt-5 w-full  flex flex-col items-center ' >
-                                    <CardMedia component="picture" style={{ maxHeight: '10rem', maxWidth: '10rem', borderRadius: '50%' }}>
-                                        <img src={Prophilepic} className='rounded-full'></img>
-                                    </CardMedia>
-                                    <div className='mt-3'>
-                                        <Typography variant="h3" color={colors.gray[100]}>
-                                            {/* {console.log(user)} */}
-                                            {user.firstName + " " + user.lastName}
-                                        </Typography>
-                                    </div>
+                <div className='m-5' style={{ height: '88svh' }}>
+                    <div className='w-full h-full flex justify-center align-center justify-center'>
+                        <div className='w-11/12 h-full  p-2 '>
+                            <div className='flex h-full justify-around items-center align-center flex-col'>
+                                <div className='w-full h-full  flex flex-row justify-between items-center align-center '>
+                                    <Card sx={{ background: colors.primary[400] }} className='w-4/12 h-3/4'>
+                                        <div className='flex flex-col justify-between items-center h-full '>
+                                            <div className='h-1/2 mt-5 w-full  flex flex-col items-center ' >
+                                                <CardMedia component="picture" style={{ maxHeight: '10rem', maxWidth: '10rem', borderRadius: '50%' }}>
+                                                    <img src={Prophilepic} className='rounded-full'></img>
+                                                </CardMedia>
+                                            </div>
+                                            <div className='h-1/2 flex flex-col gap-4'>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                    <Card sx={{ background: colors.primary[400] }} className='w-7/12 h-3/4 flex justify-center items-center '>
+                                        <div className='text-xl w-full m-4'>
+                                            <table class="border-collapse border border-slate-500 ... w-full">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="w-1/2 p-4 border border-slate-700 ... ">First Name:</td>
+                                                        <td class="w-1/2 p-4 border border-slate-700 ...">{user.firstName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-1/2 p-4 border border-slate-700 ...">Last Name:</td>
+                                                        <td class="w-1/2 p-4 border border-slate-700 ...">{user.lastName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-1/2 p-4 border border-slate-700 ...">ID:</td>
+                                                        <td class="w-1/2 p-4 border border-slate-700 ...">{user.id}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-1/2 p-4 border border-slate-700 ...">Role:</td>
+                                                        <td class="w-1/2 p-4 border border-slate-700 ...">{user.role}</td>
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </Card>
                                 </div>
-                                <div className='h-1/2 flex flex-col gap-4'>
+                                <div className='w-full h-full flex items-start align-center justify-start '>
+                                    <Card sx={{ background: colors.primary[400] }} className='w-full h-full'>
+                                        <div>
+                                            <div className='m-4'>
+                                                <table class="border-collapse border border-slate-500 ... w-full ">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="w-1/2 p-4 border border-slate-700 ... ">Gender : <span className='ml-6'>{user.gjinia}</span></td>
+                                                            <td class="w-1/2 p-4 border border-slate-700 ...">Date of Birth: <span className='ml-6'>{user.dateLindja}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-1/2 p-4 border border-slate-700 ...">Email: <span className='ml-6'>{user.email}</span></td>
+                                                            <td class="w-1/2 p-4 border border-slate-700 ...">Phone:<span className='ml-6'>{user.nrTelefonit}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-1/2 p-4 border border-slate-700 ...">Country:<span className='ml-6'>{user.shteti}</span></td>
+                                                            <td class="w-1/2 p-4 border border-slate-700 ...">City:<span className='ml-6'>{user.qyteti}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-1/2 p-4 border border-slate-700 ...">ZIP:<span className='ml-6'>{user.zipcode}</span></td>
+                                                            <td class="w-1/2 p-4 border border-slate-700 ...">Address:<span className='ml-6'>{user.rruga}</span></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div className='flex justify-evenly  content-center pt-5'>
+                                                <button type="button" class="  w-44 same-size-button text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-6 py-2.5 text-center me-2 mb-5">Change Password</button>
+                                                <button type="button" class=" w-44 same-size-button text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-6 py-2.5 text-center me-2 mb-5 " onClick={logOut}>Log out</button>
 
-                                    <Typography variant="h4" color={colors.gray[100]}>
-                                        Viti Studimeve: 22/23
-                                    </Typography>
-                                    <Button color="info" variant="outlined" onClick={changeShfaq}>Shfaq me shume te dhena</Button>
-                                    <Button color="error" variant="outlined" onClick={logOut}>LogOut</Button>
-
+                                            </div>
+                                        </div>
+                                    </Card>
                                 </div>
+                                {console.log(user)}
                             </div>
-
-
-
-                        </Card>
-                        <Card style={{ maxHeight: '45rem', maxWidth: '60rem', display: shfaq ? "block" : "none" }} sx={{ background: colors.primary[400], }}>
-
-                            <div style={{ maxHeight: "80svh", maxWidth: "120svh", padding: "5rem" }} className="flex flex-row justify-center items-center  content-center gap-4">
-                                <div className="flex flex-col w-full h-full items-center justify-center gap-4">
-                                    <div>
-                                        <InputLabel>Name</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.firstName}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Surname</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.lastName}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Gender</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.gjinia}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Student ID</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.id}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Email</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.email}
-                                        />
-                                    </div>
-                                    <Button color="info" variant="outlined" onClick={changeShfaq}>Back</Button>
-                                </div>
-
-                                <div className="flex flex-col items-center justify-center w-full h-full gap-4">
-                                    <div>
-                                        <InputLabel>Phone</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.nrTelefonit}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Country</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.shteti}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>City</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.qyteti}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>Street</InputLabel>
-
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.rruga}
-                                        />
-                                    </div>
-                                    <div>
-                                        <InputLabel>ZIP Code</InputLabel>
-                                        <TextField
-                                            type="text"
-                                            inputProps={{ readOnly: true }}
-                                            value={user.zipcode}
-                                        />
-                                    </div>
-                                    <Button color="error" variant="outlined" onClick={logOut}>LogOut</Button>
-                                </div>
-                            </div>
-                        </Card>
-                        {/* x</Card> */}
-                        {console.log(user)}
+                        </div>
                     </div>
                 </div>
             </>
