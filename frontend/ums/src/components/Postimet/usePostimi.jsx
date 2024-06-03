@@ -113,6 +113,22 @@ const usePostimi = (ligjerataId, token) => {
       });
   };
 
+  
+  const getEnroll = () => {
+    axios
+      .get(`http://localhost:8080/api/student/get/enrollments/${semestriId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setEnrolledData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error: " + error);
+      });
+  };
+
   const toggleViewMyPosts = () => {
     setViewMyPosts(!viewMyPosts);
     if (viewMyPosts) {

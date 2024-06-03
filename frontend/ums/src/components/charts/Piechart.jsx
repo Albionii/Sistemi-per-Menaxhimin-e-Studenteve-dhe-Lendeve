@@ -41,7 +41,7 @@ const Pie = ({ token }) => {
   };
 
   const series = countNotat;
-  const data = false;
+  const allZero = series.every(value => value === 0);
 
   return (
     <Box
@@ -50,13 +50,13 @@ const Pie = ({ token }) => {
       justifyContent={"center"}
       minWidth={"350px"}
     >
-      {series.length > 0 ? (
+      {!allZero ? (
         <div className="pie">
           <Chart options={options} series={series} type="pie" width="380" />
         </div>
 
       ) : (
-        <Typography alignItems={'center'}>Ju nuk keni dhene ndonje provim</Typography>
+        <Typography mt={'35%'} fontWeight={'bold'} variant='h5'>Ju nuk keni dhene ndonje provim</Typography>
       )}
     </Box>
   );

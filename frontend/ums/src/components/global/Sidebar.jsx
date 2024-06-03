@@ -1,29 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
+import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+// import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
+// import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+// import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+// import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+// import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
-import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
-import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
-import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
+import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import SignalCellularAltOutlinedIcon from "@mui/icons-material/SignalCellularAltOutlined";
+import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
+import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import "./Sidebar.css"
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, to, icon, selected, setSelected, handleCollapse }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -32,7 +34,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       style={{
         color: colors.gray[100],
       }}
-      onClick={() => setSelected(title)}
+      onClick={() => {setSelected(title);handleCollapse()}}
       icon={icon}
     >
       <Typography>{title}</Typography>
@@ -45,18 +47,20 @@ const SubItem = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <MenuItem
-      active={selected === title}
-      style={{
-        color: colors.gray[100],
-        padding: "7px 0",
-      }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-    >
-      <Typography>{title}</Typography>
-      <Link to={to} />
-    </MenuItem>
+
+      <MenuItem
+        active={selected === title}
+        style={{
+          color: colors.gray[100],
+          padding: "7px 0",
+        }}
+        onClick={() => setSelected(title)}
+        icon={icon}
+      >
+        <Typography>{title}</Typography>
+        <Link to={to} />
+      </MenuItem>
+
   );
 };
 
@@ -66,7 +70,13 @@ const Sidebar = ({ user }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const role = user.role;
-  const formattedRole = role && role.includes('_') ? role.split('_')[1].toLowerCase().replace(/^\w/, (c) => c.toUpperCase()) : '';
+  const formattedRole =
+    role && role.includes("_")
+      ? role
+          .split("_")[1]
+          .toLowerCase()
+          .replace(/^\w/, (c) => c.toUpperCase())
+      : "";
 
   useEffect(() => {
     const handleResize = () => {
@@ -86,12 +96,13 @@ const Sidebar = ({ user }) => {
     };
   }, []);
 
-
+  const handleCollapse = () => {
+    setIsCollapsed(true)
+  }
 
   return (
-
     <Box
-      width={isCollapsed ? "80px" : "320px"}
+      className={`box ${isCollapsed?'collapsed':''}`} 
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
@@ -107,29 +118,24 @@ const Sidebar = ({ user }) => {
         },
         "& .pro-menu-item.active": {
           color: "#6870fa !important",
-        },
+        }
       }}
     >
-      {/* <Box width={isCollapsed ? "80px" : "270px"}> */}
       <ProSidebar
         id="sidebar"
         collapsed={isCollapsed}
-        style={{ position: "fixed" }}
-        rootstyles={{
-          position: "sticky",
-          top: 0,
-          height: "100vh",
-        }}
+        className={`prosidebar ${isCollapsed?'collapsed':''}`} 
       >
-        <Menu>
+        <Menu 
+          className={`menu ${isCollapsed?'collapsed':''}`}
+        
+          >
           {/* LOGO AND MENU ICON */}
           <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={() => {setIsCollapsed(!isCollapsed)}}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-            style={{
-              margin: "10px 0 20px 0",
-              color: colors.gray[100],
-            }}
+            style={{color: colors.gray[100]}}
+            className="menuitem"
           >
             {!isCollapsed && (
               <Box
@@ -146,6 +152,7 @@ const Sidebar = ({ user }) => {
                 </IconButton>
               </Box>
             )}
+          
           </MenuItem>
 
           {!isCollapsed && (
@@ -169,38 +176,40 @@ const Sidebar = ({ user }) => {
                   {user.firstName + " " + user.lastName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-
                   {formattedRole}
                 </Typography>
               </Box>
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          
+            <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
               to="/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+              handleCollapse={handleCollapse}
+              />
 
             <Typography
               variant="h6"
               color={colors.gray[300]}
               sx={{ m: "15px 0 5px 20px" }}
-            >
+              >
               Data
             </Typography>
-            {role === "ROLE_STUDENT" &&
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Transkripta"
                 to="/transkripta"
                 icon={<SchoolOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
-              />
-            }
+                handleCollapse={handleCollapse}
+                />
+              )}
             {/* {role === "ROLE_STUDENT" && }*/}
 
               <Item
@@ -209,15 +218,17 @@ const Sidebar = ({ user }) => {
                 icon={<AccountBalanceOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
-              />
+                handleCollapse={handleCollapse}
+                />
               
               <Item
                 title="Enrolled"
                 to="/enrolled"
-                icon={<AccountBalanceOutlinedIcon />}
+                icon={<AddBoxOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
-              />
+                handleCollapse={handleCollapse}
+                />
 
             <Item
               title="Profili"
@@ -225,59 +236,26 @@ const Sidebar = ({ user }) => {
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
-            {/* <Item
-              title="Lectures"
-              to="/ligjeratat"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-
-
-            <SubMenu title="Provimi" icon={<ReceiptOutlinedIcon />}>
-              <SubItem
-                title="Paraqit"
-                to="/provimet"
-                selected={selected}
-                setSelected={setSelected}
+              handleCollapse={handleCollapse}
               />
-
-            </SubMenu>
-            <SubMenu title="CRUD's" icon={<ReceiptOutlinedIcon />}>
-              <SubItem
-                title="Ligjeratat"
-                to="/Ligjeratat"
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <SubItem
-                title="Menaxho Users"
-                to="/MenaxhoUsers"
-                selected={selected}
-                setSelected={setSelected}
-              />
-            </SubMenu>
-            /> */}
-
+            
             <Typography
               variant="h6"
               color={colors.gray[300]}
               sx={{ m: "15px 0 5px 20px" }}
-            >
+              >
               Pages
             </Typography>
-            {role === "ROLE_STUDENT" &&
-
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Regjistro Semestrin"
                 to="/regjistroSemestrin"
                 icon={<LibraryBooksOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
-              />
-            }
+                handleCollapse={handleCollapse}
+                />
+              )}
             {role === "ROLE_STUDENT" &&
 
               <Item
@@ -286,55 +264,62 @@ const Sidebar = ({ user }) => {
                 icon={<GroupsOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
-              />
-            }
+                handleCollapse={handleCollapse}
+                />
+              }
             <Item
               title="CRUD's"
               to="/cruds"
               icon={<EditCalendarOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+              handleCollapse={handleCollapse}
+              />
 
             <Typography
               variant="h6"
               color={colors.gray[300]}
               sx={{ m: "15px 0 5px 20px" }}
-            >
+              >
               Charts
             </Typography>
-            {role === "ROLE_STUDENT" &&
-
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Paraqit Provimet"
                 to="/provimet"
                 icon={<QuizOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
-              />
-            }
+                handleCollapse={handleCollapse}
+                />
+              )}
             <Item
               title="Pie Chart"
               to="/pie"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+              handleCollapse={handleCollapse}
+              />
             <Item
               title="Line Chart"
               to="/line"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+              handleCollapse={handleCollapse}
+              />
             <Item
               title="Geography Chart"
               to="/geography"
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              handleCollapse={handleCollapse}
             />
           </Box>
+          
+          
         </Menu>
       </ProSidebar>
     </Box>

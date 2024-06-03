@@ -104,21 +104,21 @@ function loggedIn({ changeLoggedInState}) {
           </div>
         </div>
       </div>
-      <Sidebar user={user} />
-      <main className="content">
-        <Topbar />
-        <Routes>
-          <Route path="/" element={<Home token={token} />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+        <Sidebar user={user} />
+        <main className="flex-1 transition">
+          <Topbar />
+          <Routes>
+            <Route path="/" element={<Home token={token}/>} />
+            <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} />} />
-          <Route path="/cruds" element={<CrudCategories role={user.role} />} />
-          <Route path="/transkripta" element={<Transkripta token={token} />} />
+            <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} user={user.role}/>} />
+            <Route path="/cruds" element={<CrudCategories role={user.role} />} />
+            <Route path="/transkripta" element={<Transkripta token={token} />} />
 
           <Route path="/paraqitura" element={<Paraqitura token={token} />} />
 
-          <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} />} />
-          <Route path="/postimi" element={<Postimi token={token} />} />
+            <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} />} />
+            <Route path="/postimi" element={<Postimi token={token}  user={user}/>} />
 
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import axios from "axios";
 
 export default function SimpleSlider({ token }) {
@@ -22,7 +22,7 @@ export default function SimpleSlider({ token }) {
     fetchLajmet();
   }, [token]);
 
-  var settings = {
+  const settings = {
     dots: true,
     infinite: true,
     slidesToShow: 1,
@@ -34,12 +34,20 @@ export default function SimpleSlider({ token }) {
   };
 
   return (
-    <Slider {...settings} style={{ width: '100%', height: '100%', color: '#fff' }}>
-      {lajmet.map(lajmi => (
-        <Box key={lajmi.id} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-          <h3>{lajmet.length > 0 ? lajmi.mesazhi : 'Ju nuk keni regjistruar semestrin apo nuk ka lajme momentalisht'}</h3>
+    <Box style={{ width: '100%', color: '#fff' }}>
+      {lajmet.length > 0 ? (
+        <Slider {...settings}>
+          {lajmet.map(lajmi => (
+            <Box key={lajmi.id}>
+              <Typography variant="h6">{lajmi.mesazhi}</Typography>
+            </Box>
+          ))}
+        </Slider>
+      ) : (
+        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} height={'100%'}>
+          <Typography variant="h6">Ju nuk keni regjistruar semestrin apo nuk ka lajme momentalisht</Typography>
         </Box>
-      ))}
-    </Slider>
+      )}
+    </Box>
   );
 }

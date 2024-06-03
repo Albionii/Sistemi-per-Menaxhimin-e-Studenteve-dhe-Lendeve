@@ -1,10 +1,14 @@
 package com.projekti.sistemimenaxhimittefakulltetit.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Data
+@RequiredArgsConstructor
 public class StudentGrupi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +23,9 @@ public class StudentGrupi {
     private Grupi grupi;
 
     private LocalDateTime registrationDate;
+
+    @PrePersist
+    protected void onCreateDataParaqitjes() {
+        registrationDate = LocalDateTime.now();
+    }
 }

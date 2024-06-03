@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ConfirmationModal from "./ConfirmationModal";
 import extractFileName from "../global/extractFileName";
+import DeletedNotification from "../Notifications/DeletedNotification";
 
 const useAssignments = (ligjerataId, token, setHasSubmitted) => {
   const [assignments, setAssignments] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+  const [deleteNotification, setDeleteNotification] = useState(false);
+
 
   const getAssignments = () => {
     axios
@@ -39,6 +43,10 @@ const useAssignments = (ligjerataId, token, setHasSubmitted) => {
         let pointer = response.data;
         submitFiles(formData, pointer.id);
         getAssignments();
+        setShowNotification(true);
+        setTimeout(() => {
+          setShowNotification(false);
+        }, 3000);
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -104,6 +112,10 @@ const useAssignments = (ligjerataId, token, setHasSubmitted) => {
       )
       .then(() => {
         getAssignments();
+        setDeleteNotification(true);
+        setTimeout(() => {
+          setDeleteNotification(false);
+        }, 3000);
         if (callback) {
           callback();
         }
@@ -187,7 +199,6 @@ const useAssignments = (ligjerataId, token, setHasSubmitted) => {
       .then((response) => {
         submissionFiles(formData, assignmentId, response.data.id);
         setHasSubmitted(true);
-        console.log("success");
         return true;
       })
       .catch((error) => {
@@ -230,6 +241,8 @@ const useAssignments = (ligjerataId, token, setHasSubmitted) => {
     submitAssignment,
     updateSubmission,
     downloadFile,
+    showNotification,
+    deleteNotification,
   };
 };
 

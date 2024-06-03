@@ -172,7 +172,7 @@ const EnrolledSemesters = ({ token }) => {
 
         {semestrat.length === 0 ? (
           <Typography variant="h4" align="center" pt="40vh">
-            You have no Enrollments for this Semester!
+            You need to Register a semester to have access to your enrollments!
           </Typography>
         ) : (
           <Grid container spacing={3}>

@@ -227,15 +227,15 @@ const About = () => {
       </div>
       <div className='h-auto lg:h-screen  overflow-scroll flex flex-col justify-end items-center'>
         <div className='w-full flex items-center justify-evenly h-full  flex-col-reverse lg:flex-row '>
-          <Card className="max-w-sm mb-5 lg:mb-0">
-            <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Mire se vini ne SEMS</h5>
-            <p className="mb-5 text-base text-gray-500 dark:text-gray-400 sm:text-lg">
+          <Card className="max-w-sm mb-5 lg:mb-0" style={{background: colors.primary[400], borderColor: colors.primary[600]}}> 
+            <h5 className="mb-2 text-3xl font-bold">Mire se vini ne SEMS</h5>
+            <p className="mb-5 text-base sm:text-lg">
               Mirë se vini në platformën tonë për shkëmbimin e notave dhe komunikimin efikas midis studentëve dhe profesorëve. Monitoroni përparimin, merrni feedback dhe menaxhoni notat në një mjedis të përshtatur për nevojat tuaja akademike. Bashkohuni me ne për një eksperiencë të përmirësuar të arsimit!
             </p>
             <div className="items-center justify-center space-y-4 sm:flex sm:space-x-4 sm:space-y-0">
               <a
                 href="#"
-                className="inline-flex w-full items-center justify-center rounded-lg bg-gray-800 px-4 py-2.5 text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-lg px-4 py-2.5 text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300  dark:focus:ring-gray-700 sm:w-auto" style={{background: colors.primary[600], color: colors.gray[200]}}
               >
                 <svg
                   className="mr-3 h-7 w-7"
@@ -259,7 +259,7 @@ const About = () => {
               </a>
               <a
                 href="#"
-                className="inline-flex w-full items-center justify-center rounded-lg bg-gray-800 px-4 py-2.5 text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-lg px-4 py-2.5 text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300  dark:focus:ring-gray-700 sm:w-auto" style={{background: colors.primary[600], color: colors.gray[200]}}
               >
                 <svg
                   className="mr-3 h-7 w-7"
@@ -283,26 +283,26 @@ const About = () => {
               </a>
             </div>
           </Card>
-          <Card className='mb-4 lg:mb-0 mt-5 lg:mt-0 '>
-            <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white text-center">Krijo nje account!</h5>
+          <Card className='mb-4 lg:mb-0 mt-5 lg:mt-0 ' style={{background: colors.primary[400], borderColor: colors.primary[600]}}>
+            <h5 className="mb-2 text-3xl font-bold  text-center">Krijo nje account!</h5>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
               <div className="formDiv flex max-w-md flex-col gap-4 grid grid-cols-2" style={{ display: isAdress ? '' : 'none' }}>
                 <label>
-                  <Label htmlFor='email1' value='name' color={nameColor}></Label>
+                  <Label htmlFor='email1' value='name' color={colors.gray[200]}></Label>
                   <TextInput
                     type="text"
                     name="firstName"
                     autoComplete='off'
-                    color={nameColor}
                     placeholder="Filan"
                     value={formData.firstName}
                     onChange={handleChange}
+                    style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}
                     required
                   />
                 </label>
                 <label>
-                  <Label htmlFor='email1' value='Surname'></Label>
+                  <Label htmlFor='email1' value='Surname' color={colors.gray[200]}></Label>
 
                   <TextInput
                     type="text"
@@ -312,6 +312,7 @@ const About = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     required
+                    style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}
                   />
                 </label>
                 {/* <label>
@@ -326,7 +327,7 @@ const About = () => {
                   />
                 </label> */}
                 <label>
-                  <Label htmlFor='email1' value='Nr Tel.'></Label>
+                  <Label htmlFor='email1' value='Nr Tel.' color={colors.gray[200]}></Label>
 
                   <TextInput
                     type="text"
@@ -335,12 +336,13 @@ const About = () => {
                     value={formData.nrTelefonit.numri}
                     onChange={handleChange}
                     required
+                    style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}
                   />
                 </label>
 
                 <label>
-                  < Label value='Birthday'></Label>
-                  <Datepicker name='dateLindja' id="date" onSelectedDateChanged={(e) => { handleDateChange(e.setTime(e.getTime() + 8640000)) }} maxDate={currentDate} required>
+                  < Label value='Birthday' color={colors.gray[200]}></Label>
+                  <Datepicker name='dateLindja' id="date" onSelectedDateChanged={(e) => { handleDateChange(e.setTime(e.getTime() + 8640000)) }} maxDate={currentDate} required style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}>
 
                   </Datepicker>
 
@@ -348,34 +350,34 @@ const About = () => {
                 </label>
 
                 <label>
-                  <Label htmlFor='email1' value='Email'></Label>
-                  <TextInput id='email1' type='email' name='email' value={formData.email} onChange={handleChange} placeholder="name@flowbite.com" required shadow />
+                  <Label htmlFor='email1' value='Email' color={colors.gray[200]}></Label>
+                  <TextInput id='email1' type='email' name='email' value={formData.email} onChange={handleChange} placeholder="name@flowbite.com" required shadow style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}/>
                 </label>
                 <label>
-                  <Label htmlFor='male'> Chose your gender
+                  <Label htmlFor='male' color={colors.gray[200]}> Chose your gender
                     <div className='flex gap-2 '>
                       <br />
                       <div className="flex items-center gap-2">
                         <Radio id="male" name="gjinia" value="male" checked={formData.gjinia === 'male'} onChange={handleChange} />
-                        <Label htmlFor="male">Male</Label>
+                        <Label htmlFor="male" style={{ color: colors.gray[200]}}>Male</Label>
                       </div>
                       <div className="flex items-center gap-2">
                         <Radio id="female" name="gjinia" value="female" checked={formData.gjinia === 'female'} onChange={handleChange} />
-                        <Label htmlFor="female">Female</Label>
+                        <Label htmlFor="female" style={{ color: colors.gray[200]}}>Female</Label>
                       </div>
                     </div>
                   </Label>
                 </label>
                 <label>
                   <div>
-                    <Label htmlFor="password1" value="Your password" />
-                    <TextInput id="password1" type="password" name='password' value={formData.password} onChange={handleChange} required />
+                    <Label htmlFor="password1" value="Your password" color={colors.gray[200]}/>
+                    <TextInput id="password1" type="password" name='password' placeholder='Password' value={formData.password} onChange={handleChange} required style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}/>
                   </div>
                 </label>
                 <label>
                   <div>
-                    <Label htmlFor="password1" value="Confirm Password" />
-                    <TextInput id="password2" type="password" name='password2' required />
+                    <Label htmlFor="password1" value="Confirm Password" color={colors.gray[200]}/>
+                    <TextInput id="password2" type="password" name='password2' placeholder='Confirm Password' required style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}/>
                   </div>
                 </label>
               </div>
@@ -383,7 +385,7 @@ const About = () => {
 
                 <label className='mb-3'>
                   <Label value='Shteti'></Label>
-                  <select style={{ color: 'white', background: '#374151', outline: 'solid', outlineWidth: '1px', outlineColor: '#4b5563' }} id="ShtetiDropdown" name="shteti" className='w-full h-full rounded px-2.5 ' value={formData.shteti} onChange={handleChange}>
+                  <select style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}} id="ShtetiDropdown" name="shteti" className='w-full h-full rounded px-2.5 border' value={formData.shteti} onChange={handleChange}>
                     <option value="">Zgjidhe Shtetin</option>
                     <option value="Kosova">Kosova</option>
                     <option value="Shqiperi">Shqiperi</option>
@@ -392,7 +394,7 @@ const About = () => {
                 </label>
                 <label className='mb-3'>
                   <Label value='Qyteti'></Label>
-                  <select style={{ color: 'white', background: '#374151', outline: 'solid', outlineWidth: '1px', outlineColor: '#4b5563' }} id="QytetiDropdown" name="qyteti" className='w-full h-full rounded px-2.5' value={formData.qyteti} onChange={handleChange}>
+                  <select style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}} id="QytetiDropdown" name="qyteti" className='w-full h-full rounded px-2.5 border' value={formData.qyteti} onChange={handleChange}>
                     <option value="">Zgjidhe Qytetin</option>
                   </select>
 
@@ -408,6 +410,7 @@ const About = () => {
                     value={formData.rruga}
                     onChange={handleChange}
                     required
+                    style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}
                   />
                 </label>
                 <label>
@@ -420,12 +423,13 @@ const About = () => {
                     value={formData.zipcode}
                     onChange={handleChange}
                     required
+                    style={{background: colors.primary[500], color: colors.gray[200], borderColor: colors.primary[700]}}
                   />
                 </label>
 
               </div>
               <div className='flex justify-center items-center w-full gap-4'>
-                <Button outline gradientDuoTone="cyanToBlue" as='div' style={{ cursor: 'pointer' }} className="mt-3 items-center w-full" onClick={changeIsAdress}>{isAdress ? 'Next' : 'Previous'}</Button>
+                <Button outline as='div' style={{ cursor: 'pointer', background: colors.primary[600]}} className="mt-3 items-center w-full" onClick={changeIsAdress}>{isAdress ? 'Next' : 'Previous'}</Button>
 
                 <Button className="mt-3 items-center w-full" type="submit" style={{ display: isAdress ? 'none' : '' }}>Register new account</Button>
               </div>

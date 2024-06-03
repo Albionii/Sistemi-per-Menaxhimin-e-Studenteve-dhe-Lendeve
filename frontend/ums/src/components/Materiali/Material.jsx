@@ -109,14 +109,15 @@ const Material = ({ material, deleteMaterial, updateMaterial, downloadFile, USER
 
               <Box
                 sx={{
-                  padding: "2px",
+                  padding: 1,
                   display: "flex",
                   alignItems: "center",
                   gap: "5px",
                   border: "1px dashed",
                   borderRadius: "10px",
                   ":hover": {
-                    cursor:"pointer"
+                    cursor:"pointer",
+                    bgcolor:colors.primary[400]
                   }
                 }}
                 key={index}

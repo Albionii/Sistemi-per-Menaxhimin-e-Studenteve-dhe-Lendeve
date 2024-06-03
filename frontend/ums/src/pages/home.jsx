@@ -37,8 +37,8 @@ const Home = ({ token }) => {
   }
   const USER_ROLE = role;
 
-  const handleClick = (id, name, professor) => {
-    navigate("/postimi", { state: { id, name, professor } });
+  const handleClick = (id, name, professor, professorId) => {
+    navigate("/postimi", { state: { id, name, professor, professorId} });
   };
 
   const [ligjeratat, setLigjeratat] = useState([]);
@@ -198,7 +198,7 @@ const Home = ({ token }) => {
                         fontWeight={"bold"}
                         color={"white"}
                       >
-                        {parseFloat(mesatarja).toFixed(2)}
+                        {mesatarja == null ? 0 : mesatarja}
                       </Typography>
                     </Box>
                   </Box>
@@ -319,8 +319,8 @@ const Home = ({ token }) => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography variant="h6" pl={2} pr={2} bgcolor={colors.blueAccent[700]} borderRadius={3} fontWeight={'bold'} color={'white'}>{currentSemester.name}</Typography>
-                  <Box display={'flex'} alignItems={'center'} textAlign={'center'} justifyContent={'space-between'}>
+                  <Typography variant="h6" pl={2} pr={2} bgcolor={colors.blueAccent[700]} borderRadius={3} fontWeight={'bold'} color={'white'} mb={''}>{currentSemester.name}</Typography>
+                  <Box>
                     <IconButton onClick={handleDecrease} size="small">
                       <ArrowBackIosIcon fontSize="small" />
                     </IconButton>
@@ -330,7 +330,7 @@ const Home = ({ token }) => {
                   </Box>
                 </Box>
               </Box>
-              <Box mt={3}>
+              <Box mt={2}>
                 <Grid container spacing={2}>
                   {ligjeratat.map((ligjerata, index) => (
                     <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
@@ -341,7 +341,8 @@ const Home = ({ token }) => {
                             ligjerata.lenda.emri,
                             ligjerata.professor.user.firstName +
                               " " +
-                              ligjerata.professor.user.lastName
+                              ligjerata.professor.user.lastName,
+                            ligjerata.professor.user.id
                           );
                         }}
                         underline="none"
@@ -377,7 +378,7 @@ const Home = ({ token }) => {
                             </Typography>
                           </Box>
                         </Box>
-                        <Box p={1} bgcolor={colors.blueAccent[900]} borderRadius={3} m={'3px'} >
+                        <Box p={1} bgcolor={colors.blueAccent[900]} borderRadius={3} m={'3px'} color={'white'}>
                           <Typography>Students:</Typography>
                           <Typography fontWeight={'bold'}>{studentCounts[ligjerata.id]}</Typography> {/* Corrected */}
                         </Box>

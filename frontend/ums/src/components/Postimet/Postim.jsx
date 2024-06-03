@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import {
   Box,
   Typography,
@@ -15,9 +15,15 @@ import SendIcon from "@mui/icons-material/Send";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import UpdatePostimi from "./UpdatePostimi";
 import ConfirmationModal from "./ConfirmationModal";
-import Komentet from "./Komentet";
-import useKomenti from "./useKomenti";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { OrbitProgress } from "react-loading-indicators";
+
+
+// import Komentet from "./Komentet";
+const Komentet = lazy(() => import("./Komentet"));
+
+import useKomenti from "./useKomenti";
+
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -27,7 +33,14 @@ const formatDate = (timestamp) => {
   return `${year}-${month}-${day}`;
 };
 
-const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) => {
+const Postim = ({
+  post,
+  user,
+  updatePostimi,
+  deletePostimi,
+  USER_ROLE,
+  token,
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -40,7 +53,7 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
   const closeDelete = () => setDeletePost(false);
 
   const initialData = {
-    teksti: '',
+    teksti: "",
   };
 
   const [koment, setKoment] = useState(initialData);
@@ -60,8 +73,7 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
   const handleConfirmation = () => {
     deletePostimi(post.id);
     setDeletePost(false);
-  };
-
+  };  
   const {
     komentet,
     createKomenti,
@@ -102,24 +114,34 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
 
   return (
     <Box>
-      <Box key={post.id} sx={{ marginBottom: '40px' }}>
-        <Box padding={'15px'} borderRadius={'15px'} sx={{ background: colors.primary[600] }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <Box display={'flex'}>
+      <Box key={post.id} sx={{ marginBottom: "40px" }}>
+        <Box
+          padding={"15px"}
+          borderRadius={"15px"}
+          sx={{ background: colors.primary[600] }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Box display={"flex"}>
               <Avatar></Avatar>
-              <Box ml={'15px'}>
+              <Box ml={"15px"}>
                 <Typography variant="h5">
-                  {post.user.firstName + ' ' + post.user.lastName}
+                  {post.user.firstName + " " + post.user.lastName}
                 </Typography>
-                <Typography fontSize={'12px'} color={'text.secondary'}>
+                <Typography fontSize={"12px"} color={"text.secondary"}>
                   {formatDate(post.data_Postimit)}
                 </Typography>
               </Box>
             </Box>
-            {(user.id === post.user.id || USER_ROLE === 'ROLE_ADMIN') && (
+            {(user.id === post.user.id || USER_ROLE === "ROLE_ADMIN") && (
               <IconButton
                 aria-label="settings"
-                aria-controls={menuOpen ? 'menu' : undefined}
+                aria-controls={menuOpen ? "menu" : undefined}
                 aria-haspopup="true"
                 onClick={handleClick}
               >
@@ -127,15 +149,15 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
               </IconButton>
             )}
           </Box>
-          <Box padding={'25px 50px'}>
+          <Box padding={"25px 50px"}>
             <Typography>{post.mesazhi}</Typography>
           </Box>
           {showComments && (
             <Button
               sx={{
-                '&:hover': {
-                  textDecoration: 'underline',
-                  textDecorationColor: 'white',
+                "&:hover": {
+                  textDecoration: "underline",
+                  textDecorationColor: "white",
                 },
               }}
               onClick={handleCloseComments}
@@ -144,7 +166,10 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
             </Button>
           )}
           {showComments ? (
-            <Box sx={{ background: colors.primary[600] }} borderTop={'3px solid' + colors.primary[400]}>
+            <Box
+              sx={{ background: colors.primary[600] }}
+              borderTop={"3px solid" + colors.primary[400]}
+            >
               <Box>
                 <IconButton
                   onClick={() => {
@@ -158,24 +183,38 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
                     <Typography>See all</Typography>
                   )}
                 </IconButton>
-                <Komentet
-                  deleteKomenti={deleteKomenti}
-                  komentet={komentet}
-                  postimId={post.id}
-                  token={token}
-                  user={user}
-                  updateKomenti={updateKomenti}
-                  displayedCommentsCount={displayedCommentsCount}
-                />
+                <Suspense
+                  fallback={
+                    <Box sx={{ textAlign: "center" }}>
+                      <OrbitProgress
+                        variant="track-disc"
+                        color="#006cff"
+                        size="medium"
+                        text=""
+                        textColor=""
+                      />
+                    </Box>
+                  }
+                >
+                  <Komentet
+                    deleteKomenti={deleteKomenti}
+                    komentet={komentet}
+                    postimId={post.id}
+                    token={token}
+                    user={user}
+                    updateKomenti={updateKomenti}
+                    displayedCommentsCount={displayedCommentsCount}
+                  />
+                </Suspense>
               </Box>
 
               {displayedCommentsCount < komentet.length && (
                 <Button
                   onClick={loadMoreComments}
                   sx={{
-                    '&:hover': {
-                      textDecoration: 'underline',
-                      textDecorationColor: 'white',
+                    "&:hover": {
+                      textDecoration: "underline",
+                      textDecorationColor: "white",
                     },
                   }}
                 >
@@ -188,9 +227,9 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
               {komentet.length > 0 && (
                 <Button
                   sx={{
-                    '&:hover': {
-                      textDecoration: 'underline',
-                      textDecorationColor: 'white',
+                    "&:hover": {
+                      textDecoration: "underline",
+                      textDecorationColor: "white",
                     },
                   }}
                   onClick={handleShowComments}
@@ -203,23 +242,33 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
 
           <Box
             sx={{ background: colors.primary[600] }}
-            borderTop={'3px solid ' + colors.primary[400]}
+            borderTop={"3px solid " + colors.primary[400]}
             component="form"
             onSubmit={komento}
           >
-            <Box display="flex" alignItems="center" justifyContent="space-between" mt={2}>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              mt={2}
+            >
               <Avatar />
-              <Box width={'95%'} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+              <Box
+                width={"95%"}
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
                 <input
                   type="text"
                   name="teksti"
                   placeholder="Write something here"
                   style={{
-                    padding: '15px 30px',
-                    width: '90%',
+                    padding: "15px 30px",
+                    width: "90%",
                     background: colors.primary[600],
-                    borderRadius: '15px',
-                    border: '2px solid ' + colors.primary[400],
+                    borderRadius: "15px",
+                    border: "2px solid " + colors.primary[400],
                   }}
                   required
                   value={koment.teksti}
@@ -233,8 +282,14 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
           </Box>
         </Box>
 
-        <Menu id="menu" anchorEl={anchorEl} open={menuOpen} onClose={handleClose} keepMounted>
-          {user.id === post.user.id && USER_ROLE !== 'ROLE_ADMIN' && (
+        <Menu
+          id="menu"
+          anchorEl={anchorEl}
+          open={menuOpen}
+          onClose={handleClose}
+          keepMounted
+        >
+          {user.id === post.user.id && USER_ROLE !== "ROLE_ADMIN" && (
             <MenuItem
               onClick={() => {
                 openUpdate();
@@ -266,24 +321,29 @@ const Postim = ({ post, user, updatePostimi, deletePostimi, USER_ROLE, token }) 
             borderRadius={2}
             boxShadow={24}
             sx={{
-              width: '60vw',
-              position: 'absolute',
-              transform: 'translate(-50%, -50%)',
-              top: '50%',
-              left: '50%',
-              maxWidth: '800px',
-              maxHeight: '80%',
-              overflowY: 'auto',
-              margin: 'auto',
-              '@media (max-width: 960px)': {
-                width: '80vw',
+              width: "60vw",
+              position: "absolute",
+              transform: "translate(-50%, -50%)",
+              top: "50%",
+              left: "50%",
+              maxWidth: "800px",
+              maxHeight: "80%",
+              overflowY: "auto",
+              margin: "auto",
+              "@media (max-width: 960px)": {
+                width: "80vw",
               },
-              '@media (max-width: 600px)': {
-                width: '90vw',
+              "@media (max-width: 600px)": {
+                width: "90vw",
               },
             }}
           >
-            <UpdatePostimi onSubmit={updatePostimi} onClose={closeUpdate} initialData={post} postimiId={post.id} />
+            <UpdatePostimi
+              onSubmit={updatePostimi}
+              onClose={closeUpdate}
+              initialData={post}
+              postimiId={post.id}
+            />
           </Box>
         </Modal>
 

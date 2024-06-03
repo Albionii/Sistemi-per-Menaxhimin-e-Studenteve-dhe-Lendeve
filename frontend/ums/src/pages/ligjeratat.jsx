@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@mui/system";
 import { tokens } from "../theme";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, CircularProgress } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -20,24 +20,45 @@ const CourseCard = ({
   enroll,
   unEnroll,
   enrollData,
+  USER_ROLE,
+  professorId,
+  loading,
+  index
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
+  const fixedBackgroundColors = [
+    '#FF204E', '#A0153E', '#5D0E41', '#00224D', '#6FDCE3',
+    '#FFA07A', '#20B2AA', '#87CEFA', '#778899'
+  ];
+
+
+
+  const isEnrolled =
+    enrollData &&
+    enrollData.some((course) => course.ligjerata && course.ligjerata.id === id);
+
   const handleClick = () => {
-    navigate("/postimi", { state: { imageUrl, name, professor, id } });
+    navigate("/postimi", {
+      state: { imageUrl, name, professor, id, professorId, isEnrolled },
+    });
   };
 
-  const handleEnroll = () => {
+  const handleEnroll = (e) => {
+    e.stopPropagation();
     enroll(id);
   };
 
-  const handleUnEnroll = () => {
+  const handleUnEnroll = (e) => {
+    e.stopPropagation();
     unEnroll(id);
   };
 
-  const isEnrolled = enrollData && enrollData.some((course) => course.ligjerata && course.ligjerata.id === id);
+  const background = fixedBackgroundColors[index % fixedBackgroundColors.length];
+
+
 
   return (
     <Card
@@ -59,7 +80,7 @@ const CourseCard = ({
           component="div"
           sx={{
             height: 200,
-            backgroundImage: `url(${imageUrl})`,
+            background: background,
             backgroundSize: "cover",
             zIndex: 21,
           }}
@@ -86,41 +107,50 @@ const CourseCard = ({
               {professor}
             </Typography>
           </Box>
-
-          {isEnrolled ? (
-            <Button
-              sx={{
-                position: "relative",
-                background: colors.redAccent[500],
-                color: "#fff",
-                "&:hover": { background: colors.redAccent[700] },
-                padding: "15px 30px",
-                zIndex: "50",
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                handleUnEnroll();
-              }}
-            >
-              UnEnroll
-            </Button>
-          ) : (
-            <Button
-              sx={{
-                position: "relative",
-                background: colors.blueAccent[600],
-                color: "#fff",
-                "&:hover": { background: colors.blueAccent[700] },
-                padding: "15px 30px",
-                zIndex: "50",
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                handleEnroll();
-              }}
-            >
-              Enroll
-            </Button>
+          {USER_ROLE === "ROLE_STUDENT" && (
+            <>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <>
+                  {isEnrolled ? (
+                    <Button
+                      sx={{
+                        position: "relative",
+                        background: colors.redAccent[500],
+                        color: "#fff",
+                        "&:hover": { background: colors.redAccent[700] },
+                        padding: "15px 30px",
+                        zIndex: "50",
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleUnEnroll();
+                      }}
+                    >
+                      UnEnroll
+                    </Button>
+                  ) : (
+                    <Button
+                      sx={{
+                        position: "relative",
+                        background: colors.blueAccent[600],
+                        color: "#fff",
+                        "&:hover": { background: colors.blueAccent[700] },
+                        padding: "15px 30px",
+                        zIndex: "50",
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleEnroll();
+                      }}
+                    >
+                      Enroll
+                    </Button>
+                  )}
+                </>
+              )}
+            </>
           )}
         </CardContent>
       </CardActionArea>
@@ -133,16 +163,16 @@ const getRandomImage = () => {
   return `https://picsum.photos/seed/${randomIndex}/1080/720`;
 };
 
-const Ligjeratat = ({ token }) => {
+const Ligjeratat = ({ token, user }) => {
   const [ligjerataData, setLigjerataData] = useState([]);
   const { semestriId } = useParams();
   const [enrolledData, setEnrolledData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getLigjeratat = () => {
     axios
       .get(`http://localhost:8080/professorLenda/semester/${semestriId}`)
       .then((response) => {
-        // console.log(response.data);
         setLigjerataData(response.data);
         getEnroll();
       })
@@ -160,6 +190,7 @@ const Ligjeratat = ({ token }) => {
       })
       .then((response) => {
         setEnrolledData(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error: " + error);
@@ -226,7 +257,7 @@ const Ligjeratat = ({ token }) => {
             justifyContent="center"
             alignItems="center"
           >
-            {ligjerataData.map((course) => (
+            {ligjerataData.map((course, index) => (
               <Grid item xs={12} sm={6} md={4} key={course.id}>
                 <CourseCard
                   name={course.lenda.emri}
@@ -234,12 +265,15 @@ const Ligjeratat = ({ token }) => {
                     course.professor.user.firstName +
                     " " +
                     course.professor.user.lastName
-                  } // Adjust this based on your API response structure
-                  imageUrl={getRandomImage()}
+                  } 
                   id={course.id}
                   enroll={enroll}
                   unEnroll={unEnroll}
                   enrollData={enrolledData}
+                  USER_ROLE={user}
+                  professorId={course.professor.user.id}
+                  loading={loading}
+                  index={index}
                 />
               </Grid>
             ))}

@@ -12,6 +12,7 @@ import { Box, useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { tokens } from "../../theme";
+import dayjs from "dayjs";
 
 const Provimet = ({ token }) => {
   console.log("TOKEN " +  JSON.stringify(token));
@@ -126,11 +127,11 @@ const Provimet = ({ token }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{textAlign: 'center'}}>Lenda</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>Profesori</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>Data</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>ECTS</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>Operation</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Lenda</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Profesori</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Data</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>ECTS</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Operation</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -162,12 +163,12 @@ const Provimet = ({ token }) => {
             <Table>
               <TableHead>
                 <TableRow >
-                  <TableCell sx={{textAlign: 'center'}}>Lenda</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>Profesori</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>Data Paraqitjes</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>Nota</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>Operation</TableCell>
-                  <TableCell sx={{textAlign: 'center'}}>Refuzo</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Lenda</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Profesori</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Data Paraqitjes</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Nota</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Operation</TableCell>
+                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Refuzo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -190,6 +191,8 @@ const Provimet = ({ token }) => {
 const TableRou = ({ provimi, paraqitProvimin }) => {
   const [placeholder, setPlaceholder] = useState("Zgjidh Provimin");
   const [selectedProvimiId, setSelectedProvimiId] = useState(null);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const handleDropdownItemClick = (provimiId, emri, mbiemri) => {
     setSelectedProvimiId(provimiId);
@@ -197,10 +200,10 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
   };
 
   return (
-    <TableRow>
-      <TableCell sx={{textAlign: 'center'}}>{provimi.emriLendes}</TableCell>
-      <TableCell sx={{textAlign: 'center'}}>
-        <Dropdown label={placeholder}>
+    <TableRow sx={{border: 'none'}}>
+      <TableCell sx={{textAlign: 'center', border: 'none'}}>{provimi.emriLendes}</TableCell>
+      <TableCell sx={{textAlign: 'center', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Dropdown label={placeholder} >
           {provimi.provimet.map((item, idx) => (
             <Dropdown.Item
               key={idx}
@@ -220,9 +223,9 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
           ))}
         </Dropdown>
       </TableCell>
-      <TableCell sx={{textAlign: 'center'}}>{provimi.provimet[0]?.data}</TableCell>
-      <TableCell sx={{textAlign: 'center'}}>{provimi.provimet[0]?.ligjerata.lenda.ects}</TableCell>
-      <TableCell >
+      <TableCell sx={{textAlign: 'center', border: 'none'}}>{provimi.provimet[0]?.data}</TableCell>
+      <TableCell sx={{textAlign: 'center', border: 'none'}}>{provimi.provimet[0]?.ligjerata.lenda.ects}</TableCell>
+      <TableCell sx={{textAlign: 'center', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Button
           disabled={selectedProvimiId === null}
           onClick={() => {
@@ -241,19 +244,20 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
 const PaRow = ({ item, anuloParaqitjen }) => {
   return (
     <TableRow>
-      <TableCell sx={{textAlign: 'center'}}>{item.emriLendes}</TableCell>
-      <TableCell sx={{textAlign: 'center'}}>
+      {console.log(item)}
+      <TableCell sx={{textAlign: 'center', border: 'none'}}>{item.emriLendes}</TableCell>
+      <TableCell sx={{textAlign: 'center', border: 'none'}}>
         {item.provimi.ligjerata.professor.user.firstName}{" "}
         {item.provimi.ligjerata.professor.user.lastName}
       </TableCell>
-      <TableCell sx={{textAlign: 'center'}}>{item.dataVendosjes || "null"}</TableCell>
-      <TableCell sx={{textAlign: 'center'}}>{item.nota === 0 ? " " : item.nota}</TableCell>
-      <TableCell sx={{textAlign: 'center'}}>
+      <TableCell sx={{textAlign: 'center', border: 'none'}}>{ dayjs(item.dataParaqitjes).format('YYYY-MM-DD/HH:mm:ss') || "null"}</TableCell>
+      <TableCell sx={{textAlign: 'center', border: 'none'}}>{item.nota === 0 ? " " : item.nota}</TableCell>
+      <TableCell sx={{textAlign: 'center', border: 'none'}}>
         <Button onClick={() => anuloParaqitjen(item.id)}>
           Anulo Paraqitjen
         </Button>
       </TableCell>
-      <TableCell>
+      <TableCell sx={{textAlign: 'center', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Button disabled={item.nota === 0 || item.nota === 5 || item.nota === 10} onClick={() => refuzoNoten(item.id)}>
           Refuzo Noten
         </Button>

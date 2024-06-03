@@ -24,6 +24,7 @@
     "apexcharts": "^3.49.0",
     "axios": "^1.6.8",
     "critters": "^0.0.22",
+    "dayjs": "^1.11.11",
     "flowbite-react": "^0.7.3",
     "formik": "^2.4.6",
     "jwt-decode": "^4.0.0",

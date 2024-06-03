@@ -8,10 +8,11 @@ import Select from "@mui/material/Select";
 import TabelaOrarit from "../components/TabelaOrarit";
 import axios from "axios";
 
-const RegjistroGrupin = () => {
+const RegjistroGrupin = ({token}) => {
   const [grupi, setGrupi] = useState(null);
   const [grupet, setGrupet] = useState([]);
   const [orari, setOrari] = useState([]);
+  const [studentGrupi, setStudentGrupi] = useState("");
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -22,6 +23,7 @@ const RegjistroGrupin = () => {
       .then((response) => {
         console.log("Response data:", response.data);
         setGrupet(response.data);
+        
       })
       .catch((error) => console.error("Error fetching groups", error));
   }, []);
@@ -38,13 +40,24 @@ const RegjistroGrupin = () => {
         })
         .catch((error) => {
             console.error("Error fetching orari:", error);
-            // Handle error: You can display an error message to the user or perform other actions as needed
         });
 };
 
-  const handleSubmit = () => {
-    
-  }
+const handleSubmit = () => {
+  axios.post(`http://localhost:8080/studentGrupi/${grupi}`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      console.log(response.data)
+      setStudentGrupi(response.data);
+      window.location.reload();
+    })
+    .catch(error => {
+      console.error("There was an error registering the group!", error);
+    });
+}
 
   return (
     <Box m={{ xs: 2, sm: 3, md: 4 }}>
@@ -133,7 +146,9 @@ const RegjistroGrupin = () => {
                     "&:hover": {
                       backgroundColor: colors.blueAccent[600],
                     },
+                    cursor: 'pointer'
                   }}
+                  onClick={handleSubmit}
                 >
                   Ruaj Ndryshimet
                 </Box>

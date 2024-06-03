@@ -20,14 +20,17 @@ const CourseCard = ({
   enroll,
   unEnroll,
   enrollData,
+  professorId,
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/postimi", { state: { imageUrl, name, professor, id } });
+    navigate("/postimi", { state: { imageUrl, name, professor, id, isEnrolled, professorId } });
   };
+
+  console.log("Professor id: " +professorId);
 
   const handleEnroll = () => {
     enroll(id);
@@ -122,22 +125,7 @@ const CourseCard = ({
               Enroll
             </Button>
           )}
-          {/* <Button
-            sx={{
-              position: "relative",
-              background: colors.blueAccent[600],
-              color: "#fff",
-              "&:hover": { background: colors.blueAccent[700] },
-              padding: "15px 30px",
-              zIndex: "50",
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              handleEnroll();
-            }}
-          >
-            Enroll
-          </Button> */}
+
         </CardContent>
       </CardActionArea>
     </Card>
@@ -262,6 +250,7 @@ const EnrolledLigjerata = ({ token }) => {
                       enroll={enroll}
                       unEnroll={unEnroll}
                       enrollData={enrolledData}
+                      professorId={course.professor.user.id}
                     />
                   </Grid>
                 ))}
