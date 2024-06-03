@@ -7,62 +7,24 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Header from "../components/Header";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import axios from "axios";
 
-// Function to generate random image URL
-const getRandomImage = () => {
-  const randomIndex = Math.floor(Math.random() * 1000) + 1;
-  return `https://picsum.photos/seed/${randomIndex}/1080/720`;
-};
-
-const names = [
-  "2024/25",
-  "2023/24",
-  "2022/23",
-  "2021/22",
-  "2020/21",
-  "2019/20",
-  "2018/19",
+const fixedBackgroundColors = [
+  '#FFB6C1', '#FFD700', '#ADD8E6', '#90EE90', '#FF69B4',
+  '#FFA07A', '#20B2AA', '#87CEFA', '#778899'
 ];
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const CourseCard = ({ name, imageUrl, departamentiId }) => {
+const CourseCard = ({ name, departamentiId, index }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [personName, setPersonName] = React.useState([]);
+  const backgroundColor = fixedBackgroundColors[index % fixedBackgroundColors.length];
 
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/semesters/${departamentiId}`)
   }
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
 
   return (
     <Card
@@ -73,21 +35,20 @@ const CourseCard = ({ name, imageUrl, departamentiId }) => {
       }}
       onClick={handleClick}
     >
-      <CardActionArea component={Link} to={"/semestrat"}>
+      <CardActionArea component={Link} to={`/semesters/${departamentiId}`}>
         <CardMedia
           component="div"
           sx={{
             height: 200,
-            backgroundImage: `url(${imageUrl})`,
+            background: backgroundColor,
             backgroundSize: "cover",
           }}
         />
         <CardContent
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
             padding: "20px",
+            paddingTop: '30px',
+            paddingBottom: '30px'
           }}
         >
           <Box>
@@ -100,29 +61,6 @@ const CourseCard = ({ name, imageUrl, departamentiId }) => {
               {name}
             </Typography>
           </Box>
-
-          <FormControl sx={{ m: 1, width: 150, background: colors.primary[600] }}>
-            <InputLabel id="demo-multiple-name-label" sx={{color: colors.gray[300]}}>Viti Akademik</InputLabel>
-            <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              multiple
-              value={personName}
-              onChange={handleChange}
-              input={<OutlinedInput label="Viti Akademik" />}
-              MenuProps={MenuProps}
-            >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  sx={{background: colors.primary[600]}}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
         </CardContent>
       </CardActionArea>
     </Card>
@@ -130,34 +68,23 @@ const CourseCard = ({ name, imageUrl, departamentiId }) => {
 };
 
 const Departmentat = () => {
-  function handleClick(event) {
-    event.preventDefault();
-    console.info("You clicked a breadcrumb.");
-  }
-  // const departmentat = Array.from(Array(9)).map((_, index) => ({
-  //   name: "Shkenca Kompjuterike",
-  //   imageUrl: getRandomImage(),
-  //   key: index,
-  // }));
-
   const [departmentet, setDepartmentet] = useState([]);
 
-  useEffect(()=> {
+  useEffect(() => {
     axios
       .get("http://localhost:8080/departamenti")
-      .then((response)=>{
-        // console.log(response.data)
-        setDepartmentet(response.data)
-    })
-    .catch(error => {
-      console.error("Error fetchin the departments: "+error);
-    })
-  }, [])
+      .then((response) => {
+        setDepartmentet(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching the departments: " + error);
+      });
+  }, []);
 
   return (
     <>
       <Box m={"40px"}>
-        <Header title="DEPARTMENTET" subtitle={'Lista e departmenteve'}></Header>
+        <Header title="DEPARTMENTET" subtitle="Lista e departmenteve" />
         <Box
           sx={{ flexGrow: 1, paddingBottom: 5 }}
           overflow="auto"
@@ -170,13 +97,13 @@ const Departmentat = () => {
             justifyContent="center"
             alignItems="center"
           >
-            {departmentet.map((department) => (
+            {departmentet.map((department, index) => (
               <Grid item xs={12} sm={6} md={4} key={department.key}>
                 <CourseCard
                   key={department.id}
                   name={department.emri}
-                  imageUrl={getRandomImage()}
                   departamentiId={department.id}
+                  index={index} 
                 />
               </Grid>
             ))}

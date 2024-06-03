@@ -63,6 +63,8 @@ function loggedIn({ changeLoggedInState, token }) {
 
   const [loading, setLoading] = useState(false);
 
+  const transitionDuration = "0.5s";
+
 
 
   return (
@@ -75,20 +77,20 @@ function loggedIn({ changeLoggedInState, token }) {
         </div>
       </div>
         <Sidebar user={user} />
-        <main className="content">
+        <main className="flex-1 transition">
           <Topbar />
           <Routes>
-            <Route path="/" element={<Home token={token} />} />
+            <Route path="/" element={<Home token={token}/>} />
             <Route path="/dashboard" element={<Dashboard />} />
 
-            <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} />} />
+            <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} user={user.role}/>} />
             <Route path="/cruds" element={<CrudCategories role={user.role} />} />
             <Route path="/transkripta" element={<Transkripta token={token} />} />
 
             <Route path="/paraqitura" element={<Paraqitura token={token} />} />
 
             <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} />} />
-            <Route path="/postimi" element={<Postimi token={token} />} />
+            <Route path="/postimi" element={<Postimi token={token}  user={user}/>} />
 
 
 
@@ -145,12 +147,12 @@ function loggedIn({ changeLoggedInState, token }) {
 
             <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
 
-            <Route path="/semesters/:departamentiId" element={<Semestrat />} />
+            <Route path="/semesters/:departamentiId" element={<Semestrat token={token} />} />
             <Route path="/department" element={<Departmentat />} />
             <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
             <Route path="/refuzoNoten" element={<ProvimetNota />} />
             <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
-            <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
+            <Route path="/regjistroGrupin" element={<RegjistroGrupin token={token} />} />
             <Route path="/grupi" element={<Grupi />} />
             <Route path="/orari" element={<Orari />} />
             <Route path="/lajmi" element={<Lajmi />} />

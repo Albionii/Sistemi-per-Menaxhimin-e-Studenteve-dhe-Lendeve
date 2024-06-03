@@ -9,17 +9,6 @@ import Paper from '@mui/material/Paper';
 import { useTheme } from '@mui/material';
 import { tokens } from '../theme';
 
-function createData(dita, orari, salla, lenda, stafi) {
-  return { dita, orari, salla, lenda, stafi };
-}
-
-const rows = [
-  createData('E Hene', '10:40-12:10', 'D132', 'Hyrje ne Shkenca Kompjuterike', 'Blerim Zylfiu'),
-  createData('E Hene', '10:40-12:10', 'D132', 'Hyrje ne Shkenca Kompjuterike', 'Blerim Zylfiu'),
-  createData('E Hene', '10:40-12:10', 'D132', 'Hyrje ne Shkenca Kompjuterike', 'Blerim Zylfiu'),
-  createData('E Hene', '10:40-12:10', 'D132', 'Hyrje ne Shkenca Kompjuterike', 'Blerim Zylfiu')
-];
-
 export default function BasicTable({ orari }) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);

@@ -7,9 +7,40 @@ import SchoolIcon from "@mui/icons-material/School";
 import EastIcon from "@mui/icons-material/East";
 import axios from "axios";
 
-const SemestriItem = ({ semester, startDate, endDate, semestriId }) => {
+const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [provimet, setProvimet] = useState(0);
+  const [lendet, setLendet] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/student/totalProvimet/${semestriId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+        setProvimet(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching the total Provimet " + error);
+      });
+  }, [semestriId]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/professorLenda/lendet/${semestriId}`)
+      .then((response) => {
+        console.log(response.data);
+        setLendet(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching the total Provimet " + error);
+      });
+  }, [semestriId]);
 
   const navigate = useNavigate();
 
@@ -84,7 +115,7 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId }) => {
                 mt={2}
               >
                 <Typography variant="h1" fontWeight={"bold"} color={colors.gray[100]}>
-                  6/6
+                  {provimet}/{lendet}
                 </Typography>
               </Box>
               <Box
@@ -126,7 +157,7 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId }) => {
   );
 };
 
-const Semestrat = () => {
+const Semestrat = ({token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -138,7 +169,7 @@ const Semestrat = () => {
     axios
       .get(`http://localhost:8080/api/admin/semester/${departamentiId}`)
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         setSemestrat(response.data);
       })
       .catch((error) => {
@@ -167,11 +198,12 @@ const Semestrat = () => {
         <Grid container spacing={3}>
           {semestrat.map((semestri) => (
             <SemestriItem
-              key={semestri.id} // Adding unique key prop
+              key={semestri.id} 
               semester={semestri.name}
               startDate={semestri.startDate}
               endDate={semestri.endDate}
               semestriId={semestri.id}
+              token={token}
             />
           ))}
         </Grid>

@@ -45,6 +45,11 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(prv);
     }
 
+    @GetMapping("totalProvimet/{semesterId}")
+    public Long getProvimetCbySemester(@RequestHeader("Authorization") String token, @PathVariable Long semesterId) throws Exception{
+        return studentPrvService.countExamsByStudentAndSemester(token ,semesterId);
+    }
+
     @GetMapping("/ects")
     public ResponseEntity<Integer> getEcts(@RequestHeader("Authorization") String token) throws Exception{
         Integer ects = studentPrvService.findSumOfEctsByStudentId(token);
@@ -58,6 +63,7 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body(notat);
     }
 
+
     @GetMapping("/semestri")
     public StudentSemester getSemestri(@RequestHeader("Authorization") String token) throws Exception{
         return studentSemesterRegistrationService.findSemesterByStudent(token);
@@ -66,6 +72,11 @@ public class StudentController {
     @GetMapping("/provimetC")
     public List<StudentProvimi> getProvimetC(@RequestHeader("Authorization") String token) throws Exception{
         return studentPrvService.getByStudentId(token);
+    }
+
+    @GetMapping("/professorAVG")
+    public List<Object[]> getMesataret(@RequestHeader("Authorization") String token) throws Exception{
+        return studentPrvService.findTop4AvgByProfessor(token);
     }
 
 

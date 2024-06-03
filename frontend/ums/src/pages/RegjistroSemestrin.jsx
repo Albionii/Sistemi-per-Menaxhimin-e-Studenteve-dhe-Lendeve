@@ -208,7 +208,7 @@ const RegjistroSemestrin = () => {
                       backgroundColor: colors.blueAccent[600],
                     },
                   }}
-                  onClick={handleSubmit} // Add onClick to handle submit
+                  onClick={handleSubmit} 
                 >
                   Ruaj Ndryshimet
                 </Box>

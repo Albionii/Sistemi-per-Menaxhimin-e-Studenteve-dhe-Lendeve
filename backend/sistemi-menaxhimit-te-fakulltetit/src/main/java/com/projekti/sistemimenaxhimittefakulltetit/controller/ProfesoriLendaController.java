@@ -30,6 +30,11 @@ public class ProfesoriLendaController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/lendet/{semesterId}")
+    public Long countLendetBySemesterId(@PathVariable Long semesterId) throws Exception {
+        return profesoriLendaService.countLendetBySemester(semesterId);
+    }
+
     @GetMapping("abc/{id}")
     public List<ProfesoriLenda> findLendaByProfesoriIdaa(@PathVariable Long id){
         return profesoriLendaService.findLendaByProfesoriIdaaaaaaaa(id);

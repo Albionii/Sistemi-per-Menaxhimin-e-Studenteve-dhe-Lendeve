@@ -14,7 +14,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import { tokens } from "../../theme";
 import UpdateKomenti from "./UpdateKomenti";
 
-const Komenti = ({ koment, user, deleteKomenti,updateKomenti }) => {
+const Komenti = ({ koment, user, deleteKomenti, updateKomenti }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -75,21 +75,23 @@ const Komenti = ({ koment, user, deleteKomenti,updateKomenti }) => {
             <Typography variant="subtitle1" fontWeight="bold">
               {koment.userID.firstName + " " + koment.userID.lastName}
             </Typography>
-            <IconButton
-              aria-label="settings"
-              aria-controls={menuOpen ? "menu" : undefined}
-              aria-haspopup="true"
-              onClick={handleClick}
-            >
-              <MoreVertIcon />
-            </IconButton>
+            {(user.id === koment.userID.id ||
+              user.role === "ROLE_ADMIN") && (
+              <IconButton
+                aria-label="settings"
+                aria-controls={menuOpen ? "menu" : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            )}
           </Box>
           <Typography variant="body2" sx={{ marginTop: "5px" }}>
             {koment.teksti}
           </Typography>
         </Box>
       </Box>
-
       <Menu
         id="menu"
         anchorEl={anchorEl}

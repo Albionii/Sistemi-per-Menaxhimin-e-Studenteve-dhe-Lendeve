@@ -67,6 +67,11 @@ public class StudentLigjerataController {
         return new ResponseEntity<>(sl, HttpStatus.OK);
     }
 
+    @GetMapping("/count/{ligjerataId}")
+    public Long countStudentet(@PathVariable Long ligjerataId){
+        return studentLigjerataService.contStudentetByLigjerataId(ligjerataId);
+    }
+
     @DeleteMapping("/unenroll/{id}")
     public void unEnroll(@PathVariable Long id,
                                      @RequestHeader("Authorization")String token) throws Exception {
@@ -92,6 +97,8 @@ public class StudentLigjerataController {
         }
         return response;
     }
+
+    // Mos e shlyni se nuk asht i njejti bash i njejti sen me qito permi. :)
     @GetMapping("/get/enrolled/{semestriId}")
     public List<ProfesoriLenda> getEnrolled(@PathVariable Long semestriId,
                                                @RequestHeader("Authorization")String token) throws Exception {
@@ -109,6 +116,7 @@ public class StudentLigjerataController {
         }
         return response;
     }
+
 
 
 
