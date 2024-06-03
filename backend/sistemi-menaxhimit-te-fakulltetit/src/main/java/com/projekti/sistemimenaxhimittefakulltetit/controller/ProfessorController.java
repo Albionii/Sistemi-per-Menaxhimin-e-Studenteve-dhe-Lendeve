@@ -84,12 +84,13 @@ public class ProfessorController {
 
         List<Provimi> provimiList = new ArrayList<Provimi>();
         List<Provimi> innerProvimi = new ArrayList<Provimi>();
-        for (int i = 0; i < LigjerataList.size(); i++) {
+        for (int i = 0; i < lendaSize; i++) {
             innerProvimi = provimiService.findAllProvimiByLigjerataId(LigjerataList.get(i).getId());
             for (int j = 0; j < innerProvimi.size(); j++) {
                 provimiList.add(innerProvimi.get(j));
             }
         }
+        System.out.println("PROVIMIMIMIMI" + provimiList.get(0));
 
         int saTeNotuar = 0;
 
@@ -97,18 +98,22 @@ public class ProfessorController {
         int provimet = provimiList.size();
         int notat = 0;
         List<StudentProvimi> ProvimetCounter = new ArrayList<>();
+        List<Student> nrStudenteve = new ArrayList<Student>();
         for (int i = 0; i < provimet; i++) {
             ProvimetCounter =  studentPrvService.findByProvimi(provimiList.get(i));
             for (int j = 0; j < ProvimetCounter.size(); j++) {
                 notat += ProvimetCounter.get(j).getNota();
+                if (!nrStudenteve.contains(ProvimetCounter.get(j).getStudent())){
+                    nrStudenteve.add(ProvimetCounter.get(j).getStudent());
+                }
                 saTeNotuar++;
             }
         }
-        float mesatarjaNotave = (float) notat /provimet;
+        float mesatarjaNotave = (float) notat /saTeNotuar;
 
         HashMap<String,String> map = new HashMap<>();
         map.put("saLende", lendaSize + "");
-        map.put("SaNotaTeVendosura",saTeNotuar + "");
+        map.put("SaNotaTeVendosura",nrStudenteve.size() + "");
         map.put("Mesatarja",mesatarjaNotave + "");
 
         return map;
