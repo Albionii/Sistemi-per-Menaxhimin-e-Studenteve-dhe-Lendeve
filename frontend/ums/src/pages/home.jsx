@@ -37,6 +37,8 @@ const Home = ({ token }) => {
   }
   const USER_ROLE = role;
 
+
+
   const handleClick = (id, name, professor, professorId) => {
     navigate("/postimi", { state: { id, name, professor, professorId} });
   };
@@ -64,6 +66,7 @@ const Home = ({ token }) => {
   }, []); 
 
   useEffect(() => {
+    // getStatistics();
     if (semesters.length > 0) {
       const newSemester = semesters[semesterId - 1];
       setCurrentSemester(newSemester);
@@ -89,6 +92,8 @@ const Home = ({ token }) => {
         console.error("Error getting semesters: " + error);
       });
   };
+
+  
 
   const getStudentsCount = (ligjerataId) => {
     axios
@@ -403,7 +408,7 @@ const Home = ({ token }) => {
           borderRadius={"7px"}
           backgroundColor={colors.primary[400]}
         >
-          {USER_ROLE === "ROLE_STUDENT" ? <ResponsiveButtons /> : <ProfesoriButtons />}
+          {USER_ROLE === "ROLE_STUDENT" ? <ResponsiveButtons /> : <ProfesoriButtons token={token}/>}
         </Box>
         <Box
           gridColumn={{ xs: "span 12", md: "span 7", sm: "span 12" }}
