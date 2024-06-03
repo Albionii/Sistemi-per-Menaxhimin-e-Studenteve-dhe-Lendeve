@@ -10,12 +10,19 @@ import InputLabel from "@mui/material/InputLabel";
 // import { useHistory } from "react-router-dom";
 
 function Profili({ changeLoggedInState, user }) {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  function logOut() {
-    document.cookie = `Token=`;
-    changeLoggedInState();
-  }
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    function logOut() {
+        const response = fetch('http://localhost:8080/auth/signout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        });
+        document.cookie = "Token=";
+        changeLoggedInState();
+    }
 
   function formatDate(date) {
     const dataLindjes = new Date(date);
@@ -27,7 +34,9 @@ function Profili({ changeLoggedInState, user }) {
     return `${year}-${month}-${day}`;
   }
 
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
+
+
 
   useEffect(() => {
     if (user.firstName !== "Loading") {

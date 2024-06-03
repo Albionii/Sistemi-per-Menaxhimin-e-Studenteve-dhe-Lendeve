@@ -11,14 +11,17 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import Authentication from "./pages/authentication.jsx";
 import LoggedIn from "./components/loggedIn.jsx";
-import { getToken} from "./GetToken.js";
+import { getToken,getFromRefreshToken, getTokenBeggining} from "./GetToken.js";
 import { SignalCellularNoSimOutlined } from "@mui/icons-material";
+import { isEmptyArray } from "formik";
 
 function App() {
   const [theme, colorMode] = useMode();
 
+  
+  const[token,setToken] = useState(undefined);
 
-  const token = getToken();
+  console.log(token);
   // console.log(getRole());
 
 
@@ -51,10 +54,11 @@ function App() {
     logginStatus = false;
   } else {
     logginStatus = true;
-
   }
 
   const [loggedIn, setLoggedIn] = useState(logginStatus);
+  getTokenBeggining({setToken,setLoggedIn});
+
 
 
   // // const [loggedIn, setLoggedIn] = useState(document.cookie.split('=')[1].length !== 0);
@@ -79,7 +83,7 @@ function App() {
 
         {loggedIn ? (
           <div className="app">
-            <LoggedIn changeLoggedInState={changeLoggedInState} token={token}/>
+            <LoggedIn changeLoggedInState={changeLoggedInState}/>
           </div>
         ) : (
           <Authentication changeLoggedInState={changeLoggedInState} />

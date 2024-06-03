@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import Swal from 'sweetalert2';
 import { useTheme } from '@mui/material';
 import { tokens } from '../theme';
 
 function Login({ changeLoggedInState }) {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
 
     const [signupData, setSignupData] = useState({
@@ -27,17 +27,19 @@ function Login({ changeLoggedInState }) {
         const token = await postData(signupData);
         if (token) {
             changeLoggedInState();
-            navigate('/'); 
+            navigate('/');
         }
     }
 
     const postData = async (data) => {
+
         const response = await fetch('http://localhost:8080/auth/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: 'include'
         });
         const jwt = await response.json();
 
@@ -52,9 +54,11 @@ function Login({ changeLoggedInState }) {
             body: JSON.stringify({})
         });
         const user = await userDetails.json();
+        const tenSeconds = 10 * 1000; // Convert 10 seconds to milliseconds
+        const expirationTime = new Date(Date.now() + tenSeconds);
 
-        document.cookie = `Token=${encodeURIComponent(token)}`;
-        document.cookie = `Role=${encodeURIComponent(jwt.role)}`;
+        document.cookie = `Token=${encodeURIComponent(token)}; expires=${expirationTime.toUTCString()}`;
+
 
         if (user.status === 500) {
             Swal.fire({
