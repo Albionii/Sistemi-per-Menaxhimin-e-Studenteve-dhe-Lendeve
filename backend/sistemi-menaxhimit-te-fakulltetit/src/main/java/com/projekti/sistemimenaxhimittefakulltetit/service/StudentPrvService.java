@@ -213,6 +213,17 @@ public class StudentPrvService {
         return studentPrvRepository.findAllByStudentId(id);
     }
 
+    public StudentProvimi refuzoNota(Long id){
+        Optional<StudentProvimi> studentProvimi = studentPrvRepository.findById(id);
+        if (studentProvimi.isPresent()) {
+            StudentProvimi s = studentProvimi.get();
+            s.setNota(0);
+            return studentPrvRepository.save(s);
+        } else {
+            return null;
+        }
+    }
+
 
 
 }

@@ -44,23 +44,12 @@ public class ProfessorController {
 
     @GetMapping("/paraqitjet/{id}")
     public List<StudentProvimi> getParaqitjet(@PathVariable Long id) throws Exception {
-//        Lenda lenda = lendaService.findLendaById(lendaId);
-//        User user = userService.findUserByJwtToken(token);
-//        Professor professor = professorService.findProfessorByUserId(user.getId());
-//
-//        ProfesoriLenda profesoriLenda = profesoriLendaService.findByProfessorAndLenda(professor, lenda);
-//
-//        System.out.println(profesoriLenda.getId());
-//
-//        Provimi provimi = provimiService.findProvimiByLigjerataId(profesoriLenda.getId());
-//
-//        System.out.println(provimi.getId())
-
-        return studentPrvService.findAllStudentProvimiByProvimiId(id);
+        Provimi provimi = provimiService.findProvimiByLigjerataId(id);
+        return studentPrvService.findAllStudentProvimiByProvimiId(provimi.getId());
     }
 
 
-    @GetMapping("/provimetOfProfessor")
+    @GetMapping("/ligjeratatOfProfessor")
     public ResponseEntity<List<ProfesoriLenda>> getAllProfesoriLendaByProfessorID(@RequestHeader("Authorization")String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
         Professor professor = professorService.findProfessorByUserId(user.getId());
@@ -90,8 +79,6 @@ public class ProfessorController {
                 provimiList.add(innerProvimi.get(j));
             }
         }
-        System.out.println("PROVIMIMIMIMI" + provimiList.get(0));
-
         int saTeNotuar = 0;
 
 
@@ -102,11 +89,13 @@ public class ProfessorController {
         for (int i = 0; i < provimet; i++) {
             ProvimetCounter =  studentPrvService.findByProvimi(provimiList.get(i));
             for (int j = 0; j < ProvimetCounter.size(); j++) {
-                notat += ProvimetCounter.get(j).getNota();
+                if (ProvimetCounter.get(j).getNota() != 0 && ProvimetCounter.get(j).getNota() != 5){
+                    notat += ProvimetCounter.get(j).getNota();
+                    saTeNotuar++;
+                }
                 if (!nrStudenteve.contains(ProvimetCounter.get(j).getStudent())){
                     nrStudenteve.add(ProvimetCounter.get(j).getStudent());
                 }
-                saTeNotuar++;
             }
         }
         float mesatarjaNotave = (float) notat /saTeNotuar;

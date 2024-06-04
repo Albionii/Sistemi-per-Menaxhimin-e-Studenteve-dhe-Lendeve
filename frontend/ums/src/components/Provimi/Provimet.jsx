@@ -57,12 +57,20 @@ const Provimet = ({ token }) => {
       });
   };
 
-  const refuzoNoten = (id) => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const refuzoNoten = (provimiId) => {
+    axios.put(`http://localhost:8080/student/refuzo/${provimiId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          fetchProvimet();
+          fetchParaqitjet();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+  }
 
   const paraqitProvimin = (provimiId) => {
     if (provimiId) {
@@ -185,7 +193,6 @@ const Provimet = ({ token }) => {
                   <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Data Paraqitjes</TableCell>
                   <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Nota</TableCell>
                   <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Operation</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Refuzo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -194,6 +201,7 @@ const Provimet = ({ token }) => {
                     key={index}
                     item={paraqitja}
                     anuloParaqitjen={anuloParaqitjen}
+                    refuzoNoten={refuzoNoten}
                   />
                 ))}
               </TableBody>
@@ -288,7 +296,7 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
   );
 };
 
-const PaRow = ({ item, anuloParaqitjen }) => {
+const PaRow = ({ item, anuloParaqitjen, refuzoNoten }) => {
   return (
     <TableRow>
       {console.log(item)}

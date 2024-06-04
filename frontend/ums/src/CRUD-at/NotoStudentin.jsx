@@ -15,8 +15,7 @@ const ProvimetNota = () => {
 
     const [formData, setFormaData] = useState(
       {
-        nota: 0,
-        dataVendosjes: ""
+        nota: 0
       }
     )
 
@@ -40,6 +39,7 @@ const ProvimetNota = () => {
     const handleStudentProvimi = (p) => {
       setOpen(true);
       setProvimi(p);
+      setNota(p.nota);
     }
 
     const handleNota = (n) => {
@@ -58,7 +58,7 @@ const ProvimetNota = () => {
 
 
     const fetchProvimet = async() => {
-      axios.get('http://localhost:8080/professor/provimetOfProfessor',{
+      axios.get('http://localhost:8080/professor/ligjeratatOfProfessor',{
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -85,7 +85,6 @@ const ProvimetNota = () => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        console.log(JSON.stringify(formData))
         await axios.put("http://localhost:8080/professor/provimi/" + provimi.id + "/" + nota, formData);
         fetchStudentProvimet(provimi.provimi.id)
         handleClose();
@@ -212,7 +211,7 @@ const ProvimetNota = () => {
                           onChange={handleNota}
                           required
                         >
-                          <option value="" disabled hidden>{provimi != null ? provimi.nota:''}</option>
+                          <option value="" hidden>{nota == 0 && provimi !=null ? provimi.nota:nota}</option>
                           <option value={notat[0]}>{notat[0]}</option>
                           <option value={notat[1]}>{notat[1]}</option>
                           <option value={notat[2]}>{notat[2]}</option>

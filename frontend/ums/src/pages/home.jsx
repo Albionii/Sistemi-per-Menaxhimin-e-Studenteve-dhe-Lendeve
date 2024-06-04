@@ -21,21 +21,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfesoriButtons from "../components/ProfessorButtons";
 
-const Home = ({ token }) => {
-  let role;
-
+const Home = ({ token, user}) => {
+ 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { mesatarja, ects, semester } = useTranskriptaData(token);
 
   const navigate = useNavigate();
 
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; Role=`);
-  if (parts.length === 2) {
-    role = parts.pop().split(";").shift();
-  }
-  const USER_ROLE = role;
+  
+  const USER_ROLE = user;
 
 
 

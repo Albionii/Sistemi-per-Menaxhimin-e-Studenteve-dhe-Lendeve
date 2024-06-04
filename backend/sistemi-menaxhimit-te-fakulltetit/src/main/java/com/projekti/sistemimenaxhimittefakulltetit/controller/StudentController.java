@@ -89,13 +89,14 @@ public class StudentController {
         studentPrvService.anulo(id);
     }
 
-    @DeleteMapping("/refuzo/{id}")
-    public void refuzo(@PathVariable Long id,
-                              @RequestHeader("Authorization") String token) throws Exception {
-        User user = userService.findUserByJwtToken(token);
-        Student student = studentService.findStudentByUserId(user.getId());
-
-        studentPrvService.anulo(id);
+    @PutMapping("/refuzo/{id}")
+    public ResponseEntity<StudentProvimi> updateStudentProvimi(@PathVariable Long id) {
+        StudentProvimi studentProvimi = studentPrvService.refuzoNota(id);
+        if (studentProvimi != null) {
+            return new ResponseEntity<>(studentProvimi, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/getStudentByUserID/{id}")

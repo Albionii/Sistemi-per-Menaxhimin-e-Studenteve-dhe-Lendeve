@@ -108,7 +108,7 @@ function loggedIn({ changeLoggedInState}) {
         <main className="flex-1 transition">
           <Topbar />
           <Routes>
-            <Route path="/" element={<Home token={token}/>} />
+            <Route path="/" element={<Home token={token} user={user.role}/>} />
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} user={user.role}/>} />
