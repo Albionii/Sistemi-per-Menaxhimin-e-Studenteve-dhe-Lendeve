@@ -63,8 +63,8 @@ export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonN
 
   return (
     <>
-      <div className="overflow-x-autowid">
-        <table className="w-full" style={{ background: colors.primary[600] }}>
+      <div className="overflow-x-autowid" style={{margin:"15px"}}>
+        <table className="w-full" style={{ background: colors.primary[600]}}>
           <thead className="text-xs uppercase">
             <tr>
               {rows.map((row, index) => (

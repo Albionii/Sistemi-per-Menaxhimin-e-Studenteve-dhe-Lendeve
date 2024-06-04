@@ -21,15 +21,17 @@ const ProvimetNota = () => {
 
     const notat = [5, 6, 7, 8, 9, 10];
     
-    const [provimet, setProvimet] = useState([]);
+    const [ligjeratat, setLigjeratat] = useState([]);
+    const [ligjerata, setLigjerata] = useState(null);
     const [provimi, setProvimi] = useState(null);
     const [nota, setNota] = useState(0);
 
     const [studentProvimet, setStudentProvimet] = useState([]);
     const [open, setOpen] = useState(false);
   
-    const handleSelectedProvimi = (p) => {
+    const handleSelectedLigjerata = (p) => {
       fetchStudentProvimet(p.id);
+      setLigjerata(p.id)
     }
 
     const handleClose = () => {
@@ -53,18 +55,18 @@ const ProvimetNota = () => {
 
 
     useEffect(() => {
-      fetchProvimet();
+      fetchLigjeratat();
     }, []);
 
 
-    const fetchProvimet = async() => {
+    const fetchLigjeratat = async() => {
       axios.get('http://localhost:8080/professor/ligjeratatOfProfessor',{
         headers: {
             'Authorization': `Bearer ${token}`
         }
       })
         .then(response => {
-          setProvimet(response.data)
+          setLigjeratat(response.data)
         })
         .catch(error => {
           console.error('Error:', error);
@@ -86,7 +88,7 @@ const ProvimetNota = () => {
       e.preventDefault();
       try {
         await axios.put("http://localhost:8080/professor/provimi/" + provimi.id + "/" + nota, formData);
-        fetchStudentProvimet(provimi.provimi.id)
+        fetchStudentProvimet(ligjerata)
         handleClose();
       } catch (error) {
         console.error(error);
@@ -98,8 +100,8 @@ const ProvimetNota = () => {
   return (
     <div className="overflow-x-auto m-5">
       <Dropdown label="Zgjedhni Provimin" dismissOnClick={true}>
-        {provimet.map(p => (
-          <Dropdown.Item key={p.id} onClick = {() => {handleSelectedProvimi(p)}}>{p.lenda.emri}</Dropdown.Item> 
+        {ligjeratat.map(p => (
+          <Dropdown.Item key={p.id} onClick = {() => {handleSelectedLigjerata(p)}}>{p.lenda.emri}</Dropdown.Item> 
         ))
         }
       </Dropdown>
