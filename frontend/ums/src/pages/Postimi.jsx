@@ -192,7 +192,7 @@ const Postimi = ({ token, user }) => {
         <Box
           gridColumn={{ xs: "span 12", sm: "span 12" }}
           sx={{
-            backgroundImage: `url(${imageUrl})`,
+            background: location.state.background,
             borderRadius: "30px",
             height: "250px",
             position: "relative",
@@ -241,7 +241,9 @@ const Postimi = ({ token, user }) => {
               sx={{ background: colors.primary[600] }}
               borderRadius={4}
             >
-              <Avatar />
+              <Avatar
+                src={`http://localhost:8080/profile-pictures/${user.profile}`}
+              />
               <Box
                 width={"94%"}
                 display={"flex"}
@@ -297,10 +299,10 @@ const Postimi = ({ token, user }) => {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    mb:"10px"
+                    mb: "10px",
                   }}
                 >
-                  <Typography variant="h4" fontWeight={"bold"} >
+                  <Typography variant="h4" fontWeight={"bold"}>
                     Assignments:
                   </Typography>
                   {USER_ROLE === "ROLE_PROFESSOR" &&

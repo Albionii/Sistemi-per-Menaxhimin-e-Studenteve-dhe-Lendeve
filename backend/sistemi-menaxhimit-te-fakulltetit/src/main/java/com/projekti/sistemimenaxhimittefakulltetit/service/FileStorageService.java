@@ -38,6 +38,8 @@ public class FileStorageService {
                 throw new RuntimeException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
+
+
             Path fileTypeFolder = this.fileStorageLocation.resolve(folderType);
             if (!Files.exists(fileTypeFolder)) {
                 Files.createDirectories(fileTypeFolder);
@@ -51,11 +53,42 @@ public class FileStorageService {
             Path targetLocation = parentFolder.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
+
+
             return fileName;
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
+
+    public String storeProfile(MultipartFile file, String folderType, Long id) {
+        String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String fileName = id + fileExtension;
+        System.out.println("Storing file: " + fileName);
+        try {
+            if (fileName.contains("..")) {
+                throw new RuntimeException("Sorry! Filename contains invalid path sequence " + fileName);
+            }
+
+            Path fileTypeFolder = this.fileStorageLocation.resolve(folderType);
+            if (!Files.exists(fileTypeFolder)) {
+                Files.createDirectories(fileTypeFolder);
+            }
+
+            Path targetLocation = fileTypeFolder.resolve(fileName);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            System.out.println("File stored successfully at: " + targetLocation.toString());
+            return fileName;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.out.println("Could not store file: " + fileName + ". Please try again! Error: " + ex.getMessage());
+            throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+        }
+    }
+
+
 
     public String storeSubmission(MultipartFile file, String folderType, Long assignmentId, Long submissionId) {
         String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -169,7 +202,16 @@ public class FileStorageService {
         }
     }
 
+    public void deleteUserFiles(Long userId) throws IOException {
+        Path userDirectory = Path.of(fileStorageLocation.toString(), "Users", String.valueOf(userId));
 
+        if (Files.exists(userDirectory  )) {
+            Files.walk(userDirectory)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        }
+    }
 
 
 }

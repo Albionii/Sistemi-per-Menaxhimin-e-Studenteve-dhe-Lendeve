@@ -192,7 +192,7 @@ public class StudentController {
         Student student =studentService.findStudentByUserId(user.getId());
 
         List<StudentSemester> semesters = studentSemesterRegistrationService.getSemesters(student);
-        System.out.println(semesters);
+//        System.out.println(semesters);
         return semesters;
     }
 

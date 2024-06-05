@@ -3,26 +3,32 @@ import Card from "@mui/material/Card";
 import { tokens } from "../theme";
 import { useTheme, Typography, TextField } from "@mui/material";
 import Prophilepic from "../../src/assets/foto.png";
-import { CardMedia } from "@mui/material";
-import Button from "@mui/material/Button";
+import { CardMedia, Avatar } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
-
+import ProfilePicture from "../components/ProfilePicture/ProfilePicture";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import axios from "axios";
+import { getToken } from "../GetToken";
 // import { useHistory } from "react-router-dom";
 
 function Profili({ changeLoggedInState, user }) {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
-    function logOut() {
-        const response = fetch('http://localhost:8080/auth/signout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        });
-        document.cookie = "Token=";
-        changeLoggedInState();
-    }
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const token = getToken();
+
+  function logOut() {
+    const response = fetch("http://localhost:8080/auth/signout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    document.cookie = "Token=";
+    changeLoggedInState();
+  }
 
   function formatDate(date) {
     const dataLindjes = new Date(date);
@@ -34,9 +40,7 @@ function Profili({ changeLoggedInState, user }) {
     return `${year}-${month}-${day}`;
   }
 
-    const [loading, setLoading] = useState(true);
-
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user.firstName !== "Loading") {
@@ -44,6 +48,10 @@ function Profili({ changeLoggedInState, user }) {
     }
   }),
     [user];
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   if (loading) {
     return <h1>LOADING...</h1>;
@@ -69,7 +77,24 @@ function Profili({ changeLoggedInState, user }) {
                             borderRadius: "50%",
                           }}
                         >
-                          <img src={Prophilepic} className="rounded-full"></img>
+                          {/* <img src={Prophilepic} className="rounded-full"></img> */}
+                          <Box sx={{display:"flex", justifyContent:"space-around", flexDirection:"column", alignItems:"center", gap:"25px"}}>
+                            <Avatar
+                              alt="profile-user"
+                              src={`http://localhost:8080/profile-pictures/${user.profile}`}
+                              sx={{
+                                width: 150,
+                                height: 150,
+                                ":hover": { cursor: "pointer" },
+                              }}
+                            />
+
+                            <ProfilePicture
+                              open={open}
+                              handleOpen={handleOpen}
+                              handleClose={handleClose}
+                            />
+                          </Box>
                         </CardMedia>
                       </div>
                       <div className="h-1/2 flex flex-col gap-4"></div>
@@ -135,7 +160,9 @@ function Profili({ changeLoggedInState, user }) {
                               </td>
                               <td class="w-1/2 p-4 border border-slate-700 ...">
                                 Date of Birth:{" "}
-                                <span className="ml-6">{formatDate(user.dateLindja)}</span>
+                                <span className="ml-6">
+                                  {formatDate(user.dateLindja)}
+                                </span>
                               </td>
                             </tr>
                             <tr>

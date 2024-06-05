@@ -109,14 +109,8 @@ const Provimet = ({ token }) => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-        }}
-      >
+    <Container maxWidth="lg"  sx={{ mt: 4, width:"100vw"}}>
+      <Box>
         <Box
           sx={{
             borderRadius: "10px",
@@ -132,7 +126,7 @@ const Provimet = ({ token }) => {
             sx={{
               borderRadius: "20px",
               padding: "10px",
-              overflowX: "auto",
+
               overflowY: "auto",
               background: colors.primary[600],
               "@media (max-width: 600px)": {
@@ -193,6 +187,7 @@ const Provimet = ({ token }) => {
                   <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Data Paraqitjes</TableCell>
                   <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Nota</TableCell>
                   <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Operation</TableCell>
+
                 </TableRow>
               </TableHead>
               <TableBody>

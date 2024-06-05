@@ -22,16 +22,25 @@ const CourseCard = ({
   enrollData,
   professorId,
   loading,
+  index
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
+  const fixedBackgroundColors = [
+    '#FF204E', '#A0153E', '#5D0E41', '#00224D', '#6FDCE3',
+    '#FFA07A', '#20B2AA', '#87CEFA', '#778899'
+  ];
+  const background = fixedBackgroundColors[index % fixedBackgroundColors.length];
+
   const handleClick = () => {
     navigate("/postimi", {
-      state: { imageUrl, name, professor, id, isEnrolled, professorId },
+      state: { background, name, professor, id, isEnrolled, professorId },
     });
   };
+
+
 
   const handleEnroll = () => {
     enroll(id);
@@ -42,6 +51,7 @@ const CourseCard = ({
   };
 
   const isEnrolled = enrollData.some((course) => course.ligjerata.id === id);
+
 
   return (
     <Card
@@ -63,7 +73,7 @@ const CourseCard = ({
           component="div"
           sx={{
             height: 200,
-            backgroundImage: `url(${imageUrl})`,
+            background: background,
             backgroundSize: "cover",
             zIndex: 21,
           }}
@@ -266,6 +276,7 @@ const EnrolledLigjerata = ({ token }) => {
                     enrollData={enrolledData}
                     professorId={course.professor.user.id}
                     loading={loading}
+                    index={index}
                   />
                 </Grid>
               ))}

@@ -64,6 +64,11 @@ function loggedIn({ changeLoggedInState}) {
 
   getFromCookies({ setUserData, changeLoggedInState });
 
+  const refreshUserData = () => {
+    getFromCookies({ setUserData, changeLoggedInState });
+  };
+
+
   const [loading, setLoading] = useState(false);
   const fifteenMinutes = 15 * 60 * 1000;
 
@@ -117,7 +122,7 @@ function loggedIn({ changeLoggedInState}) {
 
           <Route path="/paraqitura" element={<Paraqitura token={token} />} />
 
-            <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} />} />
+            <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} refreshUserData={refreshUserData}/>} />
             <Route path="/postimi" element={<Postimi token={token}  user={user}/>} />
 
 

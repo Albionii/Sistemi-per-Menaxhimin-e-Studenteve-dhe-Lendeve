@@ -18,12 +18,10 @@ import ConfirmationModal from "./ConfirmationModal";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { OrbitProgress } from "react-loading-indicators";
 
-
 // import Komentet from "./Komentet";
 const Komentet = lazy(() => import("./Komentet"));
 
 import useKomenti from "./useKomenti";
-
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -73,7 +71,7 @@ const Postim = ({
   const handleConfirmation = () => {
     deletePostimi(post.id);
     setDeletePost(false);
-  };  
+  };
   const {
     komentet,
     createKomenti,
@@ -128,7 +126,9 @@ const Postim = ({
             }}
           >
             <Box display={"flex"}>
-              <Avatar></Avatar>
+              <Avatar
+                src={`http://localhost:8080/profile-pictures/${post.user.profile}`}
+              ></Avatar>
               <Box ml={"15px"}>
                 <Typography variant="h5">
                   {post.user.firstName + " " + post.user.lastName}
@@ -252,7 +252,9 @@ const Postim = ({
               justifyContent="space-between"
               mt={2}
             >
-              <Avatar />
+              <Avatar
+                src={`http://localhost:8080/profile-pictures/${user.profile}`}
+              />
               <Box
                 width={"95%"}
                 display={"flex"}

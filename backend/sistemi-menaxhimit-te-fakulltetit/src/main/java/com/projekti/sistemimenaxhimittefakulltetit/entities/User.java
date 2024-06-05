@@ -43,6 +43,8 @@ public class User {
 
     private String rruga;
 
+    private String profile;
+
     private USER_ROLE role = USER_ROLE.ROLE_STUDENT;
 }
 

@@ -62,10 +62,10 @@ public class JwtProvider {
     }
 
     public String getEmailFromJwtToken(String jwt){
-        System.out.println("TEST JWT TOKEN Para Substring " + jwt);
+//        System.out.println("TEST JWT TOKEN Para Substring " + jwt);
 
         jwt = jwt.substring(7);
-        System.out.println("TEST JWT TOKEN mas Substring " + jwt);
+//        System.out.println("TEST JWT TOKEN mas Substring " + jwt);
         Claims claims = null;
         try{
         claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();

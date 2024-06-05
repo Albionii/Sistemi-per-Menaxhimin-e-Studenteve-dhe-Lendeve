@@ -118,7 +118,7 @@ public class AuthController {
 //            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No refresh token found");
         }
         if (jwtProvider.validateToken(refreshToken)) {
-            System.out.println(refreshToken);
+//            System.out.println(refreshToken);
             String newAccessToken = jwtProvider.generateAccessTokenFromRefreshToken(refreshToken);
             if (newAccessToken != null) {
 //                return ResponseEntity<>(newAccessToken,HttpStatus.OK);
@@ -173,7 +173,7 @@ public class AuthController {
     @PostMapping("/verifyjwt")
     public ResponseEntity<User> verify (@RequestHeader("Authorization") String token){
         User user = null;
-        System.out.println(token);
+//        System.out.println(token);
         try {
             user = userService.findUserByJwtToken(token);
             return new ResponseEntity<>(user,HttpStatus.OK);

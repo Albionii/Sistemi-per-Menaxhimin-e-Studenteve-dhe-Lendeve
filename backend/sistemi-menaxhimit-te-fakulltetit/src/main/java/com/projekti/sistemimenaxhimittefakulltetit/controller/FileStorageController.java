@@ -3,13 +3,17 @@ package com.projekti.sistemimenaxhimittefakulltetit.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Assignment;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.UserRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.service.FileStorageService;
 
+import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -31,6 +36,12 @@ public class FileStorageController {
 
     @Autowired
     private AssignmentRepository assignmentRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/{folderType}/{parentId}/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(
@@ -82,6 +93,49 @@ public class FileStorageController {
                 .body(baos.toByteArray());
     }
 
+    @PostMapping("/profile/upload")
+    public ResponseEntity<String> uploadFile(
+            @RequestHeader("Authorization") String token,
+            @RequestParam("files") MultipartFile file) throws Exception {
 
+        System.out.println("Upload request received");
+        System.out.println("File name: " + file.getOriginalFilename());
 
+        User user = userService.findUserByJwtToken(token);
+        if (user == null) {
+            System.out.println("User not found");
+            return ResponseEntity.badRequest().body("User not found");
+        }
+
+        System.out.println("User found: " + user.getId());
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                System.out.println("Deleting user files");
+                fileStorageService.deleteUserFiles(user.getId());
+
+                System.out.println("Storing new profile picture");
+                String fileName = fileStorageService.storeProfile(file, "Users", user.getId());
+
+                if (user.getProfile() != null && !user.getProfile().isEmpty()) {
+                    user.setProfile(null);
+                    userRepository.save(user);
+                }
+                user.setProfile(fileName);
+                System.out.println("New profile picture set: " + user.getProfile());
+                userRepository.save(user);
+
+                return ResponseEntity.ok().body("File uploaded successfully: " + fileName);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                System.out.println("Failed to upload file: " + ex.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + ex.getMessage());
+            }
+        } else {
+            System.out.println("No file to upload");
+            return ResponseEntity.badRequest().body("No file to upload");
+        }
+    }
+
+    
 }
