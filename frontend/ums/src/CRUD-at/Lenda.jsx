@@ -26,7 +26,7 @@ function Lenda() {
   const formDataJson = {
     emri:"",
     ects:"",
-    obligative:"",
+    obligative: true,
     kodi:""
   }
 

@@ -8,13 +8,11 @@ import com.projekti.sistemimenaxhimittefakulltetit.request.LoginRequest;
 import com.projekti.sistemimenaxhimittefakulltetit.response.AuthResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.CostumerUserDetailsService;
 import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
-import com.projekti.sistemimenaxhimittefakulltetit.service.UserServiceImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +23,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -180,6 +177,20 @@ public class AuthController {
         } catch (Exception e) {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping("/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestHeader("Authorization") String token,@RequestBody PasswordChangeRequest request) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        UserDetails userDetails = costumerUserDetailsService.loadUserByUsername(user.getEmail());
+        String password = request.getOldPassword();
+        if(passwordEncoder.matches(password, userDetails.getPassword())){
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            userRepository.save(user);
+            return new ResponseEntity<>("Passwordi u rua",HttpStatus.OK);
+            
+        };
+        return new ResponseEntity<>("Passowrdi nuk u rua",HttpStatus.BAD_REQUEST);
     }
 
     private Authentication authenticate(String username, String password){
