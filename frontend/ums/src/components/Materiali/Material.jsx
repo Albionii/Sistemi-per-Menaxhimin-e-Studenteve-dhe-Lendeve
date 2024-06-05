@@ -76,7 +76,7 @@ const Material = ({ material, deleteMaterial, updateMaterial, downloadFile, USER
         <Typography variant="h6" sx={{ flexGrow: 1, paddingTop:"5px"}}>
           {material.titulli}
         </Typography>
-        <hr width="88%" noshade />
+        <hr width="88%" noshade style={{background: colors.gray[200]}}/>
       </Box>
 
       <Box

@@ -56,6 +56,14 @@ const Transkripta = ({ token }) => {
           padding={"25px"}
           backgroundColor={"#D40E14"}
           color={"white"}
+          sx={{
+            "@media (max-width: 1350px)": {
+              gridColumn: "span 7",
+            },
+            "@media (max-width: 1000px)": {
+              gridColumn: "span 13",
+            },
+          }}
         >
           <Typography variant="h3">Mesatarja</Typography>
           <Box mt={"15px"}>
@@ -84,6 +92,14 @@ const Transkripta = ({ token }) => {
           padding={"25px"}
           backgroundColor={"#EC6601"}
           color={"white"}
+          sx={{
+            "@media (max-width: 1350px)": {
+              gridColumn: "span 6",
+            },
+            "@media (max-width: 1000px)": {
+              gridColumn: "span 13",
+            },
+          }}
         >
           <Typography variant="h3">ECTS</Typography>
           <Box mt={"15px"}>
@@ -112,6 +128,14 @@ const Transkripta = ({ token }) => {
           padding={"25px"}
           backgroundColor={"#004F95"}
           color={"white"}
+          sx={{
+            "@media (max-width: 1350px)": {
+              gridColumn: "span 13",
+            },
+            "@media (max-width: 1000px)": {
+              gridColumn: "span 13",
+            },
+          }}
         >
           <Typography variant="h3">Semestri</Typography>
           <Box mt={"15px"}>
@@ -140,10 +164,18 @@ const Transkripta = ({ token }) => {
           borderRadius={"7px"}
           backgroundColor={colors.primary[400]}
           padding={"15px"}
+          sx={{
+            "@media (max-width: 1350px)": {
+              gridColumn: "span 13",
+            },
+            "@media (max-width: 1000px)": {
+              gridColumn: "span 13",
+            },
+          }}
         >
           <Typography variant="h4">Notat tuaja:</Typography>
-          <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-            <Pie token={token} />
+          <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={'100%'}>
+            <Pie token={token}/>
           </Box>
         </Box>
         {/* ROW 2 */}
@@ -152,6 +184,14 @@ const Transkripta = ({ token }) => {
           gridRow={"span 4"}
           borderRadius={"7px"}
           backgroundColor={colors.blueAccent[400]}
+          sx={{
+            "@media (max-width: 1350px)": {
+              gridColumn: "span 13",
+            },
+            "@media (max-width: 1000px)": {
+              gridColumn: "span 13",
+            },
+          }}
         >
           <Profesori />
         </Box>
@@ -160,6 +200,14 @@ const Transkripta = ({ token }) => {
           gridRow={"span 3"}
           borderRadius={"7px"}
           backgroundColor={colors.primary[400]}
+          sx={{
+            "@media (max-width: 1350px)": {
+              gridColumn: "span 13",
+            },
+            "@media (max-width: 1000px)": {
+              gridColumn: "span 13",
+            },
+          }}
         >
           <Box
             p={2}

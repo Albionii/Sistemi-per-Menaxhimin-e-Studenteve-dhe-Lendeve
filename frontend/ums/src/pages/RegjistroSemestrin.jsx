@@ -6,118 +6,163 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TableSemestrat from "../components/TableSemestrat";
-import axios from "axios"; // Import axios
-import { getFromCookies } from "../getUserFromJWT";
+import axios from "axios";
+
+import CreatedNotifications from "../components/Notifications/CreatedNoftifications";
 
 
-const RegjistroSemestrin = () => {
+const RegjistroSemestrin = ({ token }) => {
   const [lokacioni, setLokacioni] = useState("");
   const [semester, setSemester] = useState({});
   const [nderrimiOrarit, setOrari] = useState("");
-  const [semestriList, setSemestriList] = useState([]); // Use an array for semestri list
+  const [semestriList, setSemestriList] = useState([]);
   const [semestrat, setSemestrat] = useState([]);
-  const [userData, setUserData] = useState(null); // Use an array for semestrat
+  const [userData, setUserData] = useState(null);
+  const [afati, setAfati] = useState("");
+  const [notification, setNotification] = useState(""); 
+  const [exists, setExisting] = useState([]);
 
-  getFromCookies({setUserData});
 
-  console.log(userData);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const getCookieValue = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  };
-  
-
-
   useEffect(() => {
-    const fetchSemesters = async () => {
-      try {
-        const token = getCookieValue('Token');
-        const response = await axios.get(`http://localhost:8080/student/semesters`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setSemestrat(response.data);
-      } catch (error) {
-        console.error("There was an error fetching the semesters!", error);
-      }
-    };
-
-    fetchSemesters();
-  }, [userData]);
-
-  useEffect(() => {
-    axios.get("http://localhost:8080/api/admin/semesters")
-      .then(response => {
+    axios
+      .get("http://localhost:8080/api/admin/semesters")
+      .then((response) => {
         setSemestriList(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("There was an error fetching the semesters!", error);
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/afati/date")
+      .then((response) => {
+        console.log(response.data);
+        setAfati(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the Afatet!", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/user/semester/exists", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then((response) => {
+        if (response.data) {
+          setExisting(response.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Doesn't exist", error);
+      });
+  }, [token]);
 
   const handleLokacioniChange = (event) => {
     setLokacioni(event.target.value);
   };
 
   const handleSemestriChange = (event) => {
-    setSemester(event.target.value); 
+    setSemester(event.target.value);
   };
 
   const handleOrariChange = (event) => {
-    setOrari(event.target.value); 
+    setOrari(event.target.value);
   };
 
   const handleSubmit = () => {
-    const token = getCookieValue('Token');
-    const newSemester = { lokacioni, nderrimiOrarit, semester };
-    console.log(newSemester); 
+    const newSemester = {
+      afati: afati[0],
+      lokacioni,
+      nderrimiOrarit,
+      semester,
+    };
+    console.log(newSemester);
     console.log(semester);
-    axios.post("http://localhost:8080/api/user/semester/register", newSemester, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json' 
-      }
-    })
-    .then(response => {
-      setSemestrat([...semestrat, response.data]);
-    })
-    .catch(error => {
-      console.error("There was an error registering the semester!", error);
-    });
+    axios
+      .post("http://localhost:8080/api/user/semester/register", newSemester, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setSemestrat([...semestrat, response.data]);
+        setNotification("Registered Successfully"); 
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("There was an error registering the semester!", error);
+      });
+  };
+
+  const handleUnregister = () => {
+    axios
+      .delete(`http://localhost:8080/api/user/semester`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        setNotification("Unregistered Successfully");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("There was an error unregistering the group!", error);
+      });
   };
 
   return (
     <Box m={{ xs: 2, sm: 3, md: 4 }}>
       <Grid container>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} >
           <Box
             bgcolor={colors.primary[600]}
             p={{ xs: 2, sm: 3, md: 4 }}
             height={"100%"}
-            alignItems={'center'}
-            display={'flex'}
-            flexDirection={'row'}
-          >
+            alignItems={"center"}
+            display={"flex"}
+            flexDirection={"row"}
+          > 
             <Box>
-              <Typography mb={{ xs: 12, sm: 6, md: 5 }} mt={{ xs: 12, md: 0, sm: 6 }} variant="h4" textAlign={'center'}>
-                Afati per regjistrimin e semestrit eshte i hapur me datat:{" "}
-              </Typography>
-              <Box
-                p={2}
-                bgcolor={colors.greenAccent[500]}
-                borderRadius={3}
-                textAlign={'center'}
-                fontSize={'17px'}
-                color={'white'}
+              <Typography
+                mb={{ xs: 12, sm: 6, md: 5 }}
+                mt={{ xs: 12, md: 0, sm: 6 }}
+                variant="h4"
+                textAlign={"center"}
               >
-                15/05/2024-28/05/2024
-              </Box>
+                Afati per regjistrimin e grupit eshte i hapur me datat:{" "}
+              </Typography>
+              {afati.length > 0 && (
+                <Box
+                  p={2}
+                  mb={5}
+                  bgcolor={colors.greenAccent[500]}
+                  borderRadius={3}
+                  textAlign={"center"}
+                  fontSize={"17px"}
+                  color={"white"}
+                >
+                  {afati[0].dataFillimit} - {afati[0].dataMbarimit}
+                </Box>
+              )}
+              {exists.length > 0 && (<Box
+                    mt={2}
+                    py={4}
+                    px={2}
+                    bgcolor={colors.greenAccent[600]}
+                    textAlign={"center"}
+                    fontSize={"16px"}
+                    borderRadius={3}
+                    color={"white"}
+                  >
+                    Semestri është regjistruar me sukses!
+                  </Box>)}
             </Box>
           </Box>
         </Grid>
@@ -128,7 +173,7 @@ const RegjistroSemestrin = () => {
             justifyContent={"center"}
             alignItems={"center"}
           >
-            <Box width={{ md: "50%", sm: '65%', sx: '75%' }}>
+            <Box width={{ md: "50%", sm: "65%", sx: "75%" }}>
               <Box
                 p={2}
                 textAlign={"center"}
@@ -150,9 +195,24 @@ const RegjistroSemestrin = () => {
                     label="Lokacioni"
                     onChange={handleLokacioniChange}
                   >
-                    <MenuItem value="Prishtine" sx={{ background: colors.primary[500] }}>Prishtine</MenuItem>
-                    <MenuItem value="Therande" sx={{ background: colors.primary[500] }}>Therande</MenuItem>
-                    <MenuItem value="Prizren" sx={{ background: colors.primary[500] }}>Prizren</MenuItem>
+                    <MenuItem
+                      value="Prishtine"
+                      sx={{ background: colors.primary[500] }}
+                    >
+                      Prishtine
+                    </MenuItem>
+                    <MenuItem
+                      value="Therande"
+                      sx={{ background: colors.primary[500] }}
+                    >
+                      Therande
+                    </MenuItem>
+                    <MenuItem
+                      value="Prizren"
+                      sx={{ background: colors.primary[500] }}
+                    >
+                      Prizren
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -169,8 +229,12 @@ const RegjistroSemestrin = () => {
                     label="semestri"
                     onChange={handleSemestriChange}
                   >
-                    {semestriList.map(semester => (
-                      <MenuItem key={semester.id} value={semester} sx={{ background: colors.primary[500] }}>
+                    {semestriList.map((semester) => (
+                      <MenuItem
+                        key={semester.id}
+                        value={semester}
+                        sx={{ background: colors.primary[500] }}
+                      >
                         {semester.name}
                       </MenuItem>
                     ))}
@@ -190,8 +254,18 @@ const RegjistroSemestrin = () => {
                     label="Orari"
                     onChange={handleOrariChange}
                   >
-                    <MenuItem value='Paradite' sx={{ background: colors.primary[500] }}>Paradite</MenuItem>
-                    <MenuItem value='Pasdite' sx={{ background: colors.primary[500] }}>Pasdite</MenuItem>
+                    <MenuItem
+                      value="Paradite"
+                      sx={{ background: colors.primary[500] }}
+                    >
+                      Paradite
+                    </MenuItem>
+                    <MenuItem
+                      value="Pasdite"
+                      sx={{ background: colors.primary[500] }}
+                    >
+                      Pasdite
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -208,23 +282,56 @@ const RegjistroSemestrin = () => {
                       backgroundColor: colors.blueAccent[600],
                     },
                   }}
-                  onClick={handleSubmit} 
-                  color={'white'}
+                  onClick={handleSubmit}
+                  color={"white"}
                 >
                   Ruaj Ndryshimet
                 </Box>
               </Box>
+              {exists.length > 0 && (
+                <>
+                  <Box width={"100%"} mt={5} mb={4}>
+                <Box
+                  bgcolor={colors.redAccent[500]}
+                  p={2}
+                  textAlign={"center"}
+                  mt={5}
+                  fontSize={"16px"}
+                  borderRadius={3}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: colors.redAccent[600],
+                    },
+                    cursor: "pointer",
+                  }}
+                  onClick={handleUnregister}
+                  color={"white"}
+                >
+                  C'regjistro semestrin
+                </Box>
+              </Box>
+                </>
+              )}
+              {notification && ( 
+                <CreatedNotifications message={notification} />
+              )}
             </Box>
           </Box>
         </Grid>
       </Grid>
       <Grid container mt={8}>
         <Grid item xs={12} md={12}>
-          <Box p={2} textAlign={'center'} fontSize={'20px'} bgcolor={colors.primary[400]} borderRadius={3}>
-            <Box p={2} borderBottom={'1px solid ' + colors.gray[600]}>
+          <Box
+            p={2}
+            textAlign={"center"}
+            fontSize={"20px"}
+            bgcolor={colors.primary[400]}
+            borderRadius={3}
+          >
+            <Box p={2} borderBottom={"1px solid " + colors.gray[600]}>
               Lista e regjistrimeve të semestrave
             </Box>
-            <TableSemestrat semestrat={semestrat} />
+            <TableSemestrat token={token} />
           </Box>
         </Grid>
       </Grid>

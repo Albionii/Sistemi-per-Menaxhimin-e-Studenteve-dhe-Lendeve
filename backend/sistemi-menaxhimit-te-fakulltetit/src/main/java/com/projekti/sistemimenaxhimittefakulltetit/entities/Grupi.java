@@ -18,4 +18,14 @@ public class Grupi {
 
     @ManyToOne
     private Semester semester;
+
+    private int hapesira;
+
+    public void decreaseAvailableSpaces() {
+        if (hapesira > 0) {
+            hapesira--;
+        } else {
+            throw new IllegalStateException("No available spaces left in the group.");
+        }
+    }
 }

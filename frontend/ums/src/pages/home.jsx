@@ -21,21 +21,17 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfesoriButtons from "../components/ProfessorButtons";
 
-const Home = ({ token, user}) => {
- 
+const Home = ({ token, user }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { mesatarja, ects, semester } = useTranskriptaData(token);
 
   const navigate = useNavigate();
 
-  
   const USER_ROLE = user;
 
-
-
   const handleClick = (id, name, professor, professorId) => {
-    navigate("/postimi", { state: { id, name, professor, professorId} });
+    navigate("/postimi", { state: { id, name, professor, professorId } });
   };
 
   const [ligjeratat, setLigjeratat] = useState([]);
@@ -58,7 +54,7 @@ const Home = ({ token, user}) => {
 
   useEffect(() => {
     getSemesters();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     // getStatistics();
@@ -67,7 +63,7 @@ const Home = ({ token, user}) => {
       setCurrentSemester(newSemester);
       getLigjeratatSemester(newSemester.id);
     }
-  }, [semesterId, semesters]); 
+  }, [semesterId, semesters]);
   const getSemesters = () => {
     axios
       .get(`http://localhost:8080/professorLenda/professor/semestret/`, {
@@ -87,8 +83,6 @@ const Home = ({ token, user}) => {
         console.error("Error getting semesters: " + error);
       });
   };
-
-  
 
   const getStudentsCount = (ligjerataId) => {
     axios
@@ -134,7 +128,7 @@ const Home = ({ token, user}) => {
         <Box
           gridColumn="span 12"
           backgroundColor={colors.blueAccent[400]}
-          gridRow={{ xs: "span", md: "span 1", sm: "span 2" }}
+          gridRow={{ xs: "span 2", md: "span 1", sm: "span 2" }}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
@@ -154,6 +148,17 @@ const Home = ({ token, user}) => {
               gridRow={"span 2"}
               backgroundColor={colors.primary[400]}
               borderRadius={"7px"}
+              sx={{
+                "@media (max-width: 1350px)": {
+                  gridColumn: "span 6",
+                },
+                "@media (max-width: 1000px)": {
+                  gridColumn: "span 12",
+                },
+                "@media (max-width: 800px)": {
+                  gridColumn: "span 12",
+                },
+              }}
             >
               <Table token={token} />
             </Box>
@@ -162,6 +167,14 @@ const Home = ({ token, user}) => {
               gridRow={"span 2"}
               backgroundColor={colors.primary[400]}
               borderRadius={"7px"}
+              sx={{
+                "@media (max-width: 1350px)": {
+                  gridColumn: "span 6",
+                },
+                "@media (max-width: 1000px)": {
+                  gridColumn: "span 12",
+                },
+              }}
             >
               <Box>
                 <Box
@@ -187,7 +200,7 @@ const Home = ({ token, user}) => {
                     </Box>
                     <Box
                       pt={2}
-                      bgcolor={'#004F95'}
+                      bgcolor={"#004F95"}
                       borderRadius={3}
                       pb={2}
                       textAlign={"center"}
@@ -218,7 +231,7 @@ const Home = ({ token, user}) => {
                     </Box>
                     <Box
                       pt={2}
-                      bgcolor={'#004F95'}
+                      bgcolor={"#004F95"}
                       borderRadius={3}
                       pb={2}
                       textAlign={"center"}
@@ -248,7 +261,7 @@ const Home = ({ token, user}) => {
                     </Box>
                     <Box
                       pt={2}
-                      bgcolor={'#004F95'}
+                      bgcolor={"#004F95"}
                       borderRadius={3}
                       pb={2}
                       textAlign={"center"}
@@ -271,6 +284,14 @@ const Home = ({ token, user}) => {
               gridRow={"span 2"}
               backgroundColor={colors.primary[400]}
               borderRadius={"7px"}
+              sx={{
+                "@media (max-width: 1350px)": {
+                  gridColumn: "span 6",
+                },
+                "@media (max-width: 1000px)": {
+                  gridColumn: "span 12",
+                },
+              }}
             >
               <Typography variant="h4" pt={"10px"} pl={"10px"}>
                 Notat tuaja:
@@ -293,6 +314,11 @@ const Home = ({ token, user}) => {
               gridRow={"span 2"}
               backgroundColor={colors.primary[400]}
               borderRadius={"7px"}
+              sx={{
+                "@media (max-width: 1350px)": {
+                  gridColumn: "span 12",
+                },
+              }}
             >
               <Table token={token} />
             </Box>
@@ -302,6 +328,11 @@ const Home = ({ token, user}) => {
               backgroundColor={colors.primary[400]}
               borderRadius={"7px"}
               padding={1}
+              sx={{
+                "@media (max-width: 1350px)": {
+                  gridColumn: "span 12",
+                },
+              }}
             >
               <Box
                 display="flex"
@@ -319,7 +350,18 @@ const Home = ({ token, user}) => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography variant="h6" pl={2} pr={2} bgcolor={colors.blueAccent[700]} borderRadius={3} fontWeight={'bold'} color={'white'} mb={''}>{currentSemester.name}</Typography>
+                  <Typography
+                    variant="h6"
+                    pl={2}
+                    pr={2}
+                    bgcolor={colors.blueAccent[700]}
+                    borderRadius={3}
+                    fontWeight={"bold"}
+                    color={"white"}
+                    mb={""}
+                  >
+                    {currentSemester.name}
+                  </Typography>
                   <Box>
                     <IconButton onClick={handleDecrease} size="small">
                       <ArrowBackIosIcon fontSize="small" />
@@ -348,9 +390,9 @@ const Home = ({ token, user}) => {
                         underline="none"
                         sx={{ ":hover": { cursor: "pointer" } }}
                       >
-                        <Box 
-                          display={'flex'}
-                          justifyContent={'space-between'}
+                        <Box
+                          display={"flex"}
+                          justifyContent={"space-between"}
                           bgcolor={colors.blueAccent[800]}
                           textAlign="center"
                           borderRadius={3}
@@ -362,26 +404,36 @@ const Home = ({ token, user}) => {
                             ":hover": {
                               cursor: "pointer",
                               bgcolor: [colors.blueAccent[900]],
-                            }
+                            },
                           }}
-                          alignItems={'center'}
-                          boxShadow="0px 2px 3px rgba(0, 0, 0, 0.2)">
-                        <Box>
-                          <Box
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                            color="#fff"
-                          >
-                            <Typography ml={1} >
-                              {ligjerata.lenda.emri}
-                            </Typography>
+                          alignItems={"center"}
+                          boxShadow="0px 2px 3px rgba(0, 0, 0, 0.2)"
+                        >
+                          <Box>
+                            <Box
+                              display="flex"
+                              justifyContent="center"
+                              alignItems="center"
+                              color="#fff"
+                            >
+                              <Typography ml={1}>
+                                {ligjerata.lenda.emri}
+                              </Typography>
+                            </Box>
                           </Box>
-                        </Box>
-                        <Box p={1} bgcolor={colors.blueAccent[900]} borderRadius={3} m={'3px'} color={'white'}>
-                          <Typography>Students:</Typography>
-                          <Typography fontWeight={'bold'}>{studentCounts[ligjerata.id]}</Typography> {/* Corrected */}
-                        </Box>
+                          <Box
+                            p={1}
+                            bgcolor={colors.blueAccent[900]}
+                            borderRadius={3}
+                            m={"3px"}
+                            color={"white"}
+                          >
+                            <Typography>Students:</Typography>
+                            <Typography fontWeight={"bold"}>
+                              {studentCounts[ligjerata.id]}
+                            </Typography>{" "}
+                            {/* Corrected */}
+                          </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -393,18 +445,48 @@ const Home = ({ token, user}) => {
         )}
 
         {/* ROW 3 */}
+        {USER_ROLE === "ROLE_STUDENT" ? (
+          <Box
+            gridColumn={{ xs: "span 12", md: "span 5", sm: "span 12" }}
+            gridRow={{ xs: "span 4", md: "span 2", sm: "span 2" }}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            borderRadius={"7px"}
+            backgroundColor={colors.primary[400]}
+            sx={{
+              "@media (max-width: 1350px)": {
+                gridColumn: "span 6",
+              },
+              "@media (max-width: 1000px)": {
+                gridColumn: "span 12",
+              },
+            }}
+          >
+            <ResponsiveButtons />
+          </Box>
+        ) : (
+          <Box
+            gridColumn={{ xs: "span 12", md: "span 5", sm: "span 12" }}
+            gridRow={{ xs: "span 4", md: "span 2", sm: "span 2" }}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            borderRadius={"7px"}
+            backgroundColor={colors.primary[400]}
+            sx={{
+              "@media (max-width: 1350px)": {
+                gridColumn: "span 12",
+              },
+              "@media (max-width: 1000px)": {
+                gridColumn: "span 12",
+              },
+            }}
+          >
+            <ProfesoriButtons token={token} />
+          </Box>
+        )}
 
-        <Box
-          gridColumn={{ xs: "span 12", md: "span 5", sm: "span 12" }}
-          gridRow={{ xs: "span 4", md: "span 2", sm: "span 2" }}
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          borderRadius={"7px"}
-          backgroundColor={colors.primary[400]}
-        >
-          {USER_ROLE === "ROLE_STUDENT" ? <ResponsiveButtons /> : <ProfesoriButtons token={token}/>}
-        </Box>
         <Box
           gridColumn={{ xs: "span 12", md: "span 7", sm: "span 12" }}
           gridRow={"span 2"}
@@ -418,6 +500,9 @@ const Home = ({ token, user}) => {
             "--fc-button-border-color": colors.primary[600],
             "--fc-button-text-color": colors.gray[100],
             "--fc-today-bg-color": colors.primary[400],
+            "@media (max-width: 1350px)": {
+              gridColumn: "span 12",
+            },
           }}
         >
           <Calendar token={token} />

@@ -265,7 +265,7 @@ const Postimi = ({ token, user }) => {
                   name="mesazhi"
                   value={postimi.mesazhi}
                 />
-                <Button variant="contained" type="submit">
+                <Button type="submit" sx={{color: colors.gray[300]}}>
                   <SendIcon />
                 </Button>
               </Box>
@@ -328,7 +328,7 @@ const Postimi = ({ token, user }) => {
                 </Box>
 
                 {assignments.map((assignment) => (
-                  <Box key={assignment.id}>
+                  <Box key={assignment.id} color={'white'}>
                     <Box
                       onClick={() => {
                         setViewAssignment(assignment);
@@ -391,6 +391,7 @@ const Postimi = ({ token, user }) => {
                             flexDirection: "column",
                             justifyContent: "center",
                             alignItems: "center",
+                            color: colors.gray[200]
                           }}
                         >
                           <TaskIcon
@@ -401,25 +402,25 @@ const Postimi = ({ token, user }) => {
                           />
                           <Typography
                             variant="h5"
-                            sx={{ color: "white", mb: 2 }}
+                            sx={{ mb: 2 }}
                           >
                             {viewAssignment.titulli}
                           </Typography>
                           <Typography
                             variant="body1"
-                            sx={{ color: "white", mb: 2 }}
+                            sx={{ mb: 2 }}
                           >
                             {viewAssignment.mesazhi}
                           </Typography>
                           <Typography
                             variant="body2"
-                            sx={{ color: "white", mb: 2 }}
+                            sx={{mb: 2 }}
                           >
                             Due date: {viewAssignment.expireAt}
                           </Typography>
                           <Typography
                             variant="body2"
-                            sx={{ color: "white", mb: 2 }}
+                            sx={{ mb: 2 }}
                           >
                             Files:
                           </Typography>
@@ -430,7 +431,6 @@ const Postimi = ({ token, user }) => {
                               alignItems="center"
                               mb={1}
                               sx={{
-                                color: "white",
                                 cursor: "pointer",
                                 "&:hover": { opacity: 0.8 },
                               }}

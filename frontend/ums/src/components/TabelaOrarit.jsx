@@ -14,7 +14,7 @@ export default function BasicTable({ orari }) {
     const colors = tokens(theme.palette.mode);
   return (
     <TableContainer component={Paper} elevation={0} sx={{background: colors.primary[400]}}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow >
             <TableCell sx={{fontSize: '16px', padding: 2, fontWeight: 'bold', textAlign: 'center'}}>Dita</TableCell>

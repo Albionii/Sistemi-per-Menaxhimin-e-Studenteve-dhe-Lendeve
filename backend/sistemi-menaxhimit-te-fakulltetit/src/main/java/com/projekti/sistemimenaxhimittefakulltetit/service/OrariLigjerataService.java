@@ -21,7 +21,8 @@ public class OrariLigjerataService {
     private final StudentSemesterRegistrationService studentSemesterRegistrationService;
 
     public List<OrariLigjerata> getByOrariId(Long id){
-        return orariLigjerataRepository.findByOrariId(id);
+        List<Orari> byGrupiId = orariService.findByGrupiId(id);
+        return orariLigjerataRepository.findByOrariId(byGrupiId.get(0).getId());
     }
 
 //    public List<OrariLigjerata> getOrariLigjertaByDita(String jwt, String dita) throws Exception {

@@ -58,7 +58,7 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
   };
 
   return (
-    <Grid item xs={12} sm={12} md={6} onClick={handleClick}>
+    <Grid item xs={12} sm={12} md={12} lg={6} onClick={handleClick}>
       <Box
         bgcolor={colors.primary[400]}
         p={2}
@@ -199,7 +199,15 @@ const Semestrat = ({ token }) => {
           width="100%"
           mt={2}
         />
-        <Grid container spacing={3}>
+        <Grid container spacing={3}
+        sx={{
+          "@media (max-width: 1350px)": {
+            gridColumn: "span 12",
+          },
+          "@media (max-width: 1000px)": {
+            gridColumn: "span 12",
+          },
+        }}>
           {semestrat.map((semestri) => (
             <SemestriItem
               key={semestri.id}

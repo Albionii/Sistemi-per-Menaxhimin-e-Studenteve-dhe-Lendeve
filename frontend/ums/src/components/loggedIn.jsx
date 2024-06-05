@@ -155,7 +155,7 @@ function loggedIn({ changeLoggedInState}) {
 
 
 
-          <Route path="/provimet" element={<Provimet token={token} />} />
+          <Route path="/provimet" element={<Provimet token={token}/>} />
 
           <Route path="/notoStudentin" element={<NotoStudentin />} />
 
@@ -184,8 +184,8 @@ function loggedIn({ changeLoggedInState}) {
           <Route path="/department" element={<Departmentat />} />
           <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
           <Route path="/refuzoNoten" element={<ProvimetNota />} />
-          <Route path="/regjistroSemestrin" element={<RegjistroSemestrin />} />
-          <Route path="/regjistroGrupin" element={<RegjistroGrupin />} />
+          <Route path="/regjistroSemestrin" element={<RegjistroSemestrin token={token}/>} />
+          <Route path="/regjistroGrupin" element={<RegjistroGrupin token={token}/>} />
           <Route path="/grupi" element={<Grupi />} />
           <Route path="/orari" element={<Orari />} />
           <Route path="/lajmi" element={<Lajmi />} />

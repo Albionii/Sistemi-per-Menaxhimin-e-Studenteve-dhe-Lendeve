@@ -24,6 +24,7 @@ public class OrariController {
         return orariService.getAllOraret();
     }
 
+
     @DeleteMapping("/delete/{id}")
     public void deleteOrari(@PathVariable Long id){
         orariService.deleteOrari(id);

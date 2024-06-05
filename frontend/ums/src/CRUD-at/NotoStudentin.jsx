@@ -107,17 +107,17 @@ const ProvimetNota = () => {
       </Dropdown>
       <br />
       <Table hoverable>
-        <Table.Head className='border'>
-          <Table.HeadCell>Lenda</Table.HeadCell>
-          <Table.HeadCell>Emri Studentit</Table.HeadCell>
-          <Table.HeadCell>Data Paraqitjes</Table.HeadCell>
-          <Table.HeadCell>Data Vendosjes</Table.HeadCell>
-          <Table.HeadCell>Nota</Table.HeadCell>
-          <Table.HeadCell>Butoni</Table.HeadCell>
+        <Table.Head>
+          <Table.HeadCell style={{background: colors.primary[600], color: colors.gray[200]}}>Lenda</Table.HeadCell>
+          <Table.HeadCell style={{background: colors.primary[600], color: colors.gray[200]}}>Emri Studentit</Table.HeadCell>
+          <Table.HeadCell style={{background: colors.primary[600], color: colors.gray[200]}}>Data Paraqitjes</Table.HeadCell>
+          <Table.HeadCell style={{background: colors.primary[600], color: colors.gray[200]}}>Data Vendosjes</Table.HeadCell>
+          <Table.HeadCell style={{background: colors.primary[600], color: colors.gray[200]}}>Nota</Table.HeadCell>
+          <Table.HeadCell style={{background: colors.primary[600], color: colors.gray[200]}}>Butoni</Table.HeadCell>
         </Table.Head>
-        <Table.Body className="divide-y border dark:border-gray-400">
+        <Table.Body className="divide-y" >
             {studentProvimet.map((item) =>(
-                <Table.Row key={item.id} style={{background: colors.primary[500]}}>
+                <Table.Row key={item.id} style={{background: colors.primary[400], color: colors.gray[200], borderColor: colors.primary[500]}}>
                 <Table.Cell className="whitespace-nowrap font-medium">
                 {item.provimi.ligjerata.lenda.emri}
                 </Table.Cell>

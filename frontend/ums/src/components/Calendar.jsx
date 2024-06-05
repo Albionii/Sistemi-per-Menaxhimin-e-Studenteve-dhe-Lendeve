@@ -48,7 +48,7 @@ export default function Calendar({ token }) {
     const eventStyle = {
       padding: 3,
       textAlign: 'center',
-      background: eventInfo.event.extendedProps.type === 'provim' ? colors.redAccent[500] : colors.blueAccent[500],
+      background: eventInfo.event.extendedProps.type === 'provim' ? '#e33327' : colors.blueAccent[500],
       color: '#fff',
       width: '100%',
       borderRadius: 3,

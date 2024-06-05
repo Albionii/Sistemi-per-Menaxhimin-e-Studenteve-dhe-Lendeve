@@ -48,7 +48,6 @@ const Pie = ({ token }) => {
       display={"flex"}
       alignItems={"center"}
       justifyContent={"center"}
-      minWidth={"350px"}
     >
       {!allZero ? (
         <div className="pie">
