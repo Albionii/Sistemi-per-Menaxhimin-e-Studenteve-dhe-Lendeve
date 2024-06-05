@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/studentGrupi")
+@RequestMapping("/api/student/studentGrupi")
 public class StudentGrupiController {
 
     private final StudentGrupiService studentGrupiService;

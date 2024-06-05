@@ -17,7 +17,7 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/student/totalProvimet/${semestriId}`, {
+      .get(`http://localhost:8080/api/student/totalProvimet/${semestriId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

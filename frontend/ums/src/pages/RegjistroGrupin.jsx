@@ -45,7 +45,7 @@ const RegjistroGrupin = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/studentGrupi/exists", {
+      .get("http://localhost:8080/api/student/studentGrupi/exists", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -60,7 +60,7 @@ const RegjistroGrupin = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/studentGrupi/me", {
+      .get("http://localhost:8080/api/student/studentGrupi/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -92,7 +92,7 @@ const RegjistroGrupin = ({ token }) => {
   const handleSubmit = () => {
     axios
       .post(
-        `http://localhost:8080/studentGrupi/${grupi}`,
+        `http://localhost:8080/api/student/studentGrupi/${grupi}`,
         {},
         {
           headers: {
@@ -113,7 +113,7 @@ const RegjistroGrupin = ({ token }) => {
 
   const handleUnregister = () => {
     axios
-      .delete(`http://localhost:8080/studentGrupi`, {
+      .delete(`http://localhost:8080/api/student/studentGrupi`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {

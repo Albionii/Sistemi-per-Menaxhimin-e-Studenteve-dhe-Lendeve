@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/student")
+@RequestMapping("/api/student")
 public class StudentController {
 
     private final StudentPrvService studentPrvService;
@@ -32,6 +32,9 @@ public class StudentController {
     private final LendaSemesterService lendaSemesterService;
     private final FileStorageService fileStorageService;
     private final AssignmentSubmissionRepository assignmentSubmissionRepository;
+    private final OrariLigjerataService orariLigjerataService;
+    private final AssignmentService assignmentService;
+    private final LajmiService lajmiService;
 
     @PostMapping("/paraqit/{id}")
     public ResponseEntity<StudentProvimi> paraqitProvimin(@PathVariable Long id,
@@ -43,6 +46,22 @@ public class StudentController {
         StudentProvimi prv =  studentPrvService.paraqitProvimin(student, provimi.get());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(prv);
+    }
+
+
+    @GetMapping("/lajmet")
+    public List<Lajmi> lajmetByDepartment(@RequestHeader("Authorization")String jwt) throws Exception {
+        return lajmiService.findByDepartmentId(jwt);
+    }
+
+    @GetMapping("/assignments")
+    public List<Assignment> getAllAssignments() {
+        return assignmentService.getAllAssignments();
+    }
+
+    @GetMapping("/dita/{dita}")
+    public List<OrariLigjerata> getByDita(@PathVariable String dita, @RequestHeader("Authorization")String jwt) throws Exception {
+        return orariLigjerataService.getOrariByDita(dita, jwt);
     }
 
     @GetMapping("totalProvimet/{semesterId}")

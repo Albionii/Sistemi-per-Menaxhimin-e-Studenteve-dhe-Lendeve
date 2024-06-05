@@ -13,7 +13,7 @@ export default function BasicTable({ token }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/student/semesters", {
+      .get("http://localhost:8080/api/student/semesters", {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((response) => {

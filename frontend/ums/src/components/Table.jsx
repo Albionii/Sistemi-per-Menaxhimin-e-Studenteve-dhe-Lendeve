@@ -44,7 +44,7 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/orariLigjerata/dita/${currentDay}`, {
+      .get(`http://localhost:8080/api/student/dita/${currentDay}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

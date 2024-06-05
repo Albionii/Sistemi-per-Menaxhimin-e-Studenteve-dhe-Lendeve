@@ -39,7 +39,7 @@ const Profesori = () => {
   })
 
   const getProvimetNotuara = async () => {
-    axios.get('http://localhost:8080/student/getTranskripta', {
+    axios.get('http://localhost:8080/api/student/getTranskripta', {
       headers: {
         'Authorization': `Bearer ${token}`
       }

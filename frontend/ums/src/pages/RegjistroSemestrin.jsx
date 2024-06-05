@@ -52,7 +52,7 @@ const RegjistroSemestrin = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/user/semester/exists", {
+      .get("http://localhost:8080/api/student/semester/exists", {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((response) => {
@@ -87,7 +87,7 @@ const RegjistroSemestrin = ({ token }) => {
     console.log(newSemester);
     console.log(semester);
     axios
-      .post("http://localhost:8080/api/user/semester/register", newSemester, {
+      .post("http://localhost:8080/api/student/semester/register", newSemester, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -105,7 +105,7 @@ const RegjistroSemestrin = ({ token }) => {
 
   const handleUnregister = () => {
     axios
-      .delete(`http://localhost:8080/api/user/semester`, {
+      .delete(`http://localhost:8080/api/student/semester`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {

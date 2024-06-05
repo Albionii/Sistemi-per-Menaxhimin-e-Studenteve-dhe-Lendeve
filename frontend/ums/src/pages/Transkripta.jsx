@@ -23,7 +23,7 @@ const Transkripta = ({ token }) => {
 
   useEffect(() => {
     axios
-    .get(`http://localhost:8080/student/professorAVG`,{
+    .get(`http://localhost:8080/api/student/professorAVG`,{
         headers:{
             Authorization: `Bearer ${token}`
         }})

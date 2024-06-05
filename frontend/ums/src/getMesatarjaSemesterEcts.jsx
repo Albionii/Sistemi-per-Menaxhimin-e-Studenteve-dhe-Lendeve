@@ -9,21 +9,21 @@ const useTranskriptaData = (token) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const transkriptaResponse = await axios.get(`http://localhost:8080/student/transkripta`, {
+        const transkriptaResponse = await axios.get(`http://localhost:8080/api/student/transkripta`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setMesatarja(transkriptaResponse.data.mesatarja);
 
-        const ectsResponse = await axios.get(`http://localhost:8080/student/ects`, {
+        const ectsResponse = await axios.get(`http://localhost:8080/api/student/ects`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setEcts(ectsResponse.data);
 
-        const semesterResponse = await axios.get(`http://localhost:8080/student/semestri`, {
+        const semesterResponse = await axios.get(`http://localhost:8080/api/student/semestri`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

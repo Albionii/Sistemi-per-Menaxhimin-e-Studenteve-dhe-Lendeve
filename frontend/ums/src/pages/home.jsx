@@ -57,7 +57,6 @@ const Home = ({ token, user }) => {
   }, []);
 
   useEffect(() => {
-    // getStatistics();
     if (semesters.length > 0) {
       const newSemester = semesters[semesterId - 1];
       setCurrentSemester(newSemester);

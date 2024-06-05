@@ -9,7 +9,7 @@ export default function SimpleSlider({ token }) {
   useEffect(() => {
     const fetchLajmet = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/lajmet`, {
+        const response = await axios.get(`http://localhost:8080/api/student/lajmet`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

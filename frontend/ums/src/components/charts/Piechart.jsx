@@ -14,7 +14,7 @@ const Pie = ({ token }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/student/notatCount", {
+        const response = await axios.get("http://localhost:8080/api/student/notatCount", {
           headers: {
             Authorization: `Bearer ${token}`
           }
