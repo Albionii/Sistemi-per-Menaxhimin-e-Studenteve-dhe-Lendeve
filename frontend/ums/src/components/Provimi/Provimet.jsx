@@ -29,7 +29,7 @@ const Provimet = ({ token }) => {
 
   const fetchProvimet = () => {
     axios
-      .get("http://localhost:8080/student/get/provimet/", {
+      .get("http://localhost:8080/api/student/get/provimet/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,7 +44,7 @@ const Provimet = ({ token }) => {
 
   const fetchParaqitjet = () => {
     axios
-      .get("http://localhost:8080/student/provimetParaqitura", {
+      .get("http://localhost:8080/api/student/provimetParaqitura", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +59,7 @@ const Provimet = ({ token }) => {
 
   const refuzoNoten = (provimiId) => {
     axios
-      .put(`http://localhost:8080/student/refuzo/${provimiId}`, {
+      .put(`http://localhost:8080/api/student/refuzo/${provimiId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +76,7 @@ const Provimet = ({ token }) => {
   const paraqitProvimin = (provimiId) => {
     if (provimiId) {
       axios
-        .post(`http://localhost:8080/student/paraqit/${provimiId}`, null, {
+        .post(`http://localhost:8080/api/student/paraqit/${provimiId}`, null, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -95,7 +95,7 @@ const Provimet = ({ token }) => {
 
   const anuloParaqitjen = (id) => {
     axios
-      .delete(`http://localhost:8080/student/anulo/${id}`, {
+      .delete(`http://localhost:8080/api/student/anulo/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -363,7 +363,7 @@ const PaRow = ({ item, anuloParaqitjen, refuzoNoten }) => {
   return (
     <TableRow>
       {console.log(item)}
-      <TableCell sx={{ textAlign: "center" }}  sx={{ fontSize: { xs: "6px", sm: "12px" } }}>{item.emriLendes}</TableCell>
+      <TableCell sx={{ textAlign: "center", fontSize: { xs: "6px", sm: "12px" }}}>{item.emriLendes}</TableCell>
       <TableCell sx={{ textAlign: "center" }}>
         <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
           {item.provimi.ligjerata.professor.user.firstName}{" "}
