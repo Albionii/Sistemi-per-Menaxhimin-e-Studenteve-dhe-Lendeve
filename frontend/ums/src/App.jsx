@@ -1,5 +1,5 @@
 import "./output.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -11,71 +11,42 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import Authentication from "./pages/authentication.jsx";
 import LoggedIn from "./components/loggedIn.jsx";
-import { getToken,getFromRefreshToken, getTokenBeggining} from "./GetToken.js";
-import { SignalCellularNoSimOutlined } from "@mui/icons-material";
-import { isEmptyArray } from "formik";
+import { getTokenBeggining } from "./GetToken.js";
+
+import { OrbitProgress } from "react-loading-indicators";
+
 
 function App() {
   const [theme, colorMode] = useMode();
-
-  
-  const[token,setToken] = useState(undefined);
-
-  console.log(token);
-  // console.log(getRole());
-
-
-  // let isLoggedIn = document.cookie ? true : false;
-  // // console.log(document.cookie);
-
-  // if (isLoggedIn) {
-  //   const documentSplited = document.cookie.split('=');
-  //   let hasToken = false;
-  //   for (let i = 0; i < documentSplited.length; i++) {
-  //     try{
-  //       if((documentSplited[i].startsWith("Token") && documentSplited[i++].length === 0)){
-  //         isLoggedIn = false;
-  //         hasToken = true;
-  //       }
-  //     }
-  //     catch(error){
-  //       console.log("Cookie Error" + error);
-  //     }
-
-  //     if(!hasToken){
-  //       isLoggedIn = false;
-  //     }
-  //   }
-  // }
-
-  // console.log(typeof token);
-  let logginStatus;
-  if (typeof token === "undefined" || token.length === 0) {
-    logginStatus = false;
-  } else {
-    logginStatus = true;
-  }
-
-  const [loggedIn, setLoggedIn] = useState(logginStatus);
-  getTokenBeggining({setToken,setLoggedIn});
-
-
-
-  // // const [loggedIn, setLoggedIn] = useState(document.cookie.split('=')[1].length !== 0);
-
-
-
-
-
-
-
-  // const loggedIn = ;
+  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(undefined);
+  const [loggedIn, setLoggedIn] = useState(false);
   const changeLoggedInState = () => {
     setLoggedIn(!loggedIn);
   }
-  // console.log(document.cookie);
-  // console.log(loggedIn);
 
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      await getTokenBeggining({ setToken, setLoggedIn, setLoading });
+    };
+
+
+    fetchToken();
+  }, []);
+  if (loading) {
+    return (
+      <>
+        <div className="flex items-center justify-center w-full h-full absolute bg-slate-600" style={{ display: loading ? "none" : "", zIndex: "100000", backgroundColor: "#141b2d" }}>
+          <div style={{ width: "100%", height: "100%" }} className="flex items-center justify-center w-full h-full">
+            <div style={{ display: loading ? "none" : "" }}>
+              <OrbitProgress variant="track-disc" color="#006cff" size="medium" text="" textColor="" />
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -83,7 +54,7 @@ function App() {
 
         {loggedIn ? (
           <div className="app">
-            <LoggedIn changeLoggedInState={changeLoggedInState}/>
+            <LoggedIn changeLoggedInState={changeLoggedInState} />
           </div>
         ) : (
           <Authentication changeLoggedInState={changeLoggedInState} />
