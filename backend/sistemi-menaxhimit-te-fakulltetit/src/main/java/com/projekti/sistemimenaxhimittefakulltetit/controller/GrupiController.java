@@ -43,4 +43,9 @@ public class GrupiController {
     public Grupi createGrupi(@RequestBody Grupi grupi) throws Exception {
         return grupiService.createGrupi(grupi);
     }
+
+    @GetMapping
+    public List<Grupi> grupiByAfatiId(){
+        return grupiService.findGrupetByAfatiId();
+    }
 }

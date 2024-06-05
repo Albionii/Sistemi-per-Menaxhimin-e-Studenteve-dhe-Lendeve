@@ -1,17 +1,23 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
+import com.projekti.sistemimenaxhimittefakulltetit.entities.Afati;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Grupi;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.StudentSemester;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.GrupiRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class GrupiService {
     private final GrupiRepository grupiRepository;
+    private final AfatiService afatiService;
+    private final StudentSemesterRegistrationService studentSemesterRegistrationService;
 
     public Grupi getGrupiById(Long id){
         return grupiRepository.findById(id).orElse(null);
@@ -44,5 +50,17 @@ public class GrupiService {
 
     public void deleteGrupiById(Long id){
         grupiRepository.deleteById(id);
+    }
+
+    public List<Grupi> findGrupetByAfatiId(){
+        Afati currentAfati = afatiService.findByCurrent().get(0);
+
+        StudentSemester studentSemester = studentSemesterRegistrationService.getStudentSemestersByAfatiId(currentAfati.getId()).get(0);
+
+        if (studentSemester == null) {
+            return Collections.emptyList();
+        }
+
+        return grupiRepository.findBySemesterId(studentSemester.getSemester().getId());
     }
 }
