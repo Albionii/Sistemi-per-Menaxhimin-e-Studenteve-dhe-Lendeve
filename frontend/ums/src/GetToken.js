@@ -8,7 +8,7 @@ export const getToken = () => {
     }
 }
 
-export const getTokenBeggining = ({ setToken, setLoggedIn }) => {
+export const getTokenBeggining = ({ setToken, setLoggedIn,setLoading }) => {
   getFromRefreshToken().then(() => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; Token=`);
@@ -16,8 +16,13 @@ export const getTokenBeggining = ({ setToken, setLoggedIn }) => {
       const LoggedIn = isTokenValid(parts.pop().split(';').shift(),{setLoggedIn})
       setToken(parts.pop().split(';').shift());
 
-      // setLoggedIn(true);
+      setLoggedIn(true);
+      setLoading(false);
 
+
+    }else{
+      setLoggedIn(false);
+      setLoading(false);
 
     }
   });
