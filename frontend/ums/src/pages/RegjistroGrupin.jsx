@@ -15,7 +15,7 @@ const RegjistroGrupin = ({ token }) => {
   const [orari, setOrari] = useState([]);
   const [studentGrupi, setStudentGrupi] = useState(null);
   const [afati, setAfati] = useState([]);
-  const [notification, setNotification] = useState(""); 
+  const [notification, setNotification] = useState("");
   const [exists, setExisting] = useState([]);
 
   const theme = useTheme();
@@ -30,7 +30,6 @@ const RegjistroGrupin = ({ token }) => {
       })
       .catch((error) => console.error("Error fetching groups", error));
   }, []);
-  
 
   useEffect(() => {
     axios
@@ -47,7 +46,7 @@ const RegjistroGrupin = ({ token }) => {
   useEffect(() => {
     axios
       .get("http://localhost:8080/studentGrupi/exists", {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         if (response.data) {
@@ -62,7 +61,7 @@ const RegjistroGrupin = ({ token }) => {
   useEffect(() => {
     axios
       .get("http://localhost:8080/studentGrupi/me", {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         if (response.data) {
@@ -104,7 +103,7 @@ const RegjistroGrupin = ({ token }) => {
       .then((response) => {
         console.log(response.data);
         setStudentGrupi(response.data);
-        setNotification("Registered Successfully"); 
+        setNotification("Registered Successfully");
         window.location.reload();
       })
       .catch((error) => {
@@ -129,15 +128,16 @@ const RegjistroGrupin = ({ token }) => {
   return (
     <Box m={{ xs: 2, sm: 3, md: 4 }}>
       <Grid container>
-        <Grid item xs={12} md={4} >
+        <Grid item xs={12} md={4}>
           <Box
             bgcolor={colors.primary[600]}
             p={{ xs: 2, sm: 3, md: 4 }}
             height={"100%"}
             alignItems={"center"}
             display={"flex"}
+            justifyContent={"center"}
             flexDirection={"row"}
-          > 
+          >
             <Box>
               <Typography
                 mb={{ xs: 12, sm: 6, md: 5 }}
@@ -147,7 +147,7 @@ const RegjistroGrupin = ({ token }) => {
               >
                 Afati per regjistrimin e grupit eshte i hapur me datat:{" "}
               </Typography>
-              {afati.length > 0 && (
+              {afati.length > 0 ? (
                 <Box
                   p={2}
                   mb={5}
@@ -159,19 +159,48 @@ const RegjistroGrupin = ({ token }) => {
                 >
                   {afati[0].dataFillimit} - {afati[0].dataMbarimit}
                 </Box>
+              ) : (
+                <Box
+                  p={2}
+                  mb={5}
+                  bgcolor={colors.redAccent[500]}
+                  borderRadius={3}
+                  textAlign={"center"}
+                  fontSize={"17px"}
+                  color={"white"}
+                >
+                  Nuk ka afat te hapur
+                </Box>
               )}
-              {exists.length > 0 && (<Box
-                    mt={2}
-                    py={4}
-                    px={2}
-                    bgcolor={colors.greenAccent[600]}
-                    textAlign={"center"}
-                    fontSize={"16px"}
-                    borderRadius={3}
-                    color={"white"}
-                  >
-                    Grupi është regjistruar me sukses!
-                  </Box>)}
+              {grupet.length < 0 ? (
+                <Box
+                  p={2}
+                  mb={5}
+                  bgcolor={colors.redAccent[500]}
+                  borderRadius={3}
+                  textAlign={"center"}
+                  fontSize={"17px"}
+                  color={"white"}
+                >
+                  Nuk keni regjistruar semestrin
+                </Box>
+              ) : (
+                ""
+              )}
+              {exists.length > 0 && (
+                <Box
+                  mt={2}
+                  py={4}
+                  px={2}
+                  bgcolor={colors.greenAccent[600]}
+                  textAlign={"center"}
+                  fontSize={"16px"}
+                  borderRadius={3}
+                  color={"white"}
+                >
+                  Grupi është regjistruar me sukses!
+                </Box>
+              )}
             </Box>
           </Box>
         </Grid>
@@ -239,30 +268,28 @@ const RegjistroGrupin = ({ token }) => {
               {exists.length > 0 && (
                 <>
                   <Box width={"100%"} mt={5} mb={4}>
-                <Box
-                  bgcolor={colors.redAccent[500]}
-                  p={2}
-                  textAlign={"center"}
-                  mt={5}
-                  fontSize={"16px"}
-                  borderRadius={3}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: colors.redAccent[600],
-                    },
-                    cursor: "pointer",
-                  }}
-                  onClick={handleUnregister}
-                  color={"white"}
-                >
-                  C'regjistro grupin
-                </Box>
-              </Box>
+                    <Box
+                      bgcolor={colors.redAccent[500]}
+                      p={2}
+                      textAlign={"center"}
+                      mt={5}
+                      fontSize={"16px"}
+                      borderRadius={3}
+                      sx={{
+                        "&:hover": {
+                          backgroundColor: colors.redAccent[600],
+                        },
+                        cursor: "pointer",
+                      }}
+                      onClick={handleUnregister}
+                      color={"white"}
+                    >
+                      C'regjistro grupin
+                    </Box>
+                  </Box>
                 </>
               )}
-              {notification && ( 
-                <CreatedNotifications message={notification} />
-              )}
+              {notification && <CreatedNotifications message={notification} />}
             </Box>
           </Box>
         </Grid>

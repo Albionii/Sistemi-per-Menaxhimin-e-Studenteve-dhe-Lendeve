@@ -126,6 +126,7 @@ const RegjistroSemestrin = ({ token }) => {
             p={{ xs: 2, sm: 3, md: 4 }}
             height={"100%"}
             alignItems={"center"}
+            justifyContent={"center"}
             display={"flex"}
             flexDirection={"row"}
           > 
@@ -138,7 +139,7 @@ const RegjistroSemestrin = ({ token }) => {
               >
                 Afati per regjistrimin e grupit eshte i hapur me datat:{" "}
               </Typography>
-              {afati.length > 0 && (
+              {afati.length > 0 ? (
                 <Box
                   p={2}
                   mb={5}
@@ -150,7 +151,17 @@ const RegjistroSemestrin = ({ token }) => {
                 >
                   {afati[0].dataFillimit} - {afati[0].dataMbarimit}
                 </Box>
-              )}
+              ): (<Box
+                p={2}
+                mb={5}
+                bgcolor={colors.redAccent[500]}
+                borderRadius={3}
+                textAlign={"center"}
+                fontSize={"17px"}
+                color={"white"}
+              >
+                Nuk ka afat te hapur 
+              </Box>)}
               {exists.length > 0 && (<Box
                     mt={2}
                     py={4}
