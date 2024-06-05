@@ -1,6 +1,6 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Assignment;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.USER_ROLE;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 
 import java.util.List;
@@ -18,5 +18,7 @@ public interface UserService {
     void deleteUserById(Long id);
 
     User updateRole(Long id, User user) throws Exception;
+
+    USER_ROLE findRoleByEmail(String email);
 
 }

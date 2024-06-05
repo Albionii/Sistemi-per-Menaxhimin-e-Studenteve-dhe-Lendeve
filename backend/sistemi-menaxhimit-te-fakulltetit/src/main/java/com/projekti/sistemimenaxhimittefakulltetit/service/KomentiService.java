@@ -95,8 +95,8 @@ public class KomentiService {
     }
 
 
-    public Page<Komenti> getKomentetByPostimiId(Long postimiId, int page, int size) {
-        return komentRepository.findByPostimiId(postimiId, PageRequest.of(page, size));
-    }
+//    public Page<Komenti> getKomentetByPostimiId(Long postimiId, int page, int size) {
+//        return komentRepository.findByPostimiId(postimiId, PageRequest.of(page, size));
+//    }
 
 }

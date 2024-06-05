@@ -2,10 +2,12 @@ package com.projekti.sistemimenaxhimittefakulltetit.config;
 
 import javax.crypto.SecretKey;
 
+import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.Set;
 
 @Service
 public class JwtProvider {
+
+
     private SecretKey key = Keys.hmacShaKeyFor(JWTConstants.SECRET_KEY.getBytes());
 
     public String generateToken(Authentication auth){
@@ -51,9 +55,12 @@ public class JwtProvider {
     public String generateAccessTokenFromRefreshToken(String refreshToken) {
         if (validateToken(refreshToken)) {
             String username = getEmailFromRefreshJwtToken(refreshToken);
+            String role = getRoleFromRefreshJwtToken(refreshToken);
+
             String jwt = Jwts.builder().setIssuedAt(new Date())
                     .setExpiration((new Date(new Date().getTime()+900000)))
                     .claim("email", username)
+                    .claim("authorities",role)
                     .signWith(key)
                     .compact();
             return jwt;
@@ -89,6 +96,20 @@ public class JwtProvider {
         String email = String.valueOf(claims.get("email"));
 
         return email;
+    }
+
+    public String getRoleFromRefreshJwtToken(String jwt){
+        Claims claims = null;
+        try{
+            if (jwt != null){
+                claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+            }
+        }catch (JwtException e){
+            e.printStackTrace();
+        }
+        String authorities = String.valueOf(claims.get("authorities"));
+
+        return authorities;
     }
 
     private String populateAuthorities(Collection<? extends GrantedAuthority> authorities) {
