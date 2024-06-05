@@ -38,6 +38,8 @@ const Postim = ({
   deletePostimi,
   USER_ROLE,
   token,
+  isEnrolled,
+  professorId
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -204,6 +206,7 @@ const Postim = ({
                     user={user}
                     updateKomenti={updateKomenti}
                     displayedCommentsCount={displayedCommentsCount}
+                    isEnrolled={isEnrolled}
                   />
                 </Suspense>
               </Box>
@@ -265,6 +268,7 @@ const Postim = ({
                   type="text"
                   name="teksti"
                   placeholder="Write something here"
+                  disabled={(isEnrolled || user.id === professorId || USER_ROLE === "ROLE_ADMIN") ? false : true}
                   style={{
                     padding: "15px 30px",
                     width: "90%",
@@ -276,9 +280,12 @@ const Postim = ({
                   value={koment.teksti}
                   onChange={handleInputChange}
                 />
-                <IconButton type="submit">
-                  <SendIcon />
-                </IconButton>
+
+                {isEnrolled && (
+                  <IconButton type="submit">
+                    <SendIcon />
+                  </IconButton>
+                )}
               </Box>
             </Box>
           </Box>

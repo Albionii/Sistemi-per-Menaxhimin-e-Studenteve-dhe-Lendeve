@@ -13,7 +13,7 @@ import axios from "axios";
 import { getToken } from "../GetToken";
 // import { useHistory } from "react-router-dom";
 
-function Profili({ changeLoggedInState, user }) {
+function Profili({ changeLoggedInState, user, setUserData }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const token = getToken();
@@ -46,8 +46,7 @@ function Profili({ changeLoggedInState, user }) {
     if (user.firstName !== "Loading") {
       setLoading(false);
     }
-  }),
-    [user];
+  }, [user]);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -78,21 +77,31 @@ function Profili({ changeLoggedInState, user }) {
                           }}
                         >
                           {/* <img src={Prophilepic} className="rounded-full"></img> */}
-                          <Box sx={{display:"flex", justifyContent:"space-around", flexDirection:"column", alignItems:"center", gap:"25px"}}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              gap: "25px",
+                            }}
+                          >
                             <Avatar
                               alt="profile-user"
-                              src={`http://localhost:8080/profile-pictures/${user.profile}`}
+                              src={`http://localhost:8080/profile-pictures/${
+                                user.profile
+                              }?${new Date().getTime()}`} // Adding a timestamp to force reload
                               sx={{
                                 width: 150,
                                 height: 150,
                                 ":hover": { cursor: "pointer" },
                               }}
                             />
-
                             <ProfilePicture
                               open={open}
                               handleOpen={handleOpen}
                               handleClose={handleClose}
+                              setUserData={setUserData}
                             />
                           </Box>
                         </CardMedia>
@@ -105,37 +114,37 @@ function Profili({ changeLoggedInState, user }) {
                     className="w-7/12 h-3/4 flex justify-center items-center "
                   >
                     <div className="text-xl w-full m-4">
-                      <table class="border-collapse border border-slate-500 ... w-full">
+                      <table className="border-collapse border border-slate-500 w-full">
                         <tbody>
                           <tr>
-                            <td class="w-1/2 p-4 border border-slate-700 ... ">
+                            <td className="w-1/2 p-4 border border-slate-700">
                               First Name:
                             </td>
-                            <td class="w-1/2 p-4 border border-slate-700 ...">
+                            <td className="w-1/2 p-4 border border-slate-700">
                               {user.firstName}
                             </td>
                           </tr>
                           <tr>
-                            <td class="w-1/2 p-4 border border-slate-700 ...">
+                            <td className="w-1/2 p-4 border border-slate-700">
                               Last Name:
                             </td>
-                            <td class="w-1/2 p-4 border border-slate-700 ...">
+                            <td className="w-1/2 p-4 border border-slate-700">
                               {user.lastName}
                             </td>
                           </tr>
                           <tr>
-                            <td class="w-1/2 p-4 border border-slate-700 ...">
+                            <td className="w-1/2 p-4 border border-slate-700">
                               ID:
                             </td>
-                            <td class="w-1/2 p-4 border border-slate-700 ...">
+                            <td className="w-1/2 p-4 border border-slate-700">
                               {user.id}
                             </td>
                           </tr>
                           <tr>
-                            <td class="w-1/2 p-4 border border-slate-700 ...">
+                            <td className="w-1/2 p-4 border border-slate-700">
                               Role:
                             </td>
-                            <td class="w-1/2 p-4 border border-slate-700 ...">
+                            <td className="w-1/2 p-4 border border-slate-700">
                               {user.role}
                             </td>
                           </tr>
@@ -151,14 +160,14 @@ function Profili({ changeLoggedInState, user }) {
                   >
                     <div>
                       <div className="m-4">
-                        <table class="border-collapse border border-slate-500 ... w-full ">
+                        <table className="border-collapse border border-slate-500 w-full">
                           <tbody>
                             <tr>
-                              <td class="w-1/2 p-4 border border-slate-700 ... ">
+                              <td className="w-1/2 p-4 border border-slate-700">
                                 Gender :{" "}
                                 <span className="ml-6">{user.gjinia}</span>
                               </td>
-                              <td class="w-1/2 p-4 border border-slate-700 ...">
+                              <td className="w-1/2 p-4 border border-slate-700">
                                 Date of Birth:{" "}
                                 <span className="ml-6">
                                   {formatDate(user.dateLindja)}
@@ -166,29 +175,29 @@ function Profili({ changeLoggedInState, user }) {
                               </td>
                             </tr>
                             <tr>
-                              <td class="w-1/2 p-4 border border-slate-700 ...">
+                              <td className="w-1/2 p-4 border border-slate-700">
                                 Email:{" "}
                                 <span className="ml-6">{user.email}</span>
                               </td>
-                              <td class="w-1/2 p-4 border border-slate-700 ...">
+                              <td className="w-1/2 p-4 border border-slate-700">
                                 Phone:
                                 <span className="ml-6">{user.nrTelefonit}</span>
                               </td>
                             </tr>
                             <tr>
-                              <td class="w-1/2 p-4 border border-slate-700 ...">
+                              <td className="w-1/2 p-4 border border-slate-700">
                                 Country:
                                 <span className="ml-6">{user.shteti}</span>
                               </td>
-                              <td class="w-1/2 p-4 border border-slate-700 ...">
+                              <td className="w-1/2 p-4 border border-slate-700">
                                 City:<span className="ml-6">{user.qyteti}</span>
                               </td>
                             </tr>
                             <tr>
-                              <td class="w-1/2 p-4 border border-slate-700 ...">
+                              <td className="w-1/2 p-4 border border-slate-700">
                                 ZIP:<span className="ml-6">{user.zipcode}</span>
                               </td>
-                              <td class="w-1/2 p-4 border border-slate-700 ...">
+                              <td className="w-1/2 p-4 border border-slate-700">
                                 Address:
                                 <span className="ml-6">{user.rruga}</span>
                               </td>
@@ -196,16 +205,16 @@ function Profili({ changeLoggedInState, user }) {
                           </tbody>
                         </table>
                       </div>
-                      <div className="flex justify-evenly  content-center pt-5">
+                      <div className="flex justify-evenly content-center pt-5">
                         <button
                           type="button"
-                          class="  w-44 same-size-button text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-6 py-2.5 text-center me-2 mb-5"
+                          className="w-44 same-size-button text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-6 py-2.5 text-center me-2 mb-5"
                         >
                           Change Password
                         </button>
                         <button
                           type="button"
-                          class=" w-44 same-size-button text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-6 py-2.5 text-center me-2 mb-5 "
+                          className="w-44 same-size-button text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-6 py-2.5 text-center me-2 mb-5"
                           onClick={logOut}
                         >
                           Log out
@@ -214,7 +223,7 @@ function Profili({ changeLoggedInState, user }) {
                     </div>
                   </Card>
                 </div>
-                {console.log(user)}
+                {/* {console.log(user)} */}
               </div>
             </div>
           </div>

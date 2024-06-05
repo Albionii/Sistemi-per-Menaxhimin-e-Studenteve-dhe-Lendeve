@@ -56,7 +56,6 @@ const Postimi = ({ token, user }) => {
   const USER_ROLE = user.role;
   const location = useLocation();
   const ligjerataId = location.state?.id;
-  const imageUrl = location.state?.imageUrl;
 
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -237,16 +236,23 @@ const Postimi = ({ token, user }) => {
               display="flex"
               alignItems="center"
               justifyContent="space-between"
+              gap={2}
               padding={3}
               sx={{ background: colors.primary[600] }}
               borderRadius={4}
             >
               <Avatar
+                sx={{
+                  width: 50,
+                  height: 50,
+                  ":hover": { cursor: "pointer" },
+                }}
                 src={`http://localhost:8080/profile-pictures/${user.profile}`}
               />
               <Box
                 width={"94%"}
                 display={"flex"}
+                gap={2}
                 justifyContent={"space-between"}
                 alignItems={"center"}
               >
@@ -261,13 +267,17 @@ const Postimi = ({ token, user }) => {
                     borderRadius: "15px",
                     border: "2px solid " + colors.primary[400],
                   }}
+                  disabled={(location.state.isEnrolled || user.id === location.state.professorId || USER_ROLE=== "ROLE_ADMIN" ) ? false : true}
                   onChange={handleInputChange}
                   name="mesazhi"
                   value={postimi.mesazhi}
                 />
-                <Button type="submit" sx={{color: colors.gray[300]}}>
-                  <SendIcon />
-                </Button>
+                {location.state.isEnrolled  && (
+                  <IconButton variant="contained" type="submit">
+                    <SendIcon />
+                  </IconButton>
+                )}
+                {console.log(location.state.isEnrolled)}
               </Box>
             </Box>
           </Box>
@@ -585,6 +595,8 @@ const Postimi = ({ token, user }) => {
                     deletePostimi={deletePostimi}
                     USER_ROLE={USER_ROLE}
                     token={token}
+                    isEnrolled={location.state.isEnrolled}
+                    professorId={location.state.professorId}
                   />
                 ))}
                 {postimet.length > postimCount && (

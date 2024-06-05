@@ -10,6 +10,8 @@ import com.projekti.sistemimenaxhimittefakulltetit.request.KomentiReq;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -93,5 +95,8 @@ public class KomentiService {
     }
 
 
+    public Page<Komenti> getKomentetByPostimiId(Long postimiId, int page, int size) {
+        return komentRepository.findByPostimiId(postimiId, PageRequest.of(page, size));
+    }
 
 }

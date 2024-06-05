@@ -94,7 +94,7 @@ public class FileStorageController {
     }
 
     @PostMapping("/profile/upload")
-    public ResponseEntity<String> uploadFile(
+    public ResponseEntity<User> uploadFile(
             @RequestHeader("Authorization") String token,
             @RequestParam("files") MultipartFile file) throws Exception {
 
@@ -104,7 +104,7 @@ public class FileStorageController {
         User user = userService.findUserByJwtToken(token);
         if (user == null) {
             System.out.println("User not found");
-            return ResponseEntity.badRequest().body("User not found");
+            return ResponseEntity.badRequest().body(null);
         }
 
         System.out.println("User found: " + user.getId());
@@ -117,24 +117,30 @@ public class FileStorageController {
                 System.out.println("Storing new profile picture");
                 String fileName = fileStorageService.storeProfile(file, "Users", user.getId());
 
-                if (user.getProfile() != null && !user.getProfile().isEmpty()) {
-                    user.setProfile(null);
-                    userRepository.save(user);
-                }
                 user.setProfile(fileName);
-                System.out.println("New profile picture set: " + user.getProfile());
+
                 userRepository.save(user);
 
-                return ResponseEntity.ok().body("File uploaded successfully: " + fileName);
+                return ResponseEntity.ok().body(user);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 System.out.println("Failed to upload file: " + ex.getMessage());
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + ex.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             }
         } else {
             System.out.println("No file to upload");
-            return ResponseEntity.badRequest().body("No file to upload");
+            return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @DeleteMapping("/profile/delete")
+    public void deleteProfilePicture(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+
+        user.setProfile(null);
+        userRepository.save(user);
+
+        fileStorageService.deleteUserFiles(user.getId());
     }
 
     

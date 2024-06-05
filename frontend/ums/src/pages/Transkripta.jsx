@@ -81,7 +81,7 @@ const Transkripta = ({ token }) => {
               </Box>
 
               <Typography variant="h1" fontWeight={"bold"}>
-                {mesatarja.toFixed(1)}
+                {mesatarja ? mesatarja.toFixed(1) : 0}
               </Typography>
             </Box>
           </Box>

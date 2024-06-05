@@ -14,7 +14,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import { tokens } from "../../theme";
 import UpdateKomenti from "./UpdateKomenti";
 
-const Komenti = ({ koment, user, deleteKomenti, updateKomenti }) => {
+const Komenti = ({ koment, user, deleteKomenti, updateKomenti, isEnrolled }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -56,8 +56,8 @@ const Komenti = ({ koment, user, deleteKomenti, updateKomenti }) => {
       }}
     >
       <Avatar
-        alt={`${koment.userID.firstName} ${koment.userID.lastName}`}
-        src={koment.userID.avatarUrl}
+        alt={`${koment.userID.id} ${koment.userID.lastName}`}
+        src={`http://localhost:8080/profile-pictures/${koment.userID.profile}`}
       />
       <Box flex="1">
         <Box

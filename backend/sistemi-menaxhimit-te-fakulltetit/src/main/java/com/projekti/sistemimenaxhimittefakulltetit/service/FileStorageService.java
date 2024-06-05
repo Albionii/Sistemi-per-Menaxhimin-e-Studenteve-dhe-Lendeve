@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 public class FileStorageService {
@@ -203,15 +204,23 @@ public class FileStorageService {
     }
 
     public void deleteUserFiles(Long userId) throws IOException {
-        Path userDirectory = Path.of(fileStorageLocation.toString(), "Users", String.valueOf(userId));
+        Path userDirectory = Path.of(fileStorageLocation.toString(), "Users");
 
-        if (Files.exists(userDirectory  )) {
-            Files.walk(userDirectory)
-                    .sorted(Comparator.reverseOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
+        if (Files.exists(userDirectory)) {
+            try (Stream<Path> files = Files.list(userDirectory)) {
+                files.filter(file -> {
+                    String fileName = file.getFileName().toString();
+                    String baseName = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
+                    return baseName.equals(String.valueOf(userId));
+                }).forEach(file -> {
+                    try {
+                        Files.deleteIfExists(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
         }
     }
-
 
 }

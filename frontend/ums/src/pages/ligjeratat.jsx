@@ -34,13 +34,16 @@ const CourseCard = ({
     '#FFA07A', '#20B2AA', '#87CEFA', '#778899'
   ];
 
+  const background = fixedBackgroundColors[index % fixedBackgroundColors.length];
+
+
   const isEnrolled =
     enrollData &&
     enrollData.some((course) => course.ligjerata && course.ligjerata.id === id);
 
   const handleClick = () => {
     navigate("/postimi", {
-      state: { imageUrl, name, professor, id, professorId, isEnrolled },
+      state: { background, name, professor, id, professorId, isEnrolled },
     });
   };
 
@@ -54,7 +57,6 @@ const CourseCard = ({
     unEnroll(id);
   };
 
-  const background = fixedBackgroundColors[index % fixedBackgroundColors.length];
 
   return (
     <Card
@@ -117,7 +119,7 @@ const CourseCard = ({
                         color: "#fff",
                         "&:hover": { background: colors.redAccent[700] },
                         padding: "15px 30px",
-                        zIndex: 6,
+                        zIndex: 5,
                       }}
                       onClick={(e) => {
                         e.preventDefault();
@@ -134,7 +136,7 @@ const CourseCard = ({
                         color: "#fff",
                         "&:hover": { background: colors.blueAccent[700] },
                         padding: "15px 30px",
-                        zIndex: "50",
+                        zIndex: 5,
                       }}
                       onClick={(e) => {
                         e.preventDefault();

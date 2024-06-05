@@ -20,6 +20,8 @@ const useKomenti = (postimiId, token) => {
       });
   };
 
+  
+
   const userKomentet = () => {
     axios
       .get(`http://localhost:8080/komenti/user/${postimiId}`, {

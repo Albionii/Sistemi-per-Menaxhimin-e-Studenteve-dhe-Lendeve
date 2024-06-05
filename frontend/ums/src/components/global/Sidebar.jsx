@@ -161,7 +161,7 @@ const Sidebar = ({ user }) => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Avatar
                   alt="profile-user"
-                  src={`http://localhost:8080/profile-pictures/${user.profile}`}
+                  src={`http://localhost:8080/profile-pictures/${user.profile}?${new Date().getTime()}`}
                   sx={{ width: 100, height: 100 }}
                 />
               </Box>

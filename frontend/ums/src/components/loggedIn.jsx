@@ -47,10 +47,10 @@ import { getToken } from "../GetToken.js";
 
 function loggedIn({ changeLoggedInState}) {
   const token = getToken();
-  console.log(token);
+  // console.log(token);
   const [sideBarInfo, setSideBarInfo] = useState(null);
 
-  console.log("TOKENI TE LOGGED IN " + token);
+  // console.log("TOKENI TE LOGGED IN " + token);
 
   const [user, setUser] = useState({
     firstName: "",
@@ -63,10 +63,6 @@ function loggedIn({ changeLoggedInState}) {
   }
 
   getFromCookies({ setUserData, changeLoggedInState });
-
-  const refreshUserData = () => {
-    getFromCookies({ setUserData, changeLoggedInState });
-  };
 
 
   const [loading, setLoading] = useState(false);
@@ -122,7 +118,7 @@ function loggedIn({ changeLoggedInState}) {
 
           <Route path="/paraqitura" element={<Paraqitura token={token} />} />
 
-            <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} user={user} refreshUserData={refreshUserData}/>} />
+            <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} setUserData={setUserData} user={user} />} />
             <Route path="/postimi" element={<Postimi token={token}  user={user}/>} />
 
 

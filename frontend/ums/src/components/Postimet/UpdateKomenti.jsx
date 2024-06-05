@@ -39,7 +39,7 @@ const UpdateKomenti = ({ onSubmit, onClose, initialData, postimiId }) => {
       </Typography>
 
       <Box display={"flex"} sx={{ paddingTop: "10px" }}>
-        <Avatar></Avatar>
+        <Avatar src={`http://localhost:8080/profile-pictures/${post.userID.profile}`} />
         <Box ml={"15px"}>
           <Typography variant="h5">
             {post.userID.firstName + " " + post.userID.lastName}

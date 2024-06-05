@@ -2,7 +2,7 @@ import React from 'react';
 import Komenti from './Komenti';
 import { Box, IconButton , Typography} from '@mui/material';
 
-const Komentet = ({ komentet, postimId, token, user, deleteKomenti, updateKomenti, displayedCommentsCount }) => {
+const Komentet = ({ komentet, postimId, token, user, deleteKomenti, updateKomenti, displayedCommentsCount, isEnrolled }) => {
   return (
     <Box>
       
@@ -14,6 +14,7 @@ const Komentet = ({ komentet, postimId, token, user, deleteKomenti, updateKoment
           deleteKomenti={deleteKomenti}
           komentet={komentet}
           updateKomenti={updateKomenti}
+          isEnrolled={isEnrolled}
         />
       ))}
     </Box>

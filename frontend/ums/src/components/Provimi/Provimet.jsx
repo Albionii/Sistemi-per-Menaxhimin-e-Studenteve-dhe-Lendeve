@@ -16,7 +16,7 @@ import dayjs from "dayjs";
 import { ClassNames } from "@emotion/react";
 
 const Provimet = ({ token }) => {
-  console.log("TOKEN " +  JSON.stringify(token));
+  console.log("TOKEN " + JSON.stringify(token));
   const [provimet, setProvimet] = useState([]);
   const [paraqitjet, setParaqitjet] = useState([]);
   const theme = useTheme();
@@ -58,19 +58,20 @@ const Provimet = ({ token }) => {
   };
 
   const refuzoNoten = (provimiId) => {
-    axios.put(`http://localhost:8080/student/refuzo/${provimiId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(() => {
-          fetchProvimet();
-          fetchParaqitjet();
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-  }
+    axios
+      .put(`http://localhost:8080/student/refuzo/${provimiId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        fetchProvimet();
+        fetchParaqitjet();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   const paraqitProvimin = (provimiId) => {
     if (provimiId) {
@@ -109,7 +110,7 @@ const Provimet = ({ token }) => {
   };
 
   return (
-    <Container maxWidth="lg"  sx={{ mt: 4, width:"100vw"}}>
+    <Container maxWidth="lg" sx={{ mt: 4, width: "100vw" }}>
       <Box>
         <Box
           sx={{
@@ -126,7 +127,6 @@ const Provimet = ({ token }) => {
             sx={{
               borderRadius: "20px",
               padding: "10px",
-
               overflowY: "auto",
               background: colors.primary[600],
               "@media (max-width: 600px)": {
@@ -137,11 +137,41 @@ const Provimet = ({ token }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Lenda</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Profesori</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Data</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>ECTS</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Operation</TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Lenda
+                    </Typography>{" "}
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Profesori
+                    </Typography>
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Data
+                    </Typography>
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      ECTS
+                    </Typography>
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Operation
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -181,13 +211,42 @@ const Provimet = ({ token }) => {
           >
             <Table>
               <TableHead>
-                <TableRow >
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Lenda</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Profesori</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Data Paraqitjes</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Nota</TableCell>
-                  <TableCell sx={{textAlign: 'center', borderColor: colors.gray[600]}}>Operation</TableCell>
-
+                <TableRow>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Lenda
+                    </Typography>
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Profesori
+                    </Typography>
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Data Paraqitjes
+                    </Typography>
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Nota
+                    </Typography>
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", borderColor: colors.gray[600] }}
+                  >
+                    <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+                      Operation
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -221,7 +280,12 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
 
   return (
     <TableRow>
-      <TableCell sx={{ textAlign: "center" }}>{provimi.emriLendes}</TableCell>
+      <TableCell sx={{ textAlign: "center" }}>
+        {" "}
+        <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+          {provimi.emriLendes}
+        </Typography>
+      </TableCell>
       <TableCell sx={{ textAlign: "center" }}>
         <Box
           sx={{
@@ -233,10 +297,12 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
           <Dropdown
             size="xs"
             label={
-              <Typography fontSize={{ xs: "10px", sm: "12px" }}>
+              <Typography fontSize={{ xs: "6px", sm: "12px" }}>
                 {placeholder}
               </Typography>
             }
+            className="relative inline-flex items-center justify-center p-2  text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300"
+
           >
             {provimi.provimet.map((item, idx) => (
               <Dropdown.Item
@@ -249,9 +315,7 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
                   )
                 }
               >
-                <Typography
-                  sx={{ fontSize: { xs: "10px", md: "12px" } }}
-                >
+                <Typography sx={{ fontSize: { xs: "6px", md: "12px" } }}>
                   {item.ligjerata.professor.user.firstName}{" "}
                   {item.ligjerata.professor.user.lastName}
                 </Typography>
@@ -261,10 +325,14 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
         </Box>
       </TableCell>
       <TableCell sx={{ textAlign: "center" }}>
-        {provimi.provimet[0]?.data}
+        <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+          {provimi.provimet[0]?.data}
+        </Typography>
       </TableCell>
       <TableCell sx={{ textAlign: "center" }}>
-        {provimi.provimet[0]?.ligjerata.lenda.ects}
+        <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+          {provimi.provimet[0]?.ligjerata.lenda.ects}
+        </Typography>
       </TableCell>
       <TableCell>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -279,7 +347,7 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
           >
             <Typography
               sx={{
-                fontSize: { xs: "10px", md: "12px" },
+                fontSize: { xs: "6px", md: "12px" },
               }}
             >
               Paraqit Provimin
@@ -295,48 +363,59 @@ const PaRow = ({ item, anuloParaqitjen, refuzoNoten }) => {
   return (
     <TableRow>
       {console.log(item)}
-      <TableCell sx={{ textAlign: "center" }}>{item.emriLendes}</TableCell>
+      <TableCell sx={{ textAlign: "center" }}  sx={{ fontSize: { xs: "6px", sm: "12px" } }}>{item.emriLendes}</TableCell>
       <TableCell sx={{ textAlign: "center" }}>
-        {item.provimi.ligjerata.professor.user.firstName}{" "}
-        {item.provimi.ligjerata.professor.user.lastName}
+        <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+          {item.provimi.ligjerata.professor.user.firstName}{" "}
+          {item.provimi.ligjerata.professor.user.lastName}
+        </Typography>
       </TableCell>
       <TableCell sx={{ textAlign: "center" }}>
-        {dayjs(item.dataParaqitjes).format("YYYY-MM-DD/HH:mm:ss") || "null"}
+        <Typography sx={{ fontSize: { xs: "6px", sm: "12px" } }}>
+          {" "}
+          {dayjs(item.dataParaqitjes).format("YYYY-MM-DD/HH:mm:ss") || "null"}
+        </Typography>
       </TableCell>
       <TableCell sx={{ textAlign: "center" }}>
         {item.nota === 0 ? " " : item.nota}
       </TableCell>
       <TableCell sx={{ textAlign: "center" }}>
-        <Box sx={{display:"flex", flexDirection:{sm:"row", xs:"column"}, justifyContent:{sm:"space-around", xs:"space-between"}, gap:"10px"}}>
-        <Button size="" onClick={() => anuloParaqitjen(item.id)}>
-          <Typography
-            sx={{
-              fontSize: { xs: "10px",  md: "12px" },
-              textAlign:"center",
-              paddingTop:"5px"
-            }}
-          >
-            Anulo Paraqitjen
-          </Typography>
-        </Button>
-        <Button
-          size="xs"
-          disabled={item.nota === 0 || item.nota === 5 || item.nota === 10}
-          onClick={() => refuzoNoten(item.id)}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { sm: "row", xs: "column" },
+            justifyContent: { sm: "space-around", xs: "space-between" },
+            gap: "10px",
+          }}
         >
-          <Typography
-            sx={{
-              fontSize: { xs: "10px",  md: "12px" },
-              textAlign:"center",
-              padding:"2px"
-            }}
+          <Button size="" onClick={() => anuloParaqitjen(item.id)}>
+            <Typography
+              sx={{
+                fontSize: { xs: "6px", md: "12px" },
+                textAlign: "center",
+                paddingTop: "6px",
+              }}
+            >
+              Anulo Paraqitjen
+            </Typography>
+          </Button>
+          <Button
+            size="xs"
+            disabled={item.nota === 0 || item.nota === 5 || item.nota === 10}
+            onClick={() => refuzoNoten(item.id)}
           >
-            Refuzo Noten
-          </Typography>
-        </Button>
+            <Typography
+              sx={{
+                fontSize: { xs: "6px", md: "12px" },
+                textAlign: "center",
+                padding: "2px",
+              }}
+            >
+              Refuzo Noten
+            </Typography>
+          </Button>
         </Box>
       </TableCell>
-  
     </TableRow>
   );
 };
