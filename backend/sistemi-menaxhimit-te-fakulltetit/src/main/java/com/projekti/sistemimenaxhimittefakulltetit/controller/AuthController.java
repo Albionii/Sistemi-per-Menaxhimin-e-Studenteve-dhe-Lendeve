@@ -184,12 +184,14 @@ public class AuthController {
         User user = userService.findUserByJwtToken(token);
         UserDetails userDetails = costumerUserDetailsService.loadUserByUsername(user.getEmail());
         String password = request.getOldPassword();
+        if (!(request.getNewPassword().equals(request.getOldPassword()) || request.getNewPassword().length() < 8)){
         if(passwordEncoder.matches(password, userDetails.getPassword())){
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));
             userRepository.save(user);
             return new ResponseEntity<>("Passwordi u rua",HttpStatus.OK);
             
-        };
+        }
+        }
         return new ResponseEntity<>("Passowrdi nuk u rua",HttpStatus.BAD_REQUEST);
     }
 

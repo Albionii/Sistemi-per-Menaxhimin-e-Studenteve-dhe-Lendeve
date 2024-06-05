@@ -10,6 +10,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
+import UpdatePassword from "../components/UpdatePassword";
+
 import { getToken } from "../GetToken";
 // import { useHistory } from "react-router-dom";
 
@@ -48,15 +50,26 @@ function Profili({ changeLoggedInState, user, setUserData }) {
     }
   }, [user]);
 
+  const [openPassword, setOpenPassword] = React.useState(false);
+  const handleClosePassword = () => setOpenPassword(false);
+  const handleOpenPassword = () => setOpenPassword(true);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
 
   if (loading) {
     return <h1>LOADING...</h1>;
   } else {
     return (
       <>
+        <UpdatePassword
+          openPassword={openPassword}
+          handleClosePassword={handleClosePassword}>
+
+        </UpdatePassword>
+
         <div className="m-5" style={{ height: "88svh" }}>
           <div className="w-full h-full flex justify-center align-center">
             <div className="w-11/12 h-full  p-2 ">
@@ -88,9 +101,8 @@ function Profili({ changeLoggedInState, user, setUserData }) {
                           >
                             <Avatar
                               alt="profile-user"
-                              src={`http://localhost:8080/profile-pictures/${
-                                user.profile
-                              }?${new Date().getTime()}`} // Adding a timestamp to force reload
+                              src={`http://localhost:8080/profile-pictures/${user.profile
+                                }?${new Date().getTime()}`} // Adding a timestamp to force reload
                               sx={{
                                 width: 150,
                                 height: 150,
@@ -209,7 +221,7 @@ function Profili({ changeLoggedInState, user, setUserData }) {
                         <button
                           type="button"
                           className="w-44 same-size-button text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-6 py-2.5 text-center me-2 mb-5"
-                        >
+                          onClick={handleOpenPassword}>
                           Change Password
                         </button>
                         <button
