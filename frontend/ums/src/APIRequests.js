@@ -432,3 +432,29 @@ export const getAllOrariLigjeratat = () => {
   const url = BASE_URL + `/orariLigjerata/get`
   return [url, "Gabim ne marrjen e orariLigjeratave"];
 }
+
+//Afati 
+export const createAfati = () => {
+  const url = BASE_URL + `/api/afati`
+  return [url, "Gabim ne krijimin e afatit"];
+}
+
+export const updateAfatiByID = () => {
+  const url = BASE_URL + `/api/afati/`
+  return [url, "Gabim ne perditesimin e afatit"];
+} 
+
+export const deleteAfatiByID = () => {
+  const url = BASE_URL + `/api/afati/`
+  return [url, "Gabim ne fshirjen e afatit"];
+}
+
+export const getAfatiByID = () => {
+  const url = BASE_URL + '/api/afati/'
+  return [url, "Gabim ne marrjen e afatit"];
+}
+
+export const getAllAfatet = () => {
+  const url = BASE_URL + `/api/afati`
+  return [url, "Gabim ne marrjen e afatave"];
+}

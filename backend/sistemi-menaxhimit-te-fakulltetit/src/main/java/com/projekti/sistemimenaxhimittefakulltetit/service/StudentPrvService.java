@@ -94,13 +94,14 @@ public class StudentPrvService {
         Student student = studentService.findStudentByUserId(user.getId());
 
         List<Object[]> counts = studentPrvRepository.countGrades(student.getId());
-        int[] gradeCounts = new int[5]; // Grades are from 6 to 10, so 5 elements
+        int[] gradeCounts = new int[5];
 
         for (Object[] count : counts) {
             int grade = (int) count[0];
-            long gradeCount = (long) count[1];
-            // Adjust index for grades from 6 to 10
-            gradeCounts[grade - 6] = (int) gradeCount;
+            if(grade > 5) {
+                long gradeCount = (long) count[1];
+                gradeCounts[grade - 6] = (int) gradeCount;
+            }
         }
 
         return gradeCounts;

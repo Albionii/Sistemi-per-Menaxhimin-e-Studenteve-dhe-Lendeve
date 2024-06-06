@@ -93,10 +93,4 @@ public class KomentiService {
             throw new EntityNotFoundException("Komenti not found with ID " + id);
         }
     }
-
-
-//    public Page<Komenti> getKomentetByPostimiId(Long postimiId, int page, int size) {
-//        return komentRepository.findByPostimiId(postimiId, PageRequest.of(page, size));
-//    }
-
 }

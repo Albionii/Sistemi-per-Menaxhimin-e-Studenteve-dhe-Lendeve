@@ -12,10 +12,11 @@ function Lenda() {
   const rowsNames = [
     "Id",
     "Emri",
-    "Semester"
+    "Semester",
+    "Hapesira"
   ]
   
-  const jsonNames = ["id", "emri","semester.name"];
+  const jsonNames = ["id", "emri","semester.name", "hapesira"];
   const buttonsAvailable = {
     preview: false,
     add: true,
@@ -28,7 +29,8 @@ function Lenda() {
     semester: {
         id: "",
         name: ""
-    }
+    },
+    hapesira: ""
   }
 
 

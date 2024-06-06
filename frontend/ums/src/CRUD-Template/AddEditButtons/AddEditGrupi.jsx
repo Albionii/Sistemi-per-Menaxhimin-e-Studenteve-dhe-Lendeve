@@ -16,6 +16,7 @@ export const GrupiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
   const [emri, setEmri] = useState('');
   const [semester, setSemester] = useState("");
   const [semestrat, setSemestrat] = useState([]);
+  const [hapesira, setHapesira] = useState(0);
 
 
   useEffect(() => {
@@ -41,6 +42,14 @@ export const GrupiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
     setFormData({
       ...formData,
       emri : e.target.value
+    });
+  }
+
+  const handleHapesira = (e) => {
+    setHapesira(e.target.value);
+    setFormData({
+      ...formData,
+      hapesira : e.target.value
     });
   }
 
@@ -116,6 +125,22 @@ export const GrupiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
             </div>
             <div className="col-span-1 sm:col-span-1">
               <label
+                    htmlFor="category"
+                    className="block text-left mb-2 text-sm font-medium"
+                >
+                  Hapesira
+                </label>
+                <input 
+                  type="number" 
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
+                  value={hapesira}
+                  onInput={handleHapesira}
+                  placeholder='Emri Grupit'
+                  required  
+                />
+            </div>
+            <div className="col-span-1 sm:col-span-2">
+              <label
                 htmlFor="category"
                 className="block text-left mb-2 text-sm font-medium"
               >
@@ -169,6 +194,16 @@ export const GrupiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
   const [emri, setEmri] = useState('');
   const [semester, setSemester] = useState("");
   const [semestrat, setSemestrat] = useState([]);
+  const [hapesira, setHapesira] = useState(0);
+
+
+  const handleHapesira = (e) => {
+    setHapesira(e.target.value);
+    setFormData({
+      ...formData,
+      hapesira : e.target.value
+    });
+  }
   
   const handleClick = () => {
     setConfirmExit();
@@ -263,11 +298,26 @@ export const GrupiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
                   value={emri == "" && formData != null ? formData.emri : emri}
                   onInput={handleEmri}
-                  placeholder='Emri Fakultetit'  
+                  placeholder='Emri Grupit'  
+                />
+            </div>
+
+            <div className="col-span-1 sm:col-span-1">
+              <label
+                    htmlFor="category"
+                    className="block text-left mb-2 text-sm font-medium"
+                >
+                  Hapesira
+                </label>
+                <input 
+                  type="number" 
+                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
+                  value={hapesira == "" && formData != null ? formData.hapesira : hapesira}
+                  onInput={handleHapesira}
                 />
             </div>
             
-            <div className="col-span-1 sm:col-span-1">
+            <div className="col-span-1 sm:col-span-2">
               <label
                 htmlFor="category"
                 className="block text-left mb-2 text-sm font-medium"

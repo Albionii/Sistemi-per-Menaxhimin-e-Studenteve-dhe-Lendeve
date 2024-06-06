@@ -3,32 +3,16 @@ import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 import { getAllFakulteti } from '../../APIRequests';
-export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const AfatiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [urlCreate, errorCreate] = API.create();
-  const [urlGetFakultetet, fakultetetError] = getAllFakulteti();
   const [formData, setFormData] = useState(formDataJson);
 
   const [emri, setEmri] = useState('');
   const [dataFillimit, setDataFillimit] = useState('');
   const [dataMbarimit, setDataMbarimit] = useState('');
-
-  useEffect(()=>{
-    getFakultetet();
-  },[])
-
-  const getFakultetet = async () => {
-    try{
-      const response = await axios.get(urlGetFakultetet)
-      setFakultetet(response.data);
-    }catch(error){
-      API.errorAlert(fakultetetError);
-      console.log(error)
-    }
-  }
-
   
   const handleClick = () => {
     setConfirmExit();
@@ -38,34 +22,25 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
     setEmri(e.target.value);
     setFormData({
       ...formData,
-      emri : e.target.value
+      name : e.target.value
     });
   }
 
-  const handleLokacioni = (e) => {
-    setLokacioni(e.target.value);
+  const handleDataFillimit = (e) => {
+    setDataFillimit(e.target.value);
     setFormData({
       ...formData,
-      lokacioni : e.target.value
+      dataFillimit : e.target.value
     });
   }
 
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
+  const handleDataMbarimit = (e) => {
+    setDataMbarimit(e.target.value);
     setFormData({
       ...formData,
-      email : e.target.value
+      dataMbarimit : e.target.value
     });
   }
-
-  const handleFakulteti = (e) => {
-    setFakulteti(e.target.value);
-    setFormData({
-      ...formData,
-      fakulteti : fakultetet.find(f => f.id == e.target.value)
-    });
-  }
-  
   
   
   const handleSubmit = async (e) => {
@@ -87,7 +62,7 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
       <div className="relativew-full rounded-lg shadow" style={{background: colors.primary[500]}}>
         <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
           <h3 className="text-lg font-semibold">
-            Krijo Departamentin
+            Krijo Afatin
           </h3>
           <button
             type="button"
@@ -115,7 +90,7 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
         </div>
         <form onSubmit={handleSubmit} className="p-6 md:p-5 text-center">
           <div className="grid gap-4 mb-4 grid-cols-2">
-            <div className="col-span-1 sm:col-span-1">
+            <div className="col-span-1 sm:col-span-2">
               <label
                     htmlFor="category"
                     className="block text-left mb-2 text-sm font-medium"
@@ -127,7 +102,7 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
                   value={emri}
                   onInput={handleEmri}
-                  placeholder='Emri Departamentit'  
+                  placeholder='Emri Afatit'  
                   required
                 />
             </div>
@@ -137,18 +112,18 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
                   htmlFor="category"
                   className="block text-left mb-2 text-sm font-medium"
               >
-                Email
+                Data Fillimit
               </label>
               <input 
-                type="text"
+                type="date"
                 className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                 placeholder='Emaili'
-                value={email}
-                onInput={handleEmail}
+                value={dataFillimit}
+                onInput={handleDataFillimit}
                 required
                />
             </div>
-            <div className="col-span-2 sm:col-span-2">
+            <div className="col-span-2 sm:col-span-1">
               <label
                     htmlFor="category"
                     className="block text-left mb-2 text-sm font-medium"
@@ -156,32 +131,13 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
                   Lokacioni
                 </label>
                 <input 
-                  type="text" 
+                  type="date" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={lokacioni}
-                  onInput={handleLokacioni}
+                  value={dataMbarimit}
+                  onInput={handleDataMbarimit}
                   placeholder='Lokacioni'  
                   required
                   />
-            </div>
-            <div className="col-span-2 sm:col-span-2">
-              <label
-                    htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium"
-                >
-                  Fakulteti
-                </label>
-                <select
-                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={fakulteti}
-                  onChange={handleFakulteti}
-                  required
-                >
-                  {fakulteti == null && <option value="">Selektoni fakultetin</option>}
-                  {fakultetet.map(fakulteti => (
-                    <option key={fakulteti.id} value={fakulteti.id}>{fakulteti.emri}</option>
-                  ))}
-                </select>
             </div>
             
           </div>
@@ -201,14 +157,14 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
                 clipRule="evenodd"
               />
             </svg>
-            Krijo Departamentin
+            Krijo Afatin
           </button>
         </form>
       </div>
     </>
   )
 }
-export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const AfatiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -216,26 +172,9 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
   const [urlGetFakultetet, fakultetetError] = getAllFakulteti();
   const [formData, setFormData] = useState(item);
 
-  const [emri, setEmri] = useState('');
-  const [email, setEmail] = useState('');
-  const [lokacioni, setLokacioni] = useState('');
-  const [fakulteti, setFakulteti] = useState(null);
-  const [fakultetet, setFakultetet] = useState([]);
-
-  useEffect(()=>{
-    getFakultetet();
-  },[])
-
-  const getFakultetet = async () => {
-    try{
-      const response = await axios.get(urlGetFakultetet)
-      setFakultetet(response.data);
-    }catch(error){
-      API.errorAlert(fakultetetError);
-      console.log(error)
-    }
-  }
-
+  const [name, setEmri] = useState('');
+  const [dataFillimit, setDataFillimit] = useState('');
+  const [dataMbarimit, setDataMbarimit] = useState('');
   
   const handleClick = () => {
     setConfirmExit();
@@ -245,7 +184,23 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
     setEmri(e.target.value);
     setFormData({
       ...formData,
-      emri : e.target.value
+      name : e.target.value
+    });
+  }
+
+  const handleDataFillimit = (e) => {
+    setDataFillimit(e.target.value);
+    setFormData({
+      ...formData,
+      dataFillimit : e.target.value
+    });
+  }
+
+  const handleDataMbarimit = (e) => {
+    setDataMbarimit(e.target.value);
+    setFormData({
+      ...formData,
+      dataMbarimit : e.target.value
     });
   }
 
@@ -255,24 +210,7 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
       ...formData,
       lokacioni : e.target.value
     });
-  }
-
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-    setFormData({
-      ...formData,
-      email : e.target.value
-    });
-  }
-
-  const handleFakulteti = (e) => {
-    setFakulteti(e.target.value);
-    setFormData({
-      ...formData,
-      fakulteti : fakultetet.find(f => f.id == e.target.value)
-    });
-  }
-  
+  }  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -292,7 +230,7 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
       <div className="relativew-full rounded-lg shadow" style={{background: colors.primary[500]}}>
         <div className="flex items-center justify-between md:p-5 border-b rounded-t dark:border-gray-600">
           <h3 className="text-lg font-semibold">
-            Edito Departamentin
+            Edito Afatin
           </h3>
           <button
             type="button"
@@ -320,7 +258,7 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
         </div>
         <form onSubmit={handleSubmit} className="p-6 md:p-5 text-center">
           <div className="grid gap-4 mb-4 grid-cols-2">
-            <div className="col-span-1 sm:col-span-1">
+            <div className="col-span-1 sm:col-span-2">
               <label
                     htmlFor="category"
                     className="block text-left mb-2 text-sm font-medium"
@@ -330,59 +268,40 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
                 <input 
                   type="text" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}} 
-                  value={emri =="" && formData != null ? formData.emri:emri}
+                  value={name =="" && formData != null ? formData.name:name}
                   onInput={handleEmri}
                   placeholder='Emri Departamentit'  
                 />
             </div>
             
-            <div className="col-span-1 sm:col-span-1">
+            <div className="col-span-2 sm:col-span-1">
               <label
                   htmlFor="category"
                   className="block text-left mb-2 text-sm font-medium"
               >
-                Email
+                Data Fillimit
               </label>
               <input 
                 type="text"
                 className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
                 placeholder='Emaili'
-                value={email =="" && formData != null ? formData.email:email}
-                onInput={handleEmail}
+                value={dataFillimit =="" && formData != null ? formData.dataFillimit:dataFillimit}
+                onInput={handleDataFillimit}
                />
             </div>
-            <div className="col-span-2 sm:col-span-2">
+            <div className="col-span-1 sm:col-span-1">
               <label
                     htmlFor="category"
                     className="block text-left mb-2 text-sm font-medium"
                 >
-                  Lokacioni
+                  Data Mbarimit
                 </label>
                 <input 
-                  type="text" 
+                  type="date" 
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={lokacioni =="" && formData != null ? formData.lokacioni:lokacioni}
-                  onInput={handleLokacioni}
-                  placeholder='Lokacioni'  
+                  value={dataMbarimit =="" && formData != null ? formData.dataMbarimit:dataMbarimit}
+                  onInput={handleDataMbarimit}
                   />
-            </div>
-            <div className="col-span-2 sm:col-span-2">
-              <label
-                    htmlFor="category"
-                    className="block text-left mb-2 text-sm font-medium"
-                >
-                  Fakulteti
-                </label>
-                <select
-                  className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={fakulteti}
-                  onChange={handleFakulteti}
-                >
-                  <option value="">{fakulteti ==null && formData != null ? formData.fakulteti.emri:fakulteti}</option>
-                  {fakultetet.map(fakulteti => (
-                    <option key={fakulteti.id} value={fakulteti.id}>{fakulteti.emri}</option>
-                  ))}
-                </select>
             </div>
             
           </div>
@@ -402,7 +321,7 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
                 clipRule="evenodd"
               />
             </svg>
-            Edit Departamenti
+            Edit Afatin
           </button>
         </form>
       </div>

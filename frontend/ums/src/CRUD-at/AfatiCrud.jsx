@@ -11,13 +11,12 @@ import {
 
 function AfatiCrud() {
     const rowsNames = [
-        "Kodi",
+        "Id",
         "Emri",
-        "Lokacioni",
-        "Email",
-        "Fakulteti",
+        "Data Fillimit",
+        "Data Mbarimit"
     ]
-    const jsonNames = ["id", "emri", "dataFillimit","dataMbarimit"];
+    const jsonNames = ["id", "name", "dataFillimit","dataMbarimit"];
     const buttonsAvailable = {
       preview: false,
       add: true,

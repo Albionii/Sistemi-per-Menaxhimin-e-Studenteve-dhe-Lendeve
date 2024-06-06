@@ -43,6 +43,7 @@ import Orari from "../CRUD-at/OrariCrud.jsx"
 import Lajmi from "../CRUD-at/LajmiCrud.jsx";
 import OrariLigjerata from "../CRUD-at/OrariLigjerataCrud.jsx";
 import { getToken } from "../GetToken.js";
+import AfatiCrud from "../CRUD-at/AfatiCrud.jsx";
 
 
 function loggedIn({ changeLoggedInState}) {
@@ -186,6 +187,8 @@ function loggedIn({ changeLoggedInState}) {
           <Route path="/orari" element={<Orari />} />
           <Route path="/lajmi" element={<Lajmi />} />
           <Route path="/orariLigjerata" element={<OrariLigjerata />} />
+          <Route path="/afati" element={<AfatiCrud />} />
+
 
             <Route path="/enrolled" element={<EnrolledLigjerata token={token} />} />
 

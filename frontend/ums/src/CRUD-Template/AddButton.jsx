@@ -1,4 +1,4 @@
-import { createLenda, createLigjerata, createProfessor,createDepartamenti, createProvimi, createSalla, createFakulteti, createSemester, createGrupi, createOrari, createLajmi, createOrariLigjerata } from "../APIRequests";
+import { createLenda, createLigjerata, createProfessor,createDepartamenti, createProvimi, createSalla, createFakulteti, createSemester, createGrupi, createOrari, createLajmi, createOrariLigjerata, createAfati } from "../APIRequests";
 import { lendaAddButton } from "./AddEditButtons/AddEditLenda"
 import { ligjerataAddButton } from "./AddEditButtons/AddEditLigjerata"
 import { provimiAddButton } from "./AddEditButtons/AddEditProvimet"
@@ -10,6 +10,7 @@ import { GrupiAddButton } from "./AddEditButtons/AddEditGrupi";
 import { OrariAddButton } from "./AddEditButtons/AddEditOrari";
 import { LajmiAddButton } from "./AddEditButtons/AddEditLajmi";
 import { OrariLigjerataAddButton } from "./AddEditButtons/AddEditOrariLigjerata";
+import { AfatiAddButton } from "./AddEditButtons/AddEditAfati";
 
 export default function AddButton ({setConfirmExit, renderBot, formDataJson, API}) {
   let prompt = {setConfirmExit, renderBot, formDataJson, API};
@@ -38,6 +39,8 @@ export default function AddButton ({setConfirmExit, renderBot, formDataJson, API
         return LajmiAddButton(prompt);
       case createOrariLigjerata()[0]:
         return OrariLigjerataAddButton(prompt);
+      case createAfati()[0]:
+        return AfatiAddButton(prompt)
       default:
         return API.errorAlert("Nuk ekziston add butoni per kete CRUD ose nuk e keni shtuar ne AddButton.jsx");
     }
