@@ -95,17 +95,23 @@ function loggedIn({ changeLoggedInState}) {
 
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
-
-
-  return (
-    <>
-      <div className="flex items-center justify-center w-full h-full absolute bg-slate-600" style={{ display: loading ? "none" : "", zIndex: "100000", backgroundColor: "#141b2d" }}>
+  if(!loading){
+    return (
+      <>
+      <div className="flex items-center justify-center w-full h-full absolute bg-slate-600" style={{zIndex: "100000", backgroundColor: "#141b2d" }}>
         <div style={{ width: "100%", height: "100%" }} className="flex items-center justify-center w-full h-full">
           <div style={{ display: loading ? "none" : "" }}>
             <OrbitProgress variant="track-disc" color="#006cff" size="medium" text="" textColor="" />
           </div>
         </div>
       </div>
+      </>
+    )
+  }
+
+  return (
+    <>
+      
         <Sidebar user={user} />
         <main className="flex-1 transition">
           <Topbar />

@@ -15,6 +15,8 @@ import { getTokenBeggining } from "./GetToken.js";
 
 import { OrbitProgress } from "react-loading-indicators";
 
+import axios from "axios";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -34,6 +36,13 @@ function App() {
 
     fetchToken();
   }, []);
+
+  // axios.interceptors.response.use(undefined, err => {
+  //   let res = err.response;
+  //   if ((res.status == 403 || res.status == 500) && res.config && !res.config.__isRetryRequest) {
+  //     console.log("ERROR");
+  //     alert("ERROR");
+  //   }});
   if (loading) {
     return (
       <>
