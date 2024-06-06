@@ -18,15 +18,17 @@ public interface OrariLigjerataRepository extends JpaRepository<OrariLigjerata, 
 //    List<OrariLigjerata> findOrariLigjerataByStudentId(@Param("studentId")Long studentId);
 
 //    List<OrariLigjerata> findByDita(String dita);
-@Query("SELECT ol " +
+    @Query("SELECT ol " +
         "FROM OrariLigjerata ol " +
         "JOIN ol.orari o " +
         "JOIN o.grupi g " +
         "JOIN g.semester s " +
         "JOIN s.studentSemester ss " +
         "WHERE ss.student.id = :studentId AND ol.dita = :dita")
-List<OrariLigjerata> findByDita(@Param("dita") String dita, @Param("studentId") Long studentId);
+    List<OrariLigjerata> findByDita(@Param("dita") String dita, @Param("studentId") Long studentId);
 
+
+    List<OrariLigjerata> findByLigjerata_Professor_IdAndDita(Long professorId, String dita);
 
 }
 

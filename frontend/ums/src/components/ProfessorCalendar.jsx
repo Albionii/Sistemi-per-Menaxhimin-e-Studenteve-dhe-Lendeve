@@ -6,7 +6,7 @@ import { Typography, useTheme } from '@mui/material';
 import axios from 'axios';
 import './calendar.css';
 
-export default function Calendar({ token }) {
+export default function ProfessorCalendar({ token }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [assignments, setAssignments] = useState([]);
@@ -15,10 +15,15 @@ export default function Calendar({ token }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const assignmentFetch = await axios.get('http://localhost:8080/api/student/assignments');
+        const assignmentFetch = await axios.get('http://localhost:8080/professor/kalendari'
+            , {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                });
         setAssignments(assignmentFetch.data);
   
-        const provimetFetch = await axios.get('http://localhost:8080/api/student/provimetC', {
+        const provimetFetch = await axios.get('http://localhost:8080/professor/provimet', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,8 +44,8 @@ export default function Calendar({ token }) {
   }));
 
   const provimet2 = provimet.map(provimi => ({
-    title: 'Provim: ' + provimi.provimi.ligjerata.lenda.emri,
-    start: provimi.provimi.data,
+    title: 'Provim: ' + provimi.ligjerata,
+    start: provimi.data,
     type: 'provim',
   }));
 

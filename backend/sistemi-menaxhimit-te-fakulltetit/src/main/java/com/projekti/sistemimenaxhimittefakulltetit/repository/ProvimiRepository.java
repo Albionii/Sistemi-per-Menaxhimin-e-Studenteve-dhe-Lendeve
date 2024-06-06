@@ -10,4 +10,7 @@ public interface ProvimiRepository extends JpaRepository<Provimi, Long> {
     Provimi findProvimiByLigjerataId(Long Id);
     List<Provimi> findAllByLigjerataId(Long id);
 
+    List<Provimi> findByLigjerata_Professor_Id(Long professorId);
+
+
 }

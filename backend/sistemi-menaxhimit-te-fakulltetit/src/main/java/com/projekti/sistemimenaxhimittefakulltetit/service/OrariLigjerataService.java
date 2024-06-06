@@ -2,12 +2,14 @@ package com.projekti.sistemimenaxhimittefakulltetit.service;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.OrariLigjerataRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.response.OrariLigjerataDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ public class OrariLigjerataService {
     private final StudentService studentService;
     private final UserService userService;
     private final StudentSemesterRegistrationService studentSemesterRegistrationService;
+    private final ProfessorService professorService;
 
     public List<OrariLigjerata> getByOrariId(Long id){
         List<Orari> byGrupiId = orariService.findByGrupiId(id);
@@ -91,5 +94,15 @@ public class OrariLigjerataService {
         orariLigjerata1.setSalla(orariLigjerata.getSalla());
 
         return orariLigjerataRepository.save(orariLigjerata1);
+    }
+
+    public List<OrariLigjerataDTO> getOrariByProfessorAndDita(String jwt, String dita) throws Exception {
+        Long professorId = userService.findUserByJwtToken(jwt).getId();
+
+        Professor professor = professorService.findProfessorByUserId(professorId);
+        List<OrariLigjerata> orariLigjerataList = orariLigjerataRepository.findByLigjerata_Professor_IdAndDita(professor.getId(), dita);
+        return orariLigjerataList.stream()
+                .map(ol -> new OrariLigjerataDTO(ol.getLigjerata().getLenda().getEmri(), ol.getOra(), ol.getSalla(), ol.getOrari().getGrupi().getEmri()))
+                .collect(Collectors.toList());
     }
 }

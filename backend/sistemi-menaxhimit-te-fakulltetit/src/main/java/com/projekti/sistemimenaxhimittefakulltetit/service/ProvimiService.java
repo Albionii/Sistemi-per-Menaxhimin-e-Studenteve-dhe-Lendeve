@@ -1,17 +1,17 @@
 package com.projekti.sistemimenaxhimittefakulltetit.service;
 
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Lenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.ProfesoriLenda;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Professor;
-import com.projekti.sistemimenaxhimittefakulltetit.entities.Provimi;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProvimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.ProvimiReq;
+import com.projekti.sistemimenaxhimittefakulltetit.response.OrariLigjerataDTO;
+import com.projekti.sistemimenaxhimittefakulltetit.response.ProvimiDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +21,10 @@ public class ProvimiService {
     private final ProvimiRepository provimiRepository;
 
     private final ProfesoriLendaService profesoriLendaService;
+
+    private final UserService userService;
+
+    private final ProfessorService professorService;
 
     public List<Provimi> findAllProvimet(){
         return provimiRepository.findAll();
@@ -59,6 +63,16 @@ public class ProvimiService {
             return null; // Or handle the case where the product with the given id is not found
         }
 
+    }
+
+    public List<ProvimiDTO> getProvimetByProfessorId(String jwt) throws Exception{
+        Long professorId = userService.findUserByJwtToken(jwt).getId();
+
+        Professor professor = professorService.findProfessorByUserId(professorId);
+        List<Provimi> provimiList = provimiRepository.findByLigjerata_Professor_Id(professor.getId());
+        return provimiList.stream()
+                .map(p -> new ProvimiDTO(p.getLigjerata().getLenda().getEmri(), p.getData()))
+                .collect(Collectors.toList());
     }
 
 

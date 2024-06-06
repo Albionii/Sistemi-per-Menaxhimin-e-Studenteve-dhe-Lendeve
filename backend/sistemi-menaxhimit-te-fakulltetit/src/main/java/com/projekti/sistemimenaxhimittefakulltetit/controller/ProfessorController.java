@@ -2,6 +2,8 @@ package com.projekti.sistemimenaxhimittefakulltetit.controller;
 
 import com.projekti.sistemimenaxhimittefakulltetit.entities.*;
 import com.projekti.sistemimenaxhimittefakulltetit.request.CreateStudentProvimRequest;
+import com.projekti.sistemimenaxhimittefakulltetit.response.OrariLigjerataDTO;
+import com.projekti.sistemimenaxhimittefakulltetit.response.ProvimiDTO;
 import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,11 +27,34 @@ public class ProfessorController {
     private final ProfessorService professorService;
     private final StudentPrvService studentPrvService;
     private final ProfesoriLendaService profesoriLendaService;
+    private final StudentLigjerataService studentLigjerataService;
+    private final OrariLigjerataService orariLigjerataService;
+    private final AssignmentServiceImpl assignmentService;
 
     @PutMapping("/{id}")
     public Optional<Vleresimi> updateNota(@RequestBody Vleresimi updatedVleresimi,
                                           @PathVariable Long oldVleresimiId){
         return vleresimiService.updateNota(updatedVleresimi, oldVleresimiId);
+    }
+
+    @GetMapping("/kalendari")
+    public List<Assignment> assignmentList(@RequestHeader("Authorization")String jwt) throws Exception{
+        return assignmentService.findByUserId(jwt);
+    }
+
+    @GetMapping("/orari/{dita}")
+    public List<OrariLigjerataDTO> getByDita(@RequestHeader("Authorization")String jwt, @PathVariable String dita) throws Exception{
+        return orariLigjerataService.getOrariByProfessorAndDita(jwt, dita);
+    }
+
+    @GetMapping("/count/{ligjerataId}")
+    public Long countStudentet(@PathVariable Long ligjerataId){
+        return studentLigjerataService.contStudentetByLigjerataId(ligjerataId);
+    }
+
+    @GetMapping("/provimet")
+    public List<ProvimiDTO> provimetByProfessor(@RequestHeader("Authorization")String jwt) throws Exception{
+        return provimiService.getProvimetByProfessorId(jwt);
     }
 
 

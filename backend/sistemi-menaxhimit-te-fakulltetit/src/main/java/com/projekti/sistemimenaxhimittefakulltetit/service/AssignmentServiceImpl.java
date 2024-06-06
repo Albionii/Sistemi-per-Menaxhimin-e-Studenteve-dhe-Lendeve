@@ -42,7 +42,10 @@ public class AssignmentServiceImpl implements AssignmentService{
 
 
 
-
+    public List<Assignment> findByUserId(String jwt) throws Exception{
+        User user = userService.findUserByJwtToken(jwt);
+        return assignmentRepository.findByCreatedBy_Id(user.getId());
+    }
 
 
     @Override
