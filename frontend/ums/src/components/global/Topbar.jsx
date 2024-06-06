@@ -12,12 +12,18 @@ import { Link } from "react-router-dom";
 import Header from "../Header"
 import LiveClock from "../LiveClock";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-
+import Cookies from 'js-cookie';
 
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+
+  const changeMode = () => {
+    colorMode.toggleColorMode();
+    Cookies.set('theme', theme.palette.mode === "dark"? "light" : "dark", { expires: 1000 });
+    
+  }
 
   return (
     <Box display="flex" justifyContent="space-between" pt={2} pr={2} pl={2} pb={1}>
@@ -43,7 +49,7 @@ const Topbar = () => {
 
       {/* ICONS */}
       <Box display="flex">
-        <IconButton onClick={colorMode.toggleColorMode}>
+        <IconButton onClick={changeMode}>
           {theme.palette.mode === 'dark' ? (
             <DarkModeOutlinedIcon />
           ) : (
