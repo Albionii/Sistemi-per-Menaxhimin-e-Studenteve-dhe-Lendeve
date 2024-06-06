@@ -72,6 +72,7 @@ public class AuthController {
         createdUser.setShteti(user.getShteti());
         createdUser.setZipcode(user.getZipcode());
         createdUser.setNrTelefonit(user.getNrTelefonit());
+        createdUser.setProfile(user.getId() + ".png");
 
 
         Student createdStudent = new Student();
@@ -80,6 +81,9 @@ public class AuthController {
         createdStudent.setUser(createdUser);
         studentRepository.save(createdStudent);
 
+        // Duhet per profile pic!
+        savedUser.setProfile(savedUser.getId() + ".png");
+        userRepository.save(savedUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -7,6 +7,7 @@ import axios from "axios";
 import { getToken } from "../../GetToken";
 import { getFromCookies } from "../../getUserFromJWT";
 import Avatar from "react-avatar-edit";
+import { Avatar as Avatari } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -23,11 +24,18 @@ const style = {
   overflow: "auto",
 };
 
-const ProfilePicture = ({ open, handleOpen, handleClose, setUserData }) => {
+const ProfilePicture = ({
+  open,
+  handleOpen,
+  handleClose,
+  setUserData,
+  user,
+}) => {
   const token = getToken();
 
   const [src, setSrc] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [profileExists, setProfileExists] = useState(false);
 
   const onClose = () => {
     setPreview(null);
@@ -39,36 +47,63 @@ const ProfilePicture = ({ open, handleOpen, handleClose, setUserData }) => {
 
   const fetchData = async () => {
     try {
-      const url = 'http://localhost:8080/api/user';
+      const url = "http://localhost:8080/api/user";
       const userDetails = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({}),
       });
       const data = await userDetails.json();
+
+      if (data.profile === null) {
+        data.profile = ""; 
+      }
+
       setUserData(data);
+      checkProfilePicture();
     } catch (error) {
-      console.error('Error fetching user details:', error);
-      document.cookie = 'Token=';
+      console.error("Error fetching user details:", error);
+      document.cookie = "Token=";
     }
   };
 
   const deletePicture = async () => {
     try {
-      await axios.delete('http://localhost:8080/api/storage/profile/delete', {
+      await axios.delete("http://localhost:8080/api/storage/profile/delete", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('Profile Picture Has been deleted!');
+      console.log("Profile Picture Has been deleted!");
       await fetchData();
     } catch (error) {
-      console.error('Error deleting profile picture:', error);
+      console.error("Error deleting profile picture:", error);
     }
   };
+
+  const checkProfilePicture = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/storage/profile/exists', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setProfileExists(data);
+      } else {
+        throw new Error('Profile existence check failed');
+      }
+    } catch (error) {
+      console.error('Error checking profile existence:', error);
+    }
+  };
+
 
   const handleSave = async () => {
     const blob = await fetch(preview).then((res) => res.blob());
@@ -85,42 +120,68 @@ const ProfilePicture = ({ open, handleOpen, handleClose, setUserData }) => {
           },
         }
       );
-  
+
       if (response.status === 200) {
-        const updatedUser = response.data;
-        setUserData(updatedUser);
+        fetchData();
+        setUserData(response.data);
         setPreview(null);
         handleClose();
+        
       }
     } catch (error) {
       console.error("Error uploading profile picture:", error);
     }
   };
-  
+
+ 
   return (
     <Box
       sx={{
-        display: 'flex',
-        gap: '20px',
-        flexDirection: { sm: 'row', xs: 'column' },
+        display: "flex",
+        justifyContent: "space-around",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "25px",
       }}
     >
-      <Button
-        variant="contained"
-        color="secondary"
-        size="small"
-        onClick={handleOpen}
+      <Avatari
+        alt="profile-user"
+        src={`http://localhost:8080/profile-pictures/${
+          user.profile
+        }?${new Date().getTime()}`}
+        sx={{
+          width: 150,
+          height: 150,
+          ":hover": { cursor: "pointer" },
+        }}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          gap: "20px",
+          flexDirection: { lg: "row", xs: "column" },
+        }}
       >
-        Upload Picture
-      </Button>
-      <Button
-        variant="contained"
-        color="error"
-        size="small"
-        onClick={deletePicture}
-      >
-        Remove Picture
-      </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={handleOpen}
+        >
+          Upload Picture
+        </Button>
+        {profileExists && (
+          <Button
+            variant="contained"
+            color="error"
+            size="small"
+            onClick={deletePicture}
+          >
+            Remove Picture
+          </Button>
+        )}
+      </Box>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -130,19 +191,19 @@ const ProfilePicture = ({ open, handleOpen, handleClose, setUserData }) => {
         <Box sx={style}>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              width: '100%',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
             }}
           >
             {preview && (
               <img
                 src={preview}
                 style={{
-                  maxWidth: '100%',
-                  height: 'auto',
-                  marginBottom: '1rem',
+                  maxWidth: "100%",
+                  height: "auto",
+                  marginBottom: "1rem",
                 }}
               />
             )}
@@ -157,12 +218,12 @@ const ProfilePicture = ({ open, handleOpen, handleClose, setUserData }) => {
               closeIconColor="transparent"
               lineWidth={0}
               style={{
-                width: '100%',
+                width: "100%",
                 maxWidth: 300,
-                height: 'auto',
+                height: "auto",
               }}
             />
-            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
               <Button
                 variant="contained"
                 color="secondary"

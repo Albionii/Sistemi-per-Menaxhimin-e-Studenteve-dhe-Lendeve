@@ -22,9 +22,9 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import SignalCellularAltOutlinedIcon from "@mui/icons-material/SignalCellularAltOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import "./Sidebar.css"
-import {Avatar} from "@mui/material";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import "./Sidebar.css";
+import { Avatar } from "@mui/material";
 
 const Item = ({ title, to, icon, selected, setSelected, handleCollapse }) => {
   const theme = useTheme();
@@ -35,7 +35,10 @@ const Item = ({ title, to, icon, selected, setSelected, handleCollapse }) => {
       style={{
         color: colors.gray[100],
       }}
-      onClick={() => {setSelected(title);handleCollapse()}}
+      onClick={() => {
+        setSelected(title);
+        handleCollapse();
+      }}
       icon={icon}
     >
       <Typography>{title}</Typography>
@@ -48,20 +51,18 @@ const SubItem = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-
-      <MenuItem
-        active={selected === title}
-        style={{
-          color: colors.gray[100],
-          padding: "7px 0",
-        }}
-        onClick={() => setSelected(title)}
-        icon={icon}
-      >
-        <Typography>{title}</Typography>
-        <Link to={to} />
-      </MenuItem>
-
+    <MenuItem
+      active={selected === title}
+      style={{
+        color: colors.gray[100],
+        padding: "7px 0",
+      }}
+      onClick={() => setSelected(title)}
+      icon={icon}
+    >
+      <Typography>{title}</Typography>
+      <Link to={to} />
+    </MenuItem>
   );
 };
 
@@ -98,12 +99,12 @@ const Sidebar = ({ user }) => {
   }, []);
 
   const handleCollapse = () => {
-    setIsCollapsed(true)
-  }
+    setIsCollapsed(true);
+  };
 
   return (
     <Box
-      className={`box ${isCollapsed?'collapsed':''}`} 
+      className={`box ${isCollapsed ? "collapsed" : ""}`}
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
@@ -119,23 +120,22 @@ const Sidebar = ({ user }) => {
         },
         "& .pro-menu-item.active": {
           color: "#6870fa !important",
-        }
+        },
       }}
     >
       <ProSidebar
         id="sidebar"
         collapsed={isCollapsed}
-        className={`prosidebar ${isCollapsed?'collapsed':''}`} 
+        className={`prosidebar ${isCollapsed ? "collapsed" : ""}`}
       >
-        <Menu 
-          className={`menu ${isCollapsed?'collapsed':''}`}
-        
-          >
+        <Menu className={`menu ${isCollapsed ? "collapsed" : ""}`}>
           {/* LOGO AND MENU ICON */}
           <MenuItem
-            onClick={() => {setIsCollapsed(!isCollapsed)}}
+            onClick={() => {
+              setIsCollapsed(!isCollapsed);
+            }}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-            style={{color: colors.gray[100]}}
+            style={{ color: colors.gray[100] }}
             className="menuitem"
           >
             {!isCollapsed && (
@@ -153,7 +153,6 @@ const Sidebar = ({ user }) => {
                 </IconButton>
               </Box>
             )}
-          
           </MenuItem>
 
           {!isCollapsed && (
@@ -161,7 +160,9 @@ const Sidebar = ({ user }) => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Avatar
                   alt="profile-user"
-                  src={`http://localhost:8080/profile-pictures/${user.profile}?${new Date().getTime()}`}
+                  src={`http://localhost:8080/profile-pictures/${
+                    user.profile
+                  }?${new Date().getTime()}`}
                   sx={{ width: 100, height: 100 }}
                 />
               </Box>
@@ -181,8 +182,7 @@ const Sidebar = ({ user }) => {
             </Box>
           )}
 
-          
-            <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
               to="/"
@@ -190,13 +190,13 @@ const Sidebar = ({ user }) => {
               selected={selected}
               setSelected={setSelected}
               handleCollapse={handleCollapse}
-              />
+            />
 
             <Typography
               variant="h6"
               color={colors.gray[300]}
               sx={{ m: "15px 0 5px 20px" }}
-              >
+            >
               Data
             </Typography>
             {role === "ROLE_STUDENT" && (
@@ -207,19 +207,19 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
                 handleCollapse={handleCollapse}
-                />
-              )}
+              />
+            )}
             {/* {role === "ROLE_STUDENT" && }*/}
 
-              <Item
-                title="Departmentet"
-                to="/department"
-                icon={<AccountBalanceOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-                handleCollapse={handleCollapse}
-                />
-              
+            <Item
+              title="Departmentet"
+              to="/department"
+              icon={<AccountBalanceOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              handleCollapse={handleCollapse}
+            />
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Enrolled"
                 to="/enrolled"
@@ -227,7 +227,8 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
                 handleCollapse={handleCollapse}
-                />
+              />
+            )}
 
             <Item
               title="Profili"
@@ -236,13 +237,13 @@ const Sidebar = ({ user }) => {
               selected={selected}
               setSelected={setSelected}
               handleCollapse={handleCollapse}
-              />
-            
+            />
+
             <Typography
               variant="h6"
               color={colors.gray[300]}
               sx={{ m: "15px 0 5px 20px" }}
-              >
+            >
               Pages
             </Typography>
             {role === "ROLE_STUDENT" && (
@@ -253,10 +254,9 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
                 handleCollapse={handleCollapse}
-                />
-              )}
-            {role === "ROLE_STUDENT" &&
-
+              />
+            )}
+            {role === "ROLE_STUDENT" && (
               <Item
                 title="Regjistro Grupin"
                 to="/regjistroGrupin"
@@ -264,8 +264,8 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
                 handleCollapse={handleCollapse}
-                />
-              }
+              />
+            )}
             <Item
               title="CRUD's"
               to="/cruds"
@@ -273,13 +273,13 @@ const Sidebar = ({ user }) => {
               selected={selected}
               setSelected={setSelected}
               handleCollapse={handleCollapse}
-              />
+            />
 
             <Typography
               variant="h6"
               color={colors.gray[300]}
               sx={{ m: "15px 0 5px 20px" }}
-              >
+            >
               Charts
             </Typography>
             {role === "ROLE_STUDENT" && (
@@ -290,8 +290,8 @@ const Sidebar = ({ user }) => {
                 selected={selected}
                 setSelected={setSelected}
                 handleCollapse={handleCollapse}
-                />
-              )}
+              />
+            )}
             <Item
               title="Pie Chart"
               to="/pie"
@@ -299,7 +299,7 @@ const Sidebar = ({ user }) => {
               selected={selected}
               setSelected={setSelected}
               handleCollapse={handleCollapse}
-              />
+            />
             <Item
               title="Line Chart"
               to="/line"
@@ -307,7 +307,7 @@ const Sidebar = ({ user }) => {
               selected={selected}
               setSelected={setSelected}
               handleCollapse={handleCollapse}
-              />
+            />
             <Item
               title="Geography Chart"
               to="/geography"
@@ -317,8 +317,6 @@ const Sidebar = ({ user }) => {
               handleCollapse={handleCollapse}
             />
           </Box>
-          
-          
         </Menu>
       </ProSidebar>
     </Box>

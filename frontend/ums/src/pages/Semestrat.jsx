@@ -171,7 +171,11 @@ const Semestrat = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/admin/semester/${departamentiId}`)
+      .get(`http://localhost:8080/api/user/semester/${departamentiId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
       .then((response) => {
         console.log(response.data);
         setSemestrat(response.data);

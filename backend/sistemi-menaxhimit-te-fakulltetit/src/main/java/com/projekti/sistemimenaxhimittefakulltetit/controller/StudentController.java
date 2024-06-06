@@ -167,15 +167,6 @@ public class StudentController {
     }
 
 
-
-    @GetMapping("/get/user/info")
-    public User getUserInfo(@RequestHeader("Authorization")String token) throws Exception {
-
-        User student = userService.findUserById(userService.findUserByJwtToken(token).getId());
-        return student;
-    }
-
-
     @GetMapping("/provimet/{lendaId}")
     public ResponseEntity<List<Provimi>> getProvimetLenda(@PathVariable Long lendaId,
             @RequestHeader("Authorization")String token)throws Exception {
@@ -374,6 +365,38 @@ public class StudentController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+
+    @PostMapping("/submit/{id}")
+    public ResponseEntity<AssignmentSubmission> submitAssignment(@PathVariable Long id,
+                                                                 @RequestBody AssignmentSubmission submitedAssignment,
+                                                                 @RequestHeader("Authorization") String token) throws Exception {
+
+        User user = userService.findUserByJwtToken(token);
+
+        AssignmentSubmission submission = assignmentService.submit(id, submitedAssignment, user);
+
+        return ResponseEntity.status(HttpStatus.OK).body(submission);
+    }
+
+    @DeleteMapping("/submit/delete/{id}")
+    public Assignment deleteSubmission(@PathVariable Long id,
+                                       @RequestHeader("Authorization") String token) throws Exception {
+
+        User user = userService.findUserByJwtToken(token);
+
+        return assignmentService.deleteAssignmentSubmission(id, user);
+    }
+
+    @PutMapping("/submit/update/{id}")
+    public AssignmentSubmission updateSubmission(@PathVariable Long id,
+                                                 @RequestBody AssignmentSubmission submission,
+                                                 @RequestHeader("Authorization") String token) throws Exception {
+
+        User user = userService.findUserByJwtToken(token);
+
+        return assignmentService.updateAssignmentSubmission(id, submission, user);
     }
 
 

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/postimi")
+@RequestMapping("api/postimi")
 @RequiredArgsConstructor
 public class PostimiController {
 

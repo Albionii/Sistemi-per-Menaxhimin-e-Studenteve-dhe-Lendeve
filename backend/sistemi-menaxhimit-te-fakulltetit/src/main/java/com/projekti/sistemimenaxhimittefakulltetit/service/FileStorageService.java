@@ -223,4 +223,19 @@ public class FileStorageService {
         }
     }
 
+    public boolean profileExists(Long userId) throws IOException{
+        Path userDirectory = Path.of(fileStorageLocation.toString(), "Users");
+
+        if (Files.exists(userDirectory)) {
+            try (Stream<Path> files = Files.list(userDirectory)) {
+                return files.anyMatch(file -> {
+                    String fileName = file.getFileName().toString();
+                    String baseName = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
+                    return baseName.equals(String.valueOf(userId));
+                });
+            }
+        }
+        return false;
+    }
+
 }

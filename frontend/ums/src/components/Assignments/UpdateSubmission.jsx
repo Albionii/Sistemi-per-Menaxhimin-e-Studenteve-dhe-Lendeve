@@ -75,7 +75,7 @@ const UpdateSubmission = ({
 
   const deleteSubmission = () => {
     axios
-      .delete(`http://localhost:8080/api/user/submit/delete/${Submission.id}`, {
+      .delete(`http://localhost:8080/api/student/submit/delete/${Submission.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

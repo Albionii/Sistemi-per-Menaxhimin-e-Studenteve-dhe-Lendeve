@@ -20,6 +20,8 @@ function Profili({ changeLoggedInState, user, setUserData }) {
   const colors = tokens(theme.palette.mode);
   const token = getToken();
 
+
+
   function logOut() {
     const response = fetch("http://localhost:8080/auth/signout", {
       method: "POST",
@@ -42,12 +44,15 @@ function Profili({ changeLoggedInState, user, setUserData }) {
     return `${year}-${month}-${day}`;
   }
 
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user.firstName !== "Loading") {
       setLoading(false);
     }
+
+    
   }, [user]);
 
   const [openPassword, setOpenPassword] = React.useState(false);
@@ -99,21 +104,13 @@ function Profili({ changeLoggedInState, user, setUserData }) {
                               gap: "25px",
                             }}
                           >
-                            <Avatar
-                              alt="profile-user"
-                              src={`http://localhost:8080/profile-pictures/${user.profile
-                                }?${new Date().getTime()}`} // Adding a timestamp to force reload
-                              sx={{
-                                width: 150,
-                                height: 150,
-                                ":hover": { cursor: "pointer" },
-                              }}
-                            />
+
                             <ProfilePicture
                               open={open}
                               handleOpen={handleOpen}
                               handleClose={handleClose}
                               setUserData={setUserData}
+                              user={user}
                             />
                           </Box>
                         </CardMedia>

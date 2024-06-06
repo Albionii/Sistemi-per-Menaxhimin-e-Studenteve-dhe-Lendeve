@@ -121,6 +121,8 @@ public class FileStorageController {
 
                 userRepository.save(user);
 
+                System.out.println(user);
+
                 return ResponseEntity.ok().body(user);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -133,13 +135,15 @@ public class FileStorageController {
         }
     }
 
+    @GetMapping("/profile/exists")
+    public boolean profileExists(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        return fileStorageService.profileExists(user.getId());
+    }
+
     @DeleteMapping("/profile/delete")
     public void deleteProfilePicture(@RequestHeader("Authorization")String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
-
-        user.setProfile(null);
-        userRepository.save(user);
-
         fileStorageService.deleteUserFiles(user.getId());
     }
 

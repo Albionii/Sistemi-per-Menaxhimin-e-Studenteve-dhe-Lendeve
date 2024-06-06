@@ -53,10 +53,6 @@ public class AdminController {
     }
 
 
-    @GetMapping("/semester/{departamentiId}")
-    public List<Semester> getByDepartamentiId(@PathVariable Long departamentiId){
-        return semesterService.getByDepartamentiId(departamentiId);
-    }
 
     @DeleteMapping("/lenda/{id}")
     public void deleteLenda(@PathVariable Long id,

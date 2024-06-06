@@ -9,7 +9,7 @@ const usePostimi = (ligjerataId, token) => {
 
   const getPostimet = () => {
     axios
-      .get(`http://localhost:8080/postimi/get/ligjerata/${ligjerataId}`, {
+      .get(`http://localhost:8080/api/postimi/get/ligjerata/${ligjerataId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -24,7 +24,7 @@ const usePostimi = (ligjerataId, token) => {
 
   const post = (postim) => {
     axios
-      .post(`http://localhost:8080/postimi/create/${ligjerataId}`, postim, {
+      .post(`http://localhost:8080/api/postimi/create/${ligjerataId}`, postim, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,7 +44,7 @@ const usePostimi = (ligjerataId, token) => {
   const updatePostimi = (postimiId, updatedPostimi) => {
     axios
       .put(
-        `http://localhost:8080/postimi/update/${postimiId}`,
+        `http://localhost:8080/api/postimi/update/${postimiId}`,
         updatedPostimi,
         {
           headers: {
@@ -66,7 +66,7 @@ const usePostimi = (ligjerataId, token) => {
 
   const deletePostimi = (postimiId) => {
     axios
-      .delete(`http://localhost:8080/postimi/delete/${postimiId}`, {
+      .delete(`http://localhost:8080/api/postimi/delete/${postimiId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -85,7 +85,7 @@ const usePostimi = (ligjerataId, token) => {
 
   const getUserInfo = () => {
     axios
-      .get(`http://localhost:8080/student/get/user/info`, {
+      .get(`http://localhost:8080/api/user/get/user/info`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -100,7 +100,7 @@ const usePostimi = (ligjerataId, token) => {
 
   const getPostimetUser = () => {
     axios
-      .get(`http://localhost:8080/postimi/get/user/${ligjerataId}`, {
+      .get(`http://localhost:8080/api/postimi/get/user/${ligjerataId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

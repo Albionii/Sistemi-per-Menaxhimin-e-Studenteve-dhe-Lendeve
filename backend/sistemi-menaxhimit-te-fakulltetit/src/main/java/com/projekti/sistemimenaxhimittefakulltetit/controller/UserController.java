@@ -46,6 +46,9 @@ public class UserController {
     private ProfesoriProvimiService profesoriProvimiService;
 
     @Autowired
+    private SemesterService semesterService;
+
+    @Autowired
     private FileStorageService fileStorageService;
 
 
@@ -69,36 +72,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/submit/{id}")
-    public ResponseEntity<AssignmentSubmission> submitAssignment(@PathVariable Long id,
-                                                       @RequestBody AssignmentSubmission submitedAssignment,
-                                                       @RequestHeader("Authorization") String token) throws Exception {
 
-        User user = userService.findUserByJwtToken(token);
-
-        AssignmentSubmission submission = assignmentService.submit(id, submitedAssignment, user);
-
-        return ResponseEntity.status(HttpStatus.OK).body(submission);
-    }
-
-    @DeleteMapping("/submit/delete/{id}")
-    public Assignment deleteSubmission(@PathVariable Long id,
-                                    @RequestHeader("Authorization") String token) throws Exception {
-
-        User user = userService.findUserByJwtToken(token);
-
-        return assignmentService.deleteAssignmentSubmission(id, user);
-    }
-
-    @PutMapping("/submit/update/{id}")
-    public AssignmentSubmission updateSubmission(@PathVariable Long id,
-                                                 @RequestBody AssignmentSubmission submission,
-                                                 @RequestHeader("Authorization") String token) throws Exception {
-
-        User user = userService.findUserByJwtToken(token);
-
-        return assignmentService.updateAssignmentSubmission(id, submission, user);
-    }
 
     @GetMapping("/get/user/info")
     public Student getUserInfo(@RequestHeader("Authorization")String token) throws Exception {
@@ -140,6 +114,10 @@ public class UserController {
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
+    @GetMapping("/semester/{departamentiId}")
+    public List<Semester> getByDepartamentiId(@PathVariable Long departamentiId){
+        return semesterService.getByDepartamentiId(departamentiId);
+    }
 
 
 }

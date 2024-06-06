@@ -167,7 +167,7 @@ const useAssignments = (ligjerataId, token, setHasSubmitted) => {
   const submissionFiles = (formData, assignmentId, submissionId) => {
     axios
       .post(
-        `http://localhost:8080/student/${assignmentId}/upload/${submissionId}`,
+        `http://localhost:8080/api/student/${assignmentId}/upload/${submissionId}`,
         formData,
         {
           headers: {
@@ -188,7 +188,7 @@ const useAssignments = (ligjerataId, token, setHasSubmitted) => {
   const submitAssignment = (assignmentId, submission, formData) => {
     axios
       .post(
-        `http://localhost:8080/api/user/submit/${assignmentId}`,
+        `http://localhost:8080/api/student/submit/${assignmentId}`,
         submission,
         {
           headers: {
@@ -209,7 +209,7 @@ const useAssignments = (ligjerataId, token, setHasSubmitted) => {
   const updateSubmission = (formData, assignmentId, submission) => {
     axios
       .put(
-        `http://localhost:8080/api/user/submit/update/${assignmentId}`,
+        `http://localhost:8080/api/student/submit/update/${assignmentId}`,
         submission,
         {
           headers: {

@@ -23,19 +23,26 @@ const CourseCard = ({
   USER_ROLE,
   professorId,
   loading,
-  index
+  index,
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
   const fixedBackgroundColors = [
-    '#FF204E', '#A0153E', '#5D0E41', '#00224D', '#6FDCE3',
-    '#FFA07A', '#20B2AA', '#87CEFA', '#778899'
+    "#FF204E",
+    "#A0153E",
+    "#5D0E41",
+    "#00224D",
+    "#6FDCE3",
+    "#FFA07A",
+    "#20B2AA",
+    "#87CEFA",
+    "#778899",
   ];
 
-  const background = fixedBackgroundColors[index % fixedBackgroundColors.length];
-
+  const background =
+    fixedBackgroundColors[index % fixedBackgroundColors.length];
 
   const isEnrolled =
     enrollData &&
@@ -56,7 +63,6 @@ const CourseCard = ({
     e.stopPropagation();
     unEnroll(id);
   };
-
 
   return (
     <Card
@@ -172,7 +178,9 @@ const Ligjeratat = ({ token, user }) => {
       .get(`http://localhost:8080/professorLenda/semester/${semestriId}`)
       .then((response) => {
         setLigjerataData(response.data);
-        getEnroll();
+        if (user === "ROLE_STUDENT") {
+          getEnroll();
+        }
       })
       .catch((error) => {
         console.error("Error fetching the ligjerata: " + error);
@@ -226,8 +234,13 @@ const Ligjeratat = ({ token, user }) => {
       });
   };
 
+  console.log(user);
+
   useEffect(() => {
     getLigjeratat();
+    if (user === "ROLE_STUDENT") {
+      getEnroll();
+    }
   }, [semestriId]);
 
   return (
@@ -263,7 +276,7 @@ const Ligjeratat = ({ token, user }) => {
                     course.professor.user.firstName +
                     " " +
                     course.professor.user.lastName
-                  } 
+                  }
                   id={course.id}
                   enroll={enroll}
                   unEnroll={unEnroll}

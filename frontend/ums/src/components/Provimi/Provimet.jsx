@@ -14,6 +14,9 @@ import Container from "@mui/material/Container";
 import { tokens } from "../../theme";
 import dayjs from "dayjs";
 import { ClassNames } from "@emotion/react";
+import { Flowbite, } from "flowbite-react";
+
+
 
 const Provimet = ({ token }) => {
   console.log("TOKEN " + JSON.stringify(token));
@@ -297,12 +300,11 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
           <Dropdown
             size="xs"
             label={
-              <Typography fontSize={{ xs: "6px", sm: "12px" }}>
+              <Typography fontSize={{ xs: "5px", sm: "12px" }}>
                 {placeholder}
               </Typography>
             }
-            className="relative inline-flex items-center justify-center p-2  text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300"
-
+            className="relative inline-flex items-center justify-center"
           >
             {provimi.provimet.map((item, idx) => (
               <Dropdown.Item
@@ -314,8 +316,9 @@ const TableRou = ({ provimi, paraqitProvimin }) => {
                     item.ligjerata.professor.user.lastName
                   )
                 }
+                
               >
-                <Typography sx={{ fontSize: { xs: "6px", md: "12px" } }}>
+                <Typography sx={{ fontSize: { xs: "6px", md: "10px" } }}>
                   {item.ligjerata.professor.user.firstName}{" "}
                   {item.ligjerata.professor.user.lastName}
                 </Typography>
