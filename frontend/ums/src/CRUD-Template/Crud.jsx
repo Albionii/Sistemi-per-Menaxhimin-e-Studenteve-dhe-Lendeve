@@ -2,7 +2,7 @@ import TopTable from './TopTable.jsx'
 import BottomTable from './BottomTable.jsx'
 import {useState } from 'react';
 import { errorAlert } from '../APIRequests.js';
-export default function Crud({rows, createAPI,getAllAPI, getByIDAPI, updateAPI,deleteAPI,formDataJson, buttonsAvailable, jsonName}){
+export default function Crud({rows, createAPI,getAllAPI, getByIDAPI, updateAPI,deleteAPI,formDataJson, buttonsAvailable, jsonName, token}){
   const[num, setNum] = useState(0);
 
   const renderBot = () => {
@@ -30,6 +30,7 @@ export default function Crud({rows, createAPI,getAllAPI, getByIDAPI, updateAPI,d
         API={API} 
         buttonsAvailable={buttonsAvailable}
         jsonName={jsonName}
+        token={token}
       />
 
      </>

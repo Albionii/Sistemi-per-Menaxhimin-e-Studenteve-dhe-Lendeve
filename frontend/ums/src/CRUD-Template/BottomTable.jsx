@@ -7,7 +7,7 @@ import PreviewButton from "./PreviewButton";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
 
-export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonName }) {
+export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonName, token }) {
   const [formData, setFormData] = useState([]);
   const [urlGetAll, messageGetAll] = API.getAll();
   const [urlDelete, messageDelete] = API.delete();
@@ -26,7 +26,11 @@ export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonN
 
   const getAllRows = async () => {
     try {
-      const fetchAllProfesorLenda = await axios.get(urlGetAll);
+      const fetchAllProfesorLenda = await axios.get(urlGetAll, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
       setFormData(fetchAllProfesorLenda.data);
     } catch (error) {
       errorAlert(messageGetAll);
@@ -36,7 +40,11 @@ export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonN
 
   const deleteRow = async (id) => {
     try {
-      await axios.delete(urlDelete + `${id}`);
+      await axios.delete(urlDelete + `${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
       getAllRows();
     } catch (error) {
       errorAlert(messageDelete);
@@ -98,9 +106,9 @@ export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonN
 
                 <td className="px-4 py-3 font-medium whitespace-nowrap">
                   <div className="flex items-center space-x-4 justify-center">
-                    {buttonsAvailable.edit && <EditButton item={p} onLigjerataEdit={onLigjerataEdit} API={API} />}
+                    {buttonsAvailable.edit && <EditButton item={p} onLigjerataEdit={onLigjerataEdit} API={API} token={token} />}
                     {buttonsAvailable.preview && <PreviewButton />}
-                    {buttonsAvailable.delete && <DeleteButton id={p.id} onDelete={deleteRow} />}
+                    {buttonsAvailable.delete && <DeleteButton id={p.id} onDelete={deleteRow} token={token}/>}
                   </div>
                 </td>
               </tr>

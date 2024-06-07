@@ -9,7 +9,7 @@ import {
     deleteSemesterById
 } from '../APIRequests';
 
-function AltiniCrud() {
+function AltiniCrud({token}) {
     const rowsNames = [
         "Id",
         "Emri",
@@ -47,6 +47,7 @@ function AltiniCrud() {
             buttonsAvailable={buttonsAvailable}
             formDataJson={formDataJson}
             jsonName={jsonNames}
+            token={token}
         />
     );
 }

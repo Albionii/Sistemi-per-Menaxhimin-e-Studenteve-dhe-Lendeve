@@ -178,7 +178,7 @@ function loggedIn({ changeLoggedInState}) {
 
           <Route path="/userRole" element={<UserRole />} />
 
-          <Route path="/semestri" element={<AltiniCrud />} />
+          <Route path="/semestri" element={<AltiniCrud token={token} />} />
 
 
           <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />

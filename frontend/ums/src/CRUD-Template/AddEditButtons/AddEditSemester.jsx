@@ -241,6 +241,7 @@ export const SemesterEditButton = ({
   item,
   onLigjerataEdit,
   API,
+  token
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -261,7 +262,11 @@ export const SemesterEditButton = ({
 
   const getDepartamentet = async () => {
     try {
-      const response = await axios.get(urlGetDepartamentet);
+      const response = await axios.get(urlGetDepartamentet, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setDepartamentet(response.data);
     } catch (error) {
       API.errorAlert(departmentetError);
@@ -307,7 +312,11 @@ export const SemesterEditButton = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData, {
+        headers: {
+          Authorization:`Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
     } catch (error) {

@@ -15,9 +15,9 @@ import { SemesterEditButton } from "./AddEditButtons/AddEditSemester.jsx";
 import { studentetEditButton } from "./AddEditButtons/AddEditStudentet.jsx";
 import { userRoleEditButton } from "./AddEditButtons/AddEditUserRole.jsx";
 
-export default function EditDialog({setConfirmExit, item, onLigjerataEdit, API}){
+export default function EditDialog({setConfirmExit, item, onLigjerataEdit, API, token}){
   
-  let prompt = {setConfirmExit, item, onLigjerataEdit, API};
+  let prompt = {setConfirmExit, item, onLigjerataEdit, API, token};
   const whichEdit = () => {
     switch (API.update()[0]){
       case updateProvimiByID()[0] : 

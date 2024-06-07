@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import EditDialog from './EditDialog';
 
 
-export default function EditButton ({item, onLigjerataEdit, API}) {
+export default function EditButton ({item, onLigjerataEdit, API, token}) {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -45,7 +45,7 @@ export default function EditButton ({item, onLigjerataEdit, API}) {
       <Fragment>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogContent sx={{ padding: '0px' }}>
-          <EditDialog setConfirmExit = {handleClose} item = {item} onLigjerataEdit={onLigjerataEdit} API={API}/>
+          <EditDialog setConfirmExit = {handleClose} item = {item} onLigjerataEdit={onLigjerataEdit} API={API} token={token}/>
         </DialogContent>
       </Dialog>
     </Fragment>
