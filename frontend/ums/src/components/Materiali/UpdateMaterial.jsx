@@ -11,7 +11,6 @@ const UpdateMaterial = ({ onSubmit, onClose, initialData, materialId }) => {
   const [confirmation, setConfirmation] = useState(false);
   const [files, setFiles] = useState([]);
 
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -92,8 +91,8 @@ const UpdateMaterial = ({ onSubmit, onClose, initialData, materialId }) => {
             ))}
           </Box>
         )}
-        <Button variant="contained" component="label">
-          Upload File
+        <Button variant="contained" color="neutral" component="label">
+          <Typography color={"white"}>Upload File </Typography>{" "}
           <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>

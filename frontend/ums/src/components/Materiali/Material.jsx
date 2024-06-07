@@ -159,6 +159,9 @@ const Material = ({ material, deleteMaterial, updateMaterial, downloadFile, USER
         onClose={closeUpdate}
         aria-labelledby="edit-material-modal"
         aria-describedby="modal-to-edit-material"
+        BackdropProps={{
+          onClick: (event) => event.stopPropagation()
+        }}
       >
         <Box
           p={4}

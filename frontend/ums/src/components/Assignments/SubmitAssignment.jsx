@@ -85,8 +85,8 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
             ))}
           </Box>
         )}
-        <Button variant="contained" component="label">
-          Upload File
+        <Button variant="contained" color="neutral" component="label">
+          <Typography color={"white"}>Upload File </Typography>
           <input
             type="file"
             hidden
@@ -102,7 +102,7 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
           type="submit"
           sx={{ mr: 2 }}
         >
-          Update
+          Submit
         </Button>
         <Button variant="outlined" color="error" onClick={onClose}>
           Anulo

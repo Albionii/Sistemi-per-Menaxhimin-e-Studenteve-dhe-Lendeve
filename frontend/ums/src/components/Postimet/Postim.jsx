@@ -39,7 +39,7 @@ const Postim = ({
   USER_ROLE,
   token,
   isEnrolled,
-  professorId
+  professorId,
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -130,6 +130,7 @@ const Postim = ({
             <Box display={"flex"}>
               <Avatar
                 src={`http://localhost:8080/profile-pictures/${post.user.profile}`}
+                alt={post.user.firstName}
               ></Avatar>
               <Box ml={"15px"}>
                 <Typography variant="h5">
@@ -257,6 +258,7 @@ const Postim = ({
             >
               <Avatar
                 src={`http://localhost:8080/profile-pictures/${user.profile}`}
+                alt={user.firstName}
               />
               <Box
                 width={"95%"}
@@ -268,7 +270,13 @@ const Postim = ({
                   type="text"
                   name="teksti"
                   placeholder="Write something here"
-                  disabled={(isEnrolled || user.id === professorId || USER_ROLE === "ROLE_ADMIN") ? false : true}
+                  disabled={
+                    isEnrolled ||
+                    user.id === professorId ||
+                    USER_ROLE === "ROLE_ADMIN"
+                      ? false
+                      : true
+                  }
                   style={{
                     padding: "15px 30px",
                     width: "90%",
@@ -281,7 +289,9 @@ const Postim = ({
                   onChange={handleInputChange}
                 />
 
-                {isEnrolled && (
+                {(isEnrolled ||
+                  user.id === professorId ||
+                  USER_ROLE === "ROLE_ADMIN") && (
                   <IconButton type="submit">
                     <SendIcon />
                   </IconButton>
@@ -323,6 +333,9 @@ const Postim = ({
           onClose={closeUpdate}
           aria-labelledby="edit-post-modal"
           aria-describedby="modal-to-edit-post"
+          BackdropProps={{
+            onClick: (event) => event.stopPropagation(),
+          }}
         >
           <Box
             p={4}

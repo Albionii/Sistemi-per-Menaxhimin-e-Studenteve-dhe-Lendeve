@@ -1,6 +1,6 @@
 import React from "react";
 import Material from "./Material";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,useTheme } from "@mui/material";
 import Button from "@mui/material/Button";
 import useMateriali from "./useMateriali";
 import Modal from "@mui/material/Modal";
@@ -8,7 +8,12 @@ import { useState } from "react";
 import CreateMaterial from "./CreateMaterial";
 import CreatedNotifications from "../Notifications/CreatedNoftifications";
 import DeletedNotification from "../Notifications/DeletedNotification";
+import { tokens } from "../../theme";
+
 const Materiali = ({ ligjerataId, token, USER_ROLE, user, professorId }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const {
     materiali,
     createMaterial,
@@ -30,10 +35,13 @@ const Materiali = ({ ligjerataId, token, USER_ROLE, user, professorId }) => {
 
   return (
     <>
-
       <Box>
-      {showNotification && <CreatedNotifications message={"Material Created Successfully!"} />}
-      {deleteNotification && <DeletedNotification  message={"Material Deleted Succesfully!"}/>}
+        {showNotification && (
+          <CreatedNotifications message={"Material Created Successfully!"} />
+        )}
+        {deleteNotification && (
+          <DeletedNotification message={"Material Deleted Succesfully!"} />
+        )}
 
         {USER_ROLE !== "ROLE_STUDENT" && user.id === professorId && (
           <Box
@@ -73,8 +81,36 @@ const Materiali = ({ ligjerataId, token, USER_ROLE, user, professorId }) => {
             </>
           )}
         </Box>
-        <Modal open={create} onClose={closeCreate}>
-          <Box sx={style}>
+        <Modal
+          open={create}
+          onClose={closeCreate}
+          BackdropProps={{
+            onClick: (event) => event.stopPropagation(),
+          }}
+        >
+          <Box
+            p={4}
+            bgcolor={colors.primary[500]}
+            borderRadius={2}
+            boxShadow={24}
+            sx={{
+              width: "60vw",
+              position: "absolute",
+              transform: "translate(-50%, -50%)",
+              top: "50%",
+              left: "50%",
+              maxWidth: "800px",
+              maxHeight: "80%",
+              overflowY: "auto",
+              margin: "auto",
+              "@media (max-width: 960px)": {
+                width: "80vw",
+              },
+              "@media (max-width: 600px)": {
+                width: "90vw",
+              },
+            }}
+          >
             <CreateMaterial
               onSubmit={createMaterial}
               onClose={closeCreate}

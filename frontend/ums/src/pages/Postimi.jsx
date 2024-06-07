@@ -79,6 +79,8 @@ const Postimi = ({ token, user }) => {
     deletePostimi,
     getPostimetUser,
     toggleViewMyPosts,
+    deletePostNotification,
+    postNotificaiton,
   } = usePostimi(ligjerataId, token);
 
   const [open, setOpen] = useState(false);
@@ -182,8 +184,15 @@ const Postimi = ({ token, user }) => {
       {deleteNotification && (
         <DeletedNotification message={"Assignment Deleted Successfully!"} />
       )}
+      {postNotificaiton && (
+        <CreatedNoftifications message={"Post Created Successfully!"} />
+      )}
+      {deletePostNotification && (
+        <DeletedNotification message={"Post Deleted Successfully!"} />
+      )}
       <Box
-        m={4}
+        m={{ lg: 4 }}
+        mt={{ xs: 2 }}
         display="grid"
         gridTemplateColumns={{ xs: "1fr", sm: "repeat(12, 1fr)" }}
         gap={2}
@@ -247,6 +256,7 @@ const Postimi = ({ token, user }) => {
                   height: 50,
                   ":hover": { cursor: "pointer" },
                 }}
+                alt={user.firstName}
                 src={`http://localhost:8080/profile-pictures/${user.profile}`}
               />
               <Box
@@ -267,17 +277,24 @@ const Postimi = ({ token, user }) => {
                     borderRadius: "15px",
                     border: "2px solid " + colors.primary[400],
                   }}
-                  disabled={(location.state.isEnrolled || user.id === location.state.professorId || USER_ROLE=== "ROLE_ADMIN" ) ? false : true}
+                  disabled={
+                    location.state.isEnrolled ||
+                    user.id === location.state.professorId ||
+                    USER_ROLE === "ROLE_ADMIN"
+                      ? false
+                      : true
+                  }
                   onChange={handleInputChange}
                   name="mesazhi"
                   value={postimi.mesazhi}
                 />
-                {location.state.isEnrolled  && (
+                {(location.state.isEnrolled ||
+                  user.id === location.state.professorId ||
+                  USER_ROLE === "ROLE_ADMIN") && (
                   <IconButton variant="contained" type="submit">
                     <SendIcon />
                   </IconButton>
                 )}
-                {console.log(location.state.isEnrolled)}
               </Box>
             </Box>
           </Box>
@@ -338,7 +355,7 @@ const Postimi = ({ token, user }) => {
                 </Box>
 
                 {assignments.map((assignment) => (
-                  <Box key={assignment.id} color={'white'}>
+                  <Box key={assignment.id} color={"white"}>
                     <Box
                       onClick={() => {
                         setViewAssignment(assignment);
@@ -401,7 +418,7 @@ const Postimi = ({ token, user }) => {
                             flexDirection: "column",
                             justifyContent: "center",
                             alignItems: "center",
-                            color: colors.gray[200]
+                            color: colors.gray[200],
                           }}
                         >
                           <TaskIcon
@@ -410,28 +427,18 @@ const Postimi = ({ token, user }) => {
                               color: colors.blueAccent[500],
                             }}
                           />
-                          <Typography
-                            variant="h5"
-                            sx={{ mb: 2 }}
-                          >
+                          <Typography variant="h5" sx={{ mb: 2 }}>
                             {viewAssignment.titulli}
                           </Typography>
-                          <Typography
-                            variant="body1"
-                            sx={{ mb: 2 }}
-                          >
+                          <Typography variant="body1" sx={{ mb: 2 }}>
                             {viewAssignment.mesazhi}
                           </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{mb: 2 }}
-                          >
-                            Due date: {viewAssignment.expireAt}
+                          <Typography variant="body2" sx={{ mb: 2 }}>
+                            Due date:  {dayjs(viewAssignment.expireAt).format(
+                              "YYYY-MM-DD/HH:mm:ss"
+                            )}
                           </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{ mb: 2 }}
-                          >
+                          <Typography variant="body2" sx={{ mb: 2 }}>
                             Files:
                           </Typography>
                           {viewAssignment.fileNames.map((fileName, index) => (
@@ -517,6 +524,9 @@ const Postimi = ({ token, user }) => {
                           onClose={closeUpdate}
                           aria-labelledby="CreateAssignment"
                           aria-describedby="Assignment Creation"
+                          BackdropProps={{
+                            onClick: (event) => event.stopPropagation(),
+                          }}
                         >
                           <Box sx={style}>
                             <UpdateAssignment
@@ -567,7 +577,7 @@ const Postimi = ({ token, user }) => {
             gridColumn={{ xs: "span 12", sm: "span 12", md: "span 9" }}
             sx={{ height: "100%" }}
           >
-            {!materiali && postimet.length > 0 && (
+            {!materiali && (
               <IconButton
                 onClick={() => {
                   toggleViewMyPosts();
@@ -590,7 +600,7 @@ const Postimi = ({ token, user }) => {
                   <Postim
                     key={post.id}
                     post={post}
-                    user={userInfo}
+                    user={user}
                     updatePostimi={updatePostimi}
                     deletePostimi={deletePostimi}
                     USER_ROLE={USER_ROLE}
@@ -646,6 +656,9 @@ const Postimi = ({ token, user }) => {
           onClose={handleClose}
           aria-labelledby="CreateAssignment"
           aria-describedby="Assignment Creation"
+          BackdropProps={{
+            onClick: (event) => event.stopPropagation(),
+          }}
         >
           <Box sx={style}>
             <CreateAssignment

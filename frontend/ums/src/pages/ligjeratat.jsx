@@ -11,6 +11,8 @@ import { Button } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import CreatedNotifications from "../components/Notifications/CreatedNoftifications";
+import DeletedNotification from "../components/Notifications/DeletedNotification";
 
 const CourseCard = ({
   name,
@@ -172,6 +174,8 @@ const Ligjeratat = ({ token, user }) => {
   const { semestriId } = useParams();
   const [enrolledData, setEnrolledData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState(false);
+  const [unNotification, setUnNotification] = useState(false);
 
   const getLigjeratat = () => {
     axios
@@ -212,6 +216,11 @@ const Ligjeratat = ({ token, user }) => {
       })
       .then(() => {
         getEnroll();
+        setUnNotification(false);
+        setNotification(true);
+        setTimeout(() => {
+          setNotification(false);
+        }, 3000);
       })
       .catch((error) => {
         console.error("Error:" + error);
@@ -228,6 +237,11 @@ const Ligjeratat = ({ token, user }) => {
       .then(() => {
         getLigjeratat();
         getEnroll();
+        setNotification(false);
+        setUnNotification(true);
+        setTimeout(() => {
+          setUnNotification(false);
+        }, 3000);
       })
       .catch((error) => {
         console.error("Error:" + error);
@@ -245,6 +259,12 @@ const Ligjeratat = ({ token, user }) => {
 
   return (
     <>
+      {notification && (
+        <CreatedNotifications message={"Enrolled Successfully!"} />
+      )}
+      {unNotification && (
+        <DeletedNotification message={"UnEnrolled Successfully!"} />
+      )}
       <Box m={"40px"}>
         <div role="presentation">
           <Breadcrumbs

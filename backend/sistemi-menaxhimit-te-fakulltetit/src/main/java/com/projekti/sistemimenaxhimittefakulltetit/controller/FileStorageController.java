@@ -3,9 +3,12 @@ package com.projekti.sistemimenaxhimittefakulltetit.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Assignment;
+import com.projekti.sistemimenaxhimittefakulltetit.entities.AssignmentSubmission;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.repository.AssignmentSubmissionRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.UserRepository;
+import com.projekti.sistemimenaxhimittefakulltetit.service.AssignmentService;
 import com.projekti.sistemimenaxhimittefakulltetit.service.FileStorageService;
 
 import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
@@ -43,6 +46,9 @@ public class FileStorageController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AssignmentSubmissionRepository assignmentSubmissionRepository;
+
     @GetMapping("/{folderType}/{parentId}/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(
             @PathVariable String folderType,
@@ -66,6 +72,17 @@ public class FileStorageController {
     ) {
         String mother = "Assignments/" + assignmentId + "/Submissions";
 
+        Optional<AssignmentSubmission> submissionOpt = assignmentSubmissionRepository.findById(submissionId);
+
+        if (!submissionOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        AssignmentSubmission submission = submissionOpt.get();
+        Long submitterId = submission.getSubmiter().getId();
+        String submitterName = submission.getSubmiter().getFirstName();
+        String submitterSurname = submission.getSubmiter().getLastName();
+
         List<Resource> resources = fileStorageService.loadFilesAsResources(mother, submissionId);
 
         if (resources.isEmpty()) {
@@ -81,17 +98,21 @@ public class FileStorageController {
                 zos.closeEntry();
             }
         } catch (IOException e) {
-
+            // Handle exception
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+
+        String fileName = submitterId + "." + submitterName + submitterSurname + ".zip";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", "submissions.zip");
+        headers.setContentDispositionFormData("attachment", fileName);
 
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(baos.toByteArray());
     }
+
 
     @PostMapping("/profile/upload")
     public ResponseEntity<User> uploadFile(

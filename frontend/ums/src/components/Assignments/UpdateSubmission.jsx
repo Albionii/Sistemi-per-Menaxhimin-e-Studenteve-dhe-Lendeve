@@ -5,8 +5,6 @@ import ConfirmationModal from "./ConfirmationModal";
 import axios from "axios";
 import extractFileName from "../global/extractFileName";
 
-
-
 const UpdateSubmission = ({
   onSubmit,
   onClose,
@@ -75,11 +73,14 @@ const UpdateSubmission = ({
 
   const deleteSubmission = () => {
     axios
-      .delete(`http://localhost:8080/api/student/submit/delete/${Submission.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(
+        `http://localhost:8080/api/student/submit/delete/${Submission.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         console.log("Deleted");
         setHasSubmitted(false);
@@ -123,8 +124,8 @@ const UpdateSubmission = ({
             ))}
           </Box>
         )}
-        <Button variant="contained" component="label">
-          Upload File
+        <Button variant="contained" color="neutral" component="label">
+          <Typography color={"white"}>Upload File </Typography>{" "}
           <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>
@@ -136,7 +137,7 @@ const UpdateSubmission = ({
             type="submit"
             sx={{ mr: 2 }}
           >
-            Submit
+            Save
           </Button>
           <Button variant="outlined" color="error" onClick={onClose}>
             Anulo

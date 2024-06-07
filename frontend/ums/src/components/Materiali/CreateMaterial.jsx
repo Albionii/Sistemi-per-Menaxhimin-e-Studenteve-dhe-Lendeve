@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import { tokens } from "../../theme";
 
 const CreateMaterial = ({ onSubmit, onClose, initialData, ligjerataId }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [newAssignment, setNewAssignment] = useState(initialData);
   const [files, setFiles] = useState([]);
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -76,8 +79,8 @@ const CreateMaterial = ({ onSubmit, onClose, initialData, ligjerataId }) => {
             ))}
           </Box>
         )}
-        <Button variant="contained" component="label">
-          Upload File
+        <Button variant="contained" color="neutral" component="label">
+          <Typography color={"white"}>Upload File </Typography>{" "}
           <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>
@@ -88,10 +91,10 @@ const CreateMaterial = ({ onSubmit, onClose, initialData, ligjerataId }) => {
           type="submit"
           sx={{ mr: 2 }}
         >
-          Krijo
+          Create
         </Button>
         <Button variant="outlined" color="error" onClick={onClose}>
-          Anulo
+          Cancel
         </Button>
       </Box>
     </Box>

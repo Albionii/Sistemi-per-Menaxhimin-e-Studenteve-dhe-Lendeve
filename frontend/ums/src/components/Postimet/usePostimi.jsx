@@ -6,6 +6,8 @@ const usePostimi = (ligjerataId, token) => {
   const [postimet, setPostimet] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
   const [viewMyPosts, setViewMyPosts] = useState(true);
+  const [postNotificaiton, setPostNotification] = useState(false);
+  const [deletePostNotification, setDeletePostNotification] = useState(false);
 
   const getPostimet = () => {
     axios
@@ -35,6 +37,10 @@ const usePostimi = (ligjerataId, token) => {
         } else {
           getPostimetUser();
         }
+        setPostNotification(true);
+        setTimeout(() => {
+          setPostNotification(false);
+        }, 3000);
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -77,6 +83,14 @@ const usePostimi = (ligjerataId, token) => {
         } else {
           getPostimetUser();
         }
+
+        setDeletePostNotification(true);
+        setTimeout(() => {
+          setDeletePostNotification(false);
+        }, 3000);
+        if (callback) {
+          callback();
+        }
       })
       .catch((error) => {
         console.log("Error: " + error);
@@ -113,7 +127,6 @@ const usePostimi = (ligjerataId, token) => {
       });
   };
 
-  
   const getEnroll = () => {
     axios
       .get(`http://localhost:8080/api/student/get/enrollments/${semestriId}`, {
@@ -151,6 +164,8 @@ const usePostimi = (ligjerataId, token) => {
     deletePostimi,
     getPostimetUser,
     toggleViewMyPosts,
+    deletePostNotification,
+    postNotificaiton
   };
 };
 

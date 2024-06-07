@@ -56,7 +56,7 @@ const Komenti = ({ koment, user, deleteKomenti, updateKomenti, isEnrolled }) => 
       }}
     >
       <Avatar
-        alt={`${koment.userID.id} ${koment.userID.lastName}`}
+        alt={koment.userID.firstName}
         src={`http://localhost:8080/profile-pictures/${koment.userID.profile}`}
       />
       <Box flex="1">
@@ -133,6 +133,9 @@ const Komenti = ({ koment, user, deleteKomenti, updateKomenti, isEnrolled }) => 
         onClose={closeUpdate}
         aria-labelledby="edit-post-modal"
         aria-describedby="modal-to-edit-post"
+        BackdropProps={{
+          onClick: (event) => event.stopPropagation()
+        }}
       >
         <Box
           p={4}

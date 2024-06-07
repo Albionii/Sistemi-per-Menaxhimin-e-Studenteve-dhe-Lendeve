@@ -33,7 +33,7 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
     }
     onSubmit(newAssignment, formData, ligjerataId);
     onClose();
-    setNewAssignment(initialData); 
+    setNewAssignment(initialData);
   };
 
   const getCurrentDateTime = () => {
@@ -82,7 +82,6 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
         }}
         value={newAssignment.expireAt}
         onChange={handleInputChange}
-        
         inputProps={{
           min: getCurrentDateTime(),
         }}
@@ -98,8 +97,8 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
             ))}
           </Box>
         )}
-        <Button variant="contained" component="label">
-          Upload File
+        <Button variant="contained" color="neutral" component="label">
+          <Typography color={"white"}>Upload File </Typography>{" "}
           <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>
@@ -110,10 +109,10 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
           type="submit"
           sx={{ mr: 2 }}
         >
-          Krijo
+          Create
         </Button>
         <Button variant="outlined" color="error" onClick={onClose}>
-          Anulo
+          cancel
         </Button>
       </Box>
     </Box>

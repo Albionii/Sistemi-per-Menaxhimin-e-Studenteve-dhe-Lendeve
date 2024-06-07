@@ -63,19 +63,21 @@ export default function ViewSubmissions({
     }
   }, [open, assignment.id, token]);
 
-  const downloadSubmission = (submissionId) => {
+  const downloadSubmission = (submissionId, submiterName) => {
     axios
       .get(`http://localhost:8080/api/storage/${assignment.id}/${submissionId}`, {
         responseType: "blob",
       })
       .then((response) => {
+  
         const blob = new Blob([response.data], {
           type: "application/zip",
         });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", "submissions.zip");
+        const fileName = submissionId + "_" + submiterName + ".zip";
+        link.setAttribute("download", fileName);
         document.body.appendChild(link);
         link.click();
         window.URL.revokeObjectURL(url);
@@ -85,7 +87,7 @@ export default function ViewSubmissions({
         console.error("Error downloading submission:", error);
       });
   };
-
+  
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
     {
@@ -117,7 +119,7 @@ export default function ViewSubmissions({
       renderCell: (params) => {
         return (
           <a
-            onClick={() => downloadSubmission(params.row.id)}
+            onClick={() => downloadSubmission(params.row.id, params.row.submiter.firstName+ params.row.submiter.lastName)}
             style={{ textDecoration: "none", cursor: "pointer" }}
             onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.target.style.textDecoration = "none")}

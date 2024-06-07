@@ -123,8 +123,8 @@ const UpdateAssignment = ({
             ))}
           </Box>
         )}
-        <Button variant="contained" component="label">
-          Upload File
+        <Button variant="contained" color="neutral" component="label">
+          <Typography color={"white"}>Upload File </Typography>{" "}
           <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>
@@ -135,7 +135,7 @@ const UpdateAssignment = ({
           type="submit"
           sx={{ mr: 2 }}
         >
-          Update
+          Save
         </Button>
         <Button variant="outlined" color="error" onClick={onClose}>
           Anulo

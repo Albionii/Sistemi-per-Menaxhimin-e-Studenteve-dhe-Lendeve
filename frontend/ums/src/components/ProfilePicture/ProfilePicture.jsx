@@ -104,6 +104,10 @@ const ProfilePicture = ({
     }
   };
 
+  useEffect(() => {
+    checkProfilePicture();
+  }, [token])
+
 
   const handleSave = async () => {
     const blob = await fetch(preview).then((res) => res.blob());
@@ -145,7 +149,7 @@ const ProfilePicture = ({
       }}
     >
       <Avatari
-        alt="profile-user"
+        alt={user.firstName}
         src={`http://localhost:8080/profile-pictures/${
           user.profile
         }?${new Date().getTime()}`}
