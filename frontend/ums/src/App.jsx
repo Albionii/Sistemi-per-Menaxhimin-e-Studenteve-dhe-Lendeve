@@ -14,7 +14,6 @@ import LoggedIn from "./components/loggedIn.jsx";
 import { getTokenBeggining } from "./GetToken.js";
 
 import { OrbitProgress } from "react-loading-indicators";
-
 import axios from "axios";
 
 
@@ -40,8 +39,7 @@ function App() {
   // axios.interceptors.response.use(undefined, err => {
   //   let res = err.response;
   //   if ((res.status == 403 || res.status == 500) && res.config && !res.config.__isRetryRequest) {
-  //     console.log("ERROR");
-  //     alert("ERROR");
+  //     alert("Token Error you must log in again");
   //   }});
   if (loading) {
     return (

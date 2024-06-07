@@ -36,7 +36,7 @@ export const isTokenValid = async (token,{setLoggedIn}) => {
         },
       })
       .then((response) => {
-        console.log(response.status + " JWT STATUS JWT STATUS");
+        // console.log(response.status + " JWT STATUS JWT STATUS");
         setLoggedIn(true);
       })
       .catch((error) => {
@@ -63,7 +63,7 @@ export const getFromRefreshToken = async () => {
     document.cookie = `Token=${encodeURIComponent(jwt.jwt)}; expires=${expirationTime.toUTCString()}`;
     return jwt.jwt;
   } catch (error) {
-    console.log("ERROR KA ERROR KA ERROR KA" + error);
+    // console.log("ERROR KA ERROR KA ERROR KA" + error);
     return null;
   }
 }

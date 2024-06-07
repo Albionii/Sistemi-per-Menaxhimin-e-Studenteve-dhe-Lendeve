@@ -44,7 +44,7 @@ public class DepartamentiController {
 //        d.setFakulteti(fakultetiService.findFakultetiById(fkId).get());
 //        d.setUser(userService.findUserById(dekId));
 //        departamentiService.createDepartamenti(d);
-//    }
+//    } 
 
 
     @PutMapping("/update/{id}")
