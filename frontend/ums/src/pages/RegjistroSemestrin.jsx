@@ -7,9 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TableSemestrat from "../components/TableSemestrat";
 import axios from "axios";
-
 import CreatedNotifications from "../components/Notifications/CreatedNoftifications";
-
 
 const RegjistroSemestrin = ({ token }) => {
   const [lokacioni, setLokacioni] = useState("");
@@ -21,8 +19,6 @@ const RegjistroSemestrin = ({ token }) => {
   const [afati, setAfati] = useState("");
   const [notification, setNotification] = useState(""); 
   const [exists, setExisting] = useState([]);
-
-
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -118,23 +114,23 @@ const RegjistroSemestrin = ({ token }) => {
   };
 
   return (
-    <Box m={{ xs: 2, sm: 3, md: 4 }}>
-      <Grid container>
-        <Grid item xs={12} md={4} >
+    <Box sx={{ m: { xs: 1, sm: 3, md: 4 } }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
           <Box
             bgcolor={colors.primary[600]}
             p={{ xs: 2, sm: 3, md: 4 }}
             height={"100%"}
+            display={"flex"}
             alignItems={"center"}
             justifyContent={"center"}
-            display={"flex"}
-            flexDirection={"row"}
+            flexDirection={"column"}
           > 
             <Box>
               <Typography
-                mb={{ xs: 12, sm: 6, md: 5 }}
-                mt={{ xs: 12, md: 0, sm: 6 }}
-                variant="h4"
+                mb={{ xs: 2, sm: 3, md: 4 }}
+                mt={{ xs: 2, md: 0, sm: 3 }}
+                variant={"h4"}
                 textAlign={"center"}
               >
                 Afati per regjistrimin e grupit eshte i hapur me datat:{" "}
@@ -142,7 +138,7 @@ const RegjistroSemestrin = ({ token }) => {
               {afati.length > 0 ? (
                 <Box
                   p={2}
-                  mb={5}
+                  mb={2}
                   bgcolor={colors.greenAccent[500]}
                   borderRadius={3}
                   textAlign={"center"}
@@ -151,40 +147,45 @@ const RegjistroSemestrin = ({ token }) => {
                 >
                   {afati[0].dataFillimit} - {afati[0].dataMbarimit}
                 </Box>
-              ): (<Box
-                p={2}
-                mb={5}
-                bgcolor={colors.redAccent[500]}
-                borderRadius={3}
-                textAlign={"center"}
-                fontSize={"17px"}
-                color={"white"}
-              >
-                Nuk ka afat te hapur 
-              </Box>)}
-              {exists.length > 0 && (<Box
-                    mt={2}
-                    py={4}
-                    px={2}
-                    bgcolor={colors.greenAccent[600]}
-                    textAlign={"center"}
-                    fontSize={"16px"}
-                    borderRadius={3}
-                    color={"white"}
-                  >
-                    Semestri është regjistruar me sukses!
-                  </Box>)}
+              ) : (
+                <Box
+                  p={2}
+                  mb={2}
+                  bgcolor={colors.redAccent[500]}
+                  borderRadius={3}
+                  textAlign={"center"}
+                  fontSize={"17px"}
+                  color={"white"}
+                >
+                  Nuk ka afat te hapur 
+                </Box>
+              )}
+              {exists.length > 0 && (
+                <Box
+                  mt={2}
+                  py={2}
+                  px={2}
+                  bgcolor={colors.greenAccent[600]}
+                  textAlign={"center"}
+                  fontSize={"16px"}
+                  borderRadius={3}
+                  color={"white"}
+                >
+                  Semestri është regjistruar me sukses!
+                </Box>
+              )}
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} sx={8}>
           <Box
             bgcolor={colors.primary[400]}
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
+            p={2}
           >
-            <Box width={{ md: "50%", sm: "65%", sx: "75%" }}>
+            <Box width={{ md: "50%", sm: "65%", xs: "75%" }}>
               <Box
                 p={2}
                 textAlign={"center"}
@@ -274,80 +275,80 @@ const RegjistroSemestrin = ({ token }) => {
                     <MenuItem
                       value="Pasdite"
                       sx={{ background: colors.primary[500] }}
-                    >
-                      Pasdite
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box width={"100%"} mt={5} mb={4}>
-                <Box
-                  bgcolor={colors.blueAccent[500]}
-                  p={2}
-                  textAlign={"center"}
-                  mt={5}
-                  fontSize={"16px"}
-                  borderRadius={3}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: colors.blueAccent[600],
-                    },
-                  }}
-                  onClick={handleSubmit}
-                  color={"white"}
-                >
-                  Ruaj Ndryshimet
+                      >
+                        Pasdite
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
                 </Box>
-              </Box>
-              {exists.length > 0 && (
-                <>
+                <Box width={"100%"} mt={5} mb={4}>
+                  <Box
+                    bgcolor={colors.blueAccent[500]}
+                    p={2}
+                    textAlign={"center"}
+                    mt={5}
+                    fontSize={"16px"}
+                    borderRadius={3}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: colors.blueAccent[600],
+                      },
+                      cursor: "pointer",
+                    }}
+                    onClick={handleSubmit}
+                    color={"white"}
+                  >
+                    Ruaj Ndryshimet
+                  </Box>
+                </Box>
+                {exists.length > 0 && (
                   <Box width={"100%"} mt={5} mb={4}>
-                <Box
-                  bgcolor={colors.redAccent[500]}
-                  p={2}
-                  textAlign={"center"}
-                  mt={5}
-                  fontSize={"16px"}
-                  borderRadius={3}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: colors.redAccent[600],
-                    },
-                    cursor: "pointer",
-                  }}
-                  onClick={handleUnregister}
-                  color={"white"}
-                >
-                  C'regjistro semestrin
-                </Box>
+                    <Box
+                      bgcolor={colors.redAccent[500]}
+                      p={2}
+                      textAlign={"center"}
+                      mt={5}
+                      fontSize={"16px"}
+                      borderRadius={3}
+                      sx={{
+                        "&:hover": {
+                          backgroundColor: colors.redAccent[600],
+                        },
+                        cursor: "pointer",
+                      }}
+                      onClick={handleUnregister}
+                      color={"white"}
+                    >
+                      C'regjistro semestrin
+                    </Box>
+                  </Box>
+                )}
+                {notification && (
+                  <CreatedNotifications message={notification} />
+                )}
               </Box>
-                </>
-              )}
-              {notification && ( 
-                <CreatedNotifications message={notification} />
-              )}
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container mt={8}>
-        <Grid item xs={12} md={12}>
-          <Box
-            p={2}
-            textAlign={"center"}
-            fontSize={"20px"}
-            bgcolor={colors.primary[400]}
-            borderRadius={3}
-          >
-            <Box p={2} borderBottom={"1px solid " + colors.gray[600]}>
-              Lista e regjistrimeve të semestrave
+        <Grid container mt={8} spacing={2}>
+          <Grid item xs={12}>
+            <Box
+              p={2}
+              textAlign={"center"}
+              fontSize={"20px"}
+              bgcolor={colors.primary[400]}
+              borderRadius={3}
+            >
+              <Box p={2} borderBottom={`1px solid ${colors.gray[600]}`}>
+                Lista e regjistrimeve të semestrave
+              </Box>
+              <TableSemestrat token={token} />
             </Box>
-            <TableSemestrat token={token} />
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
-  );
-};
-
-export default RegjistroSemestrin;
+      </Box>
+    );
+  };
+  
+  export default RegjistroSemestrin;
+  

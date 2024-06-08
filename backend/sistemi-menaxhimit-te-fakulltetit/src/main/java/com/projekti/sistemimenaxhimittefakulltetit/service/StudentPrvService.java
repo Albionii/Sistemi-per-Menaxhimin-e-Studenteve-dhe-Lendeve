@@ -83,7 +83,9 @@ public class StudentPrvService {
         List<StudentProvimi> studentProvimiList = studentPrvRepository.findAllByStudentId(student.getId());
         int ects = 0;
         for (StudentProvimi studentProvimi : studentProvimiList){
-            ects += studentProvimi.getProvimi().getLigjerata().getLenda().getEcts();
+            if(studentProvimi.getNota() > 5){
+                ects += studentProvimi.getProvimi().getLigjerata().getLenda().getEcts();
+            }
         }
 
         return ects;
@@ -200,7 +202,9 @@ public class StudentPrvService {
         double shuma = 0;
 
         for (Double nota : notat) {
-            shuma += nota;
+            if(nota > 5){
+                shuma += nota;
+            }
         }
 
         mesatarja = (shuma / notat.size());
