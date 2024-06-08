@@ -9,7 +9,7 @@ import {
     deleteAfatiByID
 } from '../APIRequests'
 
-function AfatiCrud() {
+function AfatiCrud({token}) {
     const rowsNames = [
         "Id",
         "Emri",
@@ -44,6 +44,7 @@ function AfatiCrud() {
                 buttonsAvailable={buttonsAvailable}
                 formDataJson={formDataJson}
                 jsonName={jsonNames}
+                token={token}
             />
         </>
     )

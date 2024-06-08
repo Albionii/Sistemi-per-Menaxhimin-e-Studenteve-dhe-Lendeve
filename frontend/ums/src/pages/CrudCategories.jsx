@@ -150,8 +150,8 @@ const CrudCategories = ({roli}) => {
         )}
         {renderCategory(
           "Administrator",
-          ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet","Departamenti","Fakulteti","UserRoles", "Semestri", "Grupi", "Orari", "Lajmi", "OrariLigjerata"],
-          ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole", "/semestri", "/grupi", "/orari", "/lajmi", "/orariLigjerata"],
+          ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet","Departamenti","Fakulteti","UserRoles", "Semestri", "Grupi", "Orari", "Lajmi", "OrariLigjerata", "Afati"],
+          ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole", "/semestri", "/grupi", "/orari", "/lajmi", "/orariLigjerata", "/afati"],
           "#004F95",
           "#00396b",
           SupervisorAccountIcon

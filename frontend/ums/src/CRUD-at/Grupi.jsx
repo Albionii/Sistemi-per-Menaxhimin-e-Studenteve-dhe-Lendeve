@@ -8,7 +8,7 @@ import {
   updateGrupiById,
   deleteGrupiById
 } from '../APIRequests'
-function Lenda() {
+function Lenda({token}) {
   const rowsNames = [
     "Id",
     "Emri",
@@ -46,6 +46,7 @@ function Lenda() {
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

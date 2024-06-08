@@ -21,9 +21,7 @@ public class ProfessorController {
 
     private final VleresimiService vleresimiService;
     private final ProvimiService provimiService;
-    private final StudentService studentService;
     private final UserService userService;
-    private final LendaService lendaService;
     private final ProfessorService professorService;
     private final StudentPrvService studentPrvService;
     private final ProfesoriLendaService profesoriLendaService;

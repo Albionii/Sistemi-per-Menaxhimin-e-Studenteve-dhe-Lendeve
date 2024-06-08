@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import AddButton from './AddButton';
 import SearchBar from './SearchBar';
 
-export default function TopTable({renderBot, formDataJson,isAddAvailable, API}){
+export default function TopTable({renderBot, formDataJson,isAddAvailable, API, token}){
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,7 +49,7 @@ export default function TopTable({renderBot, formDataJson,isAddAvailable, API}){
           <Fragment>
           <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
             <DialogContent sx={{ padding: '0px' }}>
-              <AddButton setConfirmExit = {handleClose} renderBot={renderBot} formDataJson={formDataJson} API={API}/>
+              <AddButton setConfirmExit = {handleClose} renderBot={renderBot} formDataJson={formDataJson} API={API} token={token}/>
             </DialogContent>
           </Dialog>
         </Fragment>

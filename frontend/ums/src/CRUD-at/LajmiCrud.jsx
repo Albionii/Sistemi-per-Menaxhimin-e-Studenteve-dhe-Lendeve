@@ -8,7 +8,7 @@ import {
   updateLajmiById,
   deleteLajmiById
 } from '../APIRequests'
-function Lajmi() {
+function Lajmi({token}) {
   const rowsNames = [
     "Id",
     "Mesazhi",
@@ -44,6 +44,7 @@ function Lajmi() {
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

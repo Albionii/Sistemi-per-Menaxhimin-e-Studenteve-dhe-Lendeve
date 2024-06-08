@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -26,12 +27,154 @@ public class AdminController {
     private final ProfesoriLendaService profesoriLendaService;
     private final SemesterService semesterService;
     private final LendaSemesterService lendaSemesterService;
+    private final AfatiService afatiService;
+    private final OrariLigjerataService orariLigjerataService;
+    private final LajmiService lajmiService;
+    private final OrariService orariService;
+    private final GrupiService grupiService;
+
 
     @DeleteMapping("/{id}")
     public void deleteUserById(
             @RequestHeader("Authorization") String jwt,
             @PathVariable Long id){
         userService.deleteUserById(id);
+    }
+
+    //Afati
+    @PostMapping("/api/afati")
+    public ResponseEntity<Afati> createAfati(@RequestBody Afati afati) {
+        Afati createdAfati = afatiService.createAfati(afati);
+        return ResponseEntity.ok(createdAfati);
+    }
+
+    @GetMapping("/api/afati/{id}")
+    public ResponseEntity<Afati> getAfatiById(@PathVariable Long id) {
+        Optional<Afati> afati = afatiService.getAfatiById(id);
+        return afati.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/api/afati")
+    public ResponseEntity<List<Afati>> getAllAfati() {
+        List<Afati> afatiList = afatiService.getAllAfati();
+        return ResponseEntity.ok(afatiList);
+    }
+
+    @PutMapping("/api/afati/{id}")
+    public ResponseEntity<Afati> updateAfati(@PathVariable Long id, @RequestBody Afati afati) {
+        Afati updatedAfati = afatiService.updateAfati(id, afati);
+        return ResponseEntity.ok(updatedAfati);
+    }
+
+    @DeleteMapping("/api/afati/{id}")
+    public ResponseEntity<Void> deleteAfati(@PathVariable Long id) {
+        afatiService.deleteAfati(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    //OrariLigjerata
+    @GetMapping("/orariLigjerata/getById/{id}")
+    public Optional<OrariLigjerata> findById(@PathVariable Long id){
+        return orariLigjerataService.findById(id);
+    }
+
+    @PostMapping("/orariLigjerata/create")
+    public OrariLigjerata create(@RequestBody OrariLigjerata orariLigjerata) throws Exception {
+        return orariLigjerataService.create(orariLigjerata);
+    }
+
+    @PutMapping("/orariLigjerata/update/{id}")
+    public OrariLigjerata update(@PathVariable Long id, @RequestBody OrariLigjerata orariLigjerata) throws Exception {
+        return orariLigjerataService.updateById(id, orariLigjerata);
+    }
+
+    @GetMapping("/orariLigjerata/get")
+    public List<OrariLigjerata> getAll(){
+        return orariLigjerataService.findAll();
+    }
+
+    @DeleteMapping("/orariLigjerata/delete/{id}")
+    public void deleteById(@PathVariable Long id){
+        orariLigjerataService.deleteById(id);
+    }
+
+    //Lajmi
+    @GetMapping("/lajmet/get")
+    public List<Lajmi> getAllLajmet(){
+        return lajmiService.getAllLajmet();
+    }
+
+    @GetMapping("/lajmet/getById/{id}")
+    public Optional<Lajmi> getById(@PathVariable Long id){
+        return lajmiService.getLajmiById(id);
+    }
+
+    @PostMapping("/lajmet/create")
+    public Lajmi createLajmi(@RequestBody Lajmi lajmi) throws Exception {
+        return lajmiService.createLajmi(lajmi);
+    }
+
+    @PutMapping("/lajmet/update/{id}")
+    public Lajmi updateLajmi(@RequestBody Lajmi lajmi, @PathVariable Long id) throws Exception {
+        return lajmiService.updateLajmiById(id, lajmi);
+    }
+
+    @DeleteMapping("/lajmet/delete/{id}")
+    public void deleteLajmi(@PathVariable Long id){
+        lajmiService.deleteLajmiById(id);
+    }
+
+
+    //Orari
+    @GetMapping("/orari/{id}")
+    public Optional<Orari> findOrariById(@PathVariable Long id){
+        return orariService.findOrariById(id);
+    }
+
+    @GetMapping("/orari/get")
+    public List<Orari> allOraret(){
+        return orariService.getAllOraret();
+    }
+
+    @DeleteMapping("/orari/delete/{id}")
+    public void deleteOrari(@PathVariable Long id){
+        orariService.deleteOrari(id);
+    }
+
+    @PostMapping("/orari/create")
+    public Orari createOrari(@RequestBody Orari orari) throws Exception {
+        return orariService.createOrari(orari);
+    }
+
+    @PutMapping("/orari/update/{id}")
+    public Orari updateOrari(@PathVariable Long id, @RequestBody Orari orari){
+        return orariService.updateOrari(id, orari);
+    }
+
+    //Grupi
+    @GetMapping("/grupi/{id}")
+    public Grupi getGrupiById(@PathVariable Long id){
+        return grupiService.getGrupiById(id);
+    }
+
+    @GetMapping("/grupi/get")
+    public List<Grupi> getGrupet(){
+        return grupiService.getAllGrupet();
+    }
+
+    @PutMapping("/grupi/update/{id}")
+    public Grupi updateGrupi(@PathVariable Long id, @RequestBody Grupi newGrupi){
+        return grupiService.updateGrupiById(id, newGrupi);
+    }
+
+    @DeleteMapping("/grupi/delete/{id}")
+    public void deleteGrupiById(@PathVariable Long id){
+        grupiService.deleteGrupiById(id);
+    }
+
+    @PostMapping("/grupi/create")
+    public Grupi createGrupi(@RequestBody Grupi grupi) throws Exception {
+        return grupiService.createGrupi(grupi);
     }
 
     @PutMapping("/role/{id}")

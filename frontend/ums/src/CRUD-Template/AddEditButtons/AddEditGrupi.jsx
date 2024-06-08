@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 import { getAllSemester } from '../../APIRequests';
-export const GrupiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const GrupiAddButton = ({setConfirmExit, renderBot, formDataJson, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -25,7 +25,11 @@ export const GrupiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
 
   const getSemestrat = async () => {
     try {
-      const fetchSemestrat = await axios.get(urlSemester);
+      const fetchSemestrat = await axios.get(urlSemester, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setSemestrat(fetchSemestrat.data);
     } catch (error) {
       API.errorAlert(errorSemester);
@@ -64,7 +68,11 @@ export const GrupiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -181,7 +189,7 @@ export const GrupiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
     </>
   )
 }
-export const GrupiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const GrupiEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -215,7 +223,11 @@ export const GrupiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
 
   const getSemestrat = async () => {
     try {
-      const fetchSemestrat = await axios.get(urlSemester);
+      const fetchSemestrat = await axios.get(urlSemester, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setSemestrat(fetchSemestrat.data);
     } catch (error) {
       API.errorAlert(errorSemester);
@@ -242,7 +254,11 @@ export const GrupiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       

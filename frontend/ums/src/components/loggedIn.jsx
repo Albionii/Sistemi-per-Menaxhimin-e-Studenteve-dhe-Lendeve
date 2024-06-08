@@ -189,11 +189,11 @@ function loggedIn({ changeLoggedInState}) {
           <Route path="/refuzoNoten" element={<ProvimetNota />} />
           <Route path="/regjistroSemestrin" element={<RegjistroSemestrin token={token}/>} />
           <Route path="/regjistroGrupin" element={<RegjistroGrupin token={token}/>} />
-          <Route path="/grupi" element={<Grupi />} />
-          <Route path="/orari" element={<Orari />} />
-          <Route path="/lajmi" element={<Lajmi />} />
-          <Route path="/orariLigjerata" element={<OrariLigjerata />} />
-          <Route path="/afati" element={<AfatiCrud />} />
+          <Route path="/grupi" element={<Grupi token={token}/>} />
+          <Route path="/orari" element={<Orari token={token}/>} />
+          <Route path="/lajmi" element={<Lajmi token={token}/>} />
+          <Route path="/orariLigjerata" element={<OrariLigjerata token={token}/>} />
+          <Route path="/afati" element={<AfatiCrud token={token}/>} />
 
 
             <Route path="/enrolled" element={<EnrolledLigjerata token={token} />} />

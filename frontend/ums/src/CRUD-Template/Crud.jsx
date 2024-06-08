@@ -23,7 +23,7 @@ export default function Crud({rows, createAPI,getAllAPI, getByIDAPI, updateAPI,d
 
   return(
     <>
-      <TopTable renderBot={renderBot} formDataJson={formDataJson} isAddAvailable={buttonsAvailable.add} API={API}/>
+      <TopTable renderBot={renderBot} formDataJson={formDataJson} isAddAvailable={buttonsAvailable.add} API={API} token={token}/>
       <BottomTable 
         theKey={num} 
         rows={rows} 

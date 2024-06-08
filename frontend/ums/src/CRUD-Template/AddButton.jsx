@@ -12,8 +12,8 @@ import { LajmiAddButton } from "./AddEditButtons/AddEditLajmi";
 import { OrariLigjerataAddButton } from "./AddEditButtons/AddEditOrariLigjerata";
 import { AfatiAddButton } from "./AddEditButtons/AddEditAfati";
 
-export default function AddButton ({setConfirmExit, renderBot, formDataJson, API}) {
-  let prompt = {setConfirmExit, renderBot, formDataJson, API};
+export default function AddButton ({setConfirmExit, renderBot, formDataJson, API, token}) {
+  let prompt = {setConfirmExit, renderBot, formDataJson, API, token};
 
   const whichAdd = () => {
     switch (API.create()[0]){

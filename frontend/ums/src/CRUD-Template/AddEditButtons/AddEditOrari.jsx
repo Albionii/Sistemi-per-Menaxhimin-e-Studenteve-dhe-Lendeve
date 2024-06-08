@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 import { getAllGrupet } from '../../APIRequests';
-export const OrariAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const OrariAddButton = ({setConfirmExit, renderBot, formDataJson, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -24,7 +24,11 @@ export const OrariAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
 
   const getGrupet = async () => {
     try {
-      const fetchGrupet = await axios.get(urlGrupi);
+      const fetchGrupet = await axios.get(urlGrupi, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setGrupet(fetchGrupet.data);
     } catch (error) {
       API.errorAlert(errorGrupi);
@@ -55,7 +59,11 @@ export const OrariAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -156,7 +164,7 @@ export const OrariAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
     </>
   )
 }
-export const OrariEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const OrariEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -176,7 +184,11 @@ export const OrariEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
 
   const getGrupet = async () => {
     try {
-      const fetchGrupet = await axios.get(urlGrupi);
+      const fetchGrupet = await axios.get(urlGrupi, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setGrupet(fetchGrupet.data);
     } catch (error) {
       API.errorAlert(errorGrupi);
@@ -207,7 +219,11 @@ export const OrariEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       

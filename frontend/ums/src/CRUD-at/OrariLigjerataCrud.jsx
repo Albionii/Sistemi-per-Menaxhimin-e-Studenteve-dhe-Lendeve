@@ -8,7 +8,7 @@ import {
   updateOrariLigjerataById,
   deleteOrariLigjerataById
 } from '../APIRequests'
-function OrariLigjerata() {
+function OrariLigjerata({token}) {
   const rowsNames = [
     "Id",
     "Orari",
@@ -66,6 +66,7 @@ function OrariLigjerata() {
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

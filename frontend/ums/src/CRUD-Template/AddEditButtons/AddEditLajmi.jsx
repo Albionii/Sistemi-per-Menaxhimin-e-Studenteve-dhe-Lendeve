@@ -8,6 +8,7 @@ export const LajmiAddButton = ({
   renderBot,
   formDataJson,
   API,
+  token
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -27,7 +28,11 @@ export const LajmiAddButton = ({
 
   const getDepartmentet = async () => {
     try {
-      const fetchDepartmentet = await axios.get(urlDepartment);
+      const fetchDepartmentet = await axios.get(urlDepartment, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setDepartmentet(fetchDepartmentet.data);
     } catch (error) {
       API.errorAlert(errorDepartment);
@@ -60,7 +65,11 @@ export const LajmiAddButton = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -171,6 +180,7 @@ export const LajmiEditButton = ({
   item,
   onLigjerataEdit,
   API,
+  token
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -190,7 +200,11 @@ export const LajmiEditButton = ({
 
   const getDepartmentet = async () => {
     try {
-      const fetchDepartmentet = await axios.get(urlDepartment);
+      const fetchDepartmentet = await axios.get(urlDepartment, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setDepartmentet(fetchDepartmentet.data);
     } catch (error) {
       API.errorAlert(errorDepartment);
@@ -221,7 +235,11 @@ export const LajmiEditButton = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
     } catch (error) {

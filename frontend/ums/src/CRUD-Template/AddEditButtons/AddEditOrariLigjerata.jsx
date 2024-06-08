@@ -15,6 +15,7 @@ export const OrariLigjerataAddButton = ({
   renderBot,
   formDataJson,
   API,
+  token
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -54,7 +55,11 @@ export const OrariLigjerataAddButton = ({
 
   const getLigjeratat = async () => {
     try {
-      const fetchLigjeratat = await axios.get(urlLigjerata);
+      const fetchLigjeratat = await axios.get(urlLigjerata, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setLigjeratat(fetchLigjeratat.data);
     } catch (error) {
       API.errorAlert(errorLigjerata);
@@ -64,7 +69,11 @@ export const OrariLigjerataAddButton = ({
 
   const getOraret = async () => {
     try {
-      const fetchOraret = await axios.get(urlOrari);
+      const fetchOraret = await axios.get(urlOrari, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       setOraret(fetchOraret.data);
     } catch (error) {
       API.errorAlert(errorOrari);
@@ -131,7 +140,11 @@ export const OrariLigjerataAddButton = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -307,6 +320,7 @@ export const OrariLigjerataEditButton = ({
   item,
   onLigjerataEdit,
   API,
+  token
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -347,7 +361,11 @@ export const OrariLigjerataEditButton = ({
 
   const getLigjeratat = async () => {
     try {
-      const fetchLigjeratat = await axios.get(urlLigjerata);
+      const fetchLigjeratat = await axios.get(urlLigjerata, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setLigjeratat(fetchLigjeratat.data);
     } catch (error) {
       API.errorAlert(errorLigjerata);
@@ -357,7 +375,11 @@ export const OrariLigjerataEditButton = ({
 
   const getOraret = async () => {
     try {
-      const fetchOraret = await axios.get(urlOrari);
+      const fetchOraret = await axios.get(urlOrari, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setOraret(fetchOraret.data);
     } catch (error) {
       API.errorAlert(errorOrari);
@@ -408,7 +430,11 @@ export const OrariLigjerataEditButton = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       setConfirmExit();
       onLigjerataEdit();
     } catch (error) {

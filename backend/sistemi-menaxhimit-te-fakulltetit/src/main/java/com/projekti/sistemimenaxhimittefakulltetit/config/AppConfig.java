@@ -23,7 +23,7 @@ public class AppConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
-//                        .requestMatchers("/api/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/admin/**").hasAnyRole("ADMIN")
 //                        .requestMatchers("/api/professor/**").hasAnyRole("PROFESSOR")
                         .requestMatchers("/api/student/**").hasAnyRole("STUDENT")
 //                        .requestMatchers("/api/**").authenticated()

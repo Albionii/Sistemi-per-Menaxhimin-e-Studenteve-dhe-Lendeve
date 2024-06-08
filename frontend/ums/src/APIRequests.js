@@ -1,6 +1,6 @@
   import Swal from 'sweetalert2'
 
-  const BASE_URL = `http://localhost:8080`;
+  const BASE_URL = `http://localhost:8080/api/admin`;
 
   //Studenti
 
@@ -277,23 +277,23 @@ export const updateFakultetiByID = () => {
 // Semester
 
 export const getAllSemester = () => {
-  const url = BASE_URL + `/api/admin/semesters`;
+  const url = BASE_URL + `/semesters`;
   return [url, "Gabim në marrjen e Semestrit!"];
 }
 export const deleteSemesterById = () => {
-  const url = BASE_URL + `/api/admin/semester/delete/`;
+  const url = BASE_URL + `/semester/delete/`;
     return [url, "Gabim në fshirjen e Semestrit!"];
 }
 export const createSemester = () => {
-  const url = BASE_URL + `/api/admin/semester/create`;
+  const url = BASE_URL + `/semester/create`;
   return [url, "Gabim në krijimin e Semestrit!"];
 }
 export const getSemesterById = () => {
-  const url = BASE_URL + `/api/admin/semester/get/`;
+  const url = BASE_URL + `/semester/get/`;
   return [url, "Gabim në marrjen e semestrit!"];
 }
 export const updateSemesterById = () => {
-  const url = BASE_URL + `/api/admin/semester/update/`;
+  const url = BASE_URL + `/semester/update/`;
   return [url, "Gabim në përditësimin e semestrit!"];
 }
 

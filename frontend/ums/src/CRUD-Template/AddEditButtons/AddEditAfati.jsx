@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
-import { getAllFakulteti } from '../../APIRequests';
-export const AfatiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const AfatiAddButton = ({setConfirmExit, renderBot, formDataJson, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -47,7 +46,11 @@ export const AfatiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
     e.preventDefault();
     try {
       console.log(JSON.stringify(formData))
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -164,12 +167,11 @@ export const AfatiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) =
     </>
   )
 }
-export const AfatiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const AfatiEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [urlUpdate, errorUpdate] = API.update();
-  const [urlGetFakultetet, fakultetetError] = getAllFakulteti();
   const [formData, setFormData] = useState(item);
 
   const [name, setEmri] = useState('');
@@ -203,19 +205,15 @@ export const AfatiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
       dataMbarimit : e.target.value
     });
   }
-
-  const handleLokacioni = (e) => {
-    setLokacioni(e.target.value);
-    setFormData({
-      ...formData,
-      lokacioni : e.target.value
-    });
-  }  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       
@@ -282,9 +280,8 @@ export const AfatiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) =>
                 Data Fillimit
               </label>
               <input 
-                type="text"
+                type="date"
                 className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                placeholder='Emaili'
                 value={dataFillimit =="" && formData != null ? formData.dataFillimit:dataFillimit}
                 onInput={handleDataFillimit}
                />

@@ -42,7 +42,7 @@ export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonN
     try {
       await axios.delete(urlDelete + `${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`
         }
       });
       getAllRows();
@@ -60,7 +60,7 @@ export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonN
       try {
         result = result[prop];
         if (result === undefined) {
-          return undefined; // Property not found
+          return undefined; 
         }
       }catch(error){
         console.log(error);
