@@ -9,7 +9,11 @@ export default function ProfessorLajmi({ token }) {
   useEffect(() => {
     const fetchLajmet = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/lajmet/get`)
+        const response = await axios.get(`http://localhost:8080/api/professor/lajmet/get`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
         console.log(response.data)
         setLajmet(response.data);
       } catch (error) {

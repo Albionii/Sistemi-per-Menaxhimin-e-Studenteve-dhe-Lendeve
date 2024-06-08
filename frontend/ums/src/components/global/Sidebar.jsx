@@ -292,7 +292,7 @@ const Sidebar = ({ user }) => {
                 handleCollapse={handleCollapse}
               />
             )}
-            <Item
+            {/* <Item
               title="Pie Chart"
               to="/pie"
               icon={<PieChartOutlineOutlinedIcon />}
@@ -315,7 +315,7 @@ const Sidebar = ({ user }) => {
               selected={selected}
               setSelected={setSelected}
               handleCollapse={handleCollapse}
-            />
+            /> */}
           </Box>
         </Menu>
       </ProSidebar>

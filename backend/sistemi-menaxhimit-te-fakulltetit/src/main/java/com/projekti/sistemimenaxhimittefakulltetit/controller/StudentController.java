@@ -35,6 +35,7 @@ public class StudentController {
     private final OrariLigjerataService orariLigjerataService;
     private final AssignmentService assignmentService;
     private final LajmiService lajmiService;
+    private final SemesterService semesterService;
 
     @PostMapping("/paraqit/{id}")
     public ResponseEntity<StudentProvimi> paraqitProvimin(@PathVariable Long id,
@@ -67,6 +68,12 @@ public class StudentController {
     @GetMapping("totalProvimet/{semesterId}")
     public Long getProvimetCbySemester(@RequestHeader("Authorization") String token, @PathVariable Long semesterId) throws Exception{
         return studentPrvService.countExamsByStudentAndSemester(token ,semesterId);
+    }
+
+    @GetMapping("/semesters2")
+    public ResponseEntity<List<Semester>> semesters() {
+        List<Semester> sm = semesterService.getSemesters();
+        return ResponseEntity.status(HttpStatus.OK).body(sm);
     }
 
     @GetMapping("/ects")

@@ -15,7 +15,11 @@ export default function Calendar({ token }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const assignmentFetch = await axios.get('http://localhost:8080/api/student/assignments');
+        const assignmentFetch = await axios.get('http://localhost:8080/api/student/assignments', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setAssignments(assignmentFetch.data);
   
         const provimetFetch = await axios.get('http://localhost:8080/api/student/provimetC', {

@@ -23,7 +23,11 @@ const RegjistroGrupin = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/grupi")
+      .get("http://localhost:8080/grupi", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then((response) => {
         console.log("Response data:", response.data);
         setGrupet(response.data);
@@ -79,7 +83,11 @@ const RegjistroGrupin = ({ token }) => {
     setGrupi(selectedGroupId);
 
     axios
-      .get(`http://localhost:8080/orariLigjerata/${selectedGroupId}`)
+      .get(`http://localhost:8080/orariLigjerata/${selectedGroupId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then((response) => {
         console.log("Response data:", response.data, selectedGroupId);
         setOrari(response.data);

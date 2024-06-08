@@ -15,7 +15,7 @@ const ProfesoriButtons = ({ token }) => {
   });
   const getStatistics = () => {
     axios
-      .get(`http://localhost:8080/professor/get/statistics`, {
+      .get(`http://localhost:8080/api/professor/get/statistics`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

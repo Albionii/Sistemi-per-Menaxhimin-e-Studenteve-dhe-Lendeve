@@ -17,6 +17,10 @@ public class LajmiController {
     public List<Lajmi> lajmetByDepartment(@RequestHeader("Authorization")String jwt) throws Exception {
         return lajmiService.findByDepartmentId(jwt);
     }
+    @GetMapping("/lajmet/get")
+    public List<Lajmi> getAllLajmet(){
+        return lajmiService.getAllLajmet();
+    }
 
 
 }

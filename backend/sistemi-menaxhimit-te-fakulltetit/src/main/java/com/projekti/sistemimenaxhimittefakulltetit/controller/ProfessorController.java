@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
-@RequestMapping("/professor")
+@RequestMapping("/api/professor")
 @RequiredArgsConstructor
 public class ProfessorController {
 
@@ -28,11 +28,24 @@ public class ProfessorController {
     private final StudentLigjerataService studentLigjerataService;
     private final OrariLigjerataService orariLigjerataService;
     private final AssignmentServiceImpl assignmentService;
+    private final LajmiService lajmiService;
 
     @PutMapping("/{id}")
     public Optional<Vleresimi> updateNota(@RequestBody Vleresimi updatedVleresimi,
                                           @PathVariable Long oldVleresimiId){
         return vleresimiService.updateNota(updatedVleresimi, oldVleresimiId);
+    }
+
+    @GetMapping("/lajmet/get")
+    public List<Lajmi> getAllLajmet(){
+        return lajmiService.getAllLajmet();
+    }
+
+    @GetMapping("/semestret/")
+    public List<Semester> findSemesters(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Professor professor = professorService.findProfessorByUserId(user.getId());
+        return profesoriLendaService.findSemesters(professor);
     }
 
     @GetMapping("/kalendari")

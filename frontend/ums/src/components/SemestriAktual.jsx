@@ -49,7 +49,7 @@ const SemestriAktual = ({token}) => {
   }, [semesterId, semesters]);
   const getSemesters = () => {
     axios
-      .get(`http://localhost:8080/professorLenda/professor/semestret/`, {
+      .get(`http://localhost:8080/api/professor/semestret/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -69,7 +69,11 @@ const SemestriAktual = ({token}) => {
 
   const getStudentsCount = (ligjerataId) => {
     axios
-      .get(`http://localhost:8080/professor/count/${ligjerataId}`)
+      .get(`http://localhost:8080/api/professor/count/${ligjerataId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then((response) => {
         setStudentCounts((prevCounts) => ({
           ...prevCounts,

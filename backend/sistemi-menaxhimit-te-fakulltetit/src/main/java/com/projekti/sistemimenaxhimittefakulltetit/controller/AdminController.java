@@ -22,9 +22,7 @@ import java.util.Set;
 public class AdminController {
 
     private final UserService userService;
-    private final ProfessorService professorService;
     private final LendaService lendaService;
-    private final ProfesoriLendaService profesoriLendaService;
     private final SemesterService semesterService;
     private final LendaSemesterService lendaSemesterService;
     private final AfatiService afatiService;

@@ -15,7 +15,7 @@ export default function ProfessorCalendar({ token }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const assignmentFetch = await axios.get('http://localhost:8080/professor/kalendari'
+        const assignmentFetch = await axios.get('http://localhost:8080/api/professor/kalendari'
             , {
                   headers: {
                     Authorization: `Bearer ${token}`,
@@ -23,7 +23,7 @@ export default function ProfessorCalendar({ token }) {
                 });
         setAssignments(assignmentFetch.data);
   
-        const provimetFetch = await axios.get('http://localhost:8080/professor/provimet', {
+        const provimetFetch = await axios.get('http://localhost:8080/api/professor/provimet', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

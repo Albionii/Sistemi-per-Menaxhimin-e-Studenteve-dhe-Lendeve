@@ -44,7 +44,7 @@ const TableProfessor = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/professor/orari/${currentDay}`, {
+      .get(`http://localhost:8080/api/professor/orari/${currentDay}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -25,7 +25,11 @@ const RegjistroSemestrin = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/admin/semesters")
+      .get("http://localhost:8080/api/student/semesters2", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then((response) => {
         setSemestriList(response.data);
       })
