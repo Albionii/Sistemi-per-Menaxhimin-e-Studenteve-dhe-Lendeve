@@ -26,7 +26,7 @@ public class AppConfig {
                         .requestMatchers("/api/admin/**").hasAnyRole("ADMIN")
 //                        .requestMatchers("/api/professor/**").hasAnyRole("PROFESSOR")
                         .requestMatchers("/api/student/**").hasAnyRole("STUDENT")
-//                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 ).addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())

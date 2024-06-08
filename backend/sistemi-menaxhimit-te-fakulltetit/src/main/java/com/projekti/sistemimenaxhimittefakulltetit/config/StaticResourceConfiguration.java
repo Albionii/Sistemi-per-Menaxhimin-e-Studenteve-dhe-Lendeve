@@ -10,7 +10,7 @@ public class StaticResourceConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/profile-pictures/**")
-                .addResourceLocations("file:///C:\\dren\\Projekti\\Sistemi-per-Menaxhimin-e-Studenteve-dhe-Lendeve\\backend\\sistemi-menaxhimit-te-fakulltetit\\file_storage\\Users/")
+                .addResourceLocations("file:///C:\\Users\\harve\\Desktop\\ALAB1\\WORKIN\\file_storage\\Users/")
                 .setCachePeriod(0)
                 .resourceChain(false);
     }
