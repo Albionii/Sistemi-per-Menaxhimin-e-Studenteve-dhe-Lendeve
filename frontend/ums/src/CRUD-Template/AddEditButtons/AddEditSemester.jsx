@@ -19,6 +19,7 @@ export const AddEditSemester = ({
   renderBot,
   formDataJson,
   API,
+  token
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -39,7 +40,11 @@ export const AddEditSemester = ({
 
   const getDepartamentet = async () => {
     try {
-      const response = await axios.get(urlGetDepartament);
+      const response = await axios.get(urlGetDepartament, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setDepartamentet(response.data);
     } catch (error) {
       API.errorAlert(departamentiError);
@@ -88,7 +93,11 @@ export const AddEditSemester = ({
     e.preventDefault();
     try {
       console.log(JSON.stringify(formData));
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData, {
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);

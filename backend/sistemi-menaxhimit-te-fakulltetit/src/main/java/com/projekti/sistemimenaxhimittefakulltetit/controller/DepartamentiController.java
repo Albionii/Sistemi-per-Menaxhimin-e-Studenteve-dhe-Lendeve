@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/departamenti")
-
 public class DepartamentiController {
     @Autowired
     private DepartamentiService departamentiService;
