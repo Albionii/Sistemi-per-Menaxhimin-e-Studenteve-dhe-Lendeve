@@ -202,7 +202,6 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-
   const [mode, setMode] = useState(Cookies.get("theme") != null ? Cookies.get("theme") : "dark");
 
 

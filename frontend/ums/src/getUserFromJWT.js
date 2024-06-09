@@ -27,7 +27,7 @@ export const getFromCookies = ({ setUserData, changeLoggedInState }) => {
                 setUser(data);
             } catch (error) {
                 console.error('Error fetching user details:', error);
-                document.cookie = "Token=";
+                // document.cookie = "Token=";
                 window.location.reload();
             }
         };
@@ -38,7 +38,7 @@ export const getFromCookies = ({ setUserData, changeLoggedInState }) => {
     useEffect(() => {
         if (user != null) {
             if (user.status === 500) {
-                document.cookie = "Token=";
+                // document.cookie = "Token=";
                 changeLoggedInState();
                 // window.location.reload();
             } else {

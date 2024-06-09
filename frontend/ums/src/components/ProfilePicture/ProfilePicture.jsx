@@ -66,7 +66,7 @@ const ProfilePicture = ({
       checkProfilePicture();
     } catch (error) {
       console.error("Error fetching user details:", error);
-      document.cookie = "Token=";
+      // document.cookie = "Token=";
     }
   };
 

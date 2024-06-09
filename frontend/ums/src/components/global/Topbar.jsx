@@ -22,7 +22,7 @@ const Topbar = () => {
   const changeMode = () => {
     colorMode.toggleColorMode();
     Cookies.set('theme', theme.palette.mode === "dark"? "light" : "dark", { expires: 1000 });
-    
+
   }
 
   return (
