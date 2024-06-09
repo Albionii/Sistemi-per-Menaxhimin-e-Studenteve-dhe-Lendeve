@@ -14,7 +14,7 @@
   }
 
   export const deleteStudentByID = () => {
-    const url = BASE_URL + `/student/delete/`;
+    const url = BASE_URL + `/deleteStudent/`;
     return [url, "Studenti nuk është fshirë!"];
   }
   
@@ -24,44 +24,44 @@
   }
 
   export const getAllStudents = () => {
-    const url = BASE_URL + `/student/getAllStudents`;
+    const url = BASE_URL + `/getAllStudents`;
     return [url, "Gabim në marrjen e studentëve!"];
   }
 
   export const getStudentByID = () => {
-    const url = BASE_URL + `/student/getStudent/`;
+    const url = BASE_URL + `/getStudent/`;
     return [url, "Gabim në marrjen e studentit!"];
   }
 
   export const updateStudentByID = () => {
-    const url = BASE_URL + `/student/update/`;
+    const url = BASE_URL + `/updateStudent/`;
     return [url, "Gabim në përditësimin e studentit!"];
   }
 
   //Profesori
   
   export const deleteProfessorByID = () => {
-    const url = BASE_URL + `/professor/delete/`;
+    const url = BASE_URL + `/deleteProfessor/`;
     return [url, "Profesori nuk është fshirë!"];
   }
   
   export const createProfessor = () => {
-    const url = BASE_URL + `/professor/create`;
+    const url = BASE_URL + `/createProfessor`;
     return [url, "Profesori nuk është shtuar!"];
   }
 
   export const getAllProfessors = () => {
-    const url = BASE_URL + `/professor`;
+    const url = BASE_URL + `/getProfessors`;
     return [url, "Gabim në marrjen e profesoreve!"];
   }
 
   export const getProfessorByID = () => {
-    const url = BASE_URL + `/professor/getProfessor/`;
+    const url = BASE_URL + `/getProfessor/`;
     return [url, "Gabim në marrjen e profesorit!"];
   }
 
   export const updateProfessorByID = () => {
-    const url = BASE_URL + `/professor/update/`;
+    const url = BASE_URL + `/updateProfessor/`;
     return [url, "Gabim në përditësimin e profesorit!"];
   }
 
@@ -79,12 +79,12 @@
   }
 
   export const getAllLigjeratat = () => {
-    const url = BASE_URL + `/professorLenda`;
+    const url = BASE_URL + `/getProfessorLendet`;
     return [url,"Gabim në marrjen e ligjeratave!"];
   }
   
   export const getLigjerataByID = () => {
-    const url = BASE_URL + `/professorLenda/`;
+    const url = BASE_URL + `/getProfessorLenda/`;
     return [url, "Gabim në marrjen e ligjeratës!"];
   }
 
@@ -96,83 +96,57 @@
   // Lenda
 
   export const deleteLendaByID = () => {
-    const url = BASE_URL + `/lenda/delete/`;
+    const url = BASE_URL + `/deleteLenda/`;
     return [url, "Gabim në fshirjen e lëndës!"];
   }
 
   export const createLenda = () => {
-    const url = BASE_URL + `/lenda/create`;
+    const url = BASE_URL + `/createLenda`;
     return [url, "Gabim në krijimin e lëndës!"];
   }
 
   export const getAllLendet = () => {
-    const url = BASE_URL + `/lenda`;
+    const url = BASE_URL + `/getLendet`;
     return [url, "Gabim në marrjen e lëndëve!"];
   }
   
   export const getLendaByID = () => {
-    const url = BASE_URL + `/lenda/`;
+    const url = BASE_URL + `/getLenda/`;
     return [url, "Gabim në marrjen e lëndës!"];
   }
 
   export const updateLendaByID = () => {
-    const url = BASE_URL + `/lenda/update/`;
+    const url = BASE_URL + `/updateLenda/`;
     return [url, "Gabim në përditësimin e lëndës!"];
   }
 
   // Provimi
 
   export const deleteProvimiByID = () => {
-    const url = BASE_URL + `/api/admin/provimi/delete/`;
+    const url = BASE_URL + `/deleteProvimi/`;
     return [url, "Gabim në fshirjen e provimit!"];
   }
 
   export const createProvimi = () => {
-    const url = BASE_URL + `/api/admin/provimi/create`;
+    const url = BASE_URL + `/createProvimi`;
     return [url, "Gabim në krijimin e provimit!"];
   }
 
   export const getAllProvimet = () => {
-    const url = BASE_URL + `/api/admin/provimi`;
+    const url = BASE_URL + `/getProvimet`;
     return [url, "Gabim në marrjen e provimeve!"];
   }
   
   export const getProvimiByID = () => {
-    const url = BASE_URL + `/api/admin/provimi/`;
+    const url = BASE_URL + `/getProvimi`;
     return [url, "Gabim në marrjen e provimit!"];
   }
 
   export const updateProvimiByID = () => {
-    const url = BASE_URL + `/api/admin/provimi/update/`;
+    const url = BASE_URL + `/updateProvimi/`;
     return [url, "Gabim në përditësimin e provimit!"];
   }
 
-  //Sallat
-
-  export const deleteSallaByID = () => {
-    const url = BASE_URL + `/salla/delete/`;
-    return [url, "Gabim në fshirjen e salles!"];
-  }
-
-  export const createSalla = () => {
-    const url = BASE_URL + `/salla/create`;
-    return [url, "Gabim në krijimin e salles!"];
-  }
-
-  export const getAllSallat = () => {
-    const url = BASE_URL + `/salla`;
-    return [url, "Gabim në marrjen e sallave!"];
-  }
-  
-  export const getSallaByID = () => {
-    const url = BASE_URL + `/salla/`;
-    return [url, "Gabim në marrjen e salles!"];
-  }
-
-  export const updateSallaByID = () => {
-    const url = BASE_URL + `/salla/update/`;
-    return [url, "Gabim në përditësimin e salles!"];
-  }
 
 
   //Users

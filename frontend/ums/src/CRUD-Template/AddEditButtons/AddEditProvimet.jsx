@@ -5,7 +5,7 @@ import { getAllLendet, getAllLigjeratat} from '../../APIRequests';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 
-export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -85,7 +85,11 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -231,7 +235,7 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API})
     </>
   )
 }
-export const provimiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const provimiEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [urlUpdate, errorUpdate] = API.update();
@@ -294,7 +298,11 @@ export const provimiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) 
 
   const getLendet = async () => {
     try {
-      const fetchLendet = await axios.get(urlLendet);
+      const fetchLendet = await axios.get(urlLendet,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setLendet(fetchLendet.data);
     } catch (error) {
       API.errorAlert(errorLendet);

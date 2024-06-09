@@ -8,7 +8,7 @@ import {
   updateLendaByID,
   deleteLendaByID
 } from '../APIRequests'
-function Lenda() {
+function Lenda({token}) {
   const rowsNames = [
     "Kodi",
     "Lenda",
@@ -43,6 +43,7 @@ function Lenda() {
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

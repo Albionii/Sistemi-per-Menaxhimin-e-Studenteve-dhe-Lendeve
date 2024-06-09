@@ -153,24 +153,24 @@ function loggedIn({ changeLoggedInState}) {
 
           {user.role === "ROLE_PROFESSOR" ? <Route path="/notoStudentin" element={<NotoStudentin />} />: null}
  */}
-          <Route path="/profesorLenda" element={<ProfesorLenda />} />
+          <Route path="/profesorLenda" element={<ProfesorLenda token={token}/>} />
 
 
 
 
           <Route path="/provimet" element={<Provimet token={token}/>} />
 
-          <Route path="/notoStudentin" element={<NotoStudentin />} />
+          <Route path="/notoStudentin" element={<NotoStudentin token={token}/>} />
 
-          <Route path="/provimi" element={<ProvimiCRUD />} />
-
-
-          <Route path="/profesoret" element={<Profesoret />} />
+          <Route path="/provimi" element={<ProvimiCRUD token={token}/>} />
 
 
-          <Route path="/studentet" element={<Studentet />} />
+          <Route path="/profesoret" element={<Profesoret token={token}/>} />
 
-          <Route path="/lendet" element={<Lenda />} />
+          <Route path="/lendet" element={<Lenda token={token}/>} />
+
+          <Route path="/studentet" element={<Studentet token={token} />} />
+
 
           <Route path="/DepartamentiCrud" element={<DepartamentiCrud />}></Route>
 

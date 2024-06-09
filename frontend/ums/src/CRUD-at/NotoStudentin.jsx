@@ -3,12 +3,9 @@ import axios from 'axios';
 import { Table, Button, Dropdown } from 'flowbite-react';
 
 import { Dialog, DialogContent, useTheme } from '@mui/material';
-import { getToken } from '../GetToken';
 import { tokens } from '../theme';
 
-const ProvimetNota = () => {
-
-    const token = getToken();
+const ProvimetNota = ({token}) => {
     
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -60,7 +57,7 @@ const ProvimetNota = () => {
 
 
     const fetchLigjeratat = async() => {
-      axios.get('http://localhost:8080/professor/ligjeratatOfProfessor',{
+      axios.get('http://localhost:8080/api/professor/ligjeratatOfProfessor',{
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -74,7 +71,11 @@ const ProvimetNota = () => {
     }
     
     const fetchStudentProvimet = async(id) => {
-      axios.get('http://localhost:8080/professor/paraqitjet/'+id)
+      axios.get('http://localhost:8080/api/professor/paraqitjet/'+id,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      })
         .then(response => {
           setStudentProvimet(response.data)
         })
@@ -87,7 +88,11 @@ const ProvimetNota = () => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        await axios.put("http://localhost:8080/professor/provimi/" + provimi.id + "/" + nota, formData);
+        await axios.put("http://localhost:8080/api/professor/provimi/" + provimi.id + "/" + nota, formData,{
+          headers: {
+              'Authorization': `Bearer ${token}`
+          }
+        });
         fetchStudentProvimet(ligjerata)
         handleClose();
       } catch (error) {

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 
-export const studentetEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const studentetEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -133,7 +133,11 @@ export const studentetEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       

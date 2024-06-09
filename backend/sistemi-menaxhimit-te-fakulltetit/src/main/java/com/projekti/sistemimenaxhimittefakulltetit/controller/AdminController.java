@@ -30,6 +30,11 @@ public class AdminController {
     private final LajmiService lajmiService;
     private final OrariService orariService;
     private final GrupiService grupiService;
+    private final ProvimiService provimiService;
+    private final ProfessorService professorService;
+    private final StudentService studentService;
+    private final ProfesoriLendaService profesoriLendaService;
+
 
 
     @DeleteMapping("/{id}")
@@ -248,6 +253,221 @@ public class AdminController {
     @PutMapping("/semester/update/{id}")
     public ResponseEntity<Semester> updateSemester(@PathVariable Long id, @RequestBody Semester semester) {
         return ResponseEntity.status(HttpStatus.OK).body(semesterService.updateSemester(id, semester));
+    }
+
+    //Professors
+
+
+    @GetMapping("/getProfessors")
+    public ResponseEntity<List<Professor>> getProfessors(){
+        List<Professor> professors = professorService.getProfessors();
+        return new ResponseEntity<>(professors, HttpStatus.OK);
+    }
+
+    @GetMapping("/getProfessor/{id}")
+    public Optional<Professor> getProfessor(@PathVariable Long id){
+        return professorService.findProfById(id);
+    }
+
+    @PostMapping("/createProfessor")
+    public ResponseEntity<Professor> createProfessor(@RequestBody Professor p) throws Exception {
+        Professor professor = professorService.createProfessor(p);
+        return ResponseEntity.ok().body(professor);
+    }
+
+    @DeleteMapping("/deleteProfessor/{id}")
+    public void deleteProfessorByID(@PathVariable Long id){
+        Professor professor = professorService.findProfessorById(id);
+        professorService.deleteProfessorByID(id);
+        userService.deleteUserById(professor.getUser().getId());
+    }
+
+    @PutMapping("/updateProfessor/{id}")
+    public ResponseEntity<Professor> updateProfessor(@PathVariable Long id, @RequestBody Professor p) {
+        Professor professor = professorService.updateProfessor(id, p);
+        if (professor != null) {
+            return new ResponseEntity<>(professor, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Lenda
+
+    @GetMapping("/getLenda/{id}")
+    public ResponseEntity<Lenda> findLendaById(@PathVariable Long id) throws Exception {
+        Lenda lenda = lendaService.findLendaById(id);
+        return ResponseEntity.ok().body(lenda);
+    }
+
+    @GetMapping("/getLendet")
+    public ResponseEntity<List<Lenda>> getLendet(){
+        List<Lenda> lendet = lendaService.getLendet();
+        return ResponseEntity.ok().body(lendet);
+    }
+
+    @PostMapping("/createLenda")
+    public ResponseEntity<Lenda> createLenda(@RequestBody Lenda lenda) throws Exception {
+        Lenda createdLenda = lendaService.createLenda(lenda);
+        return ResponseEntity.ok().body(createdLenda);
+    }
+
+
+
+    @PutMapping("/updateLenda/{id}")
+    public ResponseEntity<Lenda> updateLenda(@PathVariable Long id, @RequestBody Lenda l) {
+        Lenda lenda = lendaService.updateLenda(id, l);
+        if (lenda != null) {
+            return new ResponseEntity<>(lenda, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @DeleteMapping("/deleteLenda/{id}")
+    public void deleteLendaById(@PathVariable Long id){
+        lendaService.deleteLenda(id);
+    }
+
+
+    // Provimet
+
+    @PostMapping("/createProvimi")
+    public ResponseEntity<Provimi> createProvimi(@RequestBody Provimi p) throws Exception {
+        Provimi provimi = provimiService.createProvimi(p);
+        return ResponseEntity.ok().body(provimi);
+    }
+
+    @GetMapping("/getProvimet")
+    public ResponseEntity<List<Provimi>> getAllProvimet(){
+        List<Provimi> p = provimiService.getAllProvimet();
+        return ResponseEntity.ok().body(p);
+    }
+
+    @GetMapping("/getProvimi/{id}")
+    public ResponseEntity<Optional<Provimi>> findProvimiByID(@PathVariable Long id) throws Exception {
+        Optional<Provimi> provimi = provimiService.findProvimiById(id);
+        return ResponseEntity.ok().body(provimi);
+    }
+
+    @DeleteMapping("/deleteProvimi/{id}")
+    public void deleteByProvimiID(@PathVariable Long id){
+        provimiService.deleteProvimi(id);
+    }
+
+    @PutMapping("/updateProvimi/{id}")
+    public ResponseEntity<Provimi> updateProvimiByID(@PathVariable Long id, @RequestBody Provimi p) {
+        Provimi provimi = provimiService.updateProvimiByID(id, p);
+        if (provimi != null) {
+            return new ResponseEntity<>(provimi, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //Students
+
+    @DeleteMapping("/deleteStudent/{id}")
+    public void deleteStudentByID(@PathVariable Long id)
+    {
+        Student student = studentService.getStudentByID(id).get();
+        studentService.deleteByID(id);
+        userService.deleteUserById(student.getUser().getId());
+    }
+
+    @GetMapping("/getAllStudents")
+    public ResponseEntity<List<Student>> getAllStudents(){
+        List<Student> students = studentService.getAllStudents();
+        return ResponseEntity.ok().body(students);
+    }
+
+    @GetMapping("/getStudent/{id}")
+    public ResponseEntity<Student> getStudentByID(@PathVariable Long id){
+        Student student = studentService.getStudentByID(id).get();
+        return ResponseEntity.ok().body(student);
+    }
+
+    @PutMapping("/updateStudent/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student s) {
+        Student student = studentService.updateStudent(id, s);
+        if (student != null) {
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/getStudentByUserID/{id}")
+    public Student getStudent(@PathVariable Long id) {
+        return studentService.findStudentByUserId(id);
+    }
+
+
+    // Ligjeratat
+
+    @GetMapping("getProfessorLenda/{id}")
+    public ResponseEntity<ProfesoriLenda> findLendaByProfesoriId(@PathVariable Long id){
+        Optional<ProfesoriLenda> profesoriLenda = profesoriLendaService.findLendaByProfesoriId(id);
+        return profesoriLenda.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/lendetSemester/{semesterId}")
+    public Long countLendetBySemesterId(@PathVariable Long semesterId) throws Exception {
+        return profesoriLendaService.countLendetBySemester(semesterId);
+    }
+
+    @GetMapping("abc/{id}")
+    public List<ProfesoriLenda> findLendaByProfesoriIdaa(@PathVariable Long id){
+        return profesoriLendaService.findLendaByProfesoriIdaaaaaaaa(id);
+    }
+
+    @GetMapping("/professorLenda/semester/{semesterId}")
+    public List<ProfesoriLenda> findBySemesterId(@PathVariable Long semesterId){
+        return profesoriLendaService.getBySemesterId(semesterId);
+    }
+
+    @GetMapping("/professorLenda/ligjeratat/{semesterId}")
+    public List<ProfesoriLenda> findLigjeratat(@PathVariable Long semesterId,
+                                               @RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Professor professor = professorService.findProfessorByUserId(user.getId());
+        Semester semester = semesterService.getSemester(semesterId);
+
+        return  profesoriLendaService.getAllLigjerataBySemester(professor, semester);
+    }
+
+    @GetMapping("professorLenda/professor/semestret/")
+    public List<Semester> findSemesters(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Professor professor = professorService.findProfessorByUserId(user.getId());
+        return profesoriLendaService.findSemesters(professor);
+    }
+
+    @PostMapping("/createLigjerata")
+    public ResponseEntity<ProfesoriLenda> createLigjerate(@RequestBody ProfesoriLenda p) throws Exception {
+        ProfesoriLenda profesoriLenda = profesoriLendaService.createLigjerata(p);
+        return ResponseEntity.ok().body(profesoriLenda);
+    }
+
+    @GetMapping("/getProfessorLendet")
+    public ResponseEntity<List<ProfesoriLenda>> getAllProfesoriLenda(){
+        List<ProfesoriLenda> p = profesoriLendaService.getAllProfessorLenda();
+        return ResponseEntity.ok().body(p);
+    }
+
+    @DeleteMapping("/professorLenda/delete/{id}")
+    public void deleteProfesoriLendaByID(@PathVariable Long id){
+        profesoriLendaService.deleteProfessorLendaByID(id);
+    }
+
+    @PutMapping("/professorLenda/update/{id}")
+    public ResponseEntity<ProfesoriLenda> updateProfessorLenda(@PathVariable Long id, @RequestBody ProfesoriLenda pl) {
+        ProfesoriLenda profesoriLenda = profesoriLendaService.updateProfessorLenda(id, pl);
+        if (profesoriLenda != null) {
+            return new ResponseEntity<>(profesoriLenda, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 

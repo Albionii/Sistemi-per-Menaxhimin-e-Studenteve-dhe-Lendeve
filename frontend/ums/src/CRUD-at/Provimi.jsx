@@ -8,7 +8,7 @@ import {
   updateProvimiByID,
   deleteProvimiByID
 } from '../APIRequests'
-function Provimi() {
+function Provimi({token}) {
   const rowsNames = [
     "Lenda",
     "Emri",
@@ -57,6 +57,7 @@ function Provimi() {
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

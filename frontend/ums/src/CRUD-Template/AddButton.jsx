@@ -1,8 +1,7 @@
-import { createLenda, createLigjerata, createProfessor,createDepartamenti, createProvimi, createSalla, createFakulteti, createSemester, createGrupi, createOrari, createLajmi, createOrariLigjerata, createAfati } from "../APIRequests";
+import { createLenda, createLigjerata,createDepartamenti, createProvimi, createFakulteti, createSemester, createGrupi, createOrari, createLajmi, createOrariLigjerata, createAfati } from "../APIRequests";
 import { lendaAddButton } from "./AddEditButtons/AddEditLenda"
 import { ligjerataAddButton } from "./AddEditButtons/AddEditLigjerata"
 import { provimiAddButton } from "./AddEditButtons/AddEditProvimet"
-import { sallaAddButton } from "./AddEditButtons/AddEditSalla";
 import {departamentiAddButton} from "./AddEditButtons/AddEditDepartamenti";
 import { fakultetiAddButton } from "./AddEditButtons/AddEditFakulteti";
 import { AddEditSemester } from "./AddEditButtons/AddEditSemester";
@@ -23,8 +22,6 @@ export default function AddButton ({setConfirmExit, renderBot, formDataJson, API
         return ligjerataAddButton(prompt);
       case createLenda()[0]: 
         return lendaAddButton(prompt);
-      case createSalla()[0]:
-        return sallaAddButton(prompt);
       case createDepartamenti()[0]:
         return departamentiAddButton(prompt);
       case createFakulteti()[0]:
