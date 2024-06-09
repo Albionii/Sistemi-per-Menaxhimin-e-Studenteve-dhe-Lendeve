@@ -9,7 +9,7 @@ import {
     deleteFakultetiById
 } from '../APIRequests'
 
-function FakultetetCrud() {
+function FakultetetCrud({token}) {
     const rowsNames = [
         "Kodi",
         "Emri",
@@ -30,19 +30,6 @@ function FakultetetCrud() {
         emri: "",
         lokacioni: "",
         email: ""
-        // user: {
-        //     firstName: "",
-        //     lastName: "",
-        //     email: "",
-        //     dateLindja: "",
-        //     gjinia: "",
-        //     nrTelefonit: "",
-        //     qyteti: "",
-        //     zipcode: "",
-        //     shteti: "",
-        //     rruga: "",
-        //     role: ""
-        // }
     }
 
     return (
@@ -57,6 +44,7 @@ function FakultetetCrud() {
                 buttonsAvailable={buttonsAvailable}
                 formDataJson={formDataJson}
                 jsonName={jsonNames}
+                token={token}
             />
         </>
     )

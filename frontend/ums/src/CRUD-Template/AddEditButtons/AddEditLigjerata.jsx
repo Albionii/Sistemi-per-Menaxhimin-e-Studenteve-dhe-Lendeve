@@ -34,7 +34,11 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
 
   const getLendet = async () => {
     try {
-      const fetchLendet = await axios.get(urlLendet);
+      const fetchLendet = await axios.get(urlLendet,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setLendet(fetchLendet.data);
     } catch (error) {
       API.errorAlert(messageLendet);
@@ -44,7 +48,11 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
 
   const getProfesoret = async () => {
     try {
-      const fetchProfesoret = await axios.get(urlProfessor);
+      const fetchProfesoret = await axios.get(urlProfessor,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setProfesoret(fetchProfesoret.data);
     } catch (error) {
       API.errorAlert(messageProfessor);
@@ -54,7 +62,11 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
 
   const getSemestrat = async () => {
     try {
-      const fetchSemestrat = await axios.get(urlSemester);
+      const fetchSemestrat = await axios.get(urlSemester,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setSemestrat(fetchSemestrat.data);
     } catch (error) {
       API.errorAlert(errorSemester);
@@ -227,6 +239,7 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API,
   const [urlUpdate, errorUpdate] = API.update();
   const [urlLendet, messageLendet] = getAllLendet();
   const [urlProfessor, messageProfessor] = getAllProfessors();
+  const [urlSemester, messageSemester] = getAllSemester();
 
   //Per inputat select lendet
   const [lendet, setLendet] = useState([]);
@@ -235,6 +248,10 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API,
   //Per inputat select profesoret
   const [profesoret, setProfesoret] = useState([]);
   const [selectedProfesori, setSelectedProfesori] = useState(item.professor.user.firstName + item.professor.user.lastName);
+
+  const [semestrat, setSemestrat] = useState([]);
+  const [selectedSemestri, setSelectedSemestri] = useState('');
+
 
   const [formData, setFormData] = useState(item);
 
@@ -245,12 +262,17 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API,
   useEffect(() => {
     getLendet();
     getProfesoret();
+    getSemestrat();
   }, []);
 
   
   const getLendet = async () => {
     try {
-      const fetchLendet = await axios.get(urlLendet);
+      const fetchLendet = await axios.get(urlLendet,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setLendet(fetchLendet.data);
     } catch (error) {
       API.errorAlert(messageLendet);
@@ -260,7 +282,11 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API,
 
   const getProfesoret = async () => {
     try {
-      const fetchProfesoret = await axios.get(urlProfessor);
+      const fetchProfesoret = await axios.get(urlProfessor,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setProfesoret(fetchProfesoret.data);
     } catch (error) {
       API.errorAlert(messageProfessor);
@@ -269,6 +295,19 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API,
   };
 
 
+  const getSemestrat = async () => {
+    try {
+      const fetchSemestrat = await axios.get(urlSemester,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
+      setSemestrat(fetchSemestrat.data);
+    } catch (error) {
+      API.errorAlert(errorSemester);
+      console.log(error);
+    }
+  };
 
   const handleChangedLendet = (e) => {
     setSelectedLenda(e.target.value);
@@ -277,6 +316,15 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API,
       lenda : lendet.find(lenda => lenda.id == e.target.value)
     })
   };
+
+  
+  const handleChangedSemestrat = (e) => {
+    setSelectedSemestri(e.target.value);
+    setFormData({
+      ...formData,
+      semester : semestrat.find(s => s.id == e.target.value)
+    })
+  }
 
   const handleChangedProfesoret = (e) => {
     setSelectedProfesori(e.target.value);
@@ -385,12 +433,12 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API,
                 <select
                   // id="pr"
                   className="border border-gray-400 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500" style={{background: colors.primary[400]}}
-                  value={selectedProfesori}
-                  onChange={handleChangedProfesoret}
+                  value={selectedSemestri}
+                  onChange={handleChangedSemestrat}
                 >
-                  <option value="">{formData != null ? formData.professor.user.firstName + " " + formData.professor.user.lastName:""}</option>
-                  {profesoret.map(profesori => (
-                    <option key={profesori.id} value={profesori.id}>{profesori.user.firstName + " " + profesori.user.lastName}</option>
+                  <option value="">{formData != null ? formData.semester.name:""}</option>
+                  {semestrat.map(s => (
+                    <option key={s.id} value={s.id}>{s.name}</option>
                   ))}
                 </select>
             </div>

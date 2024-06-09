@@ -58,7 +58,11 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API, 
 
   const getLigjeratat = async () => {
     try {
-      const fetchLigjeratat = await axios.get(urlLigjeratat);
+      const fetchLigjeratat = await axios.get(urlLigjeratat,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setLigjeratat(fetchLigjeratat.data);
     } catch (error) {
       API.errorAlert(errorLigjeratat);
@@ -68,7 +72,11 @@ export const provimiAddButton = ({setConfirmExit, renderBot, formDataJson, API, 
 
   const getLendet = async () => {
     try {
-      const fetchLendet = await axios.get(urlLendet);
+      const fetchLendet = await axios.get(urlLendet,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setLendet(fetchLendet.data);
     } catch (error) {
       API.errorAlert(errorLendet);
@@ -288,7 +296,11 @@ export const provimiEditButton = ({setConfirmExit, item, onLigjerataEdit, API, t
 
   const getLigjeratat = async () => {
     try {
-      const fetchLigjeratat = await axios.get(urlLigjeratat);
+      const fetchLigjeratat = await axios.get(urlLigjeratat,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setLigjeratat(fetchLigjeratat.data);
     } catch (error) {
       API.errorAlert(errorLigjeratat);
@@ -321,7 +333,11 @@ export const provimiEditButton = ({setConfirmExit, item, onLigjerataEdit, API, t
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       

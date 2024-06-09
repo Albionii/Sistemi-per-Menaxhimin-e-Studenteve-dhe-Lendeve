@@ -8,6 +8,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.request.CreateLendaReq;
 import com.projekti.sistemimenaxhimittefakulltetit.request.LigjerataReq;
 import com.projekti.sistemimenaxhimittefakulltetit.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,8 @@ public class AdminController {
     private final ProfessorService professorService;
     private final StudentService studentService;
     private final ProfesoriLendaService profesoriLendaService;
+    private FakultetiService fakultetiService;
+    private UserServiceImpl userServiceImpl;
 
 
 
@@ -469,6 +472,51 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    //Fakulteti
+
+    @GetMapping("/fakulteti/{id}")
+    public Optional<Fakulteti> getFakulteti(@PathVariable Long id){
+        return fakultetiService.findFakultetiById(id);
+    }
+
+    @GetMapping("/fakulteti")
+    public List<Fakulteti> getAllFakulteti(){return fakultetiService.getAllFakulteti();}
+
+    @PostMapping("/fakulteti/create/{id}")
+    public void createFakulteti(@RequestBody Fakulteti f,@PathVariable Long id) throws Exception {
+        f.setUser(userServiceImpl.findUserById(id));
+        fakultetiService.createFakulteti(f);
+    }
+    @PostMapping("/fakulteti/create")
+    public ResponseEntity<Fakulteti> createFakulteti(@RequestBody Fakulteti fakulteti) throws Exception {
+        Fakulteti createdFakulteti = fakultetiService.createFakulteti(fakulteti);
+        return ResponseEntity.ok().body(createdFakulteti);
+    }
+
+    @PutMapping("/fakulteti/{id}/{drejtoriId}")
+    public void updateDrejtori(@PathVariable("id") Long id,@PathVariable("drejtoriId") Long idD) throws Exception {
+        Optional<Fakulteti> f1 = fakultetiService.findFakultetiById(id);
+        f1.get().setUser(userServiceImpl.findUserById(idD));
+        fakultetiService.updateDrejtori(f1.get());
+
+    }
+
+    @PutMapping("/fakulteti/update/{id}")
+    public ResponseEntity<Fakulteti> updateFakulteti(@PathVariable Long id, @RequestBody Fakulteti f) {
+        Fakulteti fakulteti = fakultetiService.updateFakulteti(id, f);
+        if (fakulteti != null) {
+            return new ResponseEntity<>(fakulteti, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/fakulteti/delete/{id}")
+    public void deleteFakultetiByID(@PathVariable Long id){
+        fakultetiService.deleteFakultetiById(id);
+    }
+
 
 
 

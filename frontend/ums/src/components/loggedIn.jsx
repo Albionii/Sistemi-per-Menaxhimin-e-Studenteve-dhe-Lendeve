@@ -174,7 +174,7 @@ function loggedIn({ changeLoggedInState}) {
 
           <Route path="/DepartamentiCrud" element={<DepartamentiCrud />}></Route>
 
-          <Route path="/FakultetiCrud" element={<FakultetetCrud />}></Route>
+          <Route path="/FakultetiCrud" element={<FakultetetCrud token={token} />}></Route>
 
           <Route path="/userRole" element={<UserRole />} />
 

@@ -24,55 +24,6 @@ public class FakultetiController {
     private UserServiceImpl userService;
 
 
-    @GetMapping("/{id}")
-    public Optional<Fakulteti> getFakulteti(@PathVariable Long id){
-        return fakultetiService.findFakultetiById(id);
-    }
-
-//    @DeleteMapping("delete/{id}")
-//    public void deleteFakulteti(@PathVariable Long id){
-//        Optional<Fakulteti> f = fakultetiService.findFakultetiById(id);
-//        f.get().setUser(null);
-//        fakultetiService.deleteFakultetiById(f.get().getId());
-//    }
-
-    @GetMapping()
-    public List<Fakulteti> getAllFakulteti(){return fakultetiService.getAllFakulteti();}
-
-    @PostMapping("/create/{id}")
-    public void createFakulteti(@RequestBody Fakulteti f,@PathVariable Long id) throws Exception {
-        f.setUser(userService.findUserById(id));
-        fakultetiService.createFakulteti(f);
-    }
-    @PostMapping("/create")
-    public ResponseEntity<Fakulteti> createFakulteti(@RequestBody Fakulteti fakulteti) throws Exception {
-        Fakulteti createdFakulteti = fakultetiService.createFakulteti(fakulteti);
-        return ResponseEntity.ok().body(createdFakulteti);
-    }
-
-    @PutMapping("/{id}/{drejtoriId}")
-    public void updateDrejtori(@PathVariable("id") Long id,@PathVariable("drejtoriId") Long idD) throws Exception {
-        Optional<Fakulteti> f1 = fakultetiService.findFakultetiById(id);
-        f1.get().setUser(userService.findUserById(idD));
-        fakultetiService.updateDrejtori(f1.get());
-
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Fakulteti> updateFakulteti(@PathVariable Long id, @RequestBody Fakulteti f) {
-        Fakulteti fakulteti = fakultetiService.updateFakulteti(id, f);
-        if (fakulteti != null) {
-            return new ResponseEntity<>(fakulteti, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void deleteFakultetiByID(@PathVariable Long id){
-        fakultetiService.deleteFakultetiById(id);
-    }
-
 
 
 }

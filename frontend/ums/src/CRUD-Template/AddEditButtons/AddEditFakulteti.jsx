@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
-export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -46,7 +46,11 @@ export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -163,7 +167,7 @@ export const fakultetiAddButton = ({setConfirmExit, renderBot, formDataJson, API
     </>
   )
 }
-export const fakultetiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const fakultetiEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -207,7 +211,11 @@ export const fakultetiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       
