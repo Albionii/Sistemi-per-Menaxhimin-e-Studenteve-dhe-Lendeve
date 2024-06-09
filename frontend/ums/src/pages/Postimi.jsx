@@ -81,6 +81,9 @@ const Postimi = ({ token, user }) => {
     toggleViewMyPosts,
     deletePostNotification,
     postNotificaiton,
+    fetchMoreData,
+    hasMore,
+    viewMyPosts,
   } = usePostimi(ligjerataId, token);
 
   const [open, setOpen] = useState(false);
@@ -307,11 +310,28 @@ const Postimi = ({ token, user }) => {
             padding={"20px"}
             borderRadius={3}
           >
+            {USER_ROLE !== "ROLE_STUDENT" && user.id === location.state.professorId && (
+              <Box sx={{display:"flex", justifyContent:"flex-end"}}>
+              <Button
+                sx={{
+                  background: colors.greenAccent[500],
+                  borderRadius: 3,
+                  "&:hover": { bgcolor: colors.greenAccent[600] },
+                }}
+                variant="contained"
+                onClick={handleOpen}
+              >
+                <Typography variant="h5" color={"#fff"} fontWeight={"bold"}>
+                  +
+                </Typography>
+              </Button>
+              </Box>
+            )}
             {assignments.length === 0 ? (
               <Box
                 sx={{
                   width: "100%",
-                  height: "100%",
+                  mt:3,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -332,26 +352,14 @@ const Postimi = ({ token, user }) => {
                   <Typography variant="h4" fontWeight={"bold"}>
                     Assignments:
                   </Typography>
-                  {USER_ROLE === "ROLE_PROFESSOR" &&
-                    user.id === location.state.professorId && (
-                      <Button
-                        sx={{
-                          background: colors.greenAccent[500],
-                          borderRadius: 3,
-                          "&:hover": { bgcolor: colors.greenAccent[600] },
-                        }}
-                        variant="contained"
-                        onClick={handleOpen}
-                      >
-                        <Typography
-                          variant="h5"
-                          color={"#fff"}
-                          fontWeight={"bold"}
-                        >
-                          +
-                        </Typography>
-                      </Button>
-                    )}
+
+                  {console.log(
+                    "userid:" +
+                      user.id +
+                      " " +
+                      "ProfessorID: " +
+                      location.state.professorId
+                  )}
                 </Box>
 
                 {assignments.map((assignment) => (
@@ -434,7 +442,8 @@ const Postimi = ({ token, user }) => {
                             {viewAssignment.mesazhi}
                           </Typography>
                           <Typography variant="body2" sx={{ mb: 2 }}>
-                            Due date:  {dayjs(viewAssignment.expireAt).format(
+                            Due date:{" "}
+                            {dayjs(viewAssignment.expireAt).format(
                               "YYYY-MM-DD/HH:mm:ss"
                             )}
                           </Typography>
@@ -584,7 +593,7 @@ const Postimi = ({ token, user }) => {
                 }}
               >
                 <FilterAltIcon />
-                <Typography>Mine Only</Typography>
+                <Typography>{viewMyPosts ? "Mine Only" : "See All"}</Typography>
               </IconButton>
             )}
 
@@ -596,7 +605,7 @@ const Postimi = ({ token, user }) => {
 
             {!materiali ? (
               <>
-                {postimet.slice(0, postimCount).map((post) => (
+                {postimet.map((post) => (
                   <Postim
                     key={post.id}
                     post={post}
@@ -609,7 +618,7 @@ const Postimi = ({ token, user }) => {
                     professorId={location.state.professorId}
                   />
                 ))}
-                {postimet.length > postimCount && (
+                {hasMore && (
                   <Box width="100%" display="flex" justifyContent="center">
                     <Button
                       sx={{
@@ -618,7 +627,7 @@ const Postimi = ({ token, user }) => {
                           textDecorationColor: "white",
                         },
                       }}
-                      onClick={loadMorePosts}
+                      onClick={fetchMoreData}
                     >
                       <Typography color="white">Show More Posts</Typography>
                     </Button>

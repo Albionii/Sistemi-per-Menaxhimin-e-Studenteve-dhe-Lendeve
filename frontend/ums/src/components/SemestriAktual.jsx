@@ -19,9 +19,10 @@ const SemestriAktual = ({token}) => {
   const [semesterId, setSemesterId] = useState(1);
   const [currentSemester, setCurrentSemester] = useState({});
   const [studentCounts, setStudentCounts] = useState({});
+  const isEnrolled = false;
 
   const handleClick = (id, name, professor, professorId) => {
-    navigate("/postimi", { state: { id, name, professor, professorId } });
+    navigate("/postimi", { state: { id, name, professor, professorId} });
   };
 
   const handleIncrease = () => {

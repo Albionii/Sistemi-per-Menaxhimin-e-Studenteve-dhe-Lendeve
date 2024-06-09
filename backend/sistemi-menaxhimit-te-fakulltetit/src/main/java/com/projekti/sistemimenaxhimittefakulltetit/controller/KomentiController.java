@@ -6,6 +6,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.entities.Postimi;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.Salla;
 import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.request.KomentiReq;
+import com.projekti.sistemimenaxhimittefakulltetit.response.KomentetResponse;
 import com.projekti.sistemimenaxhimittefakulltetit.service.KomentiService;
 import com.projekti.sistemimenaxhimittefakulltetit.service.PostimiService;
 import com.projekti.sistemimenaxhimittefakulltetit.service.UserService;
@@ -20,18 +21,33 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/komenti")
+@RequestMapping("api/komenti")
 public class KomentiController {
     private final KomentiService komentiService;
     private final PostimiService postimiService;
     private final UserService userService;
 
     @GetMapping("/postimi/{postID}")
-    public ResponseEntity<List<Komenti>> findAllKomentet(@PathVariable Long postID){
+    public KomentetResponse findAllKomentet(@PathVariable Long postID,
+                                            @RequestParam int start,
+                                            @RequestParam int end){
         Postimi postimi = postimiService.findPostimiById(postID);
         List<Komenti> komentet = postimi.getKomentet();
         Collections.reverse(komentet);
-        return ResponseEntity.ok().body(komentet);
+
+        int adjustedEnd = Math.min(end, komentet.size());
+
+        KomentetResponse komentetResponse = new KomentetResponse();
+
+        komentetResponse.setKomentet(komentet.subList(start, adjustedEnd));
+        komentetResponse.setStart(start);
+        komentetResponse.setEnd(adjustedEnd);
+        if (adjustedEnd < komentet.size()) {
+            komentetResponse.setHasMore(true);
+        }else {
+            komentetResponse.setHasMore(false);
+        }
+        return komentetResponse;
     }
 
     @GetMapping("/{id}")
@@ -42,9 +58,25 @@ public class KomentiController {
     }
 
     @GetMapping("/user/{postId}")
-    public ResponseEntity<List<Komenti>> findUserKommenti(@PathVariable Long postId, @RequestHeader("Authorization")String token) throws Exception {
+    public KomentetResponse findUserKommenti(@PathVariable Long postId,
+                                                          @RequestParam int start,
+                                                          @RequestParam int end,
+                                                          @RequestHeader("Authorization")String token) throws Exception {
         User user = userService.findUserByJwtToken(token);
-        return ResponseEntity.ok().body(komentiService.getKomentetUser(postId, user));
+        List<Komenti> userComments = komentiService.getKomentetUser(postId, user);
+        Collections.reverse(userComments);
+        int adjustedEnd = Math.min(end, userComments.size());
+        KomentetResponse komentetResponse = new KomentetResponse();
+
+        komentetResponse.setKomentet(userComments.subList(start, adjustedEnd));
+        komentetResponse.setStart(start);
+        komentetResponse.setEnd(adjustedEnd);
+        if (adjustedEnd < userComments.size()) {
+            komentetResponse.setHasMore(true);
+        }else {
+            komentetResponse.setHasMore(false);
+        }
+        return komentetResponse;
     }
 
 

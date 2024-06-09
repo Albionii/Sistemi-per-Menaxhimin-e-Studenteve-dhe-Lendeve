@@ -111,6 +111,7 @@ function Profili({ changeLoggedInState, user, setUserData }) {
                               handleClose={handleClose}
                               setUserData={setUserData}
                               user={user}
+                              token={token}
                             />
                           </Box>
                         </CardMedia>

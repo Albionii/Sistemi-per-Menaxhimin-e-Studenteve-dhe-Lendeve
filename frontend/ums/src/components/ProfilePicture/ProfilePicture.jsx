@@ -31,7 +31,10 @@ const ProfilePicture = ({
   setUserData,
   user,
 }) => {
-  const token = getToken();
+  let token  = getToken();
+  useEffect(() => {
+    token = getToken();
+  }, [])
 
   const [src, setSrc] = useState(null);
   const [preview, setPreview] = useState(null);

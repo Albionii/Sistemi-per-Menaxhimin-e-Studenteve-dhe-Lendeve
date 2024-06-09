@@ -6,6 +6,7 @@ import com.projekti.sistemimenaxhimittefakulltetit.entities.User;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.PostimiRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.repository.ProfesoriLendaRepository;
 import com.projekti.sistemimenaxhimittefakulltetit.request.PostimiReq;
+import com.projekti.sistemimenaxhimittefakulltetit.response.PostimetResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -58,24 +60,66 @@ public class PostimiService {
         postimiRepository.delete(postimi);
     }
 
-    public List<Postimi> getPostimetOfLigjerata(Long id) {
+    public PostimetResponse getPostimetOfLigjerata(Long id, int start, int end) {
         ProfesoriLenda profesoriLenda = profesoriLendaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Ligjerata nuk u gjet!!!!"));
 
-        return profesoriLenda.getPostimet();
+        List<Postimi> postimet = profesoriLenda.getPostimet();
+        Collections.reverse(postimet);
+
+        int adjustedEnd = Math.min(end, postimet.size());
+
+        PostimetResponse postimetResponse = new PostimetResponse();
+
+        postimetResponse.setPostimet(postimet.subList(start, adjustedEnd));
+        postimetResponse.setStart(start);
+        postimetResponse.setEnd(adjustedEnd);
+
+        if (adjustedEnd < postimet.size()) {
+            postimetResponse.setHasMore(true);
+        }else {
+            postimetResponse.setHasMore(false);
+        }
+
+
+
+        return postimetResponse;
     }
 
-    public List<Postimi> getPostimetOfUser(User user, ProfesoriLenda profesoriLenda) {
+    public PostimetResponse getPostimetOfUser(User user, ProfesoriLenda profesoriLenda, int start, int end) {
 
-        List<Postimi> postimetLigjerata = getPostimetOfLigjerata(profesoriLenda.getId());
+        List<Postimi> postimetLigjerata = profesoriLenda.getPostimet();
         List<Postimi> postimetUser = new ArrayList<>();
+
+        int count = 0;
+
 
         for (Postimi postimi : postimetLigjerata) {
             if (postimi.getUser() == user) {
                 postimetUser.add(postimi);
+                count++;
             }
         }
+        Collections.reverse(postimetUser);
 
-        return postimetUser;
+
+
+        int adjustedEnd = Math.min(end, postimetUser.size());
+
+        PostimetResponse postimetResponse = new PostimetResponse();
+        postimetResponse.setPostimet(postimetUser.subList(start, adjustedEnd));
+        postimetResponse.setStart(0);
+        postimetResponse.setEnd(adjustedEnd);
+
+        System.out.println("adjustedEnd:" + adjustedEnd + "<->" + "size: " + postimetUser.size() + "<-> Count: " + count);
+
+
+        if (adjustedEnd < postimetUser.size()) {
+            postimetResponse.setHasMore(true);
+        }else {
+            postimetResponse.setHasMore(false);
+        }
+
+        return postimetResponse;
     }
 }

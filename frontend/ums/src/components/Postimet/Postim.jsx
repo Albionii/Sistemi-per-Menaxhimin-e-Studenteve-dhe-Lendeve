@@ -81,7 +81,10 @@ const Postim = ({
     updateKomenti,
     toggleViewMyComment,
     viewMyComment,
-    userKomentet,
+    fetchMoreData,
+    hasMore,
+    setEnd,
+    setUserEnd
   } = useKomenti(post.id, token);
 
   const komento = (e) => {
@@ -98,18 +101,16 @@ const Postim = ({
     }));
   };
 
-  const loadMoreComments = () => {
-    setDisplayedCommentsCount((prevCount) => prevCount + 10);
-  };
-
   const handleShowComments = () => {
     setShowComments(true);
-    setDisplayedCommentsCount(5);
+    setEnd(5);
+    setUserEnd(5);
   };
 
   const handleCloseComments = () => {
     setShowComments(false);
-    setDisplayedCommentsCount(0);
+    setEnd(5);
+    setUserEnd(5);
   };
 
   return (
@@ -173,32 +174,33 @@ const Postim = ({
               sx={{ background: colors.primary[600] }}
               borderTop={"3px solid" + colors.primary[400]}
             >
-              <Box>
-                <IconButton
-                  onClick={() => {
-                    toggleViewMyComment();
-                  }}
-                >
-                  <FilterAltIcon />
-                  {viewMyComment ? (
-                    <Typography>Mine Only</Typography>
-                  ) : (
-                    <Typography>See all</Typography>
-                  )}
-                </IconButton>
-                <Suspense
-                  fallback={
-                    <Box sx={{ textAlign: "center" }}>
-                      <OrbitProgress
-                        variant="track-disc"
-                        color="#006cff"
-                        size="medium"
-                        text=""
-                        textColor=""
-                      />
-                    </Box>
-                  }
-                >
+              <Suspense
+                fallback={
+                  <Box sx={{ textAlign: "center" }}>
+                    <OrbitProgress
+                      variant="track-disc"
+                      color="#006cff"
+                      size="medium"
+                      text=""
+                      textColor=""
+                    />
+                  </Box>
+                }
+              >
+                <Box>
+                  <IconButton
+                    onClick={() => {
+                      toggleViewMyComment();
+                    }}
+                  >
+                    <FilterAltIcon />
+                    {viewMyComment ? (
+                      <Typography>Mine Only</Typography>
+                    ) : (
+                      <Typography>See all</Typography>
+                    )}
+                  </IconButton>
+
                   <Komentet
                     deleteKomenti={deleteKomenti}
                     komentet={komentet}
@@ -206,15 +208,14 @@ const Postim = ({
                     token={token}
                     user={user}
                     updateKomenti={updateKomenti}
-                    displayedCommentsCount={displayedCommentsCount}
                     isEnrolled={isEnrolled}
                   />
-                </Suspense>
-              </Box>
+                </Box>
+              </Suspense>
 
-              {displayedCommentsCount < komentet.length && (
+              {hasMore && (
                 <Button
-                  onClick={loadMoreComments}
+                  onClick={fetchMoreData}
                   sx={{
                     "&:hover": {
                       textDecoration: "underline",

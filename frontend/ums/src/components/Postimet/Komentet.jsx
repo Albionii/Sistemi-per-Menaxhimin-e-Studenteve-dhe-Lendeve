@@ -2,11 +2,11 @@ import React from 'react';
 import Komenti from './Komenti';
 import { Box, IconButton , Typography} from '@mui/material';
 
-const Komentet = ({ komentet, postimId, token, user, deleteKomenti, updateKomenti, displayedCommentsCount, isEnrolled }) => {
+const Komentet = ({ komentet, postimId, token, user, deleteKomenti, updateKomenti, isEnrolled }) => {
   return (
     <Box>
       
-      {komentet.slice(0, displayedCommentsCount).map((koment) => (
+      {komentet.map((koment) => (
         <Komenti 
           key={koment.id}
           koment={koment}
