@@ -7,6 +7,7 @@ import PreviewButton from "./PreviewButton";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
 
+
 export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonName, token }) {
   const [formData, setFormData] = useState([]);
   const [urlGetAll, messageGetAll] = API.getAll();
@@ -24,7 +25,7 @@ export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonN
     getAllRows();
   };
 
-  const getAllRows = async () => {
+  const getAllRows =  async () => {
     try {
       const fetchAllProfesorLenda = await axios.get(urlGetAll, {
         headers: {
@@ -95,7 +96,7 @@ export default function BottomTable({ theKey, rows, API, buttonsAvailable, jsonN
                 }}
               >
                 {jsonName.map(jsonNames => (
-                  <td className="px-4 py-3 font-medium whitespace-nowrap">
+                  <td key={jsonNames} className="px-4 py-3 font-medium whitespace-nowrap">
                     <div className="flex items-center justify-center">
                       {accessJsonNames(p, jsonNames) + ""}
                     </div>

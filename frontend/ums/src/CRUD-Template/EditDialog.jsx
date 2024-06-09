@@ -1,4 +1,4 @@
-import { updateAfatiByID, updateDepartamentiByID, updateFakultetiByID, updateGrupiById, updateLajmiById, updateLendaByID, updateLigjerataByID, updateOrariById, updateOrariLigjerataById, updateProfessorByID, updateProvimiByID, updateSallaByID, updateSemesterById, updateStudentByID, updateUserByID } from "../APIRequests.js";
+import { updateAfatiByID, updateDepartamentiByID, updateFakultetiByID, updateGrupiById, updateLajmiById, updateLendaByID, updateLigjerataByID, updateOrariById, updateOrariLigjerataById, updateProfessorByID, updateProvimiByID, updateSemesterById, updateStudentByID, updateUserByID } from "../APIRequests.js";
 import { AfatiEditButton } from "./AddEditButtons/AddEditAfati.jsx";
 import { departamentiEditButton } from "./AddEditButtons/AddEditDepartamenti.jsx";
 import { fakultetiEditButton } from "./AddEditButtons/AddEditFakulteti.jsx";
@@ -10,7 +10,6 @@ import { OrariEditButton } from "./AddEditButtons/AddEditOrari.jsx";
 import { OrariLigjerataEditButton } from "./AddEditButtons/AddEditOrariLigjerata.jsx";
 import { professorEditButton } from "./AddEditButtons/AddEditProfesori.jsx";
 import { provimiEditButton } from "./AddEditButtons/AddEditProvimet.jsx";
-import { sallaEditButton } from "./AddEditButtons/AddEditSalla.jsx";
 import { SemesterEditButton } from "./AddEditButtons/AddEditSemester.jsx";
 import { studentetEditButton } from "./AddEditButtons/AddEditStudentet.jsx";
 import { userRoleEditButton } from "./AddEditButtons/AddEditUserRole.jsx";
@@ -26,8 +25,6 @@ export default function EditDialog({setConfirmExit, item, onLigjerataEdit, API, 
         return ligjerataEditButton(prompt);
       case updateLendaByID()[0] : 
         return lendaEditButton(prompt);
-      case updateSallaByID()[0]:
-        return sallaEditButton(prompt);
       case updateProfessorByID()[0]:
         return professorEditButton(prompt);
       case updateStudentByID()[0]:

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { getAllLendet, getAllProfessors, getAllSemester} from '../../APIRequests';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
-export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [urlCreate, errorCreate] = API.create();
@@ -91,7 +91,11 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -216,7 +220,7 @@ export const ligjerataAddButton = ({setConfirmExit, renderBot, formDataJson, API
     </>
   )
 }
-export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -285,7 +289,11 @@ export const ligjerataEditButton = ({setConfirmExit, item, onLigjerataEdit, API}
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       

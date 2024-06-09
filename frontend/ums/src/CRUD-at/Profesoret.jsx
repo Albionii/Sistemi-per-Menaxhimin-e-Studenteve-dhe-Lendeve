@@ -8,7 +8,7 @@ import {
   updateProfessorByID,
   deleteProfessorByID
 } from '../APIRequests'
-function Profesoret() {
+function Profesoret({token}) {
   const rowsNames = [
     "Emri",
     "Mbiemri",
@@ -59,6 +59,7 @@ function Profesoret() {
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

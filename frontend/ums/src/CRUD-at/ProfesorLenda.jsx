@@ -8,7 +8,7 @@ import {
   updateLigjerataByID,
   deleteLigjerataByID,
 } from '../APIRequests'
-function ProfesorLenda() {
+function ProfesorLenda({token}) {
   const rowsNames = [
     "ID",
     "Emri",
@@ -70,6 +70,7 @@ function ProfesorLenda() {
         formDataJson={formDataJson}
         buttonsAvailable={buttonsAvailable}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

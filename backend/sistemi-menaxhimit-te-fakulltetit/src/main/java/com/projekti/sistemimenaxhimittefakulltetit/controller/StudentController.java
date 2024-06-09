@@ -125,12 +125,6 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/getStudentByUserID/{id}")
-    public Student getStudent(@PathVariable Long id) {
-        return studentService.findStudentByUserId(id);
-    }
-
-
     @GetMapping("/paraqitjaProvimit")
     public ResponseEntity<List<Provimi>> getProvimet() throws Exception {
         List<Provimi> provimet = provimiService.getAllProvimet();
@@ -161,12 +155,6 @@ public class StudentController {
         List<StudentProvimi> studentProvimi = studentPrvService.findAllStudentProvimiByStudentId(id);
         return ResponseEntity.ok().body(studentProvimi);
     }
-
-//    @GetMapping("/paraqitjaProvimit/{id}")
-//    public ResponseEntity<StudentProvimi> findParaqitjaProvimitByID(@PathVariable Long id) throws Exception {
-//        StudentProvimi studentProvimi = studentPrvService.findById(id);
-//        return ResponseEntity.ok().body(studentProvimi);
-//    }
 
     @DeleteMapping("/paraqitjaProvimit/delete/{id}")
     public void deleteParaqitjaProvimitByID(@PathVariable Long id){
@@ -296,25 +284,7 @@ public class StudentController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteStudentByID(@PathVariable Long id)
-    {
-        Student student = studentService.getStudentByID(id).get();
-        studentService.deleteByID(id);
-        userService.deleteUserById(student.getUser().getId());
-    }
 
-    @GetMapping("/getAllStudents")
-    public ResponseEntity<List<Student>> getAllStudents(){
-        List<Student> students = studentService.getAllStudents();
-        return ResponseEntity.ok().body(students);
-    }
-
-    @GetMapping("/getStudent/{id}")
-    public ResponseEntity<Student> getStudentByID(@PathVariable Long id){
-        Student student = studentService.getStudentByID(id).get();
-        return ResponseEntity.ok().body(student);
-    }
 
     @PostMapping("/{assignmentId}/upload/{submissionId}")
     public ResponseEntity<String> uploadFile(
@@ -345,9 +315,6 @@ public class StudentController {
             assignmentSubmissionRepository.save(existingSubmission);
 
         }
-
-
-
         return ResponseEntity.ok("Files uploaded successfully");
     }
 
@@ -364,15 +331,7 @@ public class StudentController {
     }
 
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student s) {
-        Student student = studentService.updateStudent(id, s);
-        if (student != null) {
-            return new ResponseEntity<>(student, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+
 
 
     @PostMapping("/submit/{id}")

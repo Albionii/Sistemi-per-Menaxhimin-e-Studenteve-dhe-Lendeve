@@ -8,7 +8,7 @@ import {
   updateStudentByID,
   deleteStudentByID
 } from '../APIRequests'
-function Studentet() {
+function Studentet({token}) {
   const rowsNames = [
     "Emri",
     "Mbiemri",
@@ -59,6 +59,7 @@ function Studentet() {
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

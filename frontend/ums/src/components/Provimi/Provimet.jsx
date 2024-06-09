@@ -19,7 +19,6 @@ import { Flowbite, } from "flowbite-react";
 
 
 const Provimet = ({ token }) => {
-  console.log("TOKEN " + JSON.stringify(token));
   const [provimet, setProvimet] = useState([]);
   const [paraqitjet, setParaqitjet] = useState([]);
   const theme = useTheme();

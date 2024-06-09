@@ -94,7 +94,6 @@ public class ProfessorController {
     }
 
 
-
     @GetMapping("/get/provimi/{id}")
     public StudentProvimi getProvimi(@PathVariable Long id) {
         return studentPrvService.findById(id);
@@ -144,40 +143,6 @@ public class ProfessorController {
         return map;
     }
 
-
-    @GetMapping("")
-    public ResponseEntity<List<Professor>> getProfessors(){
-        List<Professor> professors = professorService.getProfessors();
-        return new ResponseEntity<>(professors, HttpStatus.OK);
-    }
-
-    @GetMapping("/getProfessor/{id}")
-    public Optional<Professor> getProfessor(@PathVariable Long id){
-        return professorService.findProfById(id);
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<Professor> createProfessor(@RequestBody Professor p) throws Exception {
-        Professor professor = professorService.createProfessor(p);
-        return ResponseEntity.ok().body(professor);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void deleteProfessorByID(@PathVariable Long id){
-        Professor professor = professorService.findProfessorById(id);
-        professorService.deleteProfessorByID(id);
-        userService.deleteUserById(professor.getUser().getId());
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Professor> updateProfessor(@PathVariable Long id, @RequestBody Professor p) {
-        Professor professor = professorService.updateProfessor(id, p);
-        if (professor != null) {
-            return new ResponseEntity<>(professor, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 
 
 
