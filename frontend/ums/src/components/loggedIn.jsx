@@ -8,6 +8,7 @@ import { OrbitProgress } from "react-loading-indicators";
 import { getToken } from "../GetToken.js";
 import { useTheme } from '@mui/material';
 import { tokens } from "../theme.js";
+import RedirectByRole from "./RedirectByRole.jsx";
 
 
 const Provimet = lazy(() => import('./Provimi/Provimet.jsx'));
@@ -108,6 +109,10 @@ function loggedIn({ changeLoggedInState }) {
     )
   }
 
+  function returnTo() {
+    
+  }
+
 
   return (
     <>
@@ -197,8 +202,8 @@ function loggedIn({ changeLoggedInState }) {
 
 
 
-            {user.role !== "ROLE_ADMIN" ? <Route path="*" element={<Home />} /> : <Route path="*" element={<CrudCategories roli={user.role} />} />}
-
+            {/* {user.role !== "ROLE_ADMIN" ? <Route path="*" element={<Home />} /> : <Route path="*" element={<CrudCategories roli={user.role} />} />} */}
+            <Route path="*" element={<RedirectByRole role={user.role}></RedirectByRole>}/>
 
 
 
