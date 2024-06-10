@@ -44,6 +44,7 @@ import Lajmi from "../CRUD-at/LajmiCrud.jsx";
 import OrariLigjerata from "../CRUD-at/OrariLigjerataCrud.jsx";
 import { getToken } from "../GetToken.js";
 import AfatiCrud from "../CRUD-at/AfatiCrud.jsx";
+import ScreenSideBar from "./global/ScreenSideBar.jsx";
 
 
 function loggedIn({ changeLoggedInState}) {
@@ -109,12 +110,17 @@ function loggedIn({ changeLoggedInState}) {
     )
   }
 
+  
   return (
     <>
       
-        <Sidebar user={user} />
+
+        {/* <Sidebar user={user}/> */}
+
+        <ScreenSideBar user={user} isSmallScreen={false}/>
+        
         <main className="flex-1 transition">
-          <Topbar />
+          <Topbar user={user}/>
           <Routes>
             <Route path="/" element={<Home token={token} user={user.role}/>} />
             <Route path="/dashboard" element={<Dashboard />} />
@@ -123,7 +129,7 @@ function loggedIn({ changeLoggedInState}) {
             <Route path="/cruds" element={<CrudCategories role={user.role} />} />
             <Route path="/transkripta" element={<Transkripta token={token} />} />
 
-          <Route path="/paraqitura" element={<Paraqitura token={token} />} />
+            <Route path="/paraqitura" element={<Paraqitura token={token} />} />
 
             <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} setUserData={setUserData} user={user} />} />
             <Route path="/postimi" element={<Postimi token={token}  user={user}/>} />

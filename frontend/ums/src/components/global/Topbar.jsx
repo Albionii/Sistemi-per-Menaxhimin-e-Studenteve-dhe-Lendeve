@@ -13,8 +13,10 @@ import Header from "../Header"
 import LiveClock from "../LiveClock";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Cookies from 'js-cookie';
+import Sidebar from "./Sidebar";
+import ScreenSideBar from "./ScreenSideBar";
 
-const Topbar = () => {
+const Topbar = ({user}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -28,6 +30,7 @@ const Topbar = () => {
   return (
     <Box display="flex" justifyContent="space-between" pt={2} pr={2} pl={2} pb={1}>
       {/* SEARCH BAR */}
+      <ScreenSideBar user={user} isSmallScreen={true}/>
       <Box
         display="flex"
         backgroundColor={colors.primary[400]}

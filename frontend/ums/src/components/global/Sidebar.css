@@ -18,29 +18,33 @@
   z-index: 10;
 }
 
+
+
 /* Styles for mobile screens */
 @media screen and (max-width: 768px) {
   .prosidebar{
     width: 100vw;
     height: 100vh;
     position: absolute;
-  }
-
+    }
+    
   .box {
     position: fixed;
     width: 270px;
-  }
-  
+    margin-top: -15px;
+    margin-left: -15px;
+    }
+    
   .menu.collapsed {
     overflow: hidden;
-  }
+    }
   .prosidebar.collapsed {
     height: 80px;
     overflow: hidden;
   }
   .box.collapsed {
     width: 80px;
-    position: absolute;
+    position: relative;
   }
   
 }

@@ -7,11 +7,6 @@ import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-// import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-// import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-// import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-// import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-// import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -66,7 +61,7 @@ const SubItem = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ user, isMobile, isSmallScreen }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -105,9 +100,10 @@ const Sidebar = ({ user }) => {
   return (
     <Box
       className={`box ${isCollapsed ? "collapsed" : ""}`}
+      // style={isMobile&&{display:"none"}}
       sx={{
         "& .pro-sidebar-inner": {
-          background: `${colors.primary[400]} !important`,
+          background: isSmallScreen? (isCollapsed?`${colors.primary[500]} !important`:`${colors.primary[400]} !important`):`${colors.primary[400]} !important`,
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -121,12 +117,14 @@ const Sidebar = ({ user }) => {
         "& .pro-menu-item.active": {
           color: "#6870fa !important",
         },
+        display:isMobile?"none":"inline-block"
       }}
     >
       <ProSidebar
         id="sidebar"
         collapsed={isCollapsed}
         className={`prosidebar ${isCollapsed ? "collapsed" : ""}`}
+        style={{display: isMobile ?"none":"inline-block"}}
       >
         <Menu className={`menu ${isCollapsed ? "collapsed" : ""}`}>
           {/* LOGO AND MENU ICON */}
