@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 
-export const userRoleEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const userRoleEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -33,7 +33,11 @@ export const userRoleEditButton = ({setConfirmExit, item, onLigjerataEdit, API})
     e.preventDefault();
     try {
       console.log(formData)
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       

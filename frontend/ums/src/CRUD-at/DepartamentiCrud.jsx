@@ -9,7 +9,7 @@ import {
     deleteDepartamentiByID
 } from '../APIRequests'
 
-function DepartamentiCrud() {
+function DepartamentiCrud({token}) {
     const rowsNames = [
         "Kodi",
         "Emri",
@@ -33,36 +33,8 @@ function DepartamentiCrud() {
         fakulteti: {
             emri: "",
             lokacioni: "",
-            email: "",
-            // user: {
-            //     id: null,
-            //     firstName: "",
-            //     lastName: "",
-            //     email: "",
-            //     dateLindja: "",
-            //     gjinia: "",
-            //     nrTelefonit: "",
-            //     qyteti: "",
-            //     zipcode: "",
-            //     shteti: "",
-            //     rruga: "",
-            //     role: ""
-            // }
-        },
-        // user: {
-        //     id: null,
-        //     firstName: "",
-        //     lastName: "",
-        //     email: "",
-        //     dateLindja: "",
-        //     gjinia: "",
-        //     nrTelefonit: "",
-        //     qyteti: null,
-        //     zipcode: "",
-        //     shteti: null,
-        //     rruga: null,
-        //     role: ""
-        // }
+            email: ""
+        }
     }
 
     return (
@@ -77,6 +49,7 @@ function DepartamentiCrud() {
                 buttonsAvailable={buttonsAvailable}
                 formDataJson={formDataJson}
                 jsonName={jsonNames}
+                token={token}
             />
         </>
     )

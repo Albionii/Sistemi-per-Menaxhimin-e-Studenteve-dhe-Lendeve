@@ -172,11 +172,11 @@ function loggedIn({ changeLoggedInState}) {
           <Route path="/studentet" element={<Studentet token={token} />} />
 
 
-          <Route path="/DepartamentiCrud" element={<DepartamentiCrud />}></Route>
+          <Route path="/DepartamentiCrud" element={<DepartamentiCrud token={token}/>}></Route>
 
           <Route path="/FakultetiCrud" element={<FakultetetCrud token={token} />}></Route>
 
-          <Route path="/userRole" element={<UserRole />} />
+          <Route path="/userRole" element={<UserRole token={token}/>} />
 
           <Route path="/semestri" element={<AltiniCrud token={token} />} />
 

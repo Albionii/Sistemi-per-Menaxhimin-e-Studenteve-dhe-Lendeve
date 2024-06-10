@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 import { getAllFakulteti } from '../../APIRequests';
-export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, API}) => {
+export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -23,7 +23,11 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
 
   const getFakultetet = async () => {
     try{
-      const response = await axios.get(urlGetFakultetet)
+      const response = await axios.get(urlGetFakultetet,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      })
       setFakultetet(response.data);
     }catch(error){
       API.errorAlert(fakultetetError);
@@ -73,8 +77,11 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(JSON.stringify(formData))
-      await axios.post(urlCreate, formData);
+      await axios.post(urlCreate, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       renderBot();
     } catch (error) {
       API.errorAlert(errorCreate);
@@ -210,7 +217,7 @@ export const departamentiAddButton = ({setConfirmExit, renderBot, formDataJson, 
     </>
   )
 }
-export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, API}) => {
+export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, API, token}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -230,7 +237,11 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
 
   const getFakultetet = async () => {
     try{
-      const response = await axios.get(urlGetFakultetet)
+      const response = await axios.get(urlGetFakultetet,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      })
       setFakultetet(response.data);
     }catch(error){
       API.errorAlert(fakultetetError);
@@ -279,7 +290,11 @@ export const departamentiEditButton = ({setConfirmExit, item, onLigjerataEdit, A
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(urlUpdate + item.id, formData);
+      await axios.put(urlUpdate + item.id, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
       setConfirmExit();
       onLigjerataEdit();
       

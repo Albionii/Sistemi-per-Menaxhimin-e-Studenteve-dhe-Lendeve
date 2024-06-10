@@ -35,9 +35,9 @@ public class AdminController {
     private final ProfessorService professorService;
     private final StudentService studentService;
     private final ProfesoriLendaService profesoriLendaService;
-    private FakultetiService fakultetiService;
-    private UserServiceImpl userServiceImpl;
-
+    private final FakultetiService fakultetiService;
+    private final UserServiceImpl userServiceImpl;
+    private final DepartamentiService departamentiService;
 
 
     @DeleteMapping("/{id}")
@@ -45,6 +45,22 @@ public class AdminController {
             @RequestHeader("Authorization") String jwt,
             @PathVariable Long id){
         userService.deleteUserById(id);
+    }
+
+    @PutMapping("/updateRole/{id}")
+    public ResponseEntity<User> updateUserRole(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody User u) throws Exception {
+        User user = userService.updateRole(id, u);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<User>> allUsers(){
+        List<User> users = userService.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     //Afati
@@ -517,6 +533,40 @@ public class AdminController {
         fakultetiService.deleteFakultetiById(id);
     }
 
+    //Departamenti
+
+    @GetMapping("/departamenti/{id}")
+    public ResponseEntity<Optional<Departamenti>> getDepartamenti(@PathVariable Long id){
+        return ResponseEntity.ok().body(departamentiService.findByDepartamentiId(id));
+    }
+
+    @GetMapping("/departamenti")
+    public ResponseEntity<List<Departamenti>> getAllDepartamenti()
+    {
+        return ResponseEntity.ok().body(departamentiService.findAll());
+    }
+
+
+    @PutMapping("/departamenti/update/{id}")
+    public ResponseEntity<Departamenti> updateDepartamenti(@PathVariable Long id, @RequestBody Departamenti d) {
+        Departamenti departamenti = departamentiService.updateDepartamenti(id, d);
+        if (departamenti != null) {
+            return new ResponseEntity<>(departamenti, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/departamenti/delete/{id}")
+    public void deleteDepartamentiByID(@PathVariable Long id){
+        departamentiService.deleteDepartamentiById(id);
+    }
+
+    @PostMapping("/departamenti/create")
+    public ResponseEntity<Departamenti> createDepartamenti(@RequestBody Departamenti departamenti) throws Exception {
+        Departamenti createdDepartamenti = departamentiService.createDepartamenti(departamenti);
+        return ResponseEntity.ok().body(createdDepartamenti);
+    }
 
 
 

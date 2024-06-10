@@ -8,7 +8,7 @@ import {
   getLendaByID,
   updateUserByID
 } from '../APIRequests'
-function UserRole() {
+function UserRole({token}) {
   const rowsNames = [
     "ID",
     "Emri",
@@ -45,6 +45,7 @@ function UserRole() {
         buttonsAvailable={buttonsAvailable}
         formDataJson = {formDataJson}
         jsonName={jsonNames}
+        token={token}
          />
     </>
   )

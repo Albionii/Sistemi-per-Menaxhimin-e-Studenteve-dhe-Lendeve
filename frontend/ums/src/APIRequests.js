@@ -153,13 +153,13 @@
 
 
   export const getAllUsers = () => {
-    const url = BASE_URL + `/api/user`;
+    const url = BASE_URL + `/getAllUsers`;
     return [url,"Gabim në marrjen e userave!"];
   }
  
   export const updateUserByID = () => {
-    const url = BASE_URL + `/api/user/updateRole/`;
-    return [url, "Gabim në përditësimin e ligjeratës!"];
+    const url = BASE_URL + `/updateRole/`;
+    return [url, "Gabim në përditësimin e rolit!"];
   }
 
   //Paraqitja Provimit 
