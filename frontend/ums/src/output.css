@@ -4854,6 +4854,11 @@ body{
     background-color: rgb(127 29 29 / var(--tw-bg-opacity));
   }
 
+  .dark\:bg-slate-600 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+  }
+
   .dark\:bg-teal-200 {
     --tw-bg-opacity: 1;
     background-color: rgb(153 246 228 / var(--tw-bg-opacity));
@@ -5479,6 +5484,11 @@ body{
   .dark\:focus\:ring-gray-900:focus {
     --tw-ring-opacity: 1;
     --tw-ring-color: rgb(17 24 39 / var(--tw-ring-opacity));
+  }
+
+  .dark\:focus\:ring-green-200:focus {
+    --tw-ring-opacity: 1;
+    --tw-ring-color: rgb(187 247 208 / var(--tw-ring-opacity));
   }
 
   .dark\:focus\:ring-green-500:focus {

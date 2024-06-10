@@ -176,14 +176,15 @@ const Sidebar = ({ user, isMobile, isSmallScreen }) => {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
+            {user.role !== "ROLE_ADMIN" && <Item
               title="Dashboard"
               to="/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
               handleCollapse={handleCollapse}
-            />
+            />}
+            
 
             <Typography
               variant="h6"
@@ -268,13 +269,13 @@ const Sidebar = ({ user, isMobile, isSmallScreen }) => {
               handleCollapse={handleCollapse}
             />
 
-            <Typography
+           {user.role === "ROLE_STUDENT" && <Typography
               variant="h6"
               color={colors.gray[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
               Charts
-            </Typography>
+            </Typography>}
             {role === "ROLE_STUDENT" && (
               <Item
                 title="Paraqit Provimet"

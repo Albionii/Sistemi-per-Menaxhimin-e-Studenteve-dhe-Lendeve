@@ -6,6 +6,8 @@ import Topbar from "./global/Topbar.jsx"
 import { getFromCookies } from '../getUserFromJWT.js';
 import { OrbitProgress } from "react-loading-indicators";
 import { getToken } from "../GetToken.js";
+import { useTheme } from '@mui/material';
+import { tokens } from "../theme.js";
 
 
 const Provimet = lazy(() => import('./Provimi/Provimet.jsx'));
@@ -44,7 +46,10 @@ const ScreenSideBar = lazy(() => import('./global/ScreenSideBar.jsx'));
 
 
 
-function loggedIn({ changeLoggedInState}) {
+function loggedIn({ changeLoggedInState }) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const token = getToken();
   const [user, setUser] = useState({
     firstName: "",
@@ -88,99 +93,116 @@ function loggedIn({ changeLoggedInState}) {
 
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
-  if(!loading){
+  //#141b2d
+  if (!loading) {
     return (
       <>
-      <div className="flex items-center justify-center w-full h-full absolute bg-slate-600" style={{zIndex: "100000", backgroundColor: "#141b2d" }}>
-        <div style={{ width: "100%", height: "100%" }} className="flex items-center justify-center w-full h-full">
-          <div style={{ display: loading ? "none" : "" }}>
-            <OrbitProgress variant="track-disc" color="#006cff" size="medium" text="" textColor="" />
+        <div className="flex items-center justify-center w-full h-full absolute " style={{ zIndex: "100000", background: colors.primary[500] }}>
+          <div style={{ width: "100%", height: "100%" }} className="flex items-center justify-center w-full h-full">
+            <div style={{ display: loading ? "none" : "" }}>
+              <OrbitProgress variant="track-disc" color="#006cff" size="medium" text="" textColor="" />
+            </div>
           </div>
         </div>
-      </div>
       </>
     )
   }
 
-  
+
   return (
     <>
-        <ScreenSideBar user={user} isSmallScreen={false}/>        
-        <main className="flex-1 transition">
-          <Topbar user={user}/>
-          <Suspense fallback={
-            <div className="flex items-center justify-center w-full h-full absolute bg-slate-600" style={{zIndex: "100000", backgroundColor: "#141b2d" }}>
-              <div style={{ width: "100%", height: "100%" }} className="flex items-center justify-center w-full h-full">
-                <div style={{ display: loading ? "none" : "" }}>
-                  <OrbitProgress variant="track-disc" color="#006cff" size="medium" text="" textColor="" />
-                </div>
-              </div>
-          </div>
-          }>
+      <ScreenSideBar user={user} isSmallScreen={false} />
+      <main className="flex-1 transition">
+        <Topbar user={user} />
+        <Suspense >
           <Routes>
-            <Route path="/" element={<Home token={token} user={user.role}/>} />
+            {user.role !== "ROLE_ADMIN" ? <Route path="/" element={<Home />} /> : <Route path="/" element={<CrudCategories roli={user.role} />} />}
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} user={user.role}/>} />
-            <Route path="/cruds" element={<CrudCategories roli={user.role} />} />
+
+            {/* VEQ PER ADMIN */}
+            {user.role === "ROLE_ADMIN" ? <Route path="/profesorLenda" element={<ProfesorLenda token={token} />} /> : null}
+            {/* <Route path="/provimi" element={<ProvimiCRUD token={token} />} />
+            <Route path="/profesoret" element={<Profesoret token={token} />} />
+            <Route path="/lendet" element={<Lenda token={token} />} />
+            <Route path="/studentet" element={<Studentet token={token} />} />
+            <Route path="/DepartamentiCrud" element={<DepartamentiCrud token={token} />}></Route>
+            <Route path="/FakultetiCrud" element={<FakultetetCrud token={token} />}></Route>
+            <Route path="/userRole" element={<UserRole token={token} />} />
+            <Route path="/semestri" element={<AltiniCrud token={token} />} />
+            <Route path="/grupi" element={<Grupi token={token} />} />
+            <Route path="/orari" element={<Orari token={token} />} />
+            <Route path="/lajmi" element={<Lajmi token={token} />} />
+            <Route path="/orariLigjerata" element={<OrariLigjerata token={token} />} />
+            <Route path="/afati" element={<AfatiCrud token={token} />} /> */}
+            {user.role === "ROLE_ADMIN" ? <Route path="/provimi" element={<ProvimiCRUD token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/profesoret" element={<Profesoret token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/lendet" element={<Lenda token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/studentet" element={<Studentet token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/DepartamentiCrud" element={<DepartamentiCrud token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/FakultetiCrud" element={<FakultetetCrud token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/userRole" element={<UserRole token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/semestri" element={<AltiniCrud token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/grupi" element={<Grupi token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/orari" element={<Orari token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/lajmi" element={<Lajmi token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/orariLigjerata" element={<OrariLigjerata token={token} />} /> : null}
+            {user.role === "ROLE_ADMIN" ? <Route path="/afati" element={<AfatiCrud token={token} />} /> : null}
+
+
+
+
+
+
+
+
+            {/* VEQ PER STUDENT */}
+            {/* <Route path="/paraqitura" element={<Paraqitura token={token} />} />
+            <Route path="/regjistroSemestrin" element={<RegjistroSemestrin token={token} />} />
+            <Route path="/regjistroGrupin" element={<RegjistroGrupin token={token} />} />
             <Route path="/transkripta" element={<Transkripta token={token} />} />
-            <Route path="/paraqitura" element={<Paraqitura token={token} />} />
+            <Route path="/provimet" element={<Provimet token={token} />} />
+            <Route path="/refuzoNoten" element={<ProvimetNota />} />
+            <Route path="/enrolled" element={<EnrolledLigjerata token={token} />} /> */}
+            {user.role === "ROLE_STUDENT" ? <Route path="/paraqitura" element={<Paraqitura token={token} />} /> : null}
+            {user.role === "ROLE_STUDENT" ? <Route path="/regjistroSemestrin" element={<RegjistroSemestrin token={token} />} /> : null}
+            {user.role === "ROLE_STUDENT" ? <Route path="/regjistroGrupin" element={<RegjistroGrupin token={token} />} /> : null}
+            {user.role === "ROLE_STUDENT" ? <Route path="/transkripta" element={<Transkripta token={token} />} /> : null}
+            {user.role === "ROLE_STUDENT" ? <Route path="/provimet" element={<Provimet token={token} />} /> : null}
+            {user.role === "ROLE_STUDENT" ? <Route path="/refuzoNoten" element={<ProvimetNota />} /> : null}
+            {user.role === "ROLE_STUDENT" ? <Route path="/enrolled" element={<EnrolledLigjerata token={token} />} /> : null}
+
+
+
+
+
+            {/* VEQ PER  PROFESOR*/}
+            {/* <Route path="/notoStudentin" element={<NotoStudentin token={token} />} /> */}
+            {user.role === "ROLE_PROFESSOR" ? <Route path="/notoStudentin" element={<NotoStudentin token={token} />} /> : null}
+
+
+            {/* PER KREJT */}
+            <Route path="/department" element={<Departmentat />} />
+            <Route path="/cruds" element={<CrudCategories roli={user.role} />} />
             <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} setUserData={setUserData} user={user} />} />
-            <Route path="/postimi" element={<Postimi token={token}  user={user}/>} />
+            <Route path="/postimi" element={<Postimi token={token} user={user} />} />
+
+            {/* ??  NA KALLXOJN DJEMT*/}
+            <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
+            <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} user={user.role} />} />
+            <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
+            <Route path="/semesters/:departamentiId" element={<Semestrat token={token} user={user} />} />
+
+            {/* ENDING */}
 
 
 
 
-          {/* {user.role === "ROLE_ADMIN" ? <Route path="/profesorLenda" element={<ProfesorLenda />} /> : null}
+            {user.role !== "ROLE_ADMIN" ? <Route path="*" element={<Home />} /> : <Route path="*" element={<CrudCategories roli={user.role} />} />}
 
-          {user.role === "ROLE_ADMIN" ? <Route path="/provimi" element={<ProvimiCRUD />} /> : null}
 
-          {user.role === "ROLE_ADMIN" ? <Route path="/profesoret" element={<Profesoret />} /> : null}
 
-          {user.role === "ROLE_ADMIN" ? <Route path="/studentet" element={<Studentet />} /> : null}
 
-          {user.role === "ROLE_ADMIN" ? <Route path="/lendet" element={<Lenda />} /> : null}
-
-          {user.role === "ROLE_ADMIN" ? <Route path="/DepartamentiCrud" element={<DepartamentiCrud />}></Route> : null}
-
-          {user.role === "ROLE_ADMIN" ? <Route path="/FakultetiCrud" element={<FakultetetCrud />}></Route> : null}
-
-          {user.role === "ROLE_ADMIN" ? <Route path="/userRole" element={<UserRole />} /> : null}
-
-          {user.role === "ROLE_ADMIN" ? <Route path="/semestri" element={<AltiniCrud />} /> : null}
-
-          {user.role === "ROLE_STUDENT" ? <Route path="/provimet" element={<Provimet token={token} />} /> : null}
-
-          {user.role === "ROLE_PROFESSOR" ? <Route path="/notoStudentin" element={<NotoStudentin />} />: null}
- */}
-          <Route path="/profesorLenda" element={<ProfesorLenda token={token}/>} />
-
-          <Route path="/provimet" element={<Provimet token={token}/>} />
-          <Route path="/notoStudentin" element={<NotoStudentin token={token}/>} />
-          <Route path="/provimi" element={<ProvimiCRUD token={token}/>} />
-          <Route path="/profesoret" element={<Profesoret token={token}/>} />
-          <Route path="/lendet" element={<Lenda token={token}/>} />
-          <Route path="/studentet" element={<Studentet token={token} />} />
-          <Route path="/DepartamentiCrud" element={<DepartamentiCrud token={token}/>}></Route>
-          <Route path="/FakultetiCrud" element={<FakultetetCrud token={token} />}></Route>
-          <Route path="/userRole" element={<UserRole token={token}/>} />
-          <Route path="/semestri" element={<AltiniCrud token={token} />} />
-
-          <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
-
-          <Route path="/semesters/:departamentiId" element={<Semestrat token={token} user={user}/>} />
-          <Route path="/department" element={<Departmentat />} />
-          <Route path="/paraqitProvimin" element={<ProvimetParaqitura />} />
-          <Route path="/refuzoNoten" element={<ProvimetNota />} />
-          <Route path="/regjistroSemestrin" element={<RegjistroSemestrin token={token}/>} />
-          <Route path="/regjistroGrupin" element={<RegjistroGrupin token={token}/>} />
-          <Route path="/grupi" element={<Grupi token={token}/>} />
-          <Route path="/orari" element={<Orari token={token}/>} />
-          <Route path="/lajmi" element={<Lajmi token={token}/>} />
-          <Route path="/orariLigjerata" element={<OrariLigjerata token={token}/>} />
-          <Route path="/afati" element={<AfatiCrud token={token}/>} />
-          <Route path="/enrolled" element={<EnrolledLigjerata token={token} />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
+          </Routes>
         </Suspense>
       </main>
     </>
