@@ -18,4 +18,8 @@ public interface ProfesoriLendaRepository extends JpaRepository<ProfesoriLenda, 
     List<ProfesoriLenda> findBySemesterId(Long id);
     List<ProfesoriLenda> findByProfessorAndSemester(Professor professor, Semester semester);
 
+    List<ProfesoriLenda> findByProfessorIdAndSemesterId(Long professorId, Long semesterId);
+
+
+
 }

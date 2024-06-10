@@ -7,20 +7,31 @@ import SchoolIcon from "@mui/icons-material/School";
 import EastIcon from "@mui/icons-material/East";
 import axios from "axios";
 
-const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
+const SemestriItem = ({
+  semester,
+  startDate,
+  endDate,
+  semestriId,
+  token,
+  user,
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const isSmallOrExtraSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+  const USER_ROLE = user.role;
+  console.log(user);
+
   const [provimet, setProvimet] = useState(0);
   const [lendet, setLendet] = useState(0);
+  const [professorLenda, setProfessorLenda] = useState(0);
 
   useEffect(() => {
     axios
       .get(`http://localhost:8080/api/student/totalProvimet/${semestriId}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then((response) => {
         console.log(response.data);
@@ -40,6 +51,22 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
       })
       .catch((error) => {
         console.error("Error fetching the total Provimet " + error);
+      });
+  }, [semestriId]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/professor/count2/${semestriId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setProfessorLenda(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching the total ligjeratat " + error);
       });
   }, [semestriId]);
 
@@ -76,8 +103,16 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
           alignItems="center"
           color="#fff"
         >
-          <Box width={isSmallOrExtraSmallScreen ? "100%" : "45%"} mb={isSmallOrExtraSmallScreen ? 2 : 0}>
-            <Typography color={colors.gray[100]} ml={1} variant="h2" fontWeight={"bold"}>
+          <Box
+            width={isSmallOrExtraSmallScreen ? "100%" : "45%"}
+            mb={isSmallOrExtraSmallScreen ? 2 : 0}
+          >
+            <Typography
+              color={colors.gray[100]}
+              ml={1}
+              variant="h2"
+              fontWeight={"bold"}
+            >
               {semester}
             </Typography>
             <Box
@@ -104,7 +139,9 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
                 alignItems={"center"}
                 flexDirection={isSmallOrExtraSmallScreen ? "column" : "row"}
               >
-                <Typography color={colors.gray[100]}>Data e perfundimit:</Typography>
+                <Typography color={colors.gray[100]}>
+                  Data e perfundimit:
+                </Typography>
                 <Box p={2} bgcolor={colors.greenAccent[600]} borderRadius={3}>
                   <Typography>{formatDate(endDate)}</Typography>
                 </Box>
@@ -112,17 +149,48 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
             </Box>
           </Box>
           <Box width={isSmallOrExtraSmallScreen ? "100%" : "50%"}>
-            <Typography variant="h4" color={colors.gray[100]}>Provimet e kaluara:</Typography>
-            <Box
-              p={2}
-              borderRadius={3}
-              style={{ backgroundColor: colors.primary[500] }}
-              mt={2}
-            >
-              <Typography variant="h1" fontWeight={"bold"} color={colors.gray[100]}>
-                {provimet}/{lendet}
-              </Typography>
-            </Box>
+            {USER_ROLE === "ROLE_STUDENT" ? (
+              <>
+                <Typography variant="h4" color={colors.gray[100]}>
+                  Provimet e kaluara:
+                </Typography>
+                <Box
+                  p={2}
+                  borderRadius={3}
+                  style={{ backgroundColor: colors.primary[500] }}
+                  mt={2}
+                >
+                  <Typography
+                    variant="h1"
+                    fontWeight={"bold"}
+                    color={colors.gray[100]}
+                  >
+                    {provimet}/{lendet}
+                  </Typography>
+                </Box>
+              </>
+            ) : (
+              <>
+                <Typography variant="h4" color={colors.gray[100]}>
+                  Ligjerata tuaja:
+                </Typography>
+                <Box
+                  p={2}
+                  borderRadius={3}
+                  style={{ backgroundColor: colors.primary[500] }}
+                  mt={2}
+                >
+                  <Typography
+                    variant="h1"
+                    fontWeight={"bold"}
+                    color={colors.gray[100]}
+                  >
+                    {professorLenda}
+                  </Typography>
+                </Box>
+              </>
+            )}
+
             <Box
               mt={2}
               display={"flex"}
@@ -135,10 +203,14 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
                 "&:hover": {
                   backgroundColor: colors.blueAccent[400],
                 },
-                cursor: 'pointer'
+                cursor: "pointer",
               }}
             >
-              <Box display={"flex"} justifyContent={"space-between"} alignItems={'center'}>
+              <Box
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
                 <SchoolIcon sx={{ mr: 1, fontSize: "25px" }} />
                 <Typography variant="h4" fontWeight={"bold"}>
                   Ligjeratat
@@ -147,7 +219,7 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
               <Box
                 p={1}
                 sx={{
-                  background: 'lightgray',
+                  background: "lightgray",
                   borderRadius: 5,
                   color: colors.blueAccent[600],
                 }}
@@ -162,7 +234,7 @@ const SemestriItem = ({ semester, startDate, endDate, semestriId, token }) => {
   );
 };
 
-const Semestrat = ({ token }) => {
+const Semestrat = ({ token, user }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -174,7 +246,7 @@ const Semestrat = ({ token }) => {
       .get(`http://localhost:8080/api/user/semester/${departamentiId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       })
       .then((response) => {
         console.log(response.data);
@@ -203,15 +275,18 @@ const Semestrat = ({ token }) => {
           width="100%"
           mt={2}
         />
-        <Grid container spacing={3}
-        sx={{
-          "@media (max-width: 1350px)": {
-            gridColumn: "span 12",
-          },
-          "@media (max-width: 1000px)": {
-            gridColumn: "span 12",
-          },
-        }}>
+        <Grid
+          container
+          spacing={3}
+          sx={{
+            "@media (max-width: 1350px)": {
+              gridColumn: "span 12",
+            },
+            "@media (max-width: 1000px)": {
+              gridColumn: "span 12",
+            },
+          }}
+        >
           {semestrat.map((semestri) => (
             <SemestriItem
               key={semestri.id}
@@ -220,6 +295,7 @@ const Semestrat = ({ token }) => {
               endDate={semestri.endDate}
               semestriId={semestri.id}
               token={token}
+              user={user}
             />
           ))}
         </Grid>

@@ -36,6 +36,11 @@ public class ProfessorController {
         return vleresimiService.updateNota(updatedVleresimi, oldVleresimiId);
     }
 
+    @GetMapping("/count2/{semesterId}")
+    public int getCountByProfessorAndSemesterId(@RequestHeader("Authorization")String token,@PathVariable Long semesterId) throws Exception {
+        return profesoriLendaService.findByProfessorIdAndSemesterId(token, semesterId);
+    }
+
     @GetMapping("/lajmet/get")
     public List<Lajmi> getAllLajmet(){
         return lajmiService.getAllLajmet();

@@ -17,5 +17,35 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/professorLenda")
 public class ProfesoriLendaController {
+    private final ProfesoriLendaService profesoriLendaService;
+    private final ProfessorService professorService;
+    private final SemesterService semesterService;
+    private final UserService userService;
 
+    @GetMapping("/semester/{semesterId}")
+    public List<ProfesoriLenda> findBySemesterId(@PathVariable Long semesterId){
+        return profesoriLendaService.getBySemesterId(semesterId);
+    }
+
+    @GetMapping("/lendet/{semesterId}")
+    public Long countLendetBySemesterId(@PathVariable Long semesterId) throws Exception {
+        return profesoriLendaService.countLendetBySemester(semesterId);
+    }
+
+    @GetMapping("/ligjeratat/{semesterId}")
+    public List<ProfesoriLenda> findLigjeratat(@PathVariable Long semesterId,
+                                               @RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Professor professor = professorService.findProfessorByUserId(user.getId());
+        Semester semester = semesterService.getSemester(semesterId);
+
+        return  profesoriLendaService.getAllLigjerataBySemester(professor, semester);
+    }
+
+    @GetMapping("/professor/semestret/")
+    public List<Semester> findSemesters(@RequestHeader("Authorization")String token) throws Exception {
+        User user = userService.findUserByJwtToken(token);
+        Professor professor = professorService.findProfessorByUserId(user.getId());
+        return profesoriLendaService.findSemesters(professor);
+    }
 }

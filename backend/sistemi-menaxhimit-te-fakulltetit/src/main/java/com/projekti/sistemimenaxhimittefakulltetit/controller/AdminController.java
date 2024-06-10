@@ -430,37 +430,12 @@ public class AdminController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/lendetSemester/{semesterId}")
-    public Long countLendetBySemesterId(@PathVariable Long semesterId) throws Exception {
-        return profesoriLendaService.countLendetBySemester(semesterId);
-    }
 
     @GetMapping("abc/{id}")
     public List<ProfesoriLenda> findLendaByProfesoriIdaa(@PathVariable Long id){
         return profesoriLendaService.findLendaByProfesoriIdaaaaaaaa(id);
     }
 
-    @GetMapping("/professorLenda/semester/{semesterId}")
-    public List<ProfesoriLenda> findBySemesterId(@PathVariable Long semesterId){
-        return profesoriLendaService.getBySemesterId(semesterId);
-    }
-
-    @GetMapping("/professorLenda/ligjeratat/{semesterId}")
-    public List<ProfesoriLenda> findLigjeratat(@PathVariable Long semesterId,
-                                               @RequestHeader("Authorization")String token) throws Exception {
-        User user = userService.findUserByJwtToken(token);
-        Professor professor = professorService.findProfessorByUserId(user.getId());
-        Semester semester = semesterService.getSemester(semesterId);
-
-        return  profesoriLendaService.getAllLigjerataBySemester(professor, semester);
-    }
-
-    @GetMapping("professorLenda/professor/semestret/")
-    public List<Semester> findSemesters(@RequestHeader("Authorization")String token) throws Exception {
-        User user = userService.findUserByJwtToken(token);
-        Professor professor = professorService.findProfessorByUserId(user.getId());
-        return profesoriLendaService.findSemesters(professor);
-    }
 
     @PostMapping("/createLigjerata")
     public ResponseEntity<ProfesoriLenda> createLigjerate(@RequestBody ProfesoriLenda p) throws Exception {
