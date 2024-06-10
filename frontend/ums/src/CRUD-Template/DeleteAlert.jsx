@@ -1,8 +1,14 @@
 import { Fragment } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import { tokens } from '../theme';
+import { useTheme } from '@mui/material';
+
 
 export default function DeleteAlert({open, close, runDelete}){
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const handleClose = () => {
     close();
@@ -24,12 +30,13 @@ export default function DeleteAlert({open, close, runDelete}){
    <Fragment>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogContent sx={{ padding: '0px'}}>
-          <div className="relative bg-white w-full h-full rounded-lg shadow dark:bg-gray-700">
+          <div className="relative  w-full h-full rounded-lg shadow " style={{backgroundColor: colors.primary[500]}}>
             <div className="relative w-full h-full md:h-auto">
-              <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+              <div className="relative p-4 text-center  rounded-lg shadow  sm:p-5" style={{backgroundColor: colors.primary[500]}}>
                 <button
                   type="button"
-                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  className="text-gray-400 bg-transparent  rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                  style={{backgroundColor: colors.primary[500]}}
                   data-modal-toggle="deleteModal"
                   onClick={handleClose}
                 >
@@ -61,15 +68,16 @@ export default function DeleteAlert({open, close, runDelete}){
                     clipRule="evenodd"
                   />
                 </svg>
-                <p className="mb-4 text-gray-500 dark:text-gray-300">
+                <p className="mb-4 " style={{backgroundColor: colors.primary[500]}}>
                   A jeni të sigurt që doni të fshini këtë rresht?
                 </p>
                 <div className="flex justify-center items-center space-x-4">
                   <button
                     data-modal-toggle="deleteModal"
                     type="button"
-                    className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                    className="py-2 px-3 text-sm font-medium   rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300  focus:z-10   dark:border-gray-500  dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                     onClick={noDelete}
+                    style={{backgroundColor: colors.primary[600]}}
                   >
                     Jo, nuk jam
                   </button>
