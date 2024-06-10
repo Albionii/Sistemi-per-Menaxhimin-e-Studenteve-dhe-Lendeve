@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography, Alert } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import ConfirmationModal from "./ConfirmationModal";
 import extractFileName from "../global/extractFileName";
@@ -12,7 +7,7 @@ import extractFileName from "../global/extractFileName";
 const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
   const [Submission, setSubmission] = useState(initialData);
   const [files, setFiles] = useState([]);
-
+  const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,9 +25,14 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
       fileNames,
     }));
     setFiles(fileList);
+    setError("");
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (files.length === 0) {
+      setError("You must upload at least one file.");
+      return;
+    }
     const formData = new FormData();
     formData.append("assignment", JSON.stringify(Submission));
     for (const file of files) {
@@ -42,7 +42,6 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
     onClose();
     setSubmission(initialData);
   };
-  
 
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -62,7 +61,6 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
         name="mesazhi"
         label="Mesazhi"
         variant="outlined"
-        required
         multiline
         rows={4}
         value={Submission.mesazhi}
@@ -72,27 +70,21 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
         {Submission.fileNames.length > 0 && (
           <Box display="flex" flexWrap="wrap" mb={2}>
             {Submission.fileNames.map((file, index) => (
-              <Box
-                key={index}
-                display="flex"
-                alignItems="center"
-                mr={2}
-                mb={1}
-              >
+              <Box key={index} display="flex" alignItems="center" mr={2} mb={1}>
                 <InsertDriveFileIcon sx={{ mr: 1 }} />
                 <Typography>{extractFileName(file)}</Typography>
               </Box>
             ))}
           </Box>
         )}
+        {error && (
+          <Box>
+            <Alert severity="error" sx={{  fontSize: "0.7rem" }}>{error}</Alert>
+          </Box>
+        )}
         <Button variant="contained" color="neutral" component="label">
           <Typography color={"white"}>Upload File </Typography>
-          <input
-            type="file"
-            hidden
-            multiple
-            onChange={handleFileChange}
-          />
+          <input type="file" hidden multiple onChange={handleFileChange} />
         </Button>
       </Box>
       <Box mt={2}>
@@ -108,7 +100,6 @@ const SubmitSubmission = ({ onSubmit, onClose, initialData, assignmentId }) => {
           Anulo
         </Button>
       </Box>
-
     </Box>
   );
 };

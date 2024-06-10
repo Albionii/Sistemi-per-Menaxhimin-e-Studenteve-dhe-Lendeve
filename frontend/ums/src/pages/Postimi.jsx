@@ -442,7 +442,7 @@ const Postimi = ({ token, user }) => {
                             {viewAssignment.mesazhi}
                           </Typography>
                           <Typography variant="body2" sx={{ mb: 2 }}>
-                            Due date:{" "}
+                            Due date:  
                             {dayjs(viewAssignment.expireAt).format(
                               "YYYY-MM-DD/HH:mm:ss"
                             )}

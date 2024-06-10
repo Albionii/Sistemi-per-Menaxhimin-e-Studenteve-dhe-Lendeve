@@ -26,14 +26,16 @@ public interface StudentPrvRepository extends JpaRepository<StudentProvimi, Long
     @Query("SELECT sp.nota, COUNT(sp) FROM StudentProvimi sp WHERE sp.student.id = :student_id GROUP BY sp.nota")
     List<Object[]> countGrades(Long student_id);
 
-    @Query("SELECT pl.professor.id, pl.professor.user.firstName, pl.professor.user.lastName, AVG(sp.nota) AS averageNota " +
+    @Query("SELECT pl.professor.id, pl.professor.user.firstName, pl.professor.user.lastName, pl.professor.user.profile, AVG(sp.nota) AS averageNota " +
             "FROM StudentProvimi sp " +
             "JOIN sp.provimi p " +
             "JOIN p.ligjerata pl " +
             "WHERE sp.student.id = :studentId " +
-            "GROUP BY pl.professor.id, pl.professor.user.firstName, pl.professor.user.lastName " +
+            "GROUP BY pl.professor.id, pl.professor.user.firstName, pl.professor.user.lastName, pl.professor.user.profile " +
             "ORDER BY averageNota DESC")
     List<Object[]> findTop4ProfessorAverageNotaByStudentId(Long studentId);
+
+
 
 
 }

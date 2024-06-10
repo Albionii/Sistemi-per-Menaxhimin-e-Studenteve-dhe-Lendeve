@@ -61,7 +61,7 @@ const CreateMaterial = ({ onSubmit, onClose, initialData, ligjerataId }) => {
         name="mesazhi"
         label="Mesazhi"
         variant="outlined"
-        required
+       
         multiline
         rows={4}
         value={newAssignment.mesazhi}

@@ -21,19 +21,21 @@ const Transkripta = ({ token }) => {
 
   useEffect(() => {
     axios
-    .get(`http://localhost:8080/api/student/professorAVG`,{
-        headers:{
-            Authorization: `Bearer ${token}`
-        }})
-    .then((response) => {
-        console.log(response)
+      .get(`http://localhost:8080/api/student/professorAVG`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
         setProfessorMesatarja(response.data);
-    })
-    .catch((error) => {
-        console.error("There was and error fetching the professorAvg: "+error);
-    })
-  }, []
-)
+      })
+      .catch((error) => {
+        console.error(
+          "There was and error fetching the professorAvg: " + error
+        );
+      });
+  }, []);
 
   return (
     <Box margin={"20px"}>
@@ -79,7 +81,7 @@ const Transkripta = ({ token }) => {
               </Box>
 
               <Typography variant="h1" fontWeight={"bold"}>
-                {typeof mesatarja === 'number' ? mesatarja.toFixed(1) : 0}
+                {typeof mesatarja === "number" ? mesatarja.toFixed(1) : 0}
               </Typography>
             </Box>
           </Box>
@@ -172,8 +174,13 @@ const Transkripta = ({ token }) => {
           }}
         >
           <Typography variant="h4">Notat tuaja:</Typography>
-          <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={'100%'}>
-            <Pie token={token}/>
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            width={"100%"}
+          >
+            <Pie token={token} />
           </Box>
         </Box>
         {/* ROW 2 */}
@@ -207,18 +214,12 @@ const Transkripta = ({ token }) => {
             },
           }}
         >
-          <Box
-            p={2}
-            textAlign={"center"}
-            bgcolor={colors.primary[600]}
-          >
-            <Typography variant="h5">
-              Nota mesatare per profesor
-            </Typography>
+          <Box p={2} textAlign={"center"} bgcolor={colors.primary[600]}>
+            <Typography variant="h5">Nota mesatare per profesor</Typography>
           </Box>
           <Box p={2} height={"100%"} mt={1}>
             {professorMesatarja.map((profesor) => (
-                <Box
+              <Box
                 p={2}
                 key={profesor}
                 borderRadius={3}
@@ -234,13 +235,25 @@ const Transkripta = ({ token }) => {
                   justifyContent={"space-between"}
                   alignItems={"center"}
                 >
-                  <Avatar sx={{width: '60px', height: '60px', color: 'white'}}>{profesor[1].charAt(0).toUpperCase()}</Avatar>
-                  <Typography ml={2} fontSize={'16px'}>
-                    {profesor[1]+" "+profesor[2]}
+                  <Avatar
+                    sx={{ width: "60px", height: "60px", color: "white" }}
+                    alt={profesor[1].charAt(0).toUpperCase()}
+                    src={`http://localhost:8080/profile-pictures/${profesor[3]}`}
+                  />
+                  <Typography ml={2} fontSize={"16px"}>
+                    {profesor[1] + " " + profesor[2]}
                   </Typography>
                 </Box>
-                <Box p={2}  textAlign={'center'} borderRadius={2} bgcolor={colors.blueAccent[800]} color={'white'}>
-                  <Typography fontWeight={'bold'} variant="h3">{profesor[3].toFixed(1)}</Typography>
+                <Box
+                  p={2}
+                  textAlign={"center"}
+                  borderRadius={2}
+                  bgcolor={colors.blueAccent[800]}
+                  color={"white"}
+                >
+                  <Typography fontWeight={"bold"} variant="h3">
+                    {profesor[4].toFixed(1)}
+                  </Typography>
                 </Box>
               </Box>
             ))}

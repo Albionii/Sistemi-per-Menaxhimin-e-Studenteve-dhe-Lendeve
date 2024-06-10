@@ -64,7 +64,6 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
         name="mesazhi"
         label="Mesazhi"
         variant="outlined"
-        required
         multiline
         rows={4}
         value={newAssignment.mesazhi}
@@ -77,6 +76,7 @@ const CreateAssignment = ({ onSubmit, onClose, initialData, ligjerataId }) => {
         label="Expire At"
         type="datetime-local"
         variant="outlined"
+        required
         InputLabelProps={{
           shrink: true,
         }}
