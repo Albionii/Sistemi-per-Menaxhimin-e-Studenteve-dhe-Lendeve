@@ -510,17 +510,17 @@ public class AdminController {
 
     //Departamenti
 
-    @GetMapping("/departamenti/{id}")
+
+    @GetMapping("/{id}")
     public ResponseEntity<Optional<Departamenti>> getDepartamenti(@PathVariable Long id){
         return ResponseEntity.ok().body(departamentiService.findByDepartamentiId(id));
     }
 
-    @GetMapping("/departamenti")
+    @GetMapping
     public ResponseEntity<List<Departamenti>> getAllDepartamenti()
     {
         return ResponseEntity.ok().body(departamentiService.findAll());
     }
-
 
     @PutMapping("/departamenti/update/{id}")
     public ResponseEntity<Departamenti> updateDepartamenti(@PathVariable Long id, @RequestBody Departamenti d) {

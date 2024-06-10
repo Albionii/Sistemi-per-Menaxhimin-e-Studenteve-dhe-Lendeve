@@ -39,7 +39,7 @@ export const getFromCookies = ({ setUserData, changeLoggedInState }) => {
         if (user != null) {
             if (user.status === 500) {
                 // document.cookie = "Token=";
-                changeLoggedInState();
+                // changeLoggedInState();
                 // window.location.reload();
             } else {
                 setUserData(user); // Directly set user data here

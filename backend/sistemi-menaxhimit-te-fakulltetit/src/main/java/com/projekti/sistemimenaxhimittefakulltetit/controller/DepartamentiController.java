@@ -27,6 +27,18 @@ public class DepartamentiController {
     private UserServiceImpl userService;
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Departamenti>> getDepartamenti(@PathVariable Long id){
+        return ResponseEntity.ok().body(departamentiService.findByDepartamentiId(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Departamenti>> getAllDepartamenti()
+    {
+        return ResponseEntity.ok().body(departamentiService.findAll());
+    }
+
+
 
 
 }
