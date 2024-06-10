@@ -7,7 +7,8 @@ import SchoolIcon from "@mui/icons-material/School";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import GroupsIcon from "@mui/icons-material/Groups";
 
-const CrudCategories = ({roli}) => {
+const CrudCategories = ({ roli }) => {
+  // console.log("ROLI ROLI " + roli);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -57,95 +58,55 @@ const CrudCategories = ({roli}) => {
       </Grid>
     </Box>
   );
-   //KODI PER CONDITIONAL RENDERIN TE CRUDAVE E IMPLEMENTOJM MA VON MASI TE KRYHET KREJT 
+  //KODI PER CONDITIONAL RENDERIN TE CRUDAVE E IMPLEMENTOJM MA VON MASI TE KRYHET KREJT 
 
-  // function getByRole() {
-  //   const roli = JSON.stringify(role.role).replaceAll("\"",''); 
-  //   if (roli === "ROLE_STUDENT") {
-  //      return renderCategory(
-  //       "Student",
-  //       ["Paraqitni Provimin", "Student 2", "Student 3", "Student 4"],
-  //       ["/provimet", "/student2", "/student3", "/student4"],
-  //       "#EC6601",
-  //       "#bf5200",
+  function getByRole() {
+    // const roli = JSON.stringify(role.role).replaceAll("\"",''); 
+    // console.log("ROLI 2" + roli);
+    if (roli === "ROLE_STUDENT") {
+       return renderCategory(
+        "Student",
+          ["Paraqitni Provimin", "Regjistro Semestrin", "Regjistro Grupin", "Student 4"],
+          ["/provimet", "/regjistroSemestrin", "/regjistroGrupin", "/student4"],
+          "#EC6601",
+          "#bf5200",
 
-  //       GroupsIcon
-  //     );
-  //   }
-  //   if(roli === "ROLE_PROFESSOR"){
-  //     return renderCategory(
-  //       "Profesori",
-  //       [
-  //         "Profesori 1",
-  //         "Profesori 2",
-  //         "Profesori 3",
-  //         "Profesori 4",
-  //         "Profesori 5",
-  //         "Profesori 6",
-  //         "Profesori 7",
-  //       ],
-  //       [
-  //         "/Ligjeratat",
-  //         "/profesori2",
-  //         "/profesori3",
-  //         "/profesori4",
-  //         "/profesori5",
-  //         "/profesori6",
-  //         "/profesori7",
-  //       ],
-  //       "#D40E14",
-  //       "#ab0c11",
-  //       SchoolIcon
-  //     )
-  //   }
-  //   if(roli === "ROLE_ADMIN"){
-  //     return renderCategory(
-  //       "Administrator",
-  //       ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet", "Departamenti", "Fakulteti", "UserRoles"],
-  //       ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet", "/DepartamentiCrud", "/FakultetiCrud", "/userRole"],
-  //       "#004F95",
-  //       "#00396b",
-  //       SupervisorAccountIcon
-  //     )
+          GroupsIcon
+      );
+    }
+    if(roli === "ROLE_PROFESSOR"){
+      return renderCategory(
+        "Profesori",
+          [
+            "Notimi Studenteve",
+          ],
+          [
+            "/notoStudentin",
+          ],
+          "#D40E14",
+          "#ab0c11",
+          SchoolIcon
+      )
+    }
+    if(roli === "ROLE_ADMIN"){
+      return renderCategory(
+        "Administrator",
+  ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet", "Departamenti", "Fakulteti", "UserRoles", "Semestri", "Grupi", "Orari", "Lajmi", "OrariLigjerata", "Afati"],
+    ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet", "/DepartamentiCrud", "/FakultetiCrud", "/userRole", "/semestri", "/grupi", "/orari", "/lajmi", "/orariLigjerata", "/afati"],
+    "#004F95",
+    "#00396b",
+    SupervisorAccountIcon
+      )
 
-  //   }
-  // }
+    }
+  }
 
   return (
     <Box m={3}>
       <Header title="CRUDS" subtitle="Manage Cruds" />
       <Box m={4}>
-        {renderCategory(
-          "Profesori",
-          [
-            "Notimi Studenteve"
-          ],
-          [
-            "/notoStudentin"
-          ],
-          "#D40E14",
-          "#ab0c11",
-          SchoolIcon
-        )}
-        {renderCategory(
-          "Student",
-          ["Paraqitni Provimin", "Regjistro Semestrin", "Regjistro Grupin"],
-          ["/provimet", "/regjistroSemestrin", "/regjistroGrupin"],
-          "#EC6601",
-          "#bf5200",
+          {getByRole()}
 
-          GroupsIcon
-        )}
-        {renderCategory(
-          "Administrator",
-          ["Ligjeratat", "Provimet", "Profesoret", "Studentet", "Lëndet","Departamenti","Fakulteti","UserRoles", "Semestri", "Grupi", "Orari", "Lajmi", "OrariLigjerata", "Afati"],
-          ["/profesorLenda", "/provimi", "/profesoret", "/studentet", "/lendet","/DepartamentiCrud","/FakultetiCrud","/userRole", "/semestri", "/grupi", "/orari", "/lajmi", "/orariLigjerata", "/afati"],
-          "#004F95",
-          "#00396b",
-          SupervisorAccountIcon
-        )}
-        
-    
       </Box>
     </Box>
   );
