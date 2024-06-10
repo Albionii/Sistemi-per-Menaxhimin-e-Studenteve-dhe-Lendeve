@@ -7,14 +7,10 @@ import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import SignalCellularAltOutlinedIcon from "@mui/icons-material/SignalCellularAltOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -100,7 +96,6 @@ const Sidebar = ({ user, isMobile, isSmallScreen }) => {
   return (
     <Box
       className={`box ${isCollapsed ? "collapsed" : ""}`}
-      // style={isMobile&&{display:"none"}}
       sx={{
         "& .pro-sidebar-inner": {
           background: isSmallScreen? (isCollapsed?`${colors.primary[500]} !important`:`${colors.primary[400]} !important`):`${colors.primary[400]} !important`,

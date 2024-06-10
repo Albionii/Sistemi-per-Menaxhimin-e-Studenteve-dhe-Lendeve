@@ -1,59 +1,51 @@
-import React, { useState, useEffect } from "react";
-import Home from "../pages/home.jsx"
-import Services from "../pages/services.jsx";
-import LogIn from "../pages/login.jsx";
-import Topbar from "./global/Topbar.jsx"
-import Sidebar from "./global/Sidebar.jsx"
-import Provimet from "./Provimi/Provimet.jsx";
-import Paraqitura from "./Provimi/Paraqitura.jsx";
-import Dashboard from "../pages/dashboard.jsx";
-import Profili from "../pages/Profili.jsx";
-import CRUD from "../CRUD-Template/Crud.jsx";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-// import Profesori from "./TableTranskripta.jsx";
-import CrudCategories from "../pages/CrudCategories.jsx";
-import Transkripta from "../pages/Transkripta.jsx";
-import Ligjeratat from "../pages/ligjeratat.jsx";
-import Provimi from "./Provimi/Provimi.jsx";
-import Postimi from "../pages/Postimi.jsx";
-import SemestriCrud from "../CRUD-Template/SemesterCrud.jsx";
-import Semestrat from "../pages/Semestrat.jsx";
-import Departmentat from "../pages/Departmentat.jsx";
-import RegjistroSemestrin from "../pages/RegjistroSemestrin.jsx";
 
+import Home from "../pages/home.jsx"
+import Topbar from "./global/Topbar.jsx"
 import { getFromCookies } from '../getUserFromJWT.js';
-import ProvimiCRUD from "../CRUD-at/Provimi.jsx";
-import DepartamentiCrud from "../CRUD-at/DepartamentiCrud.jsx";
-import ProfesorLenda from '../CRUD-at/ProfesorLenda.jsx';
-import Profesoret from "../CRUD-at/Profesoret.jsx";
-import Lenda from "../CRUD-at/Lenda.jsx";
-import UserRole from "../CRUD-at/UserRole.jsx";
-import ProvimetParaqitura from "../CRUD-at/ProvimetParaqitura.jsx";
-import ProvimetNota from "./Provimi/ProvimetNota.jsx";
-import RegjistroGrupin from "../pages/RegjistroGrupin.jsx";
-import FakultetetCrud from "../CRUD-at/FakultetetCrud.jsx";
-import Studentet from "../CRUD-at/Studentet.jsx";
-import AltiniCrud from "../CRUD-at/SemestriCrud.jsx";
-import NotoStudentin from "../CRUD-at/NotoStudentin.jsx";
 import { OrbitProgress } from "react-loading-indicators";
-import EnrolledSemesters from "./Enroll/EnrolledSemesters.jsx";
-import EnrolledLigjerata from "./Enroll/EnrolledLigjeratat.jsx";
-import Grupi from "../CRUD-at/Grupi.jsx"
-import Orari from "../CRUD-at/OrariCrud.jsx"
-import Lajmi from "../CRUD-at/LajmiCrud.jsx";
-import OrariLigjerata from "../CRUD-at/OrariLigjerataCrud.jsx";
 import { getToken } from "../GetToken.js";
-import AfatiCrud from "../CRUD-at/AfatiCrud.jsx";
-import ScreenSideBar from "./global/ScreenSideBar.jsx";
+
+
+const Provimet = lazy(() => import('./Provimi/Provimet.jsx'));
+const Paraqitura = lazy(() => import('./Provimi/Paraqitura.jsx'));
+const Dashboard = lazy(() => import('../pages/dashboard.jsx'));
+const Profili = lazy(() => import('../pages/Profili.jsx'));
+const CrudCategories = lazy(() => import('../pages/CrudCategories.jsx'));
+const Transkripta = lazy(() => import('../pages/Transkripta.jsx'));
+const Ligjeratat = lazy(() => import('../pages/ligjeratat.jsx'));
+const Postimi = lazy(() => import('../pages/Postimi.jsx'));
+const SemestriCrud = lazy(() => import('../CRUD-Template/SemesterCrud.jsx'));
+const Semestrat = lazy(() => import('../pages/Semestrat.jsx'));
+const Departmentat = lazy(() => import('../pages/Departmentat.jsx'));
+const RegjistroSemestrin = lazy(() => import('../pages/RegjistroSemestrin.jsx'));
+
+const ProvimiCRUD = lazy(() => import('../CRUD-at/Provimi.jsx'));
+const DepartamentiCrud = lazy(() => import('../CRUD-at/DepartamentiCrud.jsx'));
+const ProfesorLenda = lazy(() => import('../CRUD-at/ProfesorLenda.jsx'));
+const Profesoret = lazy(() => import('../CRUD-at/Profesoret.jsx'));
+const Lenda = lazy(() => import('../CRUD-at/Lenda.jsx'));
+const UserRole = lazy(() => import('../CRUD-at/UserRole.jsx'));
+const ProvimetParaqitura = lazy(() => import('../CRUD-at/ProvimetParaqitura.jsx'));
+const ProvimetNota = lazy(() => import('./Provimi/ProvimetNota.jsx'));
+const RegjistroGrupin = lazy(() => import('../pages/RegjistroGrupin.jsx'));
+const FakultetetCrud = lazy(() => import('../CRUD-at/FakultetetCrud.jsx'));
+const Studentet = lazy(() => import('../CRUD-at/Studentet.jsx'));
+const AltiniCrud = lazy(() => import('../CRUD-at/SemestriCrud.jsx')); // Assuming this is a typo, should be SemestriCrud.jsx
+const NotoStudentin = lazy(() => import('../CRUD-at/NotoStudentin.jsx'));
+const EnrolledLigjerata = lazy(() => import('./Enroll/EnrolledLigjeratat.jsx'));
+const Grupi = lazy(() => import('../CRUD-at/Grupi.jsx'));
+const Orari = lazy(() => import('../CRUD-at/OrariCrud.jsx'));
+const Lajmi = lazy(() => import('../CRUD-at/LajmiCrud.jsx'));
+const OrariLigjerata = lazy(() => import('../CRUD-at/OrariLigjerataCrud.jsx'));
+const AfatiCrud = lazy(() => import('../CRUD-at/AfatiCrud.jsx'));
+const ScreenSideBar = lazy(() => import('./global/ScreenSideBar.jsx'));
+
 
 
 function loggedIn({ changeLoggedInState}) {
   const token = getToken();
-  // console.log(token);
-  const [sideBarInfo, setSideBarInfo] = useState(null);
-
-  // console.log("TOKENI TE LOGGED IN " + token);
-
   const [user, setUser] = useState({
     firstName: "",
     lastName: ""
@@ -113,24 +105,25 @@ function loggedIn({ changeLoggedInState}) {
   
   return (
     <>
-      
-
-        {/* <Sidebar user={user}/> */}
-
-        <ScreenSideBar user={user} isSmallScreen={false}/>
-        
+        <ScreenSideBar user={user} isSmallScreen={false}/>        
         <main className="flex-1 transition">
           <Topbar user={user}/>
+          <Suspense fallback={
+            <div className="flex items-center justify-center w-full h-full absolute bg-slate-600" style={{zIndex: "100000", backgroundColor: "#141b2d" }}>
+              <div style={{ width: "100%", height: "100%" }} className="flex items-center justify-center w-full h-full">
+                <div style={{ display: loading ? "none" : "" }}>
+                  <OrbitProgress variant="track-disc" color="#006cff" size="medium" text="" textColor="" />
+                </div>
+              </div>
+          </div>
+          }>
           <Routes>
             <Route path="/" element={<Home token={token} user={user.role}/>} />
             <Route path="/dashboard" element={<Dashboard />} />
-
             <Route path="/ligjeratat/:semestriId" element={<Ligjeratat token={token} user={user.role}/>} />
             <Route path="/cruds" element={<CrudCategories role={user.role} />} />
             <Route path="/transkripta" element={<Transkripta token={token} />} />
-
             <Route path="/paraqitura" element={<Paraqitura token={token} />} />
-
             <Route path="/Profili" element={<Profili changeLoggedInState={changeLoggedInState} setUserData={setUserData} user={user} />} />
             <Route path="/postimi" element={<Postimi token={token}  user={user}/>} />
 
@@ -161,31 +154,16 @@ function loggedIn({ changeLoggedInState}) {
  */}
           <Route path="/profesorLenda" element={<ProfesorLenda token={token}/>} />
 
-
-
-
           <Route path="/provimet" element={<Provimet token={token}/>} />
-
           <Route path="/notoStudentin" element={<NotoStudentin token={token}/>} />
-
           <Route path="/provimi" element={<ProvimiCRUD token={token}/>} />
-
-
           <Route path="/profesoret" element={<Profesoret token={token}/>} />
-
           <Route path="/lendet" element={<Lenda token={token}/>} />
-
           <Route path="/studentet" element={<Studentet token={token} />} />
-
-
           <Route path="/DepartamentiCrud" element={<DepartamentiCrud token={token}/>}></Route>
-
           <Route path="/FakultetiCrud" element={<FakultetetCrud token={token} />}></Route>
-
           <Route path="/userRole" element={<UserRole token={token}/>} />
-
           <Route path="/semestri" element={<AltiniCrud token={token} />} />
-
 
           <Route path="/menaxhoSemestrat" element={<SemestriCrud />} />
 
@@ -200,19 +178,10 @@ function loggedIn({ changeLoggedInState}) {
           <Route path="/lajmi" element={<Lajmi token={token}/>} />
           <Route path="/orariLigjerata" element={<OrariLigjerata token={token}/>} />
           <Route path="/afati" element={<AfatiCrud token={token}/>} />
-
-
-            <Route path="/enrolled" element={<EnrolledLigjerata token={token} />} />
-
-
-
-
-
-
+          <Route path="/enrolled" element={<EnrolledLigjerata token={token} />} />
           <Route path="*" element={<Home />} />
-
-
         </Routes>
+        </Suspense>
       </main>
     </>
   );

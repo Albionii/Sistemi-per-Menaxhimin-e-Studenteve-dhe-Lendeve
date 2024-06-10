@@ -118,22 +118,10 @@ const CrudCategories = ({roli}) => {
         {renderCategory(
           "Profesori",
           [
-            "Notimi Studenteve",
-            "Profesori 2",
-            "Profesori 3",
-            "Profesori 4",
-            "Profesori 5",
-            "Profesori 6",
-            "Profesori 7",
+            "Notimi Studenteve"
           ],
           [
-            "/notoStudentin",
-            "/profesori2",
-            "/profesori3",
-            "/profesori4",
-            "/profesori5",
-            "/profesori6",
-            "/profesori7",
+            "/notoStudentin"
           ],
           "#D40E14",
           "#ab0c11",
@@ -141,8 +129,8 @@ const CrudCategories = ({roli}) => {
         )}
         {renderCategory(
           "Student",
-          ["Paraqitni Provimin", "Regjistro Semestrin", "Regjistro Grupin", "Student 4"],
-          ["/provimet", "/regjistroSemestrin", "/regjistroGrupin", "/student4"],
+          ["Paraqitni Provimin", "Regjistro Semestrin", "Regjistro Grupin"],
+          ["/provimet", "/regjistroSemestrin", "/regjistroGrupin"],
           "#EC6601",
           "#bf5200",
 

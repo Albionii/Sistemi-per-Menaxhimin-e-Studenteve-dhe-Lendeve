@@ -74,7 +74,7 @@
   }
 
   export const createLigjerata = () => {
-    const url = BASE_URL + `/professorLenda/createLigjerata`;
+    const url = BASE_URL + `/createLigjerata`;
     return [url, "Gabim në krijimin e ligjeratës!"];
   }
 

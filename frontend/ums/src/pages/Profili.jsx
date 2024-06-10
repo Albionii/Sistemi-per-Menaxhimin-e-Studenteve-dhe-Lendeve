@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import { tokens } from "../theme";
-import { useTheme, Typography, TextField } from "@mui/material";
-import Prophilepic from "../../src/assets/foto.png";
-import { CardMedia, Avatar } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
+import { useTheme} from "@mui/material";
+import { CardMedia } from "@mui/material";
 import ProfilePicture from "../components/ProfilePicture/ProfilePicture";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import axios from "axios";
 import UpdatePassword from "../components/UpdatePassword";
 
 import { getToken } from "../GetToken";
