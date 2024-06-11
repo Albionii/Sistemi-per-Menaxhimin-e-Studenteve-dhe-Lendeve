@@ -118,7 +118,7 @@ function loggedIn({ changeLoggedInState }) {
         <Topbar user={user} />
         <Suspense>
           <Routes>
-            {user.role !== "ROLE_ADMIN" ? <Route path="/" element={<Home />} /> : <Route path="/" element={<CrudCategories roli={user.role} />} />}
+            {user.role !== "ROLE_ADMIN" ? <Route path="/" element={<Home token={token} user={user.role}/>} /> : <Route path="/" element={<CrudCategories roli={user.role} />} />}
 
             {/* VEQ PER ADMIN */}
             {user.role === "ROLE_ADMIN" ? <Route path="/profesorLenda" element={<ProfesorLenda token={token} />} /> : null}
@@ -199,7 +199,7 @@ function loggedIn({ changeLoggedInState }) {
 
 
             {/* {user.role !== "ROLE_ADMIN" ? <Route path="*" element={<Home />} /> : <Route path="*" element={<CrudCategories roli={user.role} />} />} */}
-            <Route path="*" element={<RedirectByRole role={user.role}></RedirectByRole>}/>
+            <Route path="*" element={<RedirectByRole token={token} role={user.role}></RedirectByRole>}/>
 
 
 
