@@ -153,7 +153,7 @@ export const AddEditSemester = ({
                 style={{ background: colors.primary[400] }}
                 value={name}
                 onInput={handleName}
-                placeholder="Emri Departamentit"
+                placeholder="Emri Semestrit"
                 required
               />
             </div>

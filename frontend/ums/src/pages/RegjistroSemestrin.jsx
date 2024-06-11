@@ -40,7 +40,11 @@ const RegjistroSemestrin = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/afati/date")
+      .get("http://localhost:8080/api/afati/date", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then((response) => {
         console.log(response.data);
         setAfati(response.data);

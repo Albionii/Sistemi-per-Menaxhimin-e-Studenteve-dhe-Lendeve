@@ -35,7 +35,7 @@ const ProvimetNota = lazy(() => import('./Provimi/ProvimetNota.jsx'));
 const RegjistroGrupin = lazy(() => import('../pages/RegjistroGrupin.jsx'));
 const FakultetetCrud = lazy(() => import('../CRUD-at/FakultetetCrud.jsx'));
 const Studentet = lazy(() => import('../CRUD-at/Studentet.jsx'));
-const AltiniCrud = lazy(() => import('../CRUD-at/SemestriCrud.jsx')); // Assuming this is a typo, should be SemestriCrud.jsx
+const AltiniCrud = lazy(() => import('../CRUD-at/SemestriCrud.jsx'));
 const NotoStudentin = lazy(() => import('../CRUD-at/NotoStudentin.jsx'));
 const EnrolledLigjerata = lazy(() => import('./Enroll/EnrolledLigjeratat.jsx'));
 const Grupi = lazy(() => import('../CRUD-at/Grupi.jsx'));
@@ -51,7 +51,8 @@ function loggedIn({ changeLoggedInState }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const token = getToken();
+  // const token = getToken();
+  const [token, setToken] = useState(getToken())
   const [user, setUser] = useState({
     firstName: "",
     lastName: ""
@@ -77,15 +78,15 @@ function loggedIn({ changeLoggedInState }) {
         'Content-Type': 'application/json'
       },
       credentials: 'include'
-    });
+    })
     const jwt = await response.json();
 
     const expirationTime = new Date(Date.now() + fifteenMinutes);
 
     document.cookie = `Token=${encodeURIComponent(jwt.jwt)}; expires=${expirationTime.toUTCString()}`;
-
+    setToken(getToken())
   }
-  const MINUTE_MS = 15 * 60 * 1000;
+  const MINUTE_MS = 60 * 1000;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -100,7 +101,7 @@ function loggedIn({ changeLoggedInState }) {
       <>
         <div className="flex items-center justify-center w-full h-full absolute " style={{ zIndex: "100000", background: colors.primary[500] }}>
           <div style={{ width: "100%", height: "100%" }} className="flex items-center justify-center w-full h-full">
-            <div style={{ display: loading ? "none" : "" }}>
+            <div style={{ display: loading ? "none" : "", position:"absolute"}}>
               <OrbitProgress variant="track-disc" color="#006cff" size="medium" text="" textColor="" />
             </div>
           </div>
@@ -109,20 +110,15 @@ function loggedIn({ changeLoggedInState }) {
     )
   }
 
-  function returnTo() {
-    
-  }
-
 
   return (
     <>
       <ScreenSideBar user={user} isSmallScreen={false} />
       <main className="flex-1 transition">
         <Topbar user={user} />
-        <Suspense >
+        <Suspense>
           <Routes>
             {user.role !== "ROLE_ADMIN" ? <Route path="/" element={<Home />} /> : <Route path="/" element={<CrudCategories roli={user.role} />} />}
-            <Route path="/dashboard" element={<Dashboard />} />
 
             {/* VEQ PER ADMIN */}
             {user.role === "ROLE_ADMIN" ? <Route path="/profesorLenda" element={<ProfesorLenda token={token} />} /> : null}

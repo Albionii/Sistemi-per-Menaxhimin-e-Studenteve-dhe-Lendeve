@@ -36,7 +36,7 @@ public class ProfesoriLenda {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Postimi> postimet = new ArrayList<>();
 
-    @OneToMany(mappedBy = "ligjerata", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ligjerata", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private List<Provimi> provimet;

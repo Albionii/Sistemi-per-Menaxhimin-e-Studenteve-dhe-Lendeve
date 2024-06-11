@@ -16,8 +16,6 @@ public class AfatiController {
     private final AfatiService afatiService;
 
 
-
-
     @GetMapping("/date")
     public List<Afati> currentDate(){
         return afatiService.findByCurrent();

@@ -1,6 +1,7 @@
   import Swal from 'sweetalert2'
 
   const BASE_URL = `http://localhost:8080/api/admin`;
+  const BASE_URL2 = `http://localhost:8080`;
 
   //Studenti
 
@@ -37,6 +38,7 @@
     const url = BASE_URL + `/updateStudent/`;
     return [url, "Gabim në përditësimin e studentit!"];
   }
+
 
   //Profesori
   
@@ -147,6 +149,10 @@
     return [url, "Gabim në përditësimin e provimit!"];
   }
 
+  
+
+
+
 
 
   //Users
@@ -206,12 +212,12 @@
   }
 
   export const getAllDepartamenti = () => {
-    const url = BASE_URL + `/departamenti`;
+    const url = BASE_URL2 + `/departamenti`;
     return [url, "Gabim në marrjen e Departamentit!"];
   }
   
   export const getDepartamentiByID = () => {
-    const url = BASE_URL + `/departamenti/`;
+    const url = BASE_URL2 + `/departamenti/`;
     return [url, "Gabim në marrjen e Departamentit!"];
   }
 
