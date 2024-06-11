@@ -49,6 +49,7 @@ const usePostimi = (ligjerataId, token) => {
         },
       })
       .then(() => {
+        setPostNotification(false);
         setEnd((prevEnd) => prevEnd + 1);
         setUserEnd((prevEnd) => prevEnd + 1);
         setPostNotification(true);
@@ -88,6 +89,7 @@ const usePostimi = (ligjerataId, token) => {
         },
       })
       .then(() => {
+        setDeletePostNotification(false);
         setEnd((prevEnd) => prevEnd - 1);
         setUserEnd((prevEnd) => prevEnd - 1);
         setDeletePostNotification(true);
@@ -137,6 +139,7 @@ const usePostimi = (ligjerataId, token) => {
 
   const toggleViewMyPosts = () => {
     setViewMyPosts((prev) => !prev);
+    console.log("viewMYPosts:" + viewMyPosts);
     if(viewMyPosts) {
       setEnd(5);
     }else {
@@ -147,19 +150,19 @@ const usePostimi = (ligjerataId, token) => {
   useEffect(() => {
     getPostimet();
     getUserInfo();
-  }, [ligjerataId, getPostimet, getUserInfo]);
+  }, [ligjerataId]);
 
   useEffect(() => {
     if (viewMyPosts) {
       getPostimet();
     }
-  }, [viewMyPosts, end, getPostimet]);
+  }, [viewMyPosts, end]);
 
   useEffect(() => {
     if (!viewMyPosts) {
       getPostimetUser();
     }
-  }, [viewMyPosts, userEnd, getPostimetUser]);
+  }, [viewMyPosts, userEnd]);
 
   return {
     postimet,

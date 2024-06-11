@@ -5,8 +5,7 @@ import { Box, IconButton , Typography} from '@mui/material';
 const Komentet = ({ komentet, postimId, token, user, deleteKomenti, updateKomenti, isEnrolled }) => {
   return (
     <Box>
-      
-      {komentet.map((koment) => (
+      {komentet.length > 0 ? (komentet.map((koment) => (
         <Komenti 
           key={koment.id}
           koment={koment}
@@ -16,7 +15,8 @@ const Komentet = ({ komentet, postimId, token, user, deleteKomenti, updateKoment
           updateKomenti={updateKomenti}
           isEnrolled={isEnrolled}
         />
-      ))}
+      ))): <Typography sx={{display:"flex", justifyContent:"center", padding:2}}>No comments Have been Posted here</Typography>}
+
     </Box>
   );
 }

@@ -353,13 +353,7 @@ const Postimi = ({ token, user }) => {
                     Assignments:
                   </Typography>
 
-                  {console.log(
-                    "userid:" +
-                      user.id +
-                      " " +
-                      "ProfessorID: " +
-                      location.state.professorId
-                  )}
+                 
                 </Box>
 
                 {assignments.map((assignment) => (
@@ -593,7 +587,7 @@ const Postimi = ({ token, user }) => {
                 }}
               >
                 <FilterAltIcon />
-                <Typography>{viewMyPosts ? "Mine Only" : "See All"}</Typography>
+                <Typography>{viewMyPosts ? "All Posts": "Mine Only" }</Typography>
               </IconButton>
             )}
 

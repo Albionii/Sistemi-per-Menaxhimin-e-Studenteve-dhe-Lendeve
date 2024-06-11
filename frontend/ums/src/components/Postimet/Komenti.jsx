@@ -42,8 +42,6 @@ const Komenti = ({ koment, user, deleteKomenti, updateKomenti, isEnrolled }) => 
     setDeleteKoment(false);
   };
 
-  const handleConfirm = () => {};
-
   return (
     <Box
       display="flex"
@@ -99,8 +97,7 @@ const Komenti = ({ koment, user, deleteKomenti, updateKomenti, isEnrolled }) => 
         onClose={handleClose}
         keepMounted
       >
-        {(user.id === koment.userID.id ||
-          koment.userID.role !== "ROLE_ADMIN") && (
+        {(user.id === koment.userID.id) && (
           <MenuItem
             onClick={() => {
               openUpdate();

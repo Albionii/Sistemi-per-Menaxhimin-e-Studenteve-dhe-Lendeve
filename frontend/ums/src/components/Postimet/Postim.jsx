@@ -195,9 +195,9 @@ const Postim = ({
                   >
                     <FilterAltIcon />
                     {viewMyComment ? (
-                      <Typography>Mine Only</Typography>
+                      <Typography>All Comments</Typography>
                     ) : (
-                      <Typography>See all</Typography>
+                      <Typography>Mine Only</Typography>
                     )}
                   </IconButton>
 
