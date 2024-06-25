@@ -138,12 +138,33 @@ public class ProfessorController {
                 }
             }
         }
+
+        HashMap<String, Integer> ligjerataList = new HashMap<String, Integer>();
+        for (int i = 0; i < LigjerataList.size(); i++) {
+            List<StudentLigjerata> aux = studentLigjerataService.findByLigjerataId(LigjerataList.get(i).getId());
+            ligjerataList.put(aux.get(0).getLigjerata().getLenda().getEmri(),aux.size());
+        }
+        int maEMadhja = 0;
+
+        String sadiku = "";
+
+        for(Map.Entry<String, Integer> entry : ligjerataList.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+
+            if (value > maEMadhja){
+                maEMadhja = value;
+                sadiku = key + " " + value;
+            }
+        }
+
         float mesatarjaNotave = (float) notat /saTeNotuar;
 
         HashMap<String,String> map = new HashMap<>();
         map.put("saLende", lendaSize + "");
         map.put("SaNotaTeVendosura",nrStudenteve.size() + "");
         map.put("Mesatarja",mesatarjaNotave + "");
+        map.put("Enrollments",sadiku);
 
         return map;
     }

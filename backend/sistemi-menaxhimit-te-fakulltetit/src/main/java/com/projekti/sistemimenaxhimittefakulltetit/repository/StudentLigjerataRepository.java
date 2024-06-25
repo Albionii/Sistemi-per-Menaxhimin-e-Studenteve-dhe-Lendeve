@@ -10,4 +10,6 @@ public interface StudentLigjerataRepository extends JpaRepository<StudentLigjera
     List<StudentLigjerata> findByStudentId(Long id);
     Optional<StudentLigjerata> findByStudentIdAndLigjerataId(Long id1, Long id2);
     List<StudentLigjerata> findByLigjerataId(Long ligjerataId);
+
+    List<StudentLigjerata> findAllByLigjerataId(Long id);
 }

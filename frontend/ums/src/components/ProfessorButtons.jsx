@@ -11,7 +11,8 @@ const ProfesoriButtons = ({ token }) => {
   const [professorStatistics, setProfessorStatistics] = useState({
     saLende: "",
     Mesatarja: "",
-    SaNotaTeVendosura: ""
+    SaNotaTeVendosura: "",
+    Enrollments: ""
   });
   const getStatistics = () => {
     axios
@@ -23,7 +24,7 @@ const ProfesoriButtons = ({ token }) => {
       .then((response) => {
         setProfessorStatistics(response.data);
         // console.log(response.data);
-        console.log("PROFESSOR STATS " + JSON.stringify(professorStatistics));
+        console.log("PROFESSOR STATS " + JSON.stringify(response));
       })
       .catch((error) => {
         console.error("Error getting Statistics: " + error);
@@ -61,7 +62,7 @@ const ProfesoriButtons = ({ token }) => {
       {renderButtons({ text: professorStatistics.saLende, color: "#D40E14", darker: "#B40C11", stat: 'Total Ligjerata', Icon: AppsIcon })}
       {renderButtons({ text: parseFloat(professorStatistics.Mesatarja).toFixed(2), color: "#EC6601", darker: "#CA5701", stat: 'Nota Mesatare', Icon: FunctionsIcon })}
       {renderButtons({ text: professorStatistics.SaNotaTeVendosura, color: "#004F95", darker: "#003D73", stat: 'Student te vleresuar', Icon: DoneAllIcon })}
-      {renderButtons({ text: "AOK", color: "#B70E77", darker: "#970C62", stat: 'Lenda me me se shumti enrollments', Icon: AutoAwesomeMotionIcon })}
+      {renderButtons({ text: professorStatistics.Enrollments, color: "#B70E77", darker: "#970C62", stat: 'Lenda me me se shumti enrollments', Icon: AutoAwesomeMotionIcon })}
     </Grid>
   );
 };

@@ -37,6 +37,10 @@ public class StudentLigjerataService {
         return opt.get();
     }
 
+    public List<StudentLigjerata> findByLigjerataId(Long id){
+        return studentLigjerataRepository.findAllByLigjerataId(id);
+    }
+
 
 
 
